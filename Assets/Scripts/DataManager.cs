@@ -24,12 +24,12 @@ public struct LeaderBoard
 
 
 /// <summary>
-/// Singleton Instance of DataManager
+/// DataManager of the game
 /// </summary>
 public class DataManager : MonoBehaviour
 {
     /// <summary>
-    /// DataManager of the game
+    /// Singleton Instance of DataManager
     /// </summary>
     public static DataManager InstanceDataManager { get; private set; }
 
