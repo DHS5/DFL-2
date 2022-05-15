@@ -363,10 +363,11 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
 
-        
 
+#if UNITY_WEBGL
         if (Application.platform == RuntimePlatform.WebGLPlayer)
             JS_FileSystem_Sync();
+#endif
     }
 
     /// <summary>
