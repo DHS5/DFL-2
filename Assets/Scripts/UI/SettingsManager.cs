@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 
 public enum SceneNumber { MENU = 0, GAME = 1, TUTO = 2 }
@@ -102,10 +105,27 @@ public class SettingsManager : MonoBehaviour
     /// <param name="scene">Scene number</param>
     public void LoadScene(int scene)
     {
-        SceneManager.LoadScene(scene);
+        if (SceneManager.GetActiveScene().buildIndex != scene)
+        {
+            SceneManager.LoadScene(scene);
+        }
     }
     public void LoadScene(SceneNumber scene)
     {
-        SceneManager.LoadScene((int) scene);
+        LoadScene((int)scene);
+    }
+
+
+    /// <summary>
+    /// Quits the game
+    /// </summary>
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#elif UNITY_WEBGL
+#else
+        Application.Quit();
+#endif
     }
 }
