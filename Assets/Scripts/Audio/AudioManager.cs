@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public abstract class AudioManager : MonoBehaviour
 {
     protected AudioSource audioSource;
-    
+
     [SerializeField] protected AudioClip[] musics;
-    
+
 
     [SerializeField] protected Toggle musicToggle;
     [SerializeField] protected Slider musicSlider;
@@ -95,8 +95,8 @@ public abstract class AudioManager : MonoBehaviour
     public bool LoopOn
     {
         get { return loopOn; }
-        set 
-        { 
+        set
+        {
             loopOn = value;
             if (DataManager.InstanceDataManager != null)
             {

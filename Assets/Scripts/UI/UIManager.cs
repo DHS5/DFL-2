@@ -32,19 +32,19 @@ public class UIManager : MonoBehaviour
 
     public void ActuScoreList()
     {
-        Vector3Int gt = gameType + new Vector3Int(1, 0, 0);
-        int i = 0;
-        while (DataManager.InstanceDataManager.highscores[i].gameType != gt && i < 96) i++;
-
-        if (DataManager.InstanceDataManager.highscores[i].gameType == gt)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                highNames[j].text = DataManager.InstanceDataManager.highscores[i].names[j];
-                highWaves[j].text = "" + DataManager.InstanceDataManager.highscores[i].waves[j];
-            }
-        }
-        else Debug.Log("Invalid game type");
+        //Vector3Int gt = gameType + new Vector3Int(1, 0, 0);
+        //int i = 0;
+        //while (DataManager.InstanceDataManager.highscores[i].gameType != gt && i < 96) i++;
+        //
+        //if (DataManager.InstanceDataManager.highscores[i].gameType == gt)
+        //{
+        //    for (int j = 0; j < 5; j++)
+        //    {
+        //        highNames[j].text = DataManager.InstanceDataManager.highscores[i].names[j];
+        //        highWaves[j].text = "" + DataManager.InstanceDataManager.highscores[i].waves[j];
+        //    }
+        //}
+        //else Debug.Log("Invalid game type");
     }
 
     public void ActuLeaderboards()

@@ -28,8 +28,8 @@ public class EnvironmentManager : MonoBehaviour
         if (gameManager.options.Contains(GameOption.FOG))
         {
             RenderSettings.fog = true;
-            if (gameManager.gameMode == GameMode.OBJECTIF)
-                RenderSettings.fogDensity = 0.03f;
+            //if (gameManager.gameMode == GameMode.OBJECTIF)
+            //    RenderSettings.fogDensity = 0.03f;
         }
     }
 
@@ -39,8 +39,8 @@ public class EnvironmentManager : MonoBehaviour
     /// <param name="densityAddition">FogDensity += densityAddition</param>
     public void IncreaseFog(float densityAddition)
     {
-        if (gameManager.gameMode == GameMode.OBJECTIF)
-            densityAddition /= 2;
+        //if (gameManager.gameMode == GameMode.OBJECTIF)
+        //    densityAddition /= 2;
         RenderSettings.fogDensity += densityAddition;
     }
 

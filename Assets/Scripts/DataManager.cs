@@ -5,21 +5,44 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.InteropServices;
 
-/// <summary>
-/// Struct containing a Vector3 representing the game type, a list of 5 names and a list of 5 wave numbers
-/// </summary>
-[System.Serializable]
-public struct ScoreList
-{
-    public Vector3Int gameType;
-    public string[] names;
-    public int[] waves;
-}
 
 public struct LeaderBoard
 {
     public List<string> names;
     public List<int> scores;
+    public int personnalHighscore;
+}
+
+public struct AudioData
+{
+    public bool soundOn;
+    public float soundVolume;
+
+    public bool musicOn;
+    public float musicVolume;
+    public int musicNumber;
+
+    public bool loopOn;
+}
+
+public struct GameplayData
+{
+    public float yms;
+    public float ysr;
+    public bool fps;
+}
+
+public struct AuthentificationData
+{
+    public int id;
+    public string name;
+}
+
+public struct ProgressData
+{
+    public int coins;
+    public string[] playerSkins;
+    public string[] stadiumSkins;
 }
 
 
@@ -45,9 +68,6 @@ public class DataManager : MonoBehaviour
 
     readonly public int leaderboardLimit = 10;
 
-    [Tooltip("List of ScoreList with the highscores")]
-    public ScoreList[] highscores = new ScoreList[96];
-
     [HideInInspector] public LeaderBoard[,,] leaderboards = new LeaderBoard[4, 3, 8];
 
     readonly int[] lb_ID = { 2909, 2911, 2912, 2913 };
@@ -61,6 +81,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public float yMouseSensitivity;
     [HideInInspector] public float ySmoothRotation;
 
+    [HideInInspector] public AudioData audioData;
 
     [HideInInspector] public bool musicOn;
     [HideInInspector] public float musicVolume;
@@ -95,7 +116,6 @@ public class DataManager : MonoBehaviour
 
         // Load the personnal highscores and player preferences
         LoadPlayerData();
-        if (highscores[0].gameType != new Vector3Int(1, 0, 0)) InitHighscores();
 
         // Starts a LootLocker session and load the leaderboards
         StartSession();
@@ -190,26 +210,6 @@ public class DataManager : MonoBehaviour
 
 
     /// <summary>
-    /// Initialize the highscore board
-    /// </summary>
-    private void InitHighscores()
-    {
-        ScoreList sl;
-        int i = 0;
-        for (int gm = 1; gm < 5; gm++)
-            for (int gd = 0; gd < 3; gd++)
-                for (int go = 0; go < 8; go++)
-                {
-                    sl.gameType = new Vector3Int(gm, gd, go);
-                    sl.names = new string[] { "none", "none", "none", "none", "none" };
-                    sl.waves = new int[] { 1, 1, 1, 1, 1 };
-                    highscores[i] = sl;
-                    i++;
-                }
-    }
-
-
-    /// <summary>
     /// Return an int being the index for the highscores 3rd arg given the game options
     /// </summary>
     /// <param name="GOs">Game Options list</param>
@@ -248,35 +248,6 @@ public class DataManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Enters a new score in the highscores if it's in the top 5
-    /// </summary>
-    /// <param name="GM">Game Mode</param>
-    /// <param name="GD">Game Difficulty</param>
-    /// <param name="GOs">Game Options list</param>
-    /// <param name="name">Name of the player</param>
-    /// <param name="wave">Wave reached by the player</param>
-    /// <returns>1 if it's a highscore, else 0</returns>
-    public int IsNewHighscoreF(GameMode GM, GameDifficulty GD, List<GameOption> GOs, int wave)
-    {
-        int i = 0;
-        Vector3Int gameType = new Vector3Int((int)GM, (int)GD / 2, OptionsToInt(GOs));
-
-        while (highscores[i].gameType != gameType && i < 96) i++;
-
-        if (highscores[i].gameType == gameType)
-        {
-            for (int j = 0; j < 5; j++)
-                if (highscores[i].waves[j] < wave)
-                {
-                    return i;
-                }
-        }
-        else Debug.Log("Invalid game type");
-
-        return -1;
-    }
-
 
     /// <summary>
     /// Enters a new score in the highscores if it's in the top 5
@@ -305,20 +276,6 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public void NewHighscore()
-    {
-        if (highName == "" || highName == " ") highName = "Anonym";
-        for (int j = 0; j < 5; j++)
-            if (highscores[highIndex].waves[j] < highWave)
-            {
-                AddScore(highscores[highIndex].names, j, highName);
-                AddScore(highscores[highIndex].waves, j, highWave);
-                SavePlayerData();
-                return;
-            }
-    }
-
-
 
 
 
@@ -328,8 +285,6 @@ public class DataManager : MonoBehaviour
     [System.Serializable]
     class SaveData
     {
-        public ScoreList[] highscores;
-
         public string name;
 
         public float yms;
@@ -346,7 +301,6 @@ public class DataManager : MonoBehaviour
     public void SavePlayerData()
     {
         SaveData data = new SaveData();
-        data.highscores = highscores;
 
         data.name = highName;
 
@@ -380,8 +334,6 @@ public class DataManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            highscores = data.highscores;
 
             highName = data.name;
 

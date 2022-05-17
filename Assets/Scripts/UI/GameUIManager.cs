@@ -198,7 +198,7 @@ public class GameUIManager : UIManager
     {
         if (DataManager.InstanceDataManager != null)
         {
-            DataManager.InstanceDataManager.NewHighscore();
+            //DataManager.InstanceDataManager.NewHighscore();
             SetScreen(GameScreen.HIGHSCORE, false);
             SetScreen(GameScreen.RESTART, true);
         }
@@ -208,7 +208,7 @@ public class GameUIManager : UIManager
     {
         if (DataManager.InstanceDataManager != null)
         {
-            if (DataManager.InstanceDataManager.highIndex != -1) DataManager.InstanceDataManager.NewHighscore();
+            //if (DataManager.InstanceDataManager.highIndex != -1) DataManager.InstanceDataManager.NewHighscore();
             DataManager.InstanceDataManager.PostScore(gameManager.gameMode, gameManager.difficulty, gameManager.options);
             SetScreen(GameScreen.ONLINE_HIGHSCORE, false);
             SetScreen(GameScreen.RESTART, true);

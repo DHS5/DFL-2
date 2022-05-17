@@ -7,17 +7,22 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Mode
 /// </summary>
-[System.Serializable] public enum GameMode { NONE = 0, ZOMBIE = 2, DEFENDERS = 1, TEAM = 3, OBJECTIF = 4 }
+[System.Serializable] public enum GameMode { DEFENDERS = 0, TEAM = 1, ZOMBIE = 2, DRILL = 3 }
 
 /// <summary>
 /// Game Difficulty
 /// </summary>
-[System.Serializable] public enum GameDifficulty { EASY = 0 , NORMAL = 2 , HARD = 4 }
+[System.Serializable] public enum GameDifficulty { EASY = 0 , NORMAL = 1 , HARD = 2 }
 
 /// <summary>
 /// Game Option
 /// </summary>
 [System.Serializable] public enum GameOption { BONUS = 0, OBSTACLE = 1, FOG = 2 }
+
+/// <summary>
+/// Game Option
+/// </summary>
+[System.Serializable] public enum GameWheather { SUN = 0, RAIN = 1, FOG = 2 }
 
 /// <summary>
 /// Manages the whole game
@@ -242,23 +247,23 @@ public class GameManager : MonoBehaviour
         //}
         if (dataManager != null && enemiesManager.waveNumber > 1)
         {
-            int index = dataManager.IsNewHighscoreF(gameMode, difficulty, options, enemiesManager.waveNumber);
+            //int index = dataManager.IsNewHighscoreF(gameMode, difficulty, options, enemiesManager.waveNumber);
             if (dataManager.IsNewHighscoreO(gameMode, difficulty, options, enemiesManager.waveNumber))
             {
                 dataManager.highWave = enemiesManager.waveNumber;
-                dataManager.highIndex = index;
+                //dataManager.highIndex = index;
                 gameUIManager.SetScreen(GameScreen.ONLINE_HIGHSCORE, true);
                 gameUIManager.SetScreen(GameScreen.RESTART, false);
                 gameUIManager.ActuInputField();
             }
-            else if (index != -1)
-            {
-                dataManager.highWave = enemiesManager.waveNumber;
-                dataManager.highIndex = index;
-                gameUIManager.SetScreen(GameScreen.HIGHSCORE, true);
-                gameUIManager.SetScreen(GameScreen.RESTART, false);
-                gameUIManager.ActuInputField();
-            }
+            //else if (index != -1)
+            //{
+            //    dataManager.highWave = enemiesManager.waveNumber;
+            //    dataManager.highIndex = index;
+            //    gameUIManager.SetScreen(GameScreen.HIGHSCORE, true);
+            //    gameUIManager.SetScreen(GameScreen.RESTART, false);
+            //    gameUIManager.ActuInputField();
+            //}
         }
     }
 
@@ -353,11 +358,11 @@ public class GameManager : MonoBehaviour
         }
 
         // If game mode = OBJECTIF
-        if (gameMode == GameMode.OBJECTIF)
-        {
-            // Generates the objectives
-            objectifManager.GenerateObj();
-        }
+        //if (gameMode == GameMode.OBJECTIF)
+        //{
+        //    // Generates the objectives
+        //    objectifManager.GenerateObj();
+        //}
 
         // ### Audio
 
