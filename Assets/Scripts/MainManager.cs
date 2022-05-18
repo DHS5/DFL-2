@@ -25,6 +25,6 @@ public class MainManager : MonoBehaviour
         PlayerManager = GetComponent<PlayerManager>();
 
 
-        SettingsManager.GetManagers(SceneNumber.GAME);   // Makes the settings manager get the useful managers
+        SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
     }
 }

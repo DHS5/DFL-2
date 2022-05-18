@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class MenuUIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private SettingsManager settingsManager;
+    
+    
+    [SerializeField] private GameObject infoButtons;
+
+
+    // ### Properties ###
+
+    public bool InfoButtonsOn
     {
-        
+        set
+        {
+            infoButtons.SetActive(value);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Start()
     {
-        
+        settingsManager = SettingsManager.InstanceSettingsManager;
+        settingsManager.GetManagers();
+    }
+
+
+    // ### Functions ###
+
+    public void SetAsLastSibling(GameObject go)
+    {
+        go.transform.SetAsLastSibling();
     }
 }

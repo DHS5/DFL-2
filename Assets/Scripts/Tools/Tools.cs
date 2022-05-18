@@ -37,10 +37,4 @@ public class Tools : MonoBehaviour
 #endif
     }
 
-
-
-    public void SetAsLastSibling(GameObject go)
-    {
-        go.transform.SetAsLastSibling();
-    }
 }
