@@ -69,12 +69,7 @@ public class MusicSource : MonoBehaviour
         set
         {
             loopOn = value;
-            if (DataManager.InstanceDataManager != null)
-            {
-                DataManager.InstanceDataManager.loopOn = value;
-                audioSource.loop = value;
-                DataManager.InstanceDataManager.SavePlayerData();
-            }
+            audioSource.loop = value;
         }
     }
 
@@ -100,6 +95,14 @@ public class MusicSource : MonoBehaviour
         MusicOn = true; //
         MusicVolume = 0.5f; //  par LoadAudioData(dataManager.audioData);
         musicSlider.value = musicVolume;
+    }
+
+    private void Update()
+    {
+        if (musicOn && !audioSource.isPlaying) // Plays the next music when the previous has ended
+        {
+            NextMusic();
+        }
     }
 
 

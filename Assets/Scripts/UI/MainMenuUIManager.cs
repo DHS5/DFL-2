@@ -10,25 +10,10 @@ using UnityEditor;
 
 public class MainMenuUIManager : UIManager
 {
-    [SerializeField] private MenuAudioManager audioManager;
 
 
 
-    /// <summary>
-    /// Game Mode property
-    /// </summary>
-    public int Mode
-    {
-        set { DataManager.InstanceDataManager.gameMode = (GameMode)value; }
-    }
 
-    /// <summary>
-    /// Difficulty property
-    /// </summary>
-    public int Difficulty
-    {
-        set { DataManager.InstanceDataManager.difficulty = (GameDifficulty)value; }
-    }
 
     public float YMouseSensitivity
     {
@@ -59,16 +44,6 @@ public class MainMenuUIManager : UIManager
 
 
 
-    /// <summary>
-    /// Removes or adds a game option
-    /// </summary>
-    /// <param name="b">True --> Add / False --> Remove</param>
-    /// <param name="option">Game option to add/remove</param>
-    public void ChooseOption(int option)
-    {
-        if (!DataManager.InstanceDataManager.options.Contains((GameOption)option)) { DataManager.InstanceDataManager.options.Add((GameOption)option); }
-        else { DataManager.InstanceDataManager.options.Remove((GameOption)option); }
-    }
 
 
     /// <summary>

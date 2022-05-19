@@ -17,7 +17,7 @@ public class SettingsManager : MonoBehaviour
 
     // ### Managers ###
     // Multi scene managers
-    private DataManager dataManager;
+    [HideInInspector] public DataManager dataManager { get; private set; }
 
     // Menu scene managers
     private MenuUIManager menuUIManager;

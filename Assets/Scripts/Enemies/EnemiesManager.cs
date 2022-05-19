@@ -47,7 +47,7 @@ public class EnemiesManager : MonoBehaviour
 
     private void Awake()
     {
-        gameUIManager = gameManager.gameUIManager;
+        //gameUIManager = gameManager.gameUIManager;
     }
 
 
@@ -143,8 +143,8 @@ public class EnemiesManager : MonoBehaviour
         Enemy enemy;
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(waveNumber + (int)gameManager.difficulty, (int)gameManager.difficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(waveNumber + (int)gameManager.difficulty - gameManager.enemiesRange, (int)gameManager.difficulty, enemyPrefabs.Length);
+        int maxLevel = Mathf.Clamp(waveNumber + (int)gameManager.gameDifficulty, (int)gameManager.gameDifficulty, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(waveNumber + (int)gameManager.gameDifficulty - gameManager.enemiesRange, (int)gameManager.gameDifficulty, enemyPrefabs.Length);
 
         // Gets a random position and instantiate the new enemy
         Vector3 randomPosition = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
@@ -213,7 +213,7 @@ public class EnemiesManager : MonoBehaviour
         float zScale = fieldZone.transform.localScale.z / 2;
         int r;
         // Spawn on the whole field
-        for (int i = 0; i < 50 + (3 + (int) gameManager.difficulty / 2) * (waveNumber + (int) gameManager.difficulty) ; i++)
+        for (int i = 0; i < 50 + (3 + (int) gameManager.gameDifficulty / 2) * (waveNumber + (int) gameManager.gameDifficulty) ; i++)
         {
             r = Random.Range(1, 3);
             if (r == 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);

@@ -17,7 +17,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Option
 /// </summary>
-[System.Serializable] public enum GameOption { BONUS = 0, OBSTACLE = 1, FOG = 2 }
+[System.Serializable] public enum GameOption { BONUS = 0, OBSTACLE = 1, OBJECTIF = 2, NONE = 3, WEAPONS = 4 }
 
 /// <summary>
 /// Game Option
@@ -25,48 +25,34 @@ using UnityEngine.Rendering;
 [System.Serializable] public enum GameWheather { SUN = 0, RAIN = 1, FOG = 2 }
 
 /// <summary>
-/// Manages the whole game
+/// Game Option
+/// </summary>
+[System.Serializable] public enum GameDrill { PRACTICE = 0, ONEVONE = 1, OBJECTIF = 2, PARKOUR = 3 }
+
+
+/// <summary>
+/// Manages the game
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    /// <summary>
-    /// Singleton Instance of GameManager
-    /// </summary>
-    public static GameManager InstanceGameManager { get; private set; }
+    private MainManager main;
+
+
+    private GameData gameData;
 
     [Header("Game parameters")]
     [Tooltip("Current game mode")]
     public GameMode gameMode;
     [Tooltip("Current game difficulty")]
-    public GameDifficulty difficulty;
+    public GameDifficulty gameDifficulty;
+    public GameWheather gameWheather;
     [Tooltip("Current game options")]
-    public List<GameOption> options = new List<GameOption>();
+    public List<GameOption> gameOptions = new List<GameOption>();
+    public GameDrill gameDrill;
     [Tooltip("Range of different enemies that can spawn in one wave")]
     [Range(0, 5)] public int enemiesRange;
 
 
-
-    [Header("Game managers")]
-    [Tooltip("Field Manager of the game")]
-    public FieldManager fieldManager;
-    [Tooltip("Environment Manager of the game")]
-    public EnvironmentManager environmentManager;
-    [Tooltip("Enemies Manager of the game")]
-    public EnemiesManager enemiesManager;
-    [Tooltip("Team Manager of the game")]
-    public TeamManager teamManager;
-    [Tooltip("UI Manager of the game")]
-    public GameUIManager gameUIManager;
-    [Tooltip("Audio Manager of the game")]
-    public GameAudioManager audioManager;
-    [Tooltip("Objectif Manager of the game")]
-    public ObjectifManager objectifManager;
-    [Tooltip("Obstacle Manager of the game")]
-    public ObstacleManager obstacleManager;
-    [Tooltip("Bonus Manager of the game")]
-    public BonusManager bonusManager;
-    [Tooltip("Data Manager of the game")]
-    [HideInInspector] public DataManager dataManager;
     [Tooltip("Current field of the game")]
     [HideInInspector] public Field currentField;
 
@@ -83,34 +69,21 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool gameOver = false;
     private bool gameOverLate = false;
 
-    /// <summary>
-    /// Instantiate the Singleton
-    /// </summary>
-    private void Awake()
-    {
-        InstanceGameManager = this;
-        dataManager = DataManager.InstanceDataManager;
-    }
-
 
     /// <summary>
     /// Starts the game
     /// </summary>
     private void Start()
     {
+        main = MainManager.InstanceMainManager;
+
+        GetGameDatas();
+
+        PrepareGame();
+
         // Game is on
         gameOn = true;
-        // Gets the Game parameters from DataManager
-        if (dataManager != null)
-        {
-            // Gets the DataManager's infos
-            gameMode = dataManager.gameMode;
-            difficulty = dataManager.difficulty;
-            options = dataManager.options;
-        }
-
-        // Generates the environment
-        environmentManager.GenerateEnvironment();
+        
         // Generates the game
         TunnelEnter();
 
@@ -133,7 +106,7 @@ public class GameManager : MonoBehaviour
             gameOverLate = true;
             playerRunAnimator.SetTrigger("Dead");
             player.GetComponent<PlayerController>().freeze = true;
-            gameUIManager.GameOver();
+            main.GameUIManager.GameOver();
             Invoke(nameof(GameOver), 0.75f);
             if (gameMode != GameMode.ZOMBIE) currentField.OuuhAudio();
             currentField.StopAmbianceAudios();
@@ -144,6 +117,52 @@ public class GameManager : MonoBehaviour
     }
 
 
+    // ### Functions ###
+
+    /// <summary>
+    /// Gets the Game datas from the DataManager
+    /// Gets the inspector chosen parameters if the DataManager doesn't exist
+    /// </summary>
+    private void GetGameDatas()
+    {
+        if (main.DataManager != null)
+        {
+            gameData = main.DataManager.gameData;
+        }
+        else
+        {
+            gameData.gameMode = gameMode;
+            gameData.gameDifficulty = gameDifficulty;
+            gameData.gameWheather = gameWheather;
+            gameData.gameOptions = gameOptions;
+            gameData.gameDrill = gameDrill;
+        }
+    }
+
+    private void PrepareGame()
+    {
+        main.EnvironmentManager.GenerateEnvironment();
+        main.FieldManager.GenerateField();
+        main.EnemiesManager.EnemyWave();
+
+        main.GameAudioManager.ActuSoundVolume();
+
+        // Modes
+        if (gameData.gameMode == GameMode.TEAM)
+            main.TeamManager.TeamCreation();
+
+
+        // Options
+        if (gameData.gameOptions.Contains(GameOption.BONUS))
+            main.BonusManager.GenerateBonus();
+
+        if (gameData.gameOptions.Contains(GameOption.OBSTACLE))
+            main.ObstacleManager.GenerateObstacles(1); // A remplacer
+
+        if (gameData.gameOptions.Contains(GameOption.OBJECTIF))
+            main.ObjectifManager.GenerateObj();
+    }
+
     public void PauseGame()
     {
         gameOn = false;
@@ -151,22 +170,22 @@ public class GameManager : MonoBehaviour
         // Freezes the player
         player.GetComponent<PlayerController>().freeze = true;
         // Stops the enemies
-        enemiesManager.StopEnemies();
+        main.EnemiesManager.StopEnemies();
 
         // If game mode = TEAM
         if (gameMode == GameMode.TEAM)
         {
             // Stops the attackers
-            teamManager.StopAttackers();
+            main.TeamManager.StopAttackers();
         }
 
-        gameUIManager.SetScreen(GameScreen.SETTINGS, true);
+        main.GameUIManager.SetScreen(GameScreen.SETTINGS, true);
 
-        if (audioManager.SoundOn) audioManager.MuteSound(true);
+        //if (main.GameAudioManager.SoundOn) main.GameAudioManager.MuteSound(true);
     }
     public void UnpauseGame()
     {
-        gameUIManager.SetScreen(GameScreen.SETTINGS, false);
+        main.GameUIManager.SetScreen(GameScreen.SETTINGS, false);
         Invoke(nameof(GameOn) , 1f);
     }
     private void GameOn()
@@ -176,18 +195,18 @@ public class GameManager : MonoBehaviour
         // Unfreezes the player
         player.GetComponent<PlayerController>().freeze = false;
         // Resumes the enemies
-        enemiesManager.ResumeEnemies();
+        main.EnemiesManager.ResumeEnemies();
 
         // If game mode = TEAM
         if (gameMode == GameMode.TEAM)
         {
             // Resumes the attackers
-            teamManager.ResumeAttackers();
+            main.TeamManager.ResumeAttackers();
         }
 
         player.GetComponentInChildren<FirstPersonCameraController>().LockCursor();
 
-        if (audioManager.SoundOn) audioManager.MuteSound(false);
+        //if (main.GameAudioManager.SoundOn) main.GameAudioManager.MuteSound(false);
     }
 
 
@@ -207,7 +226,7 @@ public class GameManager : MonoBehaviour
         // ### Enemies
 
         // Enemies stop
-        enemiesManager.StopEnemies();
+        main.EnemiesManager.StopEnemies();
 
         
         // ### Modes
@@ -216,14 +235,14 @@ public class GameManager : MonoBehaviour
         if (gameMode == GameMode.TEAM)
         {
             // Attackers stop
-            teamManager.StopAttackers();
+            main.TeamManager.StopAttackers();
         }
 
 
         // ### Environment
 
         // Activate the stadium's camera
-        fieldManager.StadiumCamera.gameObject.SetActive(true);
+        main.FieldManager.StadiumCamera.gameObject.SetActive(true);
 
 
         // ### UI
@@ -245,16 +264,16 @@ public class GameManager : MonoBehaviour
         //{
         //    dataManager.SaveHighscores();
         //}
-        if (dataManager != null && enemiesManager.waveNumber > 1)
+        if (main.DataManager != null && main.EnemiesManager.waveNumber > 1)
         {
             //int index = dataManager.IsNewHighscoreF(gameMode, difficulty, options, enemiesManager.waveNumber);
-            if (dataManager.IsNewHighscoreO(gameMode, difficulty, options, enemiesManager.waveNumber))
+            if (main.DataManager.IsNewHighscoreO(gameMode, gameDifficulty, gameOptions, main.EnemiesManager.waveNumber))
             {
-                dataManager.highWave = enemiesManager.waveNumber;
+                main.DataManager.highWave = main.EnemiesManager.waveNumber;
                 //dataManager.highIndex = index;
-                gameUIManager.SetScreen(GameScreen.ONLINE_HIGHSCORE, true);
-                gameUIManager.SetScreen(GameScreen.RESTART, false);
-                gameUIManager.ActuInputField();
+                main.GameUIManager.SetScreen(GameScreen.ONLINE_HIGHSCORE, true);
+                main.GameUIManager.SetScreen(GameScreen.RESTART, false);
+                main.GameUIManager.ActuInputField();
             }
             //else if (index != -1)
             //{
@@ -276,25 +295,24 @@ public class GameManager : MonoBehaviour
         // ### Environment
         
         // Generates a new field
-        currentField = fieldManager.GenerateField();
+        currentField = main.FieldManager.GenerateField();
         // Increases the fog according to the difficulty
-        if (difficulty == GameDifficulty.HARD) environmentManager.IncreaseFog(0.03f);
-        else if (difficulty == GameDifficulty.NORMAL) environmentManager.IncreaseFog(0.01f);
+        if (gameDifficulty == GameDifficulty.HARD) main.EnvironmentManager.IncreaseFog(0.03f);
+        else if (gameDifficulty == GameDifficulty.NORMAL) main.EnvironmentManager.IncreaseFog(0.01f);
         // Passes to night mode after wave 10 (if not zombie mode)
-        if (gameMode != GameMode.ZOMBIE && enemiesManager.waveNumber == 9) environmentManager.BedTime();
+        if (gameMode != GameMode.ZOMBIE && main.EnemiesManager.waveNumber == 9) main.EnvironmentManager.BedTime();
 
 
         // ### Audio
 
         // Actualize the audio volume
-        audioManager.ActuSoundVolume();
+        
         // Disable the crowd sound in zombie mode
         if (gameMode == GameMode.ZOMBIE) currentField.StopAmbianceAudios();
 
         // ### Enemies
 
         // Generates an enemy wave
-        enemiesManager.EnemyWave();
 
 
         // ### Modes
@@ -303,30 +321,30 @@ public class GameManager : MonoBehaviour
         if (gameMode == GameMode.TEAM)
         {
             // Clear the attackers
-            teamManager.ClearAttackers();
+            main.TeamManager.ClearAttackers();
             // Gives the teamManager an enemies's clone
-            teamManager.enemies = new List<GameObject>(currentField.enemies);
+            main.TeamManager.enemies = new List<GameObject>(currentField.enemies);
         }
 
 
         // ### Options
 
         // If the option OBSTACLE is chosen
-        if (options.Contains(GameOption.OBSTACLE))
+        if (gameOptions.Contains(GameOption.OBSTACLE))
         {
             // Destroys the active obstacles
-            obstacleManager.DestroyObstacles();
+            main.ObstacleManager.DestroyObstacles();
             // Generates the obstacles
-            obstacleManager.GenerateObstacles((enemiesManager.waveNumber + (int) difficulty) * 5);
+            main.ObstacleManager.GenerateObstacles((main.EnemiesManager.waveNumber + (int) gameDifficulty) * 5);
         }
 
         // If the option BONUS is chosen
-        if (options.Contains(GameOption.BONUS))
+        if (gameOptions.Contains(GameOption.BONUS))
         {
             // Destroys the active bonus
-            bonusManager.DestroyBonus();
+            main.BonusManager.DestroyBonus();
             // Generates the bonus
-            bonusManager.GenerateBonus();
+            main.BonusManager.GenerateBonus();
         }
     }
 
@@ -336,15 +354,15 @@ public class GameManager : MonoBehaviour
     public void TunnelExit()
     {
         // ### Environment
-        
+
         // Destroys the former field
-        fieldManager.DestroyField();
+        main.FieldManager.DestroyField();
 
 
         // ### Enemies
 
         // Starts the enemies's chase
-        enemiesManager.BeginChase();
+        main.EnemiesManager.BeginChase();
 
 
         // ### Modes
@@ -353,8 +371,8 @@ public class GameManager : MonoBehaviour
         if (gameMode == GameMode.TEAM)
         {
             // Creates a team and starts the player's protection
-            teamManager.TeamCreation();
-            teamManager.BeginProtection();
+            main.TeamManager.TeamCreation();
+            main.TeamManager.BeginProtection();
         }
 
         // If game mode = OBJECTIF
@@ -367,6 +385,6 @@ public class GameManager : MonoBehaviour
         // ### Audio
 
         // Actualize the audio volume
-        audioManager.ActuSoundVolume();
+        main.GameAudioManager.ActuSoundVolume();
     }
 }

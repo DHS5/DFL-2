@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
                         // Deactivates the acceleration
                         Invoke(nameof(CantAccelerate), accelerationTime);
                         // UI animation
-                        gameManager.gameUIManager.AccBarAnim(accelerationTime, waitToAccelerateTime);
+                        //gameManager.gameUIManager.AccBarAnim(accelerationTime, waitToAccelerateTime);
 
                         isAccelerating = true;
                     }

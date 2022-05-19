@@ -45,6 +45,15 @@ public struct ProgressData
     public string[] stadiumSkins;
 }
 
+public struct GameData
+{
+    public GameMode gameMode;
+    public GameDifficulty gameDifficulty;
+    public GameWheather gameWheather;
+    public List<GameOption> gameOptions;
+    public GameDrill gameDrill;
+}
+
 
 /// <summary>
 /// DataManager of the game
@@ -56,15 +65,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public static DataManager InstanceDataManager { get; private set; }
 
-
-    [Tooltip("Game Mode to pass to the GameManager")]
-    [HideInInspector] public GameMode gameMode;
-
-    [Tooltip("Difficulty to pass to the GameManager")]
-    [HideInInspector] public GameDifficulty difficulty;
-
-    [Tooltip("Game options to pass to the GameManager")]
-    [HideInInspector] public List<GameOption> options = new List<GameOption>();
+    [HideInInspector] public GameData gameData;
 
     readonly public int leaderboardLimit = 10;
 
@@ -83,16 +84,6 @@ public class DataManager : MonoBehaviour
 
     [HideInInspector] public AudioData audioData;
 
-    [HideInInspector] public bool musicOn;
-    [HideInInspector] public float musicVolume;
-    [HideInInspector] public int musicNumber;
-    [HideInInspector] public float musicTime;
-
-    [HideInInspector] public bool soundOn;
-    [HideInInspector] public float soundVolume;
-
-    [HideInInspector] public bool loopOn;
-
 #if UNITY_WEBGL
     [DllImport("__Internal")]
     private static extern void JS_FileSystem_Sync();
@@ -108,19 +99,55 @@ public class DataManager : MonoBehaviour
         {
             Destroy(this);
             // Clears the options when starting the menu
-            InstanceDataManager.options.Clear();
+            InstanceDataManager.ClearGameData();
             return;
         }
         InstanceDataManager = this;
         DontDestroyOnLoad(gameObject);
 
         // Load the personnal highscores and player preferences
-        LoadPlayerData();
+        //LoadPlayerData();
+
+        // Clear the game data (modes etc... for the first game)
+        ClearGameData();
 
         // Starts a LootLocker session and load the leaderboards
-        StartSession();
+        //StartSession();
     }
 
+
+    // ### Functions ###
+
+    // ## Data Management ##
+
+    public void ClearGameData()
+    {
+        gameData.gameMode = GameMode.DEFENDERS;
+        gameData.gameDifficulty = GameDifficulty.EASY;
+        gameData.gameWheather = GameWheather.SUN;
+        gameData.gameOptions = new List<GameOption>();
+        gameData.gameDrill = GameDrill.PRACTICE;
+    }
+
+    /// <summary>
+    /// Return an int being the index for the highscores 3rd arg given the game options
+    /// </summary>
+    /// <param name="GOs">Game Options list</param>
+    /// <returns></returns>
+    public int OptionsToInt(List<GameOption> GOs)
+    {
+        int Result = 0;
+
+        if (GOs.Contains(GameOption.BONUS)) Result += 10000;
+        if (GOs.Contains(GameOption.OBSTACLE)) Result += 1000;
+        if (GOs.Contains(GameOption.OBJECTIF)) Result += 100;
+        if (GOs.Contains(GameOption.NONE)) Result += 10;
+        if (GOs.Contains(GameOption.WEAPONS)) Result += 1;
+
+        return Result;
+    }
+
+    // ## Online ##
 
     /// <summary>
     /// Starts a LootLocker session and load the leaderboards if session successfully
@@ -139,16 +166,26 @@ public class DataManager : MonoBehaviour
     }
 
 
-    private string GametypeToMeta(GameMode GM, GameDifficulty GD, List<GameOption> GOs)
+    private string GametypeToMeta(GameData gD)
     {
-        return (int) GM - 1 + "." + (int) GD / 2 + "." + OptionsToInt(GOs);
+        return (int) gD.gameMode + "." 
+            + (int) gD.gameDifficulty + "." 
+            + (int) gD.gameWheather + "." 
+            + OptionsToInt(gD.gameOptions) + "." 
+            + (int) gD.gameDrill;
+    }
+
+    private string GameTypeToString(GameData gD)
+    {
+        return "";
     }
 
 
-    public void PostScore(GameMode GM, GameDifficulty GD, List<GameOption> GOs)
+    public void PostScore(GameData gameData)
     {
-        Debug.Log("gt meta : " + GametypeToMeta(GM, GD, GOs));
-        LootLockerSDKManager.SubmitScore(highName + "." + GametypeToMeta(GM, GD, GOs), highWave, lb_ID[(int) GM - 1], GametypeToMeta(GM, GD, GOs), (response) =>
+        Debug.Log("gt meta : " + GametypeToMeta(gameData));
+        LootLockerSDKManager.SubmitScore
+            (highName + "." + GametypeToMeta(gameData), highWave, lb_ID[(int) gameData.gameMode - 1], GametypeToMeta(gameData), (response) =>
         {
             if (response.success)
             {
@@ -205,27 +242,6 @@ public class DataManager : MonoBehaviour
             }
             else Debug.Log("Failed to load");
         });
-    }
-
-
-
-    /// <summary>
-    /// Return an int being the index for the highscores 3rd arg given the game options
-    /// </summary>
-    /// <param name="GOs">Game Options list</param>
-    /// <returns></returns>
-    public int OptionsToInt(List<GameOption> GOs)
-    {
-        if (GOs.Count == 0) return 0;
-        if (GOs.Count == 1) return (int)GOs[0] + 1;
-        if (GOs.Count == 3) return 7;
-        else
-        {
-            if (GOs.Contains(GameOption.BONUS) && GOs.Contains(GameOption.OBSTACLE)) return 4;
-            if (GOs.Contains(GameOption.BONUS) && GOs.Contains(GameOption.FOG)) return 5;
-            if (GOs.Contains(GameOption.FOG) && GOs.Contains(GameOption.OBSTACLE)) return 6;
-        }
-        return 0;
     }
 
 
@@ -307,12 +323,6 @@ public class DataManager : MonoBehaviour
         data.yms = yMouseSensitivity;
         data.ysr = ySmoothRotation;
 
-        data.musicOn = musicOn;
-        data.musicVolume = musicVolume;
-        data.soundOn = soundOn;
-        data.soundVolume = soundVolume;
-        data.loopOn = loopOn;
-
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
@@ -340,11 +350,6 @@ public class DataManager : MonoBehaviour
             yMouseSensitivity = data.yms;
             ySmoothRotation = data.ysr;
 
-            musicOn = data.musicOn;
-            musicVolume = data.musicVolume;
-            soundOn = data.soundOn;
-            soundVolume = data.soundVolume;
-            loopOn = data.loopOn;
         }
     }
 }

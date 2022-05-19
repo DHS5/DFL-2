@@ -92,7 +92,7 @@ public class PlayerGameplay : MonoBehaviour
         lifeNumber--;
         if (lifeNumber > 0)
         {
-            gameManager.gameUIManager.ModifyLife(false, lifeNumber - 1);
+            //gameManager.gameUIManager.ModifyLife(false, lifeNumber - 1);
             isInvincible = true;
             Invoke(nameof(NotInvincible), 1f);
         }

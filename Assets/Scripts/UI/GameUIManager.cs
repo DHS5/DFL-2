@@ -209,7 +209,7 @@ public class GameUIManager : UIManager
         if (DataManager.InstanceDataManager != null)
         {
             //if (DataManager.InstanceDataManager.highIndex != -1) DataManager.InstanceDataManager.NewHighscore();
-            DataManager.InstanceDataManager.PostScore(gameManager.gameMode, gameManager.difficulty, gameManager.options);
+            //DataManager.InstanceDataManager.PostScore(gameManager.gameData);
             SetScreen(GameScreen.ONLINE_HIGHSCORE, false);
             SetScreen(GameScreen.RESTART, true);
         }

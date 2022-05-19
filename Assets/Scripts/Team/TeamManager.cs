@@ -43,8 +43,8 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        enemiesManager = gameManager.enemiesManager;
-        fieldManager = gameManager.fieldManager;
+        //enemiesManager = gameManager.enemiesManager;
+        //fieldManager = gameManager.fieldManager;
     }
 
 
@@ -140,7 +140,7 @@ public class TeamManager : MonoBehaviour
 
     public void TeamCreation()
     {
-        for (int i = 0; i < 5 - (int) gameManager.difficulty / 2; i++)
+        for (int i = 0; i < 5 - (int) gameManager.gameDifficulty / 2; i++)
         {
             InstantiateAttacker();
         }

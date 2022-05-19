@@ -25,12 +25,12 @@ public class EnvironmentManager : MonoBehaviour
         dirLight = Instantiate(directionnalLights[renderStyleNumber], new Vector3(0, 0, 0), Quaternion.Euler(50, -30, 0));
 
 
-        if (gameManager.options.Contains(GameOption.FOG))
-        {
-            RenderSettings.fog = true;
-            //if (gameManager.gameMode == GameMode.OBJECTIF)
-            //    RenderSettings.fogDensity = 0.03f;
-        }
+        //if (gameManager.options.Contains(GameOption.FOG))
+        //{
+        //    RenderSettings.fog = true;
+        //    //if (gameManager.gameMode == GameMode.OBJECTIF)
+        //    //    RenderSettings.fogDensity = 0.03f;
+        //}
     }
 
     /// <summary>

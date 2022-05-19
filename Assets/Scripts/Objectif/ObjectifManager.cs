@@ -63,7 +63,7 @@ public class ObjectifManager : MonoBehaviour
             Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
             // Instantiate the objectif
-            obj = Instantiate(objectifPrefabs[(int) gameManager.difficulty/2], randomPos, Quaternion.identity).GetComponent<Objectif>();
+            obj = Instantiate(objectifPrefabs[(int) gameManager.gameDifficulty / 2], randomPos, Quaternion.identity).GetComponent<Objectif>();
             obj.objectifManager = this;
             objectives.Enqueue(obj);
         }
