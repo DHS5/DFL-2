@@ -35,21 +35,25 @@ public class SettingsManager : MonoBehaviour
 
     private bool infoButtonsOn = true;
 
+    private float yMouseSensitivity;
+    private float ySmoothRotation;
 
     // ### Properties ###
     public float YMouseSensitivity
     {
         set 
-        { 
-            dataManager.yMouseSensitivity = value;
+        {
+            yMouseSensitivity = value;
+            dataManager.gameplayData.yms = value;
             if (playerManager != null) playerManager.YMouseSensitivity = value;
         }
     }
     public float YSmoothRotation
     {
         set 
-        { 
-            dataManager.ySmoothRotation = value;
+        {
+            ySmoothRotation = value;
+            dataManager.gameplayData.ysr = value;
             if (playerManager != null) playerManager.YSmoothRotation = value;
         }
     }
@@ -128,6 +132,11 @@ public class SettingsManager : MonoBehaviour
         if (scene == 0)
         {
             menuUIManager.InfoButtonsOn = infoButtonsOn;
+        }
+        if (scene == 1)
+        {
+            playerManager.YMouseSensitivity = yMouseSensitivity;
+            playerManager.YSmoothRotation = ySmoothRotation;
         }
     }
 

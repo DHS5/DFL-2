@@ -23,7 +23,7 @@ public class GameUIManager : UIManager
     [SerializeField] private TextMeshProUGUI[] waveNumberTexts;
 
 
-    public string HighName { set { if (DataManager.InstanceDataManager != null) DataManager.InstanceDataManager.highName = value; } }
+    //public string HighName { set { if (DataManager.InstanceDataManager != null) DataManager.InstanceDataManager.highName = value; } }
 
     [Tooltip("")]
     [SerializeField] private TMP_InputField[] pseudoInputFields;
@@ -55,11 +55,11 @@ public class GameUIManager : UIManager
 
     private void Start()
     {
-        if (DataManager.InstanceDataManager != null)
-        {
-            sensitivitySlider.value = DataManager.InstanceDataManager.yMouseSensitivity;
-            smoothRotationSlider.value = DataManager.InstanceDataManager.ySmoothRotation;
-        }
+        //if (DataManager.InstanceDataManager != null)
+        //{
+        //    sensitivitySlider.value = DataManager.InstanceDataManager.yMouseSensitivity;
+        //    smoothRotationSlider.value = DataManager.InstanceDataManager.ySmoothRotation;
+        //}
 
         gameType = new Vector3Int(0, 0, 0);
     }
@@ -217,10 +217,10 @@ public class GameUIManager : UIManager
 
     public void ActuInputField()
     {
-        if (DataManager.InstanceDataManager != null && DataManager.InstanceDataManager.highName != "Anonym")
-        {
-            foreach (TMP_InputField i in pseudoInputFields)
-                i.text = DataManager.InstanceDataManager.highName;
-        }
+        //if (DataManager.InstanceDataManager != null && DataManager.InstanceDataManager.highName != "Anonym")
+        //{
+        //    foreach (TMP_InputField i in pseudoInputFields)
+        //        i.text = DataManager.InstanceDataManager.highName;
+        //}
     }
 }

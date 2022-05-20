@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using LootLocker.Requests;
 using UnityEngine;
 using System.IO;
-using System.Runtime.InteropServices;
 
 
 public struct LeaderBoard
@@ -32,7 +31,7 @@ public struct GameplayData
     public bool fps;
 }
 
-public struct AuthentificationData
+public struct PlayerData
 {
     public int id;
     public string name;
@@ -65,29 +64,21 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public static DataManager InstanceDataManager { get; private set; }
 
+    readonly public int leaderboardLimit = 100;
+    readonly int[] leaderboard_IDs = { 2909, 2911, 2912, 2913 };
+
+    [HideInInspector] public LeaderBoard[,] leaderboards = new LeaderBoard[3, 3];
+
+
+    // Online Savable Data
+    [HideInInspector] public AudioData audioData;
+    [HideInInspector] public GameplayData gameplayData;
+    [HideInInspector] public PlayerData playerData;
+    [HideInInspector] public ProgressData progressData;
+
+    // Current game data
     [HideInInspector] public GameData gameData;
 
-    readonly public int leaderboardLimit = 10;
-
-    [HideInInspector] public LeaderBoard[,,] leaderboards = new LeaderBoard[4, 3, 8];
-
-    readonly int[] lb_ID = { 2909, 2911, 2912, 2913 };
-
-    [HideInInspector] public string highName;
-    [HideInInspector] public int highWave;
-    [HideInInspector] public int highIndex;
-
-
-
-    [HideInInspector] public float yMouseSensitivity;
-    [HideInInspector] public float ySmoothRotation;
-
-    [HideInInspector] public AudioData audioData;
-
-#if UNITY_WEBGL
-    [DllImport("__Internal")]
-    private static extern void JS_FileSystem_Sync();
-#endif
 
 
     /// <summary>
@@ -181,11 +172,11 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public void PostScore(GameData gameData)
+    public void PostScore(GameData gameData, int score)
     {
         Debug.Log("gt meta : " + GametypeToMeta(gameData));
-        LootLockerSDKManager.SubmitScore
-            (highName + "." + GametypeToMeta(gameData), highWave, lb_ID[(int) gameData.gameMode - 1], GametypeToMeta(gameData), (response) =>
+        LootLockerSDKManager.SubmitScore(playerData.id.ToString(), score, leaderboard_IDs[(int) gameData.gameMode - 1], GametypeToMeta(gameData), 
+            (response) =>
         {
             if (response.success)
             {
@@ -197,14 +188,14 @@ public class DataManager : MonoBehaviour
     }
 
 
-    private void ClearLeaderboards(int mode)
+    private void ClearLeaderboards()
     {
-        for (int i = 0; i < 3; i++)
+        for (int mode = 0; mode < 3; mode++)
         {
-            for (int j = 0; j < 8; j++)
+            for (int dif = 0; dif < 8; dif++)
             {
-                leaderboards[mode, i, j].names = new List<string>();
-                leaderboards[mode, i, j].scores = new List<int>();
+                leaderboards[mode, dif].names = new List<string>();
+                leaderboards[mode, dif].scores = new List<int>();
             }
         }
     }
@@ -222,9 +213,9 @@ public class DataManager : MonoBehaviour
 
     private void LoadLeaderboard(int mode)
     {
-        ClearLeaderboards(mode);
+        ClearLeaderboards();
 
-        LootLockerSDKManager.GetScoreList(lb_ID[mode], 100, (response) =>
+        LootLockerSDKManager.GetScoreList(leaderboard_IDs[mode], leaderboardLimit, (response) =>
         {
             if (response.success)
             {
@@ -232,10 +223,10 @@ public class DataManager : MonoBehaviour
 
                 for (int j = 0; j < scores.Length; j++)
                 {
-                    string[] gt = scores[j].metadata.Split('.');
-                    Vector3Int gtv = new Vector3Int(int.Parse(gt[0]), int.Parse(gt[1]), int.Parse(gt[2]));
-                    leaderboards[gtv.x, gtv.y, gtv.z].names.Add(scores[j].member_id.Split('.')[0]);
-                    leaderboards[gtv.x, gtv.y, gtv.z].scores.Add(scores[j].score);
+                    //string[] gt = scores[j].metadata.Split('.');
+                    //Vector3Int gtv = new Vector3Int(int.Parse(gt[0]), int.Parse(gt[1]), int.Parse(gt[2]));
+                    //leaderboards[gtv.x, gtv.y, gtv.z].names.Add(scores[j].member_id.Split('.')[0]);
+                    //leaderboards[gtv.x, gtv.y, gtv.z].scores.Add(scores[j].score);
                 }
 
                 Debug.Log("Successfully loaded");
@@ -282,11 +273,11 @@ public class DataManager : MonoBehaviour
         
         for (int i = 0; i < leaderboardLimit; i++)
         {
-            Debug.Log((int)GM - 1 + "," + (int)GD / 2 + "," + OptionsToInt(GOs) + "," + i);
-            if (leaderboards[(int)GM - 1, (int)GD / 2, OptionsToInt(GOs)].scores.Count < leaderboardLimit || leaderboards[(int)GM - 1, (int)GD / 2, OptionsToInt(GOs)].scores[i] < wave)
-            {
-                return true;
-            }
+            //Debug.Log((int)GM - 1 + "," + (int)GD / 2 + "," + OptionsToInt(GOs) + "," + i);
+            //if (leaderboards[(int)GM - 1, (int)GD / 2, OptionsToInt(GOs)].scores.Count < leaderboardLimit || leaderboards[(int)GM - 1, (int)GD / 2, OptionsToInt(GOs)].scores[i] < wave)
+            //{
+            //    return true;
+            //}
         }
         return false;
     }
@@ -301,16 +292,7 @@ public class DataManager : MonoBehaviour
     [System.Serializable]
     class SaveData
     {
-        public string name;
-
-        public float yms;
-        public float ysr;
-
-        public bool musicOn;
-        public float musicVolume;
-        public bool soundOn;
-        public float soundVolume;
-        public bool loopOn;
+        
     }
 
 
@@ -318,20 +300,9 @@ public class DataManager : MonoBehaviour
     {
         SaveData data = new SaveData();
 
-        data.name = highName;
-
-        data.yms = yMouseSensitivity;
-        data.ysr = ySmoothRotation;
-
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-
-
-#if UNITY_WEBGL
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-            JS_FileSystem_Sync();
-#endif
     }
 
     /// <summary>
@@ -344,11 +315,6 @@ public class DataManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            highName = data.name;
-
-            yMouseSensitivity = data.yms;
-            ySmoothRotation = data.ysr;
 
         }
     }

@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
             //int index = dataManager.IsNewHighscoreF(gameMode, difficulty, options, enemiesManager.waveNumber);
             if (main.DataManager.IsNewHighscoreO(gameMode, gameDifficulty, gameOptions, main.EnemiesManager.waveNumber))
             {
-                main.DataManager.highWave = main.EnemiesManager.waveNumber;
+                //main.DataManager.highWave = main.EnemiesManager.waveNumber;
                 //dataManager.highIndex = index;
                 main.GameUIManager.SetScreen(GameScreen.ONLINE_HIGHSCORE, true);
                 main.GameUIManager.SetScreen(GameScreen.RESTART, false);
