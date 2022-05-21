@@ -39,7 +39,7 @@ public class PlayerGameplay : MonoBehaviour
             // Makes the player unchasable
             isChasable = false;
 
-            gameManager.TunnelEnter();
+            //gameManager.TunnelEnter();
 
             transform.position = new Vector3(0, 0, transform.position.z + 40);
         }
@@ -52,7 +52,7 @@ public class PlayerGameplay : MonoBehaviour
             // Makes the player chasable
             isChasable = true;
 
-            gameManager.TunnelExit();
+            //gameManager.TunnelExit();
         }
     }
     /// <summary>
@@ -61,7 +61,7 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="collision">Collider of the colliding object</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (!gameManager.gameOver)
+        if (!gameManager.GameOver)
         {
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
@@ -108,10 +108,10 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="g"></param>
     private void Dead(GameObject g)
     {
-        Vector3 dir = g.transform.position - gameManager.player.transform.position;
-        Vector3 playerRot = gameManager.player.transform.rotation.eulerAngles;
-        gameManager.player.transform.rotation = Quaternion.Euler(playerRot.x, Quaternion.LookRotation(dir, gameManager.player.transform.up).eulerAngles.y, playerRot.z);
-        gameManager.gameOver = true;
+        //Vector3 dir = g.transform.position - gameManager.player.transform.position;
+        //Vector3 playerRot = gameManager.player.transform.rotation.eulerAngles;
+        //gameManager.player.transform.rotation = Quaternion.Euler(playerRot.x, Quaternion.LookRotation(dir, gameManager.player.transform.up).eulerAngles.y, playerRot.z);
+        gameManager.GameOver = true;
     }
 
     /// <summary>

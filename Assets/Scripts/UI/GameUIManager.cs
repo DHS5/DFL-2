@@ -95,6 +95,7 @@ public class GameUIManager : UIManager
     }
 
     /// <summary>
+    /// Called when the game is over
     /// Activates the restart screen and deactivates the game screen
     /// </summary>
     public void GameOver()

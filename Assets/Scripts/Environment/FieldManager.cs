@@ -8,8 +8,8 @@ using UnityEngine.AI;
 /// </summary>
 public class FieldManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
 
     [Header("Nav Mesh Surface")]
@@ -39,7 +39,7 @@ public class FieldManager : MonoBehaviour
     [Tooltip("Stadium's camera")]
     public Camera StadiumCamera { get; private set; }
 
-    private Field fieldScript;
+    public Field fieldScript { get; private set; }
     private Field formerFieldScript;
 
     [Tooltip("Vector 3 containing the position of the actual field")]
@@ -48,6 +48,15 @@ public class FieldManager : MonoBehaviour
     private Vector3 fieldDistance = new Vector3(0,0,289);
     [Tooltip("Vector 3 containing the position of the stadium in relation to the field")]
     private Vector3 stadiumPosition = new Vector3(0, 0, 225);
+
+
+    private void Start()
+    {
+        main = GetComponent<MainManager>();
+    }
+
+
+    // ### Functions ###
 
     /// <summary>
     /// Generates a random field
@@ -102,5 +111,22 @@ public class FieldManager : MonoBehaviour
         if (formerField != null) Destroy(formerField);
         if (formerFieldScript != null) formerFieldScript.SuppEnemies();
         if (formerStadium != null) Destroy(formerStadium);
+    }
+
+    /// <summary>
+    /// Called when the game is over
+    /// Activates the stadium camera and the lose audios
+    /// </summary>
+    public void GameOver()
+    {
+        // Activates the stadium camera
+        StadiumCamera.gameObject.SetActive(true);
+        // Activates the lose audios
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
+            fieldScript.OuuhAudio();
+        fieldScript.StopAmbianceAudios();
+        // Calls the booh audios
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
+            fieldScript.BoohAudio();
     }
 }

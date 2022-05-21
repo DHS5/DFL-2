@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BonusManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
 
     [SerializeField] private GameObject[] bonusPrefabs;
@@ -15,12 +15,22 @@ public class BonusManager : MonoBehaviour
 
     private GameObject fieldZone;
 
+
+    private void Start()
+    {
+        main = GetComponent<MainManager>();
+    }
+
+
+    // ### Functions ###
+
+
     /// <summary>
     /// Gets the field zone
     /// </summary>
     private void GetZone()
     {
-        fieldZone = gameManager.currentField.fieldZone;
+        fieldZone = main.FieldManager.fieldScript.fieldZone;
     }
 
 
@@ -45,7 +55,7 @@ public class BonusManager : MonoBehaviour
         // Instantiate the bonus
         bonus = Instantiate(bonusPrefabs[Random.Range(0, bonusPrefabs.Length)], randomPos, Quaternion.identity).GetComponent<Bonus>();
         bonus.bonusManager = this;
-        bonus.player = gameManager.player;
+        bonus.player = main.PlayerManager.player;
         activeBonus = bonus;
     }
 

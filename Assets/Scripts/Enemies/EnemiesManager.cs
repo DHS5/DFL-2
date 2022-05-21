@@ -8,10 +8,8 @@ using UnityEngine;
 /// </summary>
 public class EnemiesManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
-    [Tooltip("UI Manager of the game")]
-    private GameUIManager gameUIManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
     [Tooltip("Script of the field")]
     private Field field;
@@ -45,10 +43,13 @@ public class EnemiesManager : MonoBehaviour
     private GameObject rightZone;
 
 
-    private void Awake()
+    private void Start()
     {
-        //gameUIManager = gameManager.gameUIManager;
+        main = GetComponent<MainManager>();
     }
+
+
+    // ### Functions ###
 
 
     /// <summary>
@@ -91,12 +92,12 @@ public class EnemiesManager : MonoBehaviour
     {
         // Increment the wave number
         waveNumber++;
-        gameUIManager.ActuWaveNumber(waveNumber);
+        main.GameUIManager.ActuWaveNumber(waveNumber);
         // Gets the spawning zones
         GetZones();
         
         // Generates the enemy wave given the mode
-        switch (gameManager.gameMode)
+        switch (main.GameManager.gameData.gameMode)
         {
             case GameMode.DEFENDERS:
                 DefendersWave();
@@ -121,7 +122,7 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void GetZones()
     {
-        field = gameManager.currentField;
+        field = main.FieldManager.fieldScript;
         
         fieldZone = field.fieldZone;
         centerZone = field.centerZone;
@@ -139,12 +140,14 @@ public class EnemiesManager : MonoBehaviour
     /// <param name="sizeMultiplier">Size multiplier with which create the enemy</param>
     private void CreateEnemy(GameObject[] enemyPrefabs, Vector3 pos, float xScale, float zScale, float sizeMultiplier, AudioClip[] audios)
     {
+        GameData gd = main.GameManager.gameData;
+        
         // Game Object of the enemy
         Enemy enemy;
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(waveNumber + (int)gameManager.gameDifficulty, (int)gameManager.gameDifficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(waveNumber + (int)gameManager.gameDifficulty - gameManager.enemiesRange, (int)gameManager.gameDifficulty, enemyPrefabs.Length);
+        int maxLevel = Mathf.Clamp(waveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(waveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length);
 
         // Gets a random position and instantiate the new enemy
         Vector3 randomPosition = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
@@ -213,7 +216,7 @@ public class EnemiesManager : MonoBehaviour
         float zScale = fieldZone.transform.localScale.z / 2;
         int r;
         // Spawn on the whole field
-        for (int i = 0; i < 50 + (3 + (int) gameManager.gameDifficulty / 2) * (waveNumber + (int) gameManager.gameDifficulty) ; i++)
+        for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty / 2) * (waveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
             r = Random.Range(1, 3);
             if (r == 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);

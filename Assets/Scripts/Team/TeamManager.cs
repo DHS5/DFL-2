@@ -8,12 +8,8 @@ using UnityEngine;
 /// </summary>
 public class TeamManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
-    [Tooltip("Field Manager of the game")]
-    private FieldManager fieldManager;
-    [Tooltip("Enemy Manager of the game")]
-    private EnemiesManager enemiesManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
     [Tooltip("GameObject of the player")]
     [SerializeField] private GameObject player;
@@ -38,13 +34,9 @@ public class TeamManager : MonoBehaviour
     [SerializeField] private float teamReactivity;
 
 
-    /// <summary>
-    /// Gets the Game Managers
-    /// </summary>
-    private void Awake()
+    private void Start()
     {
-        //enemiesManager = gameManager.enemiesManager;
-        //fieldManager = gameManager.fieldManager;
+        main = GetComponent<MainManager>();
     }
 
 
@@ -140,7 +132,7 @@ public class TeamManager : MonoBehaviour
 
     public void TeamCreation()
     {
-        for (int i = 0; i < 5 - (int) gameManager.gameDifficulty / 2; i++)
+        for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty / 2; i++)
         {
             InstantiateAttacker();
         }
@@ -152,6 +144,8 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void BeginProtection()
     {
+        enemies = new List<GameObject>(main.FieldManager.fieldScript.enemies);
+
         ProtectPlayer();
     }
 

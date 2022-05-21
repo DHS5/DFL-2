@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
 
     [Tooltip("Prefabs of the obstacles")]
@@ -20,12 +20,22 @@ public class ObstacleManager : MonoBehaviour
     [Tooltip("Max number of obstacles placable on a single field")]
     [SerializeField] private int obstaclesLimit;
 
+
+    private void Start()
+    {
+        main = GetComponent<MainManager>();
+    }
+
+
+    // ### Functions ###
+
+
     /// <summary>
     /// Gets the field zone
     /// </summary>
     private void GetZone()
     {
-        fieldZone = gameManager.currentField.fieldZone;
+        fieldZone = main.FieldManager.fieldScript.fieldZone;
     }
 
 

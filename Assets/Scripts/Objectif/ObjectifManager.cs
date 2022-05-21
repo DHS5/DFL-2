@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObjectifManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
     [Tooltip("Game object of the player")]
     [SerializeField] private GameObject player;
@@ -23,14 +23,24 @@ public class ObjectifManager : MonoBehaviour
     [Tooltip("Zones of the field on which to place the objectives")]
     private GameObject[] zones = new GameObject[3];
 
+
+    private void Start()
+    {
+        main = GetComponent<MainManager>();
+    }
+
+
+    // ### Functions ###
+
+
     /// <summary>
     /// Gets the field zones
     /// </summary>
     private void GetZones()
     {
-        zones[0] = gameManager.currentField.frontZone;
-        zones[1] = gameManager.currentField.middleZone;
-        zones[2] = gameManager.currentField.endZone;
+        zones[0] = main.FieldManager.fieldScript.frontZone;
+        zones[1] = main.FieldManager.fieldScript.middleZone;
+        zones[2] = main.FieldManager.fieldScript.endZone;
     }
 
     /// <summary>
@@ -63,7 +73,7 @@ public class ObjectifManager : MonoBehaviour
             Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
             // Instantiate the objectif
-            obj = Instantiate(objectifPrefabs[(int) gameManager.gameDifficulty / 2], randomPos, Quaternion.identity).GetComponent<Objectif>();
+            obj = Instantiate(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty / 2], randomPos, Quaternion.identity).GetComponent<Objectif>();
             obj.objectifManager = this;
             objectives.Enqueue(obj);
         }
@@ -76,10 +86,10 @@ public class ObjectifManager : MonoBehaviour
     private void Update()
     {
         // Checks if the player misses an objectif
-        if (currentObjectif != null && player.transform.position.z > currentObjectif.gameObject.transform.position.z + 5 && !gameManager.gameOver)
+        if (currentObjectif != null && player.transform.position.z > currentObjectif.gameObject.transform.position.z + 5 && !main.GameManager.GameOver)
         {
             Debug.Log("Missed an objectif");
-            gameManager.gameOver = true;
+            main.GameManager.GameOver = true;
         }
     }
 }

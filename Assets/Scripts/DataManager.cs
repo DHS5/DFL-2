@@ -51,6 +51,7 @@ public struct GameData
     public GameWheather gameWheather;
     public List<GameOption> gameOptions;
     public GameDrill gameDrill;
+    public int gameEnemiesRange;
 }
 
 

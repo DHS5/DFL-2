@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public enum SceneNumber { MENU = 0, GAME = 1, TUTO = 2 }
 
+public enum ScreenNumber { SETTINGS = 0 }
+
 
 public class SettingsManager : MonoBehaviour
 {
@@ -27,6 +29,10 @@ public class SettingsManager : MonoBehaviour
 
     private GameManager gameManager;
     private PlayerManager playerManager;
+
+
+    [Header("Settings screens")]
+    [SerializeField] private GameObject[] screens;
 
 
     [Header("UI elements")]
@@ -138,6 +144,11 @@ public class SettingsManager : MonoBehaviour
             playerManager.YMouseSensitivity = yMouseSensitivity;
             playerManager.YSmoothRotation = ySmoothRotation;
         }
+    }
+
+    public void SetScreen(ScreenNumber screen, bool state)
+    {
+        screens[(int)screen].SetActive(state);
     }
 
     // ## Menu Scene

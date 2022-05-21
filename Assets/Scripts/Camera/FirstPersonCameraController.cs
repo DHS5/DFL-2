@@ -150,7 +150,7 @@ public class FirstPersonCameraController : MonoBehaviour
     private void LateUpdate()
     {
         // Gets the look rotation of the camera
-        if (locked && gameManager.gameOn) LookRotation();
+        if (locked && gameManager.GameOn) LookRotation();
 
 
         if (!locked && Input.GetMouseButtonDown(1))
@@ -158,7 +158,7 @@ public class FirstPersonCameraController : MonoBehaviour
             LockCursor();
         }
 
-        if (locked && (Input.GetKeyDown(KeyCode.Escape) || gameManager.gameOver || !gameManager.gameOn))
+        if (locked && (Input.GetKeyDown(KeyCode.Escape) || gameManager.GameOver || !gameManager.GameOn))
         {
             UnlockCursor();
         }
