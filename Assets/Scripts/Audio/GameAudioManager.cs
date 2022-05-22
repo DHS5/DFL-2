@@ -2,48 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameAudioManager : AudioManager
+public class GameAudioManager : MonoBehaviour
 {
-    protected override void Start()
+    [Tooltip("Main Manager")]
+    private MainManager main;
+
+    private DataManager dataManager;
+    
+    
+    private void Start()
     {
-        base.Start();
-        
-        if (DataManager.InstanceDataManager != null)
+        main = GetComponent<MainManager>();
+        dataManager = DataManager.InstanceDataManager;
+    }
+
+
+    // ### Functions ###
+
+
+    public void GenerateAudio()
+    {
+        if (dataManager.audioData.soundOn)
         {
-            //MusicOn = DataManager.InstanceDataManager.musicOn; musicToggle.isOn = musicOn;
-            //MusicVolume = DataManager.InstanceDataManager.musicVolume; musicSlider.value = musicVolume;
-            //
-            //SoundOn = DataManager.InstanceDataManager.soundOn; soundToggle.isOn = soundOn;
-            //SoundVolume = DataManager.InstanceDataManager.soundVolume; soundSlider.value = soundVolume;
-            //
-            //MusicNumber = DataManager.InstanceDataManager.musicNumber;
-            //LoopOn = DataManager.InstanceDataManager.loopOn; loopToggle.isOn = loopOn;
+            MuteSound(false);
+
+            if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE || main.GameManager.gameData.gameMode == GameMode.DRILL)
+            {
+                StopAmbianceAudios();
+            }
+
+            ActuSoundVolume();
         }
         else
         {
-            //MusicOn = musicToggle.isOn;
-            //MusicVolume = musicSlider.value;
-            //
-            //SoundOn = soundToggle.isOn;
-            //SoundVolume = soundSlider.value;
-            //
-            //MusicNumber = 0;
-            //LoopOn = loopToggle.isOn;
-            //PlayFromBeginning(musicNumber);
+            MuteSound(true);
         }
     }
+
 
 
     /// <summary>
     /// Puts the volume of all the sound audio sources to the desired volume
     /// </summary>
-    public void ActuSoundVolume()
+    private void ActuSoundVolume()
     {
         foreach (AudioSource a in FindObjectsOfType<AudioSource>())
         {
-            if (!a.CompareTag("AudioManager"))
+            if (!a.CompareTag("MusicSource"))
             {
-                //a.volume = soundVolume;
+                a.volume = dataManager.audioData.soundVolume;
             }
         }
     }
@@ -56,10 +63,37 @@ public class GameAudioManager : AudioManager
     {
         foreach (AudioSource a in FindObjectsOfType<AudioSource>())
         {
-            if (!a.CompareTag("AudioManager"))
+            if (!a.CompareTag("MusicSource"))
             {
                 a.mute = tmp;
             }
         }
+    }
+
+
+    public void BoohAudio()
+    {
+        foreach (AudioSource a in main.FieldManager.stadium.boohAS)
+        {
+            a.gameObject.SetActive(true);
+        }
+    }
+
+    public void OuuhAudio()
+    {
+        foreach (AudioSource a in main.FieldManager.stadium.ouuhAS)
+        {
+            a.gameObject.SetActive(true);
+        }
+    }
+
+    public void StopAmbianceAudios()
+    {
+        foreach (AudioSource a in main.FieldManager.stadium.entryAS)
+            a.gameObject.SetActive(false);
+        foreach (AudioSource a in main.FieldManager.stadium.exitAS)
+            a.gameObject.SetActive(false);
+        foreach (AudioSource a in main.FieldManager.stadium.bleachersAS)
+            a.gameObject.SetActive(false);
     }
 }

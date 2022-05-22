@@ -7,6 +7,8 @@ public class MusicSource : MonoBehaviour
 {
     public static MusicSource InstanceMusicSource { get; private set; }
 
+    private DataManager dataManager;
+
 
     [HideInInspector] public AudioSource audioSource;
 
@@ -32,7 +34,11 @@ public class MusicSource : MonoBehaviour
     public int MusicNumber
     {
         get { return musicNumber; }
-        set { musicNumber = value; }
+        set 
+        { 
+            musicNumber = value;
+            dataManager.audioData.musicNumber = value;
+        }
     }
     /// <summary>
     /// Whether the music is playing
@@ -46,6 +52,7 @@ public class MusicSource : MonoBehaviour
             else if (value == false && musicOn) audioSource.Pause();
 
             musicOn = value;
+            dataManager.audioData.musicOn = value;
         }
     }
     /// <summary>
@@ -58,6 +65,7 @@ public class MusicSource : MonoBehaviour
         {
             musicVolume = value;
             audioSource.volume = musicVolume;
+            dataManager.audioData.musicVolume = value;
         }
     }
     /// <summary>
@@ -70,6 +78,7 @@ public class MusicSource : MonoBehaviour
         {
             loopOn = value;
             audioSource.loop = value;
+            dataManager.audioData.loopOn = value;
         }
     }
 
@@ -91,6 +100,8 @@ public class MusicSource : MonoBehaviour
 
     private void Start()
     {
+        dataManager = DataManager.InstanceDataManager;
+
         PlayFromBeginning(0); // A remplacer !!!
         MusicOn = true; //
         MusicVolume = 0.5f; //  par LoadAudioData(dataManager.audioData);

@@ -74,6 +74,9 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    public bool SoundOn { set { dataManager.audioData.soundOn = value; } }
+    public float SoundVolume { set { dataManager.audioData.soundVolume = value; } }
+
 
     /// <summary>
     /// Gets the Singleton Instance

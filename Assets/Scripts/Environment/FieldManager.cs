@@ -90,11 +90,11 @@ public class FieldManager : MonoBehaviour
         // Activates the stadium camera
         StadiumCamera.gameObject.SetActive(true);
         // Activates the lose audios
-        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-            stadium.OuuhAudio();
-        stadium.StopAmbianceAudios();
-        // Calls the booh audios
-        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-            stadium.BoohAudio();
+        //if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
+        //    stadium.OuuhAudio();
+        //stadium.StopAmbianceAudios();
+        //// Calls the booh audios
+        //if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
+        //    stadium.BoohAudio();
     }
 }

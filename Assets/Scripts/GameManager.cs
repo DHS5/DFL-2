@@ -202,8 +202,6 @@ public class GameManager : MonoBehaviour
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
             main.TeamManager.TeamCreation();
-        if (gameData.gameMode == GameMode.ZOMBIE)
-            main.FieldManager.stadium.StopAmbianceAudios(); // A remplacer par une fonction "Générer audio" du game audio manager
 
 
         // # Options #
@@ -220,7 +218,7 @@ public class GameManager : MonoBehaviour
             //main.
 
 
-        main.GameAudioManager.ActuSoundVolume(); // Actualize the audio volume
+        main.GameAudioManager.GenerateAudio(); // Actualize the audio volume etc...
     }
 
     /// <summary>
@@ -242,7 +240,8 @@ public class GameManager : MonoBehaviour
             else main.TeamManager.ResumeAttackers();
         }
 
-        //if (main.GameAudioManager.SoundOn) main.GameAudioManager.MuteSound(false);
+        // # Audio #
+        main.GameAudioManager.GenerateAudio();
     }
 
 
@@ -260,7 +259,8 @@ public class GameManager : MonoBehaviour
         if (gameData.gameMode == GameMode.TEAM)
             main.TeamManager.StopAttackers(); // Stops the attackers
 
-        //if (main.GameAudioManager.SoundOn) main.GameAudioManager.MuteSound(true);
+        // # Audio #
+        if (main.DataManager.audioData.soundOn) main.GameAudioManager.MuteSound(true);
     }
     /// <summary>
     /// Unpause the game

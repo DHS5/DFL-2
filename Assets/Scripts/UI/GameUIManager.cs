@@ -30,7 +30,7 @@ public class GameUIManager : MonoBehaviour
     [Tooltip("UI components of the acceleration bar")]
     [SerializeField] private GameObject[] accelerationBars;
     [Tooltip("UI components of the bonus bar")]
-    [SerializeField] private GameObject bonusBar;
+    [SerializeField] private GameObject[] bonusBars;
     [Tooltip("UI components of the life bonuses")]
     [SerializeField] private GameObject[] lifeBonuses;
 
@@ -46,7 +46,7 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        bonusBarSize = bonusBar.GetComponent<RectTransform>().rect.height;
+        bonusBarSize = bonusBars[1].GetComponent<RectTransform>().rect.height;
     }
 
     private void Start()
@@ -64,7 +64,7 @@ public class GameUIManager : MonoBehaviour
     // ### Functions ###
 
     /// <summary>
-    /// Actualize both wave texts
+    /// Actualize all wave texts
     /// </summary>
     /// <param name="wave"></param>
     public void ActuWaveNumber(int wave)
@@ -74,6 +74,18 @@ public class GameUIManager : MonoBehaviour
             if (wave < 10) t.text = "0";
             else t.text = "";
             t.text += wave.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Actualize all score texts
+    /// </summary>
+    /// <param name="score"></param>
+    public void ActuScore(int score)
+    {
+        foreach (TextMeshProUGUI t in scoreTexts)
+        {
+            t.text = score.ToString();
         }
     }
 
@@ -134,8 +146,10 @@ public class GameUIManager : MonoBehaviour
     {
         bonusBarAnim.Stop();
 
-        bonusBar.GetComponent<Image>().color = color;
-        bonusBar.SetActive(true);
+        bonusBars[1].GetComponent<Image>().color = color;
+        bonusBars[0].SetActive(true);
+        bonusBars[1].SetActive(true);
+        bonusBars[2].SetActive(true);
 
         AnimationClip clip = new AnimationClip();
         clip.legacy = true;
@@ -164,7 +178,9 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void EndBonus()
     { 
-        bonusBar.SetActive(false);
+        bonusBars[0].SetActive(false);
+        bonusBars[1].SetActive(false);
+        bonusBars[2].SetActive(false);
     }
 
 
