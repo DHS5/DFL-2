@@ -30,7 +30,7 @@ public class BonusManager : MonoBehaviour
     /// </summary>
     private void GetZone()
     {
-        fieldZone = main.FieldManager.fieldScript.fieldZone;
+        fieldZone = main.FieldManager.field.fieldZone;
     }
 
 

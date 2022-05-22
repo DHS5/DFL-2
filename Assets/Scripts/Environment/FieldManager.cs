@@ -16,38 +16,29 @@ public class FieldManager : MonoBehaviour
     [Tooltip("Nav Mesh Surface of the current field")]
     [SerializeField] private NavMeshSurface surface;
 
-    [Header("Environment prefabs")]
-    [Tooltip("Prefab of the field")]
-    [SerializeField] private GameObject fieldPrefab;
-    [Tooltip("Prefab of the Stadium")]
-    [SerializeField] private GameObject stadiumPrefab;
+    [Header("Stadium prefabs")]
+    [Tooltip("Prefab list of the stadiums")]
+    [SerializeField] private GameObject[] stadiumPrefabs;
 
 
-    [Header("List of field materials")]
-    [Tooltip("List of the struct containing the materials to use on the field")]
-    [SerializeField] private FieldMaterials[] fieldMaterialList;
-
-    [Tooltip("Current field game object")]
-    private GameObject field;
     [Tooltip("Current stadium game object")]
-    private GameObject stadium;
+    private GameObject stadiumObject;
 
-    [Tooltip("Former field game object")]
-    private GameObject formerField;
-    [Tooltip("Former stadium game object")]
-    private GameObject formerStadium;
+
     [Tooltip("Stadium's camera")]
     public Camera StadiumCamera { get; private set; }
 
-    public Field fieldScript { get; private set; }
-    private Field formerFieldScript;
+    public Field field { get; private set; }
+    public Stadium stadium { get; private set; }
+
 
     [Tooltip("Vector 3 containing the position of the actual field")]
-    private Vector3 fieldPosition = new Vector3(0, 0, 0);
+    private Vector3 fieldPosition = new Vector3(0, 0, -289);
     [Tooltip("Vector 3 giving the distance between the position of 2 fields")]
     private Vector3 fieldDistance = new Vector3(0,0,289);
-    [Tooltip("Vector 3 containing the position of the stadium in relation to the field")]
-    private Vector3 stadiumPosition = new Vector3(0, 0, 225);
+
+
+    private int stadiumNumber = 0;
 
 
     private void Start()
@@ -61,45 +52,23 @@ public class FieldManager : MonoBehaviour
     /// <summary>
     /// Generates a random field
     /// </summary>
-    public Field GenerateField()
+    public void GenerateField()
     {
-        // If it's not the first field creation, keeps the former field and stadium
-        if (field != null)
-        {
-            // Keeps the former field and stadium
-            formerField = field;
-            formerStadium = stadium;
-            formerFieldScript = fieldScript;
+        // Actualizes the public field position
+        fieldPosition += fieldDistance;
 
-            // Destroys the former black wall
-            GameObject[] bw = GameObject.FindGameObjectsWithTag("BlackWall");
-            for (int i = 0; i < bw.Length; i++)
-                Destroy(bw[i]);
-            //Destroy(GameObject.FindGameObjectWithTag("BlackWall"));
-
-            // Actualizes the public field position
-            fieldPosition += fieldDistance;
-        }
         // ### Creation of the field and the stadium
         // ## Instantiation of the prefabs
-        field =  Instantiate(fieldPrefab, fieldPosition, Quaternion.identity);
-        //stadium = Instantiate(stadiumPrefab, fieldPosition + stadiumPosition, Quaternion.identity);
-        //StadiumCamera = stadium.GetComponentInChildren<Camera>();
-        StadiumCamera = field.GetComponentInChildren<Camera>();
-        StadiumCamera.gameObject.SetActive(false);
-        // ## Gets the field script
-        fieldScript = field.GetComponent<Field>();
+        stadiumObject = Instantiate(stadiumPrefabs[stadiumNumber], fieldPosition, Quaternion.identity);
+
+        field = stadiumObject.GetComponentInChildren<Field>();
+        stadium = stadiumObject.GetComponentInChildren<Stadium>();
+
         // ## Gets random field's materials
-        fieldScript.fieldMaterials = fieldMaterialList[Random.Range(0, fieldMaterialList.Length)];
-        // ## Gives the stadium object to the field script
-        //fieldScript.stadium = stadium;
-        // ## Apply the materials on the field
-        fieldScript.CreateField();
+        field.CreateField();
+
         // ## Actualization of the Nav Mesh
         surface.BuildNavMesh();
-
-        // ### Returns the fieldScript
-        return fieldScript;
     }
 
     /// <summary>
@@ -107,10 +76,9 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     public void DestroyField()
     {
-        // Destroys the former field and stadium
-        if (formerField != null) Destroy(formerField);
-        if (formerFieldScript != null) formerFieldScript.SuppEnemies();
-        if (formerStadium != null) Destroy(formerStadium);
+        // Destroys the stadium and field
+        field.SuppEnemies();
+        Destroy(stadiumObject);
     }
 
     /// <summary>
@@ -123,10 +91,10 @@ public class FieldManager : MonoBehaviour
         StadiumCamera.gameObject.SetActive(true);
         // Activates the lose audios
         if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-            fieldScript.OuuhAudio();
-        fieldScript.StopAmbianceAudios();
+            stadium.OuuhAudio();
+        stadium.StopAmbianceAudios();
         // Calls the booh audios
         if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-            fieldScript.BoohAudio();
+            stadium.BoohAudio();
     }
 }

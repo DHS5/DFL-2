@@ -38,9 +38,9 @@ public class ObjectifManager : MonoBehaviour
     /// </summary>
     private void GetZones()
     {
-        zones[0] = main.FieldManager.fieldScript.frontZone;
-        zones[1] = main.FieldManager.fieldScript.middleZone;
-        zones[2] = main.FieldManager.fieldScript.endZone;
+        zones[0] = main.FieldManager.field.frontZone;
+        zones[1] = main.FieldManager.field.middleZone;
+        zones[2] = main.FieldManager.field.endZone;
     }
 
     /// <summary>

@@ -22,7 +22,7 @@ public struct FieldMaterials
 public class Field : MonoBehaviour
 {   
     [Tooltip("Struct containing the materials to use on the field")]
-    [HideInInspector] public FieldMaterials fieldMaterials;
+    public FieldMaterials fieldMaterials;
 
 
     [Header("Prefab objects of the field")]
@@ -47,15 +47,7 @@ public class Field : MonoBehaviour
     public GameObject frontZone;
     public GameObject middleZone;
     public GameObject endZone;
-    public GameObject stadium;
 
-
-    [Header("Stadium's audio sources")]
-    public AudioSource[] entryAS;
-    public AudioSource[] exitAS;
-    public AudioSource[] bleachersAS;
-    public AudioSource[] ouuhAS;
-    public AudioSource[] boohAS;
 
     [Tooltip("List of the enemies on the field")]
     [HideInInspector] public List<GameObject> enemies;
@@ -86,9 +78,6 @@ public class Field : MonoBehaviour
         // ## Goalpost 2
         goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase2;
         goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal2;
-
-        // ### Stadium
-        stadium.GetComponent<MeshRenderer>().material = fieldMaterials.stadiumMaterial;
     }
 
     /// <summary>
@@ -98,32 +87,5 @@ public class Field : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
             Destroy(enemies[i]);
-    }
-
-
-    public void BoohAudio()
-    {
-        foreach (AudioSource a in boohAS)
-        {
-            a.gameObject.SetActive(true);
-        }
-    }
-
-    public void OuuhAudio()
-    {
-        foreach (AudioSource a in ouuhAS)
-        {
-            a.gameObject.SetActive(true);
-        }
-    }
-
-    public void StopAmbianceAudios()
-    {
-        foreach (AudioSource a in entryAS)
-            a.gameObject.SetActive(false);
-        foreach (AudioSource a in exitAS)
-            a.gameObject.SetActive(false);
-        foreach (AudioSource a in bleachersAS)
-            a.gameObject.SetActive(false);
     }
 }

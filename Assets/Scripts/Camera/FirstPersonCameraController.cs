@@ -32,11 +32,11 @@ public class FirstPersonCameraController : MonoBehaviour
     [Tooltip("Mouse sensitivity along the Y axis")]
     [Range(0.1f, 10f)]
     [SerializeField]  private float yMouseSensitivity = 3f;
-    //public float YMS { set { yMouseSensitivity = value; if (DataManager.InstanceDataManager != null) DataManager.InstanceDataManager.yMouseSensitivity = value; } }
+    public float YMS { set { yMouseSensitivity = value; } }
     [Tooltip("Mouse smoothness of the rotation")]
     [Range(10, 30)]
     [SerializeField] private float ySmoothRotation = 20f;
-    //public float YSR { set { ySmoothRotation = value; if (DataManager.InstanceDataManager != null) DataManager.InstanceDataManager.ySmoothRotation = value; } }
+    public float YSR { set { ySmoothRotation = value; } }
     [Tooltip("")]
     [SerializeField] private float[] cameraZPositions;
     [Tooltip("")]

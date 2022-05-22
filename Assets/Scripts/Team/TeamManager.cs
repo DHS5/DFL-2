@@ -144,7 +144,7 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void BeginProtection()
     {
-        enemies = new List<GameObject>(main.FieldManager.fieldScript.enemies);
+        enemies = new List<GameObject>(main.FieldManager.field.enemies);
 
         ProtectPlayer();
     }

@@ -6,28 +6,24 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 
-public enum GameScreen { GAME = 0, RESTART = 1, SETTINGS = 2, HIGHSCORE = 3, ONLINE_HIGHSCORE = 4 }
+public enum GameScreen { GAME = 0, RESTART = 1 }
 
 
-public class GameUIManager : UIManager
+public class GameUIManager : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Main Manager")]
+    private MainManager main;
 
     [Tooltip("Game UI screens\n" +
         "0 --> game screen\n" +
-        "1 --> restart screen\n" +
-        "2 --> settings screen")]
+        "1 --> restart screen")]
     [SerializeField] private GameObject[] screens;
-    [Tooltip("Wave number UI text")]
+
+    [Tooltip("Wave number UI texts")]
     [SerializeField] private TextMeshProUGUI[] waveNumberTexts;
 
-
-    //public string HighName { set { if (DataManager.InstanceDataManager != null) DataManager.InstanceDataManager.highName = value; } }
-
-    [Tooltip("")]
-    [SerializeField] private TMP_InputField[] pseudoInputFields;
-
+    [Tooltip("Score UI texts")]
+    [SerializeField] private TextMeshProUGUI[] scoreTexts;
 
 
 
@@ -55,30 +51,17 @@ public class GameUIManager : UIManager
 
     private void Start()
     {
-        //if (DataManager.InstanceDataManager != null)
-        //{
-        //    sensitivitySlider.value = DataManager.InstanceDataManager.yMouseSensitivity;
-        //    smoothRotationSlider.value = DataManager.InstanceDataManager.ySmoothRotation;
-        //}
-
-        gameType = new Vector3Int(0, 0, 0);
+        main = GetComponent<MainManager>();
     }
 
-    /// <summary>
-    /// Goes back to the menu
-    /// </summary>
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-    /// <summary>
-    /// Restarts the game
-    /// </summary>
-    public void Restart()
-    {
-        SceneManager.LoadScene(1);
-    }
 
+
+    // ### Tools ###
+
+    public void SetScreen(GameScreen GS, bool state) { screens[(int)GS].SetActive(state); }
+
+
+    // ### Functions ###
 
     /// <summary>
     /// Actualize both wave texts
@@ -100,12 +83,10 @@ public class GameUIManager : UIManager
     /// </summary>
     public void GameOver()
     {
-        screens[0].SetActive(false);
-        screens[1].SetActive(true);
+        SetScreen(GameScreen.GAME, false);
+        SetScreen(GameScreen.RESTART, true);
     }
 
-
-    public void SetScreen(GameScreen GS, bool state) { screens[(int)GS].SetActive(state); }
 
 
     /// <summary>
@@ -190,38 +171,5 @@ public class GameUIManager : UIManager
     public void ModifyLife(bool plus, int lifeNumber)
     {
         lifeBonuses[lifeNumber].SetActive(plus);
-    }
-
-
-
-
-    public void SaveHighscore()
-    {
-        if (DataManager.InstanceDataManager != null)
-        {
-            //DataManager.InstanceDataManager.NewHighscore();
-            SetScreen(GameScreen.HIGHSCORE, false);
-            SetScreen(GameScreen.RESTART, true);
-        }
-    }
-
-    public void SaveOnlineHighscore()
-    {
-        if (DataManager.InstanceDataManager != null)
-        {
-            //if (DataManager.InstanceDataManager.highIndex != -1) DataManager.InstanceDataManager.NewHighscore();
-            //DataManager.InstanceDataManager.PostScore(gameManager.gameData);
-            SetScreen(GameScreen.ONLINE_HIGHSCORE, false);
-            SetScreen(GameScreen.RESTART, true);
-        }
-    }
-
-    public void ActuInputField()
-    {
-        //if (DataManager.InstanceDataManager != null && DataManager.InstanceDataManager.highName != "Anonym")
-        //{
-        //    foreach (TMP_InputField i in pseudoInputFields)
-        //        i.text = DataManager.InstanceDataManager.highName;
-        //}
     }
 }

@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour
 
 
     [Tooltip("Current wave number")]
-    public int waveNumber;
+    [HideInInspector] public int waveNumber;
 
     [Tooltip("Current score")]
-    public int score;
+    [HideInInspector] public int score;
 
 
 
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
             {
                 gameOver = true;
 
-                
+                StartCoroutine(GameOverCR());
             }
         }
     }
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
         if (gameData.gameMode == GameMode.TEAM)
             main.TeamManager.TeamCreation();
         if (gameData.gameMode == GameMode.ZOMBIE)
-            main.FieldManager.fieldScript.StopAmbianceAudios(); // A remplacer par une fonction "Générer audio" du game audio manager
+            main.FieldManager.stadium.StopAmbianceAudios(); // A remplacer par une fonction "Générer audio" du game audio manager
 
 
         // # Options #
@@ -223,6 +223,10 @@ public class GameManager : MonoBehaviour
         main.GameAudioManager.ActuSoundVolume(); // Actualize the audio volume
     }
 
+    /// <summary>
+    /// Launches the game by activating the player, the enemies, the atackers...
+    /// </summary>
+    /// <param name="start">If true launches the first game, if false launches the game after a pause</param>
     private void LaunchGame(bool start)
     {
         gameOn = true;
@@ -242,7 +246,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Pause the game
+    /// </summary>
     public void PauseGame()
     {
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
@@ -256,6 +262,10 @@ public class GameManager : MonoBehaviour
 
         //if (main.GameAudioManager.SoundOn) main.GameAudioManager.MuteSound(true);
     }
+    /// <summary>
+    /// Unpause the game
+    /// Close the settings screen and start UnpauseCR coroutine
+    /// </summary>
     public void UnpauseGame()
     {
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, false);
@@ -263,6 +273,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UnpauseCR(0.5f));
     }
 
+    /// <summary>
+    /// Displays a 3 2 1 timer before launching the game
+    /// </summary>
+    /// <param name="time">Time between display (in s)</param>
+    /// <returns></returns>
     private IEnumerator UnpauseCR(float time)
     {
         int i = 3;
@@ -275,8 +290,10 @@ public class GameManager : MonoBehaviour
 
         LaunchGame(false);
     }
-
-
+    /// <summary>
+    /// Executes game over tasks with a certain timing
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator GameOverCR()
     {
         main.DataManager.PostScore(gameData, score);
@@ -297,5 +314,19 @@ public class GameManager : MonoBehaviour
         }
 
         // Call the Booouuh with the game audio manager
+    }
+
+
+    /// <summary>
+    /// Called when a wave is passed by the player
+    /// Creates and launches the next wave
+    /// </summary>
+    public void NextWave()
+    {
+        CleanGame();
+
+        PrepareGame(false);
+
+        LaunchGame(false);
     }
 }

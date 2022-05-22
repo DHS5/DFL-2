@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum EnvironmentStyle { SUN = 0, RAIN = 1, NIGHT = 2, ZOMBIE = 3 }
+
 public class EnvironmentManager : MonoBehaviour
 {
     [Tooltip("Main Manager")]
@@ -10,15 +13,23 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private Material[] skyboxes;
     [SerializeField] private GameObject[] directionnalLights;
 
-    private int renderStyleNumber = 0;
-
-    private GameObject dirLight;
+    private EnvironmentStyle envStyleNumber = EnvironmentStyle.SUN;
 
 
     private void Start()
     {
         main = GetComponent<MainManager>();
     }
+
+
+    // ### Tools ###
+
+    private void ActuEnvironment()
+    {
+        RenderSettings.skybox = skyboxes[(int)envStyleNumber];
+        Instantiate(directionnalLights[(int)envStyleNumber], new Vector3(0, 0, 0), Quaternion.Euler(50, -30, 0));
+    }
+
 
 
     // ### Functions ###
@@ -28,7 +39,7 @@ public class EnvironmentManager : MonoBehaviour
         // # Modes #
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) // ZOMBIE
         {
-            renderStyleNumber = 1;
+            envStyleNumber = EnvironmentStyle.ZOMBIE;
             RenderSettings.ambientIntensity = 0.4f;
         }
 
@@ -45,8 +56,7 @@ public class EnvironmentManager : MonoBehaviour
         }
 
         // Generates the environment
-        RenderSettings.skybox = skyboxes[renderStyleNumber];
-        dirLight = Instantiate(directionnalLights[renderStyleNumber], new Vector3(0, 0, 0), Quaternion.Euler(50, -30, 0));
+        ActuEnvironment();
     }
 
 
@@ -81,9 +91,9 @@ public class EnvironmentManager : MonoBehaviour
 
     public void BedTime()
     {
-        RenderSettings.skybox = skyboxes[2];
-        FindObjectOfType<Light>().gameObject.SetActive(false);
-        dirLight = Instantiate(directionnalLights[2], new Vector3(0, 0, 0), Quaternion.Euler(50, -30, 0));
+        envStyleNumber = EnvironmentStyle.NIGHT;
+        ActuEnvironment();
+        //FindObjectOfType<Light>().gameObject.SetActive(false); ???
         RenderSettings.ambientIntensity = 0.6f;
     }
 }

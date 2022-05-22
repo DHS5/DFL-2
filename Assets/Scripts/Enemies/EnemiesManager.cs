@@ -122,7 +122,7 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void GetZones()
     {
-        field = main.FieldManager.fieldScript;
+        field = main.FieldManager.field;
         
         fieldZone = field.fieldZone;
         centerZone = field.centerZone;

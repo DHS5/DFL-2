@@ -4,16 +4,45 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [Tooltip("Main Manager")]
+    private MainManager main;
+
+
+    [Tooltip("Player controller")]
+    private PlayerController controller;
+    [Tooltip("Player gameplay")]
+    private PlayerGameplay gameplay;
+    [Tooltip("Player animator")]
+    private PlayerAnimator animator;
+
+    [Tooltip("First person camera controller")]
+    private FirstPersonCameraController fpsCamera;
+    //[Tooltip("Third person camera controller")]
+
+
     [HideInInspector] public GameObject player;
     
     // ### Properties ###
     public float YMouseSensitivity
     {
-        set { }
+        set { fpsCamera.YMS = value; }
     }
     public float YSmoothRotation
     {
-        set { }
+        set { fpsCamera.YSR = value; }
+    }
+
+
+
+    private void Start()
+    {
+        main = GetComponent<MainManager>();
+
+        controller = player.GetComponent<PlayerController>();
+        gameplay = player.GetComponent<PlayerGameplay>();
+        animator = player.GetComponent<PlayerAnimator>();
+
+        fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
     }
 
 
@@ -21,23 +50,19 @@ public class PlayerManager : MonoBehaviour
 
     public void StartPlayer()
     {
-        // Unfreezes the player
-        //player.GetComponent<PlayerController>().freeze = false;
-        // Makes the player chasable
-        //player.GetComponent<PlayerGameplay>().isChasable = true;
-        //player.GetComponentInChildren<FirstPersonCameraController>().LockCursor();
+        controller.freeze = false; // Unfreezes the player
+        gameplay.isChasable = true; // Makes the player chasable
+        fpsCamera.LockCursor(); // Locks the cursor
     }
 
     public void StopPlayer()
     {
-        // Freezes the player
-        //player.GetComponent<PlayerController>().freeze = true;
+        controller.freeze = true; // Freezes the player
     }
 
     public void DeadPlayer()
     {
-        // Player freezes
-        //player.GetComponent<PlayerController>().freeze = true;
+        controller.freeze = true; // Player freezes
         // Player animator stops
         //playerRunAnimator.SetTrigger("Dead");
     }
