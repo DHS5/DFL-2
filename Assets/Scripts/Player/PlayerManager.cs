@@ -34,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
 

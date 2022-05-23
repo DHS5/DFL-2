@@ -11,17 +11,19 @@ public class TeamManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
+
     [Tooltip("GameObject of the player")]
-    [SerializeField] private GameObject player;
+    private GameObject player;
+
 
     [Tooltip("List of the attackers's prefabs")]
     [SerializeField] private GameObject[] attackersPrefabs;
 
 
     [Tooltip("List of the team's attackers currently free")]
-    private List<GameObject> freeAttackers = new List<GameObject>();
+    private List<Attackers> freeAttackers = new List<Attackers>();
     [Tooltip("List of the team's attackers currently busy")]
-    private List<GameObject> busyAttackers = new List<GameObject>();
+    private List<Attackers> busyAttackers = new List<Attackers>();
     [Tooltip("List of the enemies currently not taken care of")]
     [HideInInspector] public List<GameObject> enemies;
 
@@ -29,14 +31,19 @@ public class TeamManager : MonoBehaviour
     private List<GameObject> enemiesToAdd = new List<GameObject>();
 
 
-    [SerializeField] private float playerProtectionRadius;
+    [SerializeField] private float playerProtectionRadius; // A choisir pour chaque attacker
 
-    [SerializeField] private float teamReactivity;
+    [SerializeField] private float teamReactivity; // idem
 
+
+    private void Awake()
+    {
+        main = GetComponent<MainManager>();
+    }
 
     private void Start()
     {
-        main = GetComponent<MainManager>();
+        player = main.PlayerManager.player;
     }
 
 
@@ -45,11 +52,11 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void StopAttackers()
     {
-        foreach (GameObject a in freeAttackers)
-            a.GetComponent<Attackers>().Stop();
+        foreach (Attackers a in freeAttackers)
+            a.Stop();
 
-        foreach (GameObject a in busyAttackers)
-            a.GetComponent<Attackers>().Stop();
+        foreach (Attackers a in busyAttackers)
+            a.Stop();
     }
 
     /// <summary>
@@ -57,11 +64,11 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void ResumeAttackers()
     {
-        foreach (GameObject a in freeAttackers)
-            a.GetComponent<Attackers>().Resume();
+        foreach (Attackers a in freeAttackers)
+            a.Resume();
 
-        foreach (GameObject a in busyAttackers)
-            a.GetComponent<Attackers>().Resume();
+        foreach (Attackers a in busyAttackers)
+            a.Resume();
     }
 
 
@@ -80,7 +87,6 @@ public class TeamManager : MonoBehaviour
     /// <param name="enemy">Enemy to supp from the list</param>
     public void SuppEnemy(GameObject enemy)
     {
-        //
         enemiesToSupp.Add(enemy);
     }
 
@@ -96,7 +102,7 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    public void FreeAttacker(GameObject a)
+    public void FreeAttacker(Attackers a)
     {
         busyAttackers.Remove(a);
         freeAttackers.Add(a);
@@ -104,8 +110,8 @@ public class TeamManager : MonoBehaviour
 
     public void ClearAttackers()
     {
-        foreach (GameObject a in freeAttackers) Destroy(a);
-        foreach (GameObject a in busyAttackers) Destroy(a);
+        foreach (Attackers a in freeAttackers) Destroy(a);
+        foreach (Attackers a in busyAttackers) Destroy(a);
         freeAttackers.Clear();
         busyAttackers.Clear();
         enemies.Clear();
@@ -126,7 +132,7 @@ public class TeamManager : MonoBehaviour
         attacker.player = player;
         attacker.playerProtectionRadius = playerProtectionRadius;
         attacker.Size *= Random.Range(0.9f, 1.1f);
-        freeAttackers.Add(attacker.gameObject);
+        freeAttackers.Add(attacker);
     }
 
 
@@ -144,7 +150,7 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void BeginProtection()
     {
-        enemies = new List<GameObject>(main.FieldManager.field.enemies);
+        enemies = new List<GameObject>(main.EnemiesManager.enemies);
 
         ProtectPlayer();
     }
@@ -159,8 +165,8 @@ public class TeamManager : MonoBehaviour
                 if (freeAttackers.Count > 0)
                 {
                     float minDist = float.PositiveInfinity;
-                    GameObject betterAttacker = null;
-                    foreach (GameObject a in freeAttackers)
+                    Attackers betterAttacker = null;
+                    foreach (Attackers a in freeAttackers)
                     {
                         if (Vector3.Distance(a.transform.position, e.transform.position) < minDist)
                         {
@@ -168,15 +174,15 @@ public class TeamManager : MonoBehaviour
                             betterAttacker = a;
                         }
                     }
-                    betterAttacker.GetComponent<Attackers>().TargetEnemy(e);
+                    betterAttacker.TargetEnemy(e);
                     busyAttackers.Add(betterAttacker);
                     freeAttackers.Remove(betterAttacker);
                 }
                 else
                 {
                     float minDist = playerProtectionRadius*2;
-                    GameObject betterAttacker = null;
-                    foreach (GameObject a in busyAttackers)
+                    Attackers betterAttacker = null;
+                    foreach (Attackers a in busyAttackers)
                     {
                         if (Vector3.Distance(a.GetComponent<Attackers>().target.transform.position, player.transform.position) > playerProtectionRadius &&
                             Vector3.Distance(a.transform.position, e.transform.position) < minDist)
@@ -185,7 +191,7 @@ public class TeamManager : MonoBehaviour
                             betterAttacker = a;
                         }
                     }
-                    if (betterAttacker != null) { betterAttacker.GetComponent<Attackers>().TargetEnemy(e); }
+                    if (betterAttacker != null) { betterAttacker.TargetEnemy(e); }
                 }
             }
         }

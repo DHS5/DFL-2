@@ -7,8 +7,7 @@ public class ObjectifManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    [Tooltip("Game object of the player")]
-    [SerializeField] private GameObject player;
+
 
     [Tooltip("Prefab of the objectif")]
     [SerializeField] private GameObject[] objectifPrefabs;
@@ -19,14 +18,22 @@ public class ObjectifManager : MonoBehaviour
     [Tooltip("Current objectif for the player to go through")]
     private Objectif currentObjectif;
 
+    [Tooltip("Game object of the player")]
+    private GameObject player;
+
 
     [Tooltip("Zones of the field on which to place the objectives")]
     private GameObject[] zones = new GameObject[3];
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
+    }
+
+    private void Start()
+    {
+        player = main.PlayerManager.player;
     }
 
 

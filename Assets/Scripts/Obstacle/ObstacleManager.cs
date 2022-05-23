@@ -8,8 +8,14 @@ public class ObstacleManager : MonoBehaviour
     private MainManager main;
 
 
+    [Header("Obstacle prefabs list")]
     [Tooltip("Prefabs of the obstacles")]
     [SerializeField] private List<GameObject> obstaclePrefabs = new List<GameObject>();
+
+    [Header("Obstacle parameter")]
+    [Tooltip("Max number of obstacles on a single field")]
+    [SerializeField] private int obstaclesLimit;
+
 
     [Tooltip("List of the active obstacles")]
     private List<GameObject> obstacles = new List<GameObject>();
@@ -17,11 +23,10 @@ public class ObstacleManager : MonoBehaviour
     [Tooltip("Field zone where the obstacles are placable")]
     private GameObject fieldZone;
 
-    [Tooltip("Max number of obstacles placable on a single field")]
-    [SerializeField] private int obstaclesLimit;
+    
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
     }
@@ -58,7 +63,7 @@ public class ObstacleManager : MonoBehaviour
 
         for (int i = 0; i < number; i++)
         {
-            randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + fieldPos;
+            randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + fieldPos; // Empêcher de placer sur un objectif
             randomOrientation = Quaternion.Euler(0, Random.Range(0, 180), 0);
             GameObject obs = Instantiate(obstaclePrefabs[Random.Range(0, obstaclePrefabs.Count)], randomPos, randomOrientation);
             obstacles.Add(obs);

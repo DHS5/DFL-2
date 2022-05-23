@@ -8,6 +8,7 @@ public class BonusManager : MonoBehaviour
     private MainManager main;
 
 
+
     [SerializeField] private GameObject[] bonusPrefabs;
 
     private Bonus activeBonus;
@@ -16,7 +17,7 @@ public class BonusManager : MonoBehaviour
     private GameObject fieldZone;
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
     }
@@ -69,13 +70,13 @@ public class BonusManager : MonoBehaviour
 
 
 
-    public void BonusAnim(bool bar, float time, Color color)
+    public void BonusAnim(bool anim, float time, Color color)
     {
-        //if (bar) gameManager.gameUIManager.BonusBarAnim(time, color);
+        if (anim) main.GameUIManager.BonusBarAnim(time, color);
     }
 
     public void AddLife(int lifeNumber)
     {
-        //gameManager.gameUIManager.ModifyLife(true, lifeNumber);
+        main.GameUIManager.ModifyLife(true, lifeNumber);
     }
 }

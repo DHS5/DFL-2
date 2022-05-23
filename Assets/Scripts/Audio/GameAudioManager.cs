@@ -10,7 +10,7 @@ public class GameAudioManager : MonoBehaviour
     private DataManager dataManager;
     
     
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
         dataManager = DataManager.InstanceDataManager;

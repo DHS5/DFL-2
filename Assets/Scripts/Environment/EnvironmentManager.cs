@@ -16,7 +16,8 @@ public class EnvironmentManager : MonoBehaviour
     private EnvironmentStyle envStyleNumber = EnvironmentStyle.SUN;
 
 
-    private void Start()
+
+    private void Awake()
     {
         main = GetComponent<MainManager>();
     }
@@ -63,7 +64,7 @@ public class EnvironmentManager : MonoBehaviour
     public void GenerateEnvironment()
     {
         // # Modes #
-        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.waveNumber == 10) // !ZOMBIE
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.WaveNumber == 10) // !ZOMBIE
             BedTime(); // Night time when player reaching wave 10
 
         // # Wheather #

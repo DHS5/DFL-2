@@ -41,7 +41,7 @@ public class FieldManager : MonoBehaviour
     private int stadiumNumber = 0;
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
     }
@@ -77,7 +77,6 @@ public class FieldManager : MonoBehaviour
     public void DestroyField()
     {
         // Destroys the stadium and field
-        field.SuppEnemies();
         Destroy(stadiumObject);
     }
 

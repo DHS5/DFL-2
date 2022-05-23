@@ -49,10 +49,6 @@ public class Field : MonoBehaviour
     public GameObject endZone;
 
 
-    [Tooltip("List of the enemies on the field")]
-    [HideInInspector] public List<GameObject> enemies;
-
-
     /// <summary>
     /// Sets all the materials of the new field
     /// </summary>
@@ -78,14 +74,5 @@ public class Field : MonoBehaviour
         // ## Goalpost 2
         goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase2;
         goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal2;
-    }
-
-    /// <summary>
-    /// Destroys all the enemies on the field
-    /// </summary>
-    public void SuppEnemies()
-    {
-        for (int i = 0; i < enemies.Count; i++)
-            Destroy(enemies[i]);
     }
 }

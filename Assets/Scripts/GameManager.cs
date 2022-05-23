@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour
 
 
     [Tooltip("Current wave number")]
-    [HideInInspector] public int waveNumber;
+    [HideInInspector] private int waveNumber;
 
     [Tooltip("Current score")]
-    [HideInInspector] public int score;
+    [HideInInspector] private int score;
 
 
 
@@ -78,6 +78,27 @@ public class GameManager : MonoBehaviour
 
 
     // ### Properties ###
+
+    public int WaveNumber
+    {
+        get { return waveNumber; }
+        set
+        {
+            waveNumber = value;
+            main.GameUIManager.ActuWaveNumber(value);
+        }
+    }
+
+    public int Score
+    {
+        get { return score; }
+        set
+        {
+            score = value;
+            main.GameUIManager.ActuScore(value);
+        }
+    }
+
     public bool GameOn
     {
         get { return gameOn; }
@@ -110,13 +131,17 @@ public class GameManager : MonoBehaviour
     }
 
 
+    private void Awake()
+    {
+        main = GetComponent<MainManager>();
+    }
+
+
     /// <summary>
     /// Starts the game
     /// </summary>
     private void Start()
     {
-        main = MainManager.InstanceMainManager;
-
         GetGameDatas();
 
         PrepareGame(true);
@@ -182,7 +207,7 @@ public class GameManager : MonoBehaviour
             main.ObstacleManager.DestroyObstacles(); // Destroys the active obstacles
         }
 
-        
+        main.EnemiesManager.SuppEnemies(); // Destroys all the enemies
         main.FieldManager.DestroyField(); // Destroys the former field
     }
 

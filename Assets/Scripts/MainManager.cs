@@ -50,11 +50,15 @@ public class MainManager : MonoBehaviour
 
         // Modes
         TeamManager = GetComponent<TeamManager>();
+        if (DataManager.gameData.gameMode != GameMode.TEAM) TeamManager.enabled = false;
 
         // Options
         ObjectifManager = GetComponent<ObjectifManager>();
+        if (!DataManager.gameData.gameOptions.Contains(GameOption.OBJECTIF)) ObjectifManager.enabled = false;
         ObstacleManager = GetComponent<ObstacleManager>();
+        if (!DataManager.gameData.gameOptions.Contains(GameOption.OBSTACLE)) ObstacleManager.enabled = false;
         BonusManager = GetComponent<BonusManager>();
+        if (!DataManager.gameData.gameOptions.Contains(GameOption.BONUS)) BonusManager.enabled = false;
 
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers

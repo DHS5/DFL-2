@@ -42,17 +42,14 @@ public class GameUIManager : MonoBehaviour
 
 
     /// <summary>
-    /// Gets the Game Managers
+    /// Gets the Main Manager
     /// </summary>
     private void Awake()
     {
         bonusBarSize = bonusBars[1].GetComponent<RectTransform>().rect.height;
-    }
-
-    private void Start()
-    {
         main = GetComponent<MainManager>();
     }
+
 
 
 

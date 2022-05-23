@@ -104,7 +104,7 @@ public class Attackers : MonoBehaviour
     {
         hasDefender = false;
         teamManager.AddEnemy(target);
-        teamManager.FreeAttacker(gameObject);
+        teamManager.FreeAttacker(this);
     }
 
     protected virtual void BlockEnemy()

@@ -11,11 +11,9 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    [Tooltip("Script of the field")]
-    private Field field;
+
 
     [Header("Defenders")]
-
     [Header("Enemy's prefab lists")]
     [Tooltip("List of the Wingmen's prefabs")]
     [SerializeField] private GameObject[] wingmenPrefabs;
@@ -32,8 +30,9 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("")]
     [SerializeField] private AudioClip[] zombieAudios;
 
-    [Tooltip("Wave number (--> difficulty)")]
-    [HideInInspector] public int waveNumber = 0;
+
+    [Tooltip("List of the enemies on the field")]
+    [HideInInspector] public List<GameObject> enemies;
 
 
     // Zones of the field
@@ -43,7 +42,7 @@ public class EnemiesManager : MonoBehaviour
     private GameObject rightZone;
 
 
-    private void Start()
+    private void Awake()
     {
         main = GetComponent<MainManager>();
     }
@@ -51,15 +50,24 @@ public class EnemiesManager : MonoBehaviour
 
     // ### Functions ###
 
+    /// <summary>
+    /// Destroys all the enemies on the field
+    /// </summary>
+    public void SuppEnemies()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+            Destroy(enemies[i]);
+    }
+
 
     /// <summary>
     /// Stops all enemies
     /// </summary>
     public void StopEnemies()
     {
-        for (int i = 0; i < field.enemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            field.enemies[i].GetComponent<Enemy>().Stop();
+            enemies[i].GetComponent<Enemy>().Stop();
         }
     }
     /// <summary>
@@ -67,9 +75,9 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     public void ResumeEnemies()
     {
-        for (int i = 0; i < field.enemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            field.enemies[i].GetComponent<Enemy>().Resume();
+            enemies[i].GetComponent<Enemy>().Resume();
         }
     }
 
@@ -78,9 +86,9 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     public void BeginChase()
     {
-        for (int i = 0; i < field.enemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            field.enemies[i].GetComponent<Enemy>().ChasePlayer();
+            enemies[i].GetComponent<Enemy>().ChasePlayer();
         }
     }
 
@@ -91,8 +99,7 @@ public class EnemiesManager : MonoBehaviour
     public void EnemyWave()
     {
         // Increment the wave number
-        waveNumber++;
-        main.GameUIManager.ActuWaveNumber(waveNumber);
+        main.GameManager.WaveNumber++;
         // Gets the spawning zones
         GetZones();
         
@@ -108,9 +115,9 @@ public class EnemiesManager : MonoBehaviour
             case GameMode.ZOMBIE:
                 ZombiesWave();
                 break;
-            //case GameMode.OBJECTIF:
-            //    DefendersWave();
-            //    break;
+            case GameMode.DRILL:
+                DrillWave();
+                break;
             default:
                 Debug.Log("No mode");
                 break;
@@ -122,7 +129,7 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void GetZones()
     {
-        field = main.FieldManager.field;
+        Field field = main.FieldManager.field;
         
         fieldZone = field.fieldZone;
         centerZone = field.centerZone;
@@ -146,13 +153,12 @@ public class EnemiesManager : MonoBehaviour
         Enemy enemy;
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(waveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(waveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length);
+        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length);
 
         // Gets a random position and instantiate the new enemy
         Vector3 randomPosition = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
         enemy = Instantiate(enemyPrefabs[Random.Range(minLevel, maxLevel)], pos + randomPosition, Quaternion.identity).GetComponent<Enemy>();
-        //enemy = Instantiate(enemyPrefabs[enemyPrefabs.Length-1], pos + randomPosition, Quaternion.identity);
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
@@ -164,7 +170,7 @@ public class EnemiesManager : MonoBehaviour
         }
 
         // Fill the enemies list of the field
-        field.enemies.Add(enemy.gameObject);
+        enemies.Add(enemy.gameObject);
     }
 
 
@@ -216,7 +222,7 @@ public class EnemiesManager : MonoBehaviour
         float zScale = fieldZone.transform.localScale.z / 2;
         int r;
         // Spawn on the whole field
-        for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty / 2) * (waveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
+        for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
             r = Random.Range(1, 3);
             if (r == 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
@@ -224,4 +230,12 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Generates a drill wave
+    /// </summary>
+    private void DrillWave()
+    {
+
+    }
 }
