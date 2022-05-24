@@ -52,6 +52,9 @@ public struct GameData
     public List<GameOption> gameOptions;
     public GameDrill gameDrill;
     public int gameEnemiesRange;
+
+    public int playerIndex;
+    public int stadiumIndex;
 }
 
 

@@ -61,6 +61,13 @@ public class GameManager : MonoBehaviour
     [Tooltip("Range of different enemies that can spawn in one wave")]
     [Range(0, 5)] public int enemiesRange;
 
+    [Tooltip("Index of the player's prefab")]
+    [Range(0, 10)] public int playerIndex;
+
+    [Tooltip("Index of the stadium's prefab")]
+    [Range(0, 10)] public int stadiumIndex;
+
+
 
     [Tooltip("Current wave number")]
     [HideInInspector] private int waveNumber;
@@ -180,6 +187,9 @@ public class GameManager : MonoBehaviour
             gameData.gameOptions = gameOptions;
             gameData.gameDrill = gameDrill;
             gameData.gameEnemiesRange = enemiesRange;
+
+            gameData.playerIndex = playerIndex;
+            gameData.stadiumIndex = stadiumIndex;
         }
 
         waveNumber = 1;

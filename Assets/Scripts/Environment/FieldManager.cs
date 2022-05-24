@@ -38,7 +38,6 @@ public class FieldManager : MonoBehaviour
     private Vector3 fieldDistance = new Vector3(0,0,289);
 
 
-    private int stadiumNumber = 0;
 
 
     private void Awake()
@@ -59,7 +58,7 @@ public class FieldManager : MonoBehaviour
 
         // ### Creation of the field and the stadium
         // ## Instantiation of the prefabs
-        stadiumObject = Instantiate(stadiumPrefabs[stadiumNumber], fieldPosition, Quaternion.identity);
+        stadiumObject = Instantiate(stadiumPrefabs[main.GameManager.gameData.stadiumIndex], fieldPosition, Quaternion.identity);
 
         field = stadiumObject.GetComponentInChildren<Field>();
         stadium = stadiumObject.GetComponentInChildren<Stadium>();

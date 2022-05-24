@@ -9,16 +9,21 @@ public class PlayerManager : MonoBehaviour
 
 
     [Tooltip("Player controller")]
-    private PlayerController controller;
+    [HideInInspector] public PlayerController controller;
     [Tooltip("Player gameplay")]
-    private PlayerGameplay gameplay;
+    [HideInInspector] public PlayerGameplay gameplay;
     [Tooltip("Player animator")]
-    private PlayerAnimator animator;
+    [HideInInspector] public PlayerAnimator playerAnimator;
 
     [Tooltip("First person camera controller")]
-    private FirstPersonCameraController fpsCamera;
+    [HideInInspector] public FirstPersonCameraController fpsCamera;
     //[Tooltip("Third person camera controller")]
+    [Tooltip("Camera animator")]
+    [HideInInspector] public CameraAnimator cameraAnimator;
 
+
+    [Tooltip("List of player prefabs")]
+    [SerializeField] private GameObject[] playerPrefabs;
 
     [HideInInspector] public GameObject player;
     
@@ -37,32 +42,40 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         main = GetComponent<MainManager>();
-
-        controller = player.GetComponent<PlayerController>();
-        gameplay = player.GetComponent<PlayerGameplay>();
-        animator = player.GetComponent<PlayerAnimator>();
-
-        fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
     }
 
 
     // ### Functions ###
 
+    public void PreparePlayer()
+    {
+        player = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 0, 0), Quaternion.identity);
+
+        controller = player.GetComponent<PlayerController>();
+        controller.playerManager = this;
+
+        gameplay = player.GetComponent<PlayerGameplay>();
+        playerAnimator = player.GetComponent<PlayerAnimator>();
+
+        fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
+        cameraAnimator = player.GetComponentInChildren<CameraAnimator>();
+    }
+
     public void StartPlayer()
     {
-        controller.freeze = false; // Unfreezes the player
+        gameplay.freeze = false; // Unfreezes the player
         gameplay.isChasable = true; // Makes the player chasable
         fpsCamera.LockCursor(); // Locks the cursor
     }
 
     public void StopPlayer()
     {
-        controller.freeze = true; // Freezes the player
+        gameplay.freeze = true; // Freezes the player
     }
 
     public void DeadPlayer()
     {
-        controller.freeze = true; // Player freezes
+        gameplay.freeze = true; // Player freezes
         // Player animator stops
         //playerRunAnimator.SetTrigger("Dead");
     }

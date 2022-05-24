@@ -25,6 +25,9 @@ public class PlayerGameplay : MonoBehaviour
     [Tooltip("Whether the player is visible")]
     [HideInInspector] public bool isVisible = true;
 
+    [Tooltip("Whether the player is freezed")]
+    [HideInInspector] public bool freeze = true;
+
     /// <summary>
     /// Called when the player collide with a trigger
     /// </summary>
@@ -114,11 +117,4 @@ public class PlayerGameplay : MonoBehaviour
         gameManager.GameOver = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void Awake()
-    {
-        
-    }
 }
