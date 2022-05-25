@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Player gameplay")]
     [HideInInspector] public PlayerGameplay gameplay;
     [Tooltip("Player animator")]
-    [HideInInspector] public PlayerAnimator playerAnimator;
+    [HideInInspector] public Animator playerAnimator;
 
     [Tooltip("First person camera controller")]
     [HideInInspector] public FirstPersonCameraController fpsCamera;
@@ -55,7 +55,7 @@ public class PlayerManager : MonoBehaviour
         controller.playerManager = this;
 
         gameplay = player.GetComponent<PlayerGameplay>();
-        playerAnimator = player.GetComponent<PlayerAnimator>();
+        playerAnimator = player.GetComponent<Animator>();
 
         fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
         cameraAnimator = player.GetComponentInChildren<CameraAnimator>();

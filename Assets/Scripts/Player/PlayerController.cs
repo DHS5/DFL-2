@@ -13,225 +13,165 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerManager playerManager;
 
 
+    private PlayerState currentState;
+
 
     
     [Tooltip("Rigidbody of the player")]
-    private Rigidbody playerRigidbody;
+    public Rigidbody PlayerRigidbody { get; private set; }
 
-    
 
-    [Tooltip("Velocity of the player")]
-    [HideInInspector] public Vector3 velocity;
+    [Tooltip("Gravity multiplier constant")]
+    readonly float gravityScale = 10f;
 
-    [Header("Controller variables of the player")]
-    [Tooltip("Forward speed of the player")]
-    [SerializeField] private float speed;
+
+
+    /// <summary>
+    /// Velocity of the player
+    /// </summary>
+    public Vector3 Velocity { get; private set; }
+
+    [Tooltip("Current speed of the player")]
+    private float speed;
+
+    [Tooltip("Current side speed of the player")]
+    private float sideSpeed;
+
+
+
+    [Header("Normal speed variables of the player")]
+    [Tooltip("Forward speed of the player when running forward")]
+    [SerializeField] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
 
     [Tooltip("Side speed multiplier of the player")]
-    [SerializeField] private float sideSpeedM;
+    [SerializeField] private float normalSideSpeed; public float NormalSideSpeed { get { return normalSideSpeed; } }
 
+
+
+    [Header("Acceleration parameters")]
+    [Tooltip("Acceleration multiplier of the player")]
+    [SerializeField] private float accelerationM; public float AccelerationM { get { return accelerationM; } }
+
+    [Tooltip("Time during which the player is able to accelerate")]
+    [SerializeField] private float accelerationTime;
+
+    [Tooltip("Time during which the player need to rest to accelerate again")]
+    [SerializeField] private float accelerationRestTime;
+
+    [Tooltip("Side speed during an acceleration of the player")]
+    [SerializeField] private float accSideSpeed; public float AccSideSpeed { get { return accSideSpeed; } }
+
+
+
+    [Header("Slowrun parameters")]
+    [Tooltip("Slowrun multiplier of the player")]
+    [SerializeField] private float slowM; public float SlowM { get { return slowM; } }
+
+    [Tooltip("Side speed during a slowrun of the player")]
+    [SerializeField] private float slowSideSpeed; public float SlowSideSpeed { get { return slowSideSpeed; } }
+
+
+
+    [Header("Jump parameters")]
+    [Tooltip("Height the player is reaching when jumping")]
+    [SerializeField] private float jumpHeight;
+
+    [Tooltip("Hang time when the player's jumping")]
+    [SerializeField] private float hangTime;
+
+
+
+    [Header("Skill moves speed multipliers")]
     [Tooltip("Juke speed multiplier of the player")]
     [SerializeField] private float jukeSpeedM;
 
     [Tooltip("Spin speed multiplier of the player")]
     [SerializeField] private float spinSpeedM;
 
-    [Tooltip("Side speed acceleration divider of the player")]
-    [SerializeField] private float sideSpeedAccD;
-
-    private bool canJuke = true;
-    /// <summary>
-    /// Side speed of the player
-    /// </summary>
-    private float SideSpeed
-    {
-        //get
-        //{
-        //    // Calculate the side speed
-        //    float ss = Input.GetAxis("Horizontal") * sideSpeedM * (speed / (speed + Acceleration / sideSpeedAccD + bonusSpeed));
-        //    // If already juking, prevent a second juke or a juke to the other side immediately
-        //    if (playerAnimator.isJuking)
-        //    {
-        //        if (ss * playerAnimator.jukeSpeed < 0 && Acceleration == 0)
-        //        {
-        //            ss *= spinSpeedM;
-        //            playerAnimator.Spin(ss);
-        //        }
-        //        else ss *= jukeSpeedM;
-        //    }
-        //    else if (playerAnimator.isSpining) ss *= spinSpeedM;
-        //    // Juke on a big side speed
-        //    if (Mathf.Abs(ss) > 9)
-        //    {
-        //        if (canJuke)
-        //        {
-        //            playerAnimator.Juke(ss);
-        //            canJuke = false;
-        //        }
-        //    }
-        //    // Else juke speed is null
-        //    else canJuke = true;
-        //
-        //    // Returns the side speed
-        //    return ss;
-        //}
-        set { sideSpeedM = value; }
-    }
-
-
-    [Tooltip("Acceleration multiplier of the player")]
-    [SerializeField] private float accelerationM;
-    /// <summary>
-    /// Acceleration of the player (can be negative)
-    /// </summary>
-    private float Acceleration
-    {
-        //get
-        //{
-        //    if (!freeze && playerGameplay.isChasable)
-        //    {
-        //        float acc = Input.GetAxis("Vertical");
-        //        if (acc <= 0)
-        //        {
-        //            // No sprint
-        //            cameraAnimator.EndSprint();
-        //            // Returns the acceleration
-        //            return acc * accelerationM;
-        //        }
-        //        else if (canAccelerate)
-        //        {
-        //            if (!isAccelerating)
-        //            {
-        //                // Deactivates the acceleration
-        //                Invoke(nameof(CantAccelerate), accelerationTime);
-        //                // UI animation
-        //                //gameManager.gameUIManager.AccBarAnim(accelerationTime, waitToAccelerateTime);
-        //
-        //                isAccelerating = true;
-        //            }
-        //            // Sprint animation
-        //            cameraAnimator.Sprint();
-        //            // Returns the acceleration
-        //            return acc * accelerationM;
-        //        }
-        //    }
-        //    // No sprint
-        //    cameraAnimator.EndSprint();
-        //    
-        //    return 0;
-        //}
-        set { accelerationM = value; }
-    }
-    [Tooltip("Is the player accelerating")]
-    private bool isAccelerating = false;
-    [Tooltip("Is the player able to accelerate")]
-    private bool canAccelerate = true;
-    [Tooltip("Seconds accelerating")]
-    [SerializeField] private float accelerationTime = 3f;
-    [Tooltip("Seconds waiting to accelerate")]
-    [SerializeField] private float waitToAccelerateTime = 8f;
-
-    [Tooltip("Whether the player can jump")]
-    private bool canJump = true;
-    [Tooltip("Vector3 containing the jump's power")]
-    private Vector3 jumpPower;
-    [Tooltip("Height the player is reaching when jumping")]
-    [SerializeField] private float jumpHeight;
-    [Tooltip("Gravity multiplier")]
-    private float gravityScale = 10f;
 
 
     [Tooltip("Bonus speed attribute of the player (changed by the bonus)")]
     [HideInInspector] public float bonusSpeed = 0f;
     [Tooltip("Bonus jump attribute of the player (changed by the bonus)")]
-    [HideInInspector] public Vector3 bonusJump = new Vector3(0,0,0);
+    [HideInInspector] public Vector3 bonusJump = new Vector3(0, 0, 0);
+
+
+
+    // Player state variables
+    public bool OnGround { get; private set; }
+    public bool CanAccelerate { get; private set; }
+    public bool Sprinting { get; private set; }
+
+
+
+    // ### Properties ###
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
+
+    public float SideSpeed
+    {
+        get { return sideSpeed; }
+        set { sideSpeed = value; }
+    }
 
     /// <summary>
-    /// Disable the player's acceleration during waitToAccelerateTime seconds
+    /// Jump power of the player
     /// </summary>
-    private void CantAccelerate()
+    public Vector3 JumpPower
     {
-        // Prevent the method of being called several times
-        if (canAccelerate)
-        {
-            canAccelerate = false;
-            isAccelerating = false;
+        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * gravityScale)), 0); }
+    }
 
-            // Calls the CanAccelerate Method after waitToAccelerateTime seconds
-            Invoke(nameof(CanAccelerate), waitToAccelerateTime);
+
+
+
+    private void Start()
+    {
+        currentState = new RunPS(this, playerManager.playerAnimator);
+    }
+
+    private void Update()
+    {
+        currentState = currentState.Process();
+        
+        Velocity = Vector3.forward * (speed + bonusSpeed) * Time.deltaTime + Vector3.right * sideSpeed * Time.deltaTime;
+        Velocity = Velocity.normalized * (speed + bonusSpeed); // Normalize the velocity to prevent greatest speed when going on the sides
+    }
+
+    private void FixedUpdate()
+    {
+        // Keep the gravity constant
+        PlayerRigidbody.AddForce(Physics.gravity * gravityScale);
+    }
+
+    void LateUpdate()
+    {
+        if (!playerManager.gameplay.freeze)
+        {
+            transform.Translate(Velocity); // Makes the player run
         }
     }
-    /// <summary>
-    /// Enable the player's acceleration
-    /// </summary>
-    private void CanAccelerate()
-    {
-        canAccelerate = true;
-    }
+
+
+    // ### Functions ###
 
 
     /// <summary>
-    /// Makes the player jump
-    /// </summary>
-    private void Jump()
-    {
-        canJump = false;
-        playerRigidbody.AddForce(jumpPower + bonusJump, ForceMode.Impulse);
-    }
-
-
-    /// <summary>
-    /// Detects a collision with the ground to know if the player can jump
+    /// Detects a collision with the ground to know if the player is on the ground
     /// </summary>
     /// <param name="collision">Collider of the colliding game object</param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-            canJump = true;
-    }
-
-    /// <summary>
-    /// Update the physics parameters
-    /// </summary>
-    private void Update()
-    {
-        //velocity = Vector3.forward * (speed + bonusSpeed + Acceleration) * Time.deltaTime + Vector3.right * SideSpeed * Time.deltaTime;
+            OnGround = true;
     }
 
 
-    /// <summary>
-    /// Update the player's movements
-    /// </summary>
-    void LateUpdate()
-    {
-        if (!playerManager.gameplay.freeze)
-        {
-            // Makes the player run
-            transform.Translate(velocity);
-
-            // Makes the player jump
-            if (Input.GetKeyDown(KeyCode.Space) && canJump)
-            {
-                canJump = false;
-                Jump();
-            }
-        }        
-    }
-
-
-    /// <summary>
-    /// Keeps the gravity scale the same given the FPS
-    /// </summary>
-    private void FixedUpdate()
-    {
-        // Increase the gravity
-        playerRigidbody.AddForce(Physics.gravity * gravityScale);
-    }
-
-
-    private void Start()
-    {
-        // Calculates the jump power to reach a precise height
-        jumpPower = new Vector3(0, Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * gravityScale)), 0);
-    }
+    public void Sprint() { if (!Sprinting) { Sprinting = true; Invoke(nameof(Rest), accelerationTime); } }
+    private void Rest() { CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
+    private void Rested() { CanAccelerate = true; }
 }
