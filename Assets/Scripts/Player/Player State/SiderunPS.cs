@@ -28,6 +28,9 @@ public class SiderunPS : PlayerState
 
         controller.SideSpeed = controller.NormalSideSpeed * side;
 
+        // A verifier
+        controller.gameObject.transform.localRotation = Quaternion.Slerp(controller.gameObject.transform.localRotation, Quaternion.Euler(controller.Velocity), 0.5f);
+
 
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))

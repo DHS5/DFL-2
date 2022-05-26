@@ -82,11 +82,14 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Skill moves speed multipliers")]
-    [Tooltip("Juke speed multiplier of the player")]
-    [SerializeField] private float jukeSpeedM;
+    [Tooltip("Juke side speed of the player")]
+    [SerializeField] private float jukeSideSpeed; public float JukeSideSpeed { get { return jukeSideSpeed; } }
 
-    [Tooltip("Spin speed multiplier of the player")]
-    [SerializeField] private float spinSpeedM;
+    [Tooltip("Spin side speed of the player")]
+    [SerializeField] private float spinSideSpeed; public float SpinSideSpeed { get { return spinSideSpeed; } }
+
+    [Tooltip("Feint side speed of the player")]
+    [SerializeField] private float feintSideSpeed; public float FeintSideSpeed { get { return feintSideSpeed; } }
 
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PState { RUN , SLOWRUN , SIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN }
+public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN }
 
 
 public abstract class PlayerState
