@@ -228,7 +228,11 @@ public class GameManager : MonoBehaviour
     private void PrepareGame(bool start)
     {
         // # Essential #
-        if (start) main.EnvironmentManager.StartEnvironment(); // Environment
+        if (start)
+        {
+            main.EnvironmentManager.StartEnvironment(); // Environment
+            main.PlayerManager.PreparePlayer();
+        }
         else main.EnvironmentManager.GenerateEnvironment();
         main.FieldManager.GenerateField(); // Field
         main.EnemiesManager.EnemyWave(); // Enemies

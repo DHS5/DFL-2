@@ -86,7 +86,7 @@ public class FieldManager : MonoBehaviour
     public void GameOver()
     {
         // Activates the stadium camera
-        StadiumCamera.gameObject.SetActive(true);
+        stadium.stadiumCamera.gameObject.SetActive(true);
         // Activates the lose audios
         //if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
         //    stadium.OuuhAudio();

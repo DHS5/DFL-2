@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class JukePS : PlayerState
 {
-    private float startSide;
-    private float startTime;
-    private float animTime;
-
     public JukePS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
     {
         name = PState.JUKE;
@@ -20,8 +16,6 @@ public class JukePS : PlayerState
         // anim
         //animTime = Animation.time;
 
-        startTime = Time.time;
-
         base.Enter();
     }
 
@@ -30,15 +24,15 @@ public class JukePS : PlayerState
         base.Update();
 
 
-        controller.Speed /= 2;
+        controller.Speed /= controller.JukeFSpeedD;
 
         controller.SideSpeed = controller.JukeSideSpeed * startSide;
 
 
-        //if (side * startSide < 0 && acc == 0)
-        //    nextState = new SpinPS(controller, animator, side / Mathf.Abs(side));
+        if (Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+            nextState = new SpinPS(controller, animator, Input.GetAxisRaw("Horizontal"));
 
-        if (Time.time > startTime + animTime)
+        if (Time.time >= startTime + animTime)
         {
             if (nextState == null)
             {
@@ -55,14 +49,14 @@ public class JukePS : PlayerState
                 // SlowSiderun
                 else if (acc < 0 && side * startSide > 0)
                 {
-                    //nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
+                    nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
                 }
                 // Slowrun
                 else if (acc < 0)
                 {
                     nextState = new SlowrunPS(controller, animator);
                 }
-                nextState = new RunPS(controller, animator);
+                else nextState = new RunPS(controller, animator);
             }
             stage = Event.EXIT;
         }

@@ -15,7 +15,6 @@ public struct FieldMaterials
     public Material goalpostMetal1;
     public Material goalpostBase2;
     public Material goalpostMetal2;
-    public Material stadiumMaterial;
 }
 
 

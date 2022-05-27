@@ -24,7 +24,10 @@ public abstract class PlayerState
 
     protected float acc;
     protected float side;
+    protected float startSide;
 
+    protected float startTime;
+    protected float animTime;
 
     public PlayerState(PlayerController _controller, Animator _animator)
     {
@@ -35,13 +38,21 @@ public abstract class PlayerState
     }
 
 
-    public virtual void Enter() { stage = Event.UPDATE; }
+    public virtual void Enter() 
+    { 
+        stage = Event.UPDATE;
+        startTime = Time.time;
+    }
     public virtual void Update()
     {
         acc = Input.GetAxis("Vertical");
         side = Input.GetAxis("Horizontal");
+
+        // A verifier
+        //controller.gameObject.transform.localRotation = 
+            //Quaternion.Slerp(controller.gameObject.transform.localRotation, Quaternion.Euler(controller.Velocity), 0.5f);
     }
-    public virtual void Exit() { stage = Event.EXIT; }
+    public virtual void Exit() { stage = Event.EXIT; Debug.Log(name + " -> " + nextState.name); }
 
 
 

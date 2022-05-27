@@ -14,6 +14,7 @@ public class RunPS : PlayerState
         // set anim run
 
         controller.Speed = controller.NormalSpeed;
+        controller.FSpeed = controller.NormalSpeed;
 
         base.Enter();
     }

@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowrunPS : PlayerState
+public class SlowsiderunPS : PlayerState
 {
-    public SlowrunPS(PlayerController _controller, Animator _animator) : base(_controller, _animator)
+    public SlowsiderunPS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
     {
-        name = PState.SLOWRUN;
-    }
+        name = PState.SLOWSIDERUN;
 
+        startSide = _side;
+    }
 
     public override void Enter()
     {
         // anim
-
-        controller.SideSpeed = 0;
+        //animTime = Animation.time;
 
         base.Enter();
     }
@@ -24,17 +24,13 @@ public class SlowrunPS : PlayerState
         base.Update();
 
 
-        controller.Speed = controller.NormalSpeed * ( 1 + (1 - controller.SlowM) * acc );
+        controller.Speed = controller.NormalSpeed * (1 + (1 - controller.SlowM) * acc);
+
+        controller.SideSpeed = controller.SlowSideSpeed * side;
 
 
-        // Juke
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            nextState = new JukePS(controller, animator, Input.GetAxisRaw("Horizontal"));
-            stage = Event.EXIT;
-        }
         // Jump
-        else if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             nextState = new JumpPS(controller, animator);
             stage = Event.EXIT;
@@ -43,6 +39,12 @@ public class SlowrunPS : PlayerState
         else if (acc > 0 && controller.CanAccelerate)
         {
             nextState = new SprintPS(controller, animator);
+            stage = Event.EXIT;
+        }
+        // Slow
+        else if (side == 0)
+        {
+            nextState = new SlowrunPS(controller, animator);
             stage = Event.EXIT;
         }
         // Run

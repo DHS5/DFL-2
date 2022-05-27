@@ -10,4 +10,6 @@ public class Stadium : MonoBehaviour
     public AudioSource[] bleachersAS;
     public AudioSource[] ouuhAS;
     public AudioSource[] boohAS;
+
+    public Camera stadiumCamera;
 }

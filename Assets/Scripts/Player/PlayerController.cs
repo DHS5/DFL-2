@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Current speed of the player")]
     private float speed;
 
+    [Tooltip("Current forward speed of the player")]
+    private float fSpeed;
+
     [Tooltip("Current side speed of the player")]
     private float sideSpeed;
 
@@ -85,8 +88,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Juke side speed of the player")]
     [SerializeField] private float jukeSideSpeed; public float JukeSideSpeed { get { return jukeSideSpeed; } }
 
+    [Tooltip("Juke forward speed divider of the player")]
+    [SerializeField] private float jukeFSpeedD; public float JukeFSpeedD { get { return jukeFSpeedD; } }
+
     [Tooltip("Spin side speed of the player")]
     [SerializeField] private float spinSideSpeed; public float SpinSideSpeed { get { return spinSideSpeed; } }
+
+    [Tooltip("Spin forward speed divider of the player")]
+    [SerializeField] private float spinFSpeedD; public float SpinFSpeedD { get { return spinFSpeedD; } }
 
     [Tooltip("Feint side speed of the player")]
     [SerializeField] private float feintSideSpeed; public float FeintSideSpeed { get { return feintSideSpeed; } }
@@ -115,6 +124,12 @@ public class PlayerController : MonoBehaviour
         set { speed = value; }
     }
 
+    public float FSpeed
+    {
+        get { return fSpeed; }
+        set { fSpeed = value; }
+    }
+
     public float SideSpeed
     {
         get { return sideSpeed; }
@@ -135,14 +150,18 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         currentState = new RunPS(this, playerManager.playerAnimator);
+
+        PlayerRigidbody = GetComponent<Rigidbody>();
+
+        CanAccelerate = true;
     }
 
     private void Update()
     {
         currentState = currentState.Process();
-        
-        Velocity = Vector3.forward * (speed + bonusSpeed) * Time.deltaTime + Vector3.right * sideSpeed * Time.deltaTime;
-        Velocity = Velocity.normalized * (speed + bonusSpeed); // Normalize the velocity to prevent greatest speed when going on the sides
+
+        Velocity = Vector3.forward * (fSpeed + bonusSpeed) + Vector3.right * sideSpeed;
+        Velocity = Velocity.normalized * (speed + bonusSpeed) * Time.deltaTime; // Normalize the velocity to prevent greatest speed when going on the sides
     }
 
     private void FixedUpdate()
@@ -157,6 +176,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(Velocity); // Makes the player run
         }
+
+        Debug.Log(Velocity.magnitude / Time.deltaTime);
     }
 
 
@@ -173,8 +194,14 @@ public class PlayerController : MonoBehaviour
             OnGround = true;
     }
 
+    public void Jump()
+    {
+        PlayerRigidbody.AddForce(JumpPower + bonusJump, ForceMode.Impulse);
+        OnGround = false;
+    }
+
 
     public void Sprint() { if (!Sprinting) { Sprinting = true; Invoke(nameof(Rest), accelerationTime); } }
-    private void Rest() { CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
+    private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
     private void Rested() { CanAccelerate = true; }
 }

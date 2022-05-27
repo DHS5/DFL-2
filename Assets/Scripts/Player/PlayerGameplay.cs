@@ -7,11 +7,10 @@ using UnityEngine;
 /// </summary>
 public class PlayerGameplay : MonoBehaviour
 {
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Player Manager")]
+    [HideInInspector] public PlayerManager playerManager;
 
 
-    [SerializeField] private AudioSource audioSource;
 
     [Tooltip("Player's number of life")]
     [HideInInspector] public int lifeNumber = 1;
@@ -35,27 +34,16 @@ public class PlayerGameplay : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // When the player enter the tunnel --> Generates a new field
-        if (other.gameObject.CompareTag("TunnelEnter"))
+        if (other.gameObject.CompareTag("NextWave"))
         {
             // Deactivates the trigger (prevent from triggering several times)
             other.gameObject.SetActive(false);
             // Makes the player unchasable
-            isChasable = false;
-
-            //gameManager.TunnelEnter();
+            //isChasable = false;
 
             transform.position = new Vector3(0, 0, transform.position.z + 40);
-        }
 
-        // When the player quits the tunnel --> Destroys the former field
-        if (other.gameObject.CompareTag("TunnelExit"))
-        {
-            // Deactivates the trigger (prevent from triggering several times)
-            other.gameObject.SetActive(false);
-            // Makes the player chasable
-            isChasable = true;
-
-            //gameManager.TunnelExit();
+            playerManager.gameManager.NextWave();
         }
     }
     /// <summary>
@@ -64,7 +52,7 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="collision">Collider of the colliding object</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (!gameManager.GameOver)
+        if (!playerManager.gameManager.GameOver)
         {
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
@@ -90,7 +78,7 @@ public class PlayerGameplay : MonoBehaviour
 
     private void Hurt(GameObject g)
     {
-        audioSource.Play();
+        playerManager.audioSource.Play();
 
         lifeNumber--;
         if (lifeNumber > 0)
@@ -114,7 +102,7 @@ public class PlayerGameplay : MonoBehaviour
         //Vector3 dir = g.transform.position - gameManager.player.transform.position;
         //Vector3 playerRot = gameManager.player.transform.rotation.eulerAngles;
         //gameManager.player.transform.rotation = Quaternion.Euler(playerRot.x, Quaternion.LookRotation(dir, gameManager.player.transform.up).eulerAngles.y, playerRot.z);
-        gameManager.GameOver = true;
+        playerManager.gameManager.GameOver = true;
     }
 
 }

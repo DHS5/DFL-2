@@ -14,7 +14,7 @@ public class JumpPS : PlayerState
     {
         // anim
 
-        controller.PlayerRigidbody.AddForce(controller.JumpPower + controller.bonusJump, ForceMode.Impulse);
+        controller.Jump();
         
         base.Enter();
     }

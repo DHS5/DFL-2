@@ -1028,7 +1028,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3022368403253336018
 BoxCollider:
@@ -1187,7 +1187,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4255154253788507784
 AudioSource:
@@ -1441,51 +1441,6 @@ BoxCollider:
   m_GameObject: {fileID: 3259164891764519935}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3458763858857682804
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4883504093102742556}
-  - component: {fileID: 1790979843674112645}
-  m_Layer: 0
-  m_Name: TunnelExit
-  m_TagString: TunnelExit
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4883504093102742556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3458763858857682804}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: -15}
-  m_LocalScale: {x: 20, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1790979843674112645
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3458763858857682804}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -3217,7 +3172,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2591858352930532102
 AudioSource:
@@ -3551,8 +3506,8 @@ GameObject:
   - component: {fileID: 888128446513055052}
   - component: {fileID: 7214444077900872551}
   m_Layer: 0
-  m_Name: TunnelEnter
-  m_TagString: TunnelEnter
+  m_Name: NextWave
+  m_TagString: NextWave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3969,7 +3924,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!33 &162505246506051584
 MeshFilter:
@@ -4216,7 +4171,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2359027643688560721}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2556930038121901406
 MonoBehaviour:
@@ -5082,7 +5037,6 @@ Transform:
   - {fileID: 6017566282380961652}
   - {fileID: 2197484641076790284}
   - {fileID: 3700656948822836917}
-  - {fileID: 4883504093102742556}
   - {fileID: 6827715275314580265}
   - {fileID: 6762275653122980395}
   - {fileID: 4666735656709847458}
@@ -5350,6 +5304,7 @@ MonoBehaviour:
   boohAS:
   - {fileID: 2976660127982395174}
   - {fileID: 1276701085263771691}
+  stadiumCamera: {fileID: 0}
 --- !u!1001 &1479377975806933386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5360,7 +5315,7 @@ PrefabInstance:
     - target: {fileID: 6072080679386267688, guid: 8f0fb7bb8ec1dd947b5e7e070873a365,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6072080679386267688, guid: 8f0fb7bb8ec1dd947b5e7e070873a365,
         type: 3}
