@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
             gameData.stadiumIndex = stadiumIndex;
         }
 
-        waveNumber = 1;
+        waveNumber = 0;
     }
 
 
@@ -267,6 +267,8 @@ public class GameManager : MonoBehaviour
     private void LaunchGame(bool start)
     {
         gameOn = true;
+
+        WaveNumber++;
 
         main.PlayerManager.StartPlayer();
         if (start) main.EnemiesManager.BeginChase();

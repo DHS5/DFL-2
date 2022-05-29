@@ -98,8 +98,6 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     public void EnemyWave()
     {
-        // Increment the wave number
-        main.GameManager.WaveNumber++;
         // Gets the spawning zones
         GetZones();
         

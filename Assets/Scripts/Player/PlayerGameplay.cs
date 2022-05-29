@@ -52,33 +52,33 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="collision">Collider of the colliding object</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (!playerManager.gameManager.GameOver)
-        {
-            // When the player collides with an enemy --> game over
-            if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
-            {
-                Hurt(collision.gameObject);
-                Debug.Log("Hurt by enemy");
-            }
-            // When the player collides with an obstacle --> game over
-            if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
-            {
-                AudioSource a = collision.gameObject.GetComponent<AudioSource>();
-                if (a != null)
-                {
-                    a.Play();
-                    a.volume = 1f;
-                }
-                
-                Hurt(collision.gameObject);
-                Debug.Log("Hurt by obstacle");
-            }
-        }
+        //if (!playerManager.gameManager.GameOver)
+        //{
+        //    // When the player collides with an enemy --> game over
+        //    if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+        //    {
+        //        Hurt(collision.gameObject);
+        //        Debug.Log("Hurt by enemy");
+        //    }
+        //    // When the player collides with an obstacle --> game over
+        //    if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
+        //    {
+        //        AudioSource a = collision.gameObject.GetComponent<AudioSource>();
+        //        if (a != null)
+        //        {
+        //            a.Play();
+        //            a.volume = 1f;
+        //        }
+        //        
+        //        Hurt(collision.gameObject);
+        //        Debug.Log("Hurt by obstacle");
+        //    }
+        //}
     }
 
     private void Hurt(GameObject g)
     {
-        playerManager.audioSource.Play();
+        //playerManager.audioSource.Play();
 
         lifeNumber--;
         if (lifeNumber > 0)
