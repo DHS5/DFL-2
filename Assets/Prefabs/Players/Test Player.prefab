@@ -50,6 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerManager: {fileID: 0}
+  dirSensitivity: 10
+  dirGravity: 3
+  accSensitivity: 10
+  accGravity: 10
   normalSpeed: 12
   normalSideSpeed: 6
   accelerationM: 1.4
@@ -57,13 +61,13 @@ MonoBehaviour:
   accelerationRestTime: 8
   accSideSpeed: 2
   slowM: 0.6
-  slowSideSpeed: 8
+  slowSideSpeed: 9
   jumpHeight: 2
   hangTime: 2
   jukeSideSpeed: 10
-  jukeFSpeedD: 2
-  spinSideSpeed: 12
-  spinFSpeedD: 1.5
+  jukeSpeed: 13
+  spinSideSpeed: 10
+  spinSpeed: 15
   feintSideSpeed: 9
   bonusSpeed: 0
   bonusJump: {x: 0, y: 0, z: 0}

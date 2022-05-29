@@ -45,8 +45,8 @@ public abstract class PlayerState
     }
     public virtual void Update()
     {
-        acc = Input.GetAxis("Vertical");
-        side = Input.GetAxis("Horizontal");
+        acc = controller.Acceleration;
+        side = controller.Direction;
 
         // A verifier
         //controller.gameObject.transform.localRotation = 

@@ -24,7 +24,7 @@ public class SprintPS : PlayerState
         base.Update();
 
 
-        controller.Speed = controller.NormalSpeed * acc * controller.AccelerationM;
+        controller.Speed = controller.NormalSpeed * (1 - (1 - controller.AccelerationM) * acc);
 
         controller.SideSpeed = controller.AccSideSpeed * side;
 

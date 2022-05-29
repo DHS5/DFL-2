@@ -16,6 +16,8 @@ public class SlowsiderunPS : PlayerState
         // anim
         //animTime = Animation.time;
 
+        controller.Speed = controller.NormalSpeed;
+
         base.Enter();
     }
 
@@ -23,8 +25,6 @@ public class SlowsiderunPS : PlayerState
     {
         base.Update();
 
-
-        controller.Speed = controller.NormalSpeed * (1 + (1 - controller.SlowM) * acc);
 
         controller.SideSpeed = controller.SlowSideSpeed * side;
 
@@ -45,6 +45,12 @@ public class SlowsiderunPS : PlayerState
         else if (side == 0)
         {
             nextState = new SlowrunPS(controller, animator);
+            stage = Event.EXIT;
+        }
+        // Siderun
+        else if (acc == 0 && side != 0)
+        {
+            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side));
             stage = Event.EXIT;
         }
         // Run

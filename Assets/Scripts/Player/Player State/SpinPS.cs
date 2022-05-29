@@ -16,6 +16,8 @@ public class SpinPS : PlayerState
         // anim
         //animTime = Animation.time;
 
+        controller.Speed = controller.SpinSpeed;
+
         base.Enter();
     }
 
@@ -23,8 +25,6 @@ public class SpinPS : PlayerState
     {
         base.Update();
 
-
-        controller.Speed /= controller.SpinFSpeedD;
 
         controller.SideSpeed = controller.SpinSideSpeed * startSide;
 

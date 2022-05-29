@@ -26,6 +26,16 @@ public class PlayerController : MonoBehaviour
 
 
 
+    [SerializeField] private float dirSensitivity;
+    [SerializeField] private float dirGravity;
+
+    [SerializeField] private float accSensitivity;
+    [SerializeField] private float accGravity;
+
+    private float realDir;
+    private float realAcc;
+
+
     /// <summary>
     /// Velocity of the player
     /// </summary>
@@ -33,9 +43,6 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("Current speed of the player")]
     private float speed;
-
-    [Tooltip("Current forward speed of the player")]
-    private float fSpeed;
 
     [Tooltip("Current side speed of the player")]
     private float sideSpeed;
@@ -88,14 +95,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Juke side speed of the player")]
     [SerializeField] private float jukeSideSpeed; public float JukeSideSpeed { get { return jukeSideSpeed; } }
 
-    [Tooltip("Juke forward speed divider of the player")]
-    [SerializeField] private float jukeFSpeedD; public float JukeFSpeedD { get { return jukeFSpeedD; } }
+    [Tooltip("Juke speed of the player")]
+    [SerializeField] private float jukeSpeed; public float JukeSpeed { get { return jukeSpeed; } }
 
     [Tooltip("Spin side speed of the player")]
     [SerializeField] private float spinSideSpeed; public float SpinSideSpeed { get { return spinSideSpeed; } }
 
-    [Tooltip("Spin forward speed divider of the player")]
-    [SerializeField] private float spinFSpeedD; public float SpinFSpeedD { get { return spinFSpeedD; } }
+    [Tooltip("Spin peed of the player")]
+    [SerializeField] private float spinSpeed; public float SpinSpeed { get { return spinSpeed; } }
 
     [Tooltip("Feint side speed of the player")]
     [SerializeField] private float feintSideSpeed; public float FeintSideSpeed { get { return feintSideSpeed; } }
@@ -118,16 +125,24 @@ public class PlayerController : MonoBehaviour
 
     // ### Properties ###
 
+    public float Direction
+    {
+        get { return realDir; }
+    }
+    public float Acceleration
+    {
+        get { return realAcc; }
+    }
+
     public float Speed
     {
-        get { return speed; }
+        get { return speed + bonusSpeed; }
         set { speed = value; }
     }
 
     public float FSpeed
     {
-        get { return fSpeed; }
-        set { fSpeed = value; }
+        get { return Mathf.Sqrt(Speed * Speed - SideSpeed * SideSpeed); }
     }
 
     public float SideSpeed
@@ -146,7 +161,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-
     private void Start()
     {
         currentState = new RunPS(this, playerManager.playerAnimator);
@@ -158,10 +172,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        FilterDir();
+        FilterAcc();
+        
         currentState = currentState.Process();
 
-        Velocity = Vector3.forward * (fSpeed + bonusSpeed) + Vector3.right * sideSpeed;
-        Velocity = Velocity.normalized * (speed + bonusSpeed) * Time.deltaTime; // Normalize the velocity to prevent greatest speed when going on the sides
+        Velocity = ( Vector3.forward * FSpeed + Vector3.right * sideSpeed ) * Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -176,12 +192,59 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(Velocity); // Makes the player run
         }
-
-        Debug.Log(Velocity.magnitude / Time.deltaTime);
     }
 
 
     // ### Functions ###
+
+    private void FilterDir()
+    {
+        float rawDir = Input.GetAxisRaw("Horizontal");
+
+        if (rawDir != 0)
+            realDir += rawDir * dirSensitivity * Time.deltaTime;
+        else if (rawDir == 0)
+        {
+            if (realDir > 0)
+            {
+                realDir -= dirGravity * Time.deltaTime;
+                if (realDir < 0) realDir = 0f;
+            }
+            else if (realDir < 0)
+            {
+                realDir += dirGravity * Time.deltaTime;
+                if (realDir > 0) realDir = 0f;
+            }
+        }
+
+        if (Mathf.Abs(realDir) <= 0.001f) realDir = 0f;
+
+        realDir = Mathf.Clamp(realDir, -1, 1);
+    }
+    private void FilterAcc()
+    {
+        float rawAcc = Input.GetAxisRaw("Vertical");
+
+        if (rawAcc != 0)
+            realAcc += rawAcc * accSensitivity * Time.deltaTime;
+        else if (rawAcc == 0)
+        {
+            if (realAcc > 0)
+            {
+                realAcc -= accGravity * Time.deltaTime;
+                if (realAcc < 0) realAcc = 0f;
+            }
+            else if (realAcc < 0)
+            {
+                realAcc += accGravity * Time.deltaTime;
+                if (realAcc > 0) realAcc = 0f;
+            }
+        }
+
+        if (Mathf.Abs(realAcc) <= 0.001f) realAcc = 0f;
+
+        realAcc = Mathf.Clamp(realAcc, -1, 1);
+    }
 
 
     /// <summary>

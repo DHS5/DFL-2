@@ -16,6 +16,8 @@ public class JukePS : PlayerState
         // anim
         //animTime = Animation.time;
 
+        controller.Speed = controller.JukeSpeed;
+
         base.Enter();
     }
 
@@ -23,8 +25,6 @@ public class JukePS : PlayerState
     {
         base.Update();
 
-
-        controller.Speed /= controller.JukeFSpeedD;
 
         controller.SideSpeed = controller.JukeSideSpeed * startSide;
 
