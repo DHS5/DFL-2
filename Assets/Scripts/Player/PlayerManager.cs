@@ -62,7 +62,7 @@ public class PlayerManager : MonoBehaviour
         gameplay = player.GetComponent<PlayerGameplay>();
         gameplay.playerManager = this;
 
-        playerAnimator = player.GetComponent<Animator>();
+        playerAnimator = player.GetComponentInChildren<Animator>();
 
         fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
         cameraAnimator = player.GetComponentInChildren<CameraAnimator>();

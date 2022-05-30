@@ -101,11 +101,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Spin side speed of the player")]
     [SerializeField] private float spinSideSpeed; public float SpinSideSpeed { get { return spinSideSpeed; } }
 
-    [Tooltip("Spin peed of the player")]
+    [Tooltip("Spin speed of the player")]
     [SerializeField] private float spinSpeed; public float SpinSpeed { get { return spinSpeed; } }
 
     [Tooltip("Feint side speed of the player")]
     [SerializeField] private float feintSideSpeed; public float FeintSideSpeed { get { return feintSideSpeed; } }
+
+    [Tooltip("Feint speed of the player")]
+    [SerializeField] private float feintSpeed; public float FeintSpeed { get { return feintSpeed; } }
 
 
 
@@ -246,6 +249,9 @@ public class PlayerController : MonoBehaviour
         realAcc = Mathf.Clamp(realAcc, -1, 1);
     }
 
+    public void SnapDir() { realDir = 0f; }
+
+    public void SnapAcc() { realAcc = 0f; }
 
     /// <summary>
     /// Detects a collision with the ground to know if the player is on the ground

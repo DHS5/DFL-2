@@ -34,7 +34,7 @@ public class JumpPS : PlayerState
                 nextState = new SlowrunPS(controller, animator);
             // Siderun
             else if (acc == 0 && side != 0)
-                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side));
+                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
             // Run
             else
                 nextState = new RunPS(controller, animator);

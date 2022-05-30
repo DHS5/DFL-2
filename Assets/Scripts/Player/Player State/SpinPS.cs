@@ -13,10 +13,11 @@ public class SpinPS : PlayerState
 
     public override void Enter()
     {
-        // anim
-        //animTime = Animation.time;
+        animator.SetTrigger("Spin");
+        animTime = 0.5f;
 
         controller.Speed = controller.SpinSpeed;
+        controller.SideSpeed = controller.SpinSideSpeed * startSide;
 
         base.Enter();
     }
@@ -24,9 +25,6 @@ public class SpinPS : PlayerState
     public override void Update()
     {
         base.Update();
-
-
-        controller.SideSpeed = controller.SpinSideSpeed * startSide;
 
 
         if (Time.time >= startTime + animTime)
@@ -51,5 +49,12 @@ public class SpinPS : PlayerState
 
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Spin");
+
+        base.Exit();
     }
 }

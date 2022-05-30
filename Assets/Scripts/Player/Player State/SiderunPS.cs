@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SiderunPS : PlayerState
-{    
-    public SiderunPS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
+{
+    private bool anim;
+
+    public SiderunPS(PlayerController _controller, Animator _animator, float _side, bool _anim) : base(_controller, _animator)
     {
         name = PState.SIDERUN;
 
         startSide = _side;
+        anim = _anim;
     }
 
 
     public override void Enter()
     {
-        // anim
+        animator.SetFloat("Dir", startSide);
+        if (anim)
+        {
+            animator.SetTrigger("Side");
+            animTime = 0.4f;
+        }
+        //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         controller.Speed = controller.NormalSpeed;
 
@@ -61,7 +70,17 @@ public class SiderunPS : PlayerState
             }
             else stage = Event.EXIT;
         }
-        else if (Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        else if (anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        {
             nextState = new FeintPS(controller, animator, Input.GetAxisRaw("Horizontal"));
+            animator.SetTrigger("Feint");
+        }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Side");
+
+        base.Exit();
     }
 }

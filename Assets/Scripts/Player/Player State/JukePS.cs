@@ -13,10 +13,12 @@ public class JukePS : PlayerState
 
     public override void Enter()
     {
-        // anim
-        //animTime = Animation.time;
+        animator.SetTrigger("Juke");
+        animator.SetFloat("Dir", startSide);
+        animTime = 0.5f;
 
         controller.Speed = controller.JukeSpeed;
+        controller.SideSpeed = controller.JukeSideSpeed * startSide;
 
         base.Enter();
     }
@@ -24,9 +26,6 @@ public class JukePS : PlayerState
     public override void Update()
     {
         base.Update();
-
-
-        controller.SideSpeed = controller.JukeSideSpeed * startSide;
 
 
         if (Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
@@ -56,9 +55,17 @@ public class JukePS : PlayerState
                 {
                     nextState = new SlowrunPS(controller, animator);
                 }
+                // Run
                 else nextState = new RunPS(controller, animator);
             }
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Juke");
+
+        base.Exit();
     }
 }

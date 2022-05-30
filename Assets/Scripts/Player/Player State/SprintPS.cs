@@ -12,7 +12,7 @@ public class SprintPS : PlayerState
 
     public override void Enter()
     {
-        // anim
+        animator.SetTrigger("Sprint");
 
         controller.Sprint();
 
@@ -44,8 +44,15 @@ public class SprintPS : PlayerState
         // Siderun
         else if ((acc == 0 && side != 0) || (!controller.CanAccelerate && side != 0))
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side));
+            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Sprint");
+        
+        base.Exit();
     }
 }

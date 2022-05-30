@@ -12,7 +12,7 @@ public class SlowrunPS : PlayerState
 
     public override void Enter()
     {
-        // anim
+        animator.SetTrigger("Slow");
 
         controller.SideSpeed = 0;
 
@@ -51,5 +51,12 @@ public class SlowrunPS : PlayerState
             nextState = new RunPS(controller, animator);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Slow");
+
+        base.Exit();
     }
 }

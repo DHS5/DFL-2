@@ -13,20 +13,17 @@ public class FeintPS : PlayerState
 
     public override void Enter()
     {
-        // anim
-        //animTime = Animation.time;
+        animTime = 0.1f;
 
-        controller.Speed = controller.NormalSpeed;
+        controller.Speed = controller.FeintSpeed;
+        controller.SideSpeed = controller.FeintSideSpeed * startSide;
 
         base.Enter();
     }
 
     public override void Update()
     {
-        base.Update();
-                
-
-        controller.SideSpeed = controller.FeintSideSpeed * startSide;
+        base.Update();        
 
 
         if (Time.time >= startTime + animTime)
@@ -46,10 +43,23 @@ public class FeintPS : PlayerState
             {
                 nextState = new SlowrunPS(controller, animator);
             }
+            // Siderun
+            else if (side != 0 && side * startSide > 0)
+            {
+                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
+                stage = Event.EXIT;
+            }
             // Run
             else nextState = new RunPS(controller, animator);
 
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Feint");
+
+        base.Exit();
     }
 }

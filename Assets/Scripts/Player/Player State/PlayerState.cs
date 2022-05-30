@@ -49,8 +49,8 @@ public abstract class PlayerState
         side = controller.Direction;
 
         // A verifier
-        //controller.gameObject.transform.localRotation = 
-            //Quaternion.Slerp(controller.gameObject.transform.localRotation, Quaternion.Euler(controller.Velocity), 0.5f);
+        controller.gameObject.transform.localRotation = 
+            Quaternion.Slerp(controller.gameObject.transform.localRotation, Quaternion.Euler(controller.Velocity), 0.5f);
     }
     public virtual void Exit() { stage = Event.EXIT; Debug.Log(name + " -> " + nextState.name); }
 

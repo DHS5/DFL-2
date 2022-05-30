@@ -13,9 +13,6 @@ public class SlowsiderunPS : PlayerState
 
     public override void Enter()
     {
-        // anim
-        //animTime = Animation.time;
-
         controller.Speed = controller.NormalSpeed;
 
         base.Enter();
@@ -50,7 +47,7 @@ public class SlowsiderunPS : PlayerState
         // Siderun
         else if (acc == 0 && side != 0)
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side));
+            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
         // Run

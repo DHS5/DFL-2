@@ -11,9 +11,11 @@ public class RunPS : PlayerState
 
     public override void Enter()
     {
-        // set anim run
+        animator.SetTrigger("Run");
+        animator.SetFloat("Dir", 0f);
 
         controller.Speed = controller.NormalSpeed;
+        controller.SideSpeed = 0f;
 
         base.Enter();
     }
@@ -43,8 +45,15 @@ public class RunPS : PlayerState
         // Siderun
         else if (side != 0)
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side));
+            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Run");
+        
+        base.Exit();
     }
 }
