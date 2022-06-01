@@ -18,8 +18,8 @@ public abstract class PlayerState
     protected PlayerState nextState;
 
 
-    protected PlayerController controller;
-    protected Animator animator;
+    public PlayerController controller;
+    public Animator animator;
 
 
     protected float acc;
@@ -47,10 +47,6 @@ public abstract class PlayerState
     {
         acc = controller.Acceleration;
         side = controller.Direction;
-
-        // A verifier
-        controller.gameObject.transform.localRotation = 
-            Quaternion.Slerp(controller.gameObject.transform.localRotation, Quaternion.Euler(controller.Velocity), 0.5f);
     }
     public virtual void Exit() { stage = Event.EXIT; Debug.Log(name + " -> " + nextState.name); }
 
@@ -59,14 +55,24 @@ public abstract class PlayerState
     public PlayerState Process()
     {
         if (stage == Event.ENTER) Enter();
-        if (stage == Event.UPDATE) Update();
-        if (stage == Event.EXIT)
+        else if (stage == Event.UPDATE) Update();
+        else if (stage == Event.EXIT)
         {
             Exit();
             return nextState;
         }
 
         return this;
+    }
+
+    protected void PlayerOrientation()
+    {
+        if (controller.playerManager.gameManager.GameOn)
+        {
+            controller.playerManager.TPPlayer.transform.localRotation =
+            Quaternion.Slerp(controller.playerManager.TPPlayer.transform.localRotation, 
+                Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
+        }
     }
 }
 

@@ -15,7 +15,7 @@ public class JukePS : PlayerState
     {
         animator.SetTrigger("Juke");
         animator.SetFloat("Dir", startSide);
-        animTime = 0.5f;
+        animTime = controller.jukeTime;
 
         controller.Speed = controller.JukeSpeed;
         controller.SideSpeed = controller.JukeSideSpeed * startSide;
@@ -49,6 +49,11 @@ public class JukePS : PlayerState
                 else if (acc < 0 && side * startSide > 0)
                 {
                     nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
+                }
+                // Siderun
+                else if (acc == 0 && side * startSide > 0)
+                {
+                    nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
                 }
                 // Slowrun
                 else if (acc < 0)

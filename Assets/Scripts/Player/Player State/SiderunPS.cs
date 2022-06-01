@@ -21,11 +21,13 @@ public class SiderunPS : PlayerState
         if (anim)
         {
             animator.SetTrigger("Side");
-            animTime = 0.4f;
+            animTime = controller.siderunTime;
         }
+        else animator.SetTrigger("Run");
         //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         controller.Speed = controller.NormalSpeed;
+        controller.SideSpeed = controller.NormalSideSpeed * side;
 
         base.Enter();
     }
@@ -34,6 +36,8 @@ public class SiderunPS : PlayerState
     public override void Update()
     {
         base.Update();
+
+        PlayerOrientation();
 
 
         controller.SideSpeed = controller.NormalSideSpeed * side;
@@ -55,10 +59,16 @@ public class SiderunPS : PlayerState
                     nextState = new SprintPS(controller, animator);
                     stage = Event.EXIT;
                 }
-                // Slow
-                else if (acc < 0)
+                // Slowsiderun
+                else if (acc < 0 && side * startSide > 0)
                 {
                     nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
+                    stage = Event.EXIT;
+                }
+                // Slow
+                else if (acc < 0 && side == 0)
+                {
+                    nextState = new SlowrunPS(controller, animator);
                     stage = Event.EXIT;
                 }
                 // Run
@@ -80,6 +90,7 @@ public class SiderunPS : PlayerState
     public override void Exit()
     {
         animator.ResetTrigger("Side");
+        animator.ResetTrigger("Run");
 
         base.Exit();
     }

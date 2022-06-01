@@ -23,6 +23,8 @@ public class SprintPS : PlayerState
     {
         base.Update();
 
+        PlayerOrientation();
+
 
         controller.Speed = controller.NormalSpeed * (1 - (1 - controller.AccelerationM) * acc);
 

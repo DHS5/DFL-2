@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject[] playerPrefabs;
 
     [HideInInspector] public GameObject player;
+    [HideInInspector] public GameObject FPPlayer;
+    [HideInInspector] public GameObject TPPlayer;
     
     // ### Properties ###
     public float YMouseSensitivity
@@ -54,7 +56,9 @@ public class PlayerManager : MonoBehaviour
     {
         gameManager = main.GameManager;
 
-        player = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 10, 0), Quaternion.identity);
+        player = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 0, -25), Quaternion.identity);
+        FPPlayer = GameObject.FindWithTag("FPP");
+        TPPlayer = GameObject.FindWithTag("TPP");
 
         controller = player.GetComponent<PlayerController>();
         controller.playerManager = this;
@@ -75,11 +79,15 @@ public class PlayerManager : MonoBehaviour
         gameplay.freeze = false; // Unfreezes the player
         gameplay.isChasable = true; // Makes the player chasable
         //fpsCamera.LockCursor(); // Locks the cursor
+
+        playerAnimator.enabled = true;
     }
 
     public void StopPlayer()
     {
         gameplay.freeze = true; // Freezes the player
+
+        playerAnimator.enabled = false;
     }
 
     public void DeadPlayer()

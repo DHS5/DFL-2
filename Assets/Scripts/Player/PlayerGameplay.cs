@@ -15,6 +15,9 @@ public class PlayerGameplay : MonoBehaviour
     [Tooltip("Player's number of life")]
     [HideInInspector] public int lifeNumber = 1;
 
+    [Tooltip("Whether the player is on the field")]
+    [HideInInspector] public bool onField = false;
+
     [Tooltip("Whether the player is in a zone where he's chasable")]
     [HideInInspector] public bool isChasable = false;
 
@@ -38,12 +41,18 @@ public class PlayerGameplay : MonoBehaviour
         {
             // Deactivates the trigger (prevent from triggering several times)
             other.gameObject.SetActive(false);
-            // Makes the player unchasable
-            //isChasable = false;
 
             transform.position = new Vector3(0, 0, transform.position.z + 40);
 
             playerManager.gameManager.NextWave();
+        }
+        // When the player accounter a field limit
+        if (other.gameObject.CompareTag("FieldLimit"))
+        {
+            // Deactivates the trigger (prevent from triggering several times)
+            other.gameObject.SetActive(false);
+
+            onField = !onField;
         }
     }
     /// <summary>

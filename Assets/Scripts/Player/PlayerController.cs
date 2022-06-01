@@ -25,15 +25,24 @@ public class PlayerController : MonoBehaviour
     readonly float gravityScale = 10f;
 
 
-
+    [Header("Control parameters")]
     [SerializeField] private float dirSensitivity;
     [SerializeField] private float dirGravity;
 
     [SerializeField] private float accSensitivity;
     [SerializeField] private float accGravity;
 
+    [SerializeField] private float snap;
+
     private float realDir;
     private float realAcc;
+
+
+    [Header("Animation's time")]
+    public float siderunTime;
+    public float jukeTime;
+    public float feintTime;
+    public float spinTime;
 
 
     /// <summary>
@@ -91,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    [Header("Skill moves speed multipliers")]
+    [Header("Skill moves speed")]
     [Tooltip("Juke side speed of the player")]
     [SerializeField] private float jukeSideSpeed; public float JukeSideSpeed { get { return jukeSideSpeed; } }
 
@@ -220,7 +229,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Mathf.Abs(realDir) <= 0.001f) realDir = 0f;
+        if (Mathf.Abs(realDir) <= snap) SnapDir();
 
         realDir = Mathf.Clamp(realDir, -1, 1);
     }
@@ -244,7 +253,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Mathf.Abs(realAcc) <= 0.001f) realAcc = 0f;
+        if (Mathf.Abs(realAcc) <= snap) SnapAcc();
 
         realAcc = Mathf.Clamp(realAcc, -1, 1);
     }

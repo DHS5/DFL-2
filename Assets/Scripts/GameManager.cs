@@ -164,6 +164,11 @@ public class GameManager : MonoBehaviour
     {
         // Pause the game on press P
         if (Input.GetKeyDown(KeyCode.P)) PauseGame();
+
+        if (main.PlayerManager.gameplay.onField)
+        {
+            Score = CalculateScore();
+        }
     }
 
 
@@ -192,7 +197,7 @@ public class GameManager : MonoBehaviour
             gameData.stadiumIndex = stadiumIndex;
         }
 
-        waveNumber = 0;
+        waveNumber = 1;
     }
 
 
@@ -268,8 +273,6 @@ public class GameManager : MonoBehaviour
     {
         gameOn = true;
 
-        WaveNumber++;
-
         main.PlayerManager.StartPlayer();
         if (start) main.EnemiesManager.BeginChase();
         else main.EnemiesManager.ResumeEnemies();
@@ -322,7 +325,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator UnpauseCR(float time)
     {
         int i = 3;
-        while (i != 0)
+        while (i > 0)
         {
             // Display i
             yield return new WaitForSeconds(time);
@@ -368,6 +371,18 @@ public class GameManager : MonoBehaviour
 
         PrepareGame(false);
 
+        WaveNumber++;
+
         LaunchGame(false);
+    }
+
+
+    private int CalculateScore()
+    {
+        return waveNumber * 100 -
+                (int)(main.FieldManager.field.fieldZone.transform.position.z +
+                main.FieldManager.field.fieldZone.transform.localScale.z / 2 -
+                main.PlayerManager.player.transform.position.z) / 
+                (int) (main.FieldManager.field.fieldZone.transform.localScale.z / 100);
     }
 }

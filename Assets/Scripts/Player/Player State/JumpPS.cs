@@ -12,7 +12,7 @@ public class JumpPS : PlayerState
 
     public override void Enter()
     {
-        // anim
+        animator.SetTrigger("Jump");
 
         controller.Jump();
         
@@ -35,11 +35,21 @@ public class JumpPS : PlayerState
             // Siderun
             else if (acc == 0 && side != 0)
                 nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
+            // Slowsiderun
+            else if (acc < 0 && side != 0)
+                nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
             // Run
             else
                 nextState = new RunPS(controller, animator);
 
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        animator.ResetTrigger("Jump");
+
+        base.Exit();
     }
 }

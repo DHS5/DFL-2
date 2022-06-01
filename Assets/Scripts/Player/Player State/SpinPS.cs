@@ -14,7 +14,7 @@ public class SpinPS : PlayerState
     public override void Enter()
     {
         animator.SetTrigger("Spin");
-        animTime = 0.5f;
+        animTime = controller.spinTime;
 
         controller.Speed = controller.SpinSpeed;
         controller.SideSpeed = controller.SpinSideSpeed * startSide;
@@ -29,13 +29,8 @@ public class SpinPS : PlayerState
 
         if (Time.time >= startTime + animTime)
         {
-            // Jump
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                nextState = new JumpPS(controller, animator);
-            }
             // Acceleration
-            else if (acc > 0 && controller.CanAccelerate)
+            if (acc > 0 && controller.CanAccelerate)
             {
                 nextState = new SprintPS(controller, animator);
             }
@@ -43,6 +38,11 @@ public class SpinPS : PlayerState
             else if (acc < 0)
             {
                 nextState = new SlowrunPS(controller, animator);
+            }
+            // Siderun
+            else if (side != 0)
+            {
+                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
             }
             // Run
             else nextState = new RunPS(controller, animator);

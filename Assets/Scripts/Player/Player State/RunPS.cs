@@ -24,6 +24,9 @@ public class RunPS : PlayerState
     {
         base.Update();
 
+        PlayerOrientation();
+
+
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {

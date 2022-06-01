@@ -13,7 +13,7 @@ public class FeintPS : PlayerState
 
     public override void Enter()
     {
-        animTime = 0.1f;
+        animTime = controller.feintTime;
 
         controller.Speed = controller.FeintSpeed;
         controller.SideSpeed = controller.FeintSideSpeed * startSide;
