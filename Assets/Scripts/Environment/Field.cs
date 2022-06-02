@@ -10,7 +10,6 @@ public struct FieldMaterials
     public Material grass;
     public Material endzone1;
     public Material endzone2;
-    public Material barriers;
     public Material goalpostBase1;
     public Material goalpostMetal1;
     public Material goalpostBase2;
@@ -26,11 +25,9 @@ public class Field : MonoBehaviour
 
     [Header("Prefab objects of the field")]
     [SerializeField] GameObject grass;
+    [SerializeField] GameObject stadiumGrass;
     [SerializeField] GameObject endzone1;
     [SerializeField] GameObject endzone2;
-
-    [SerializeField] GameObject barrierL;
-    [SerializeField] GameObject barrierR;
 
     [SerializeField] GameObject goalpost1Base;
     [SerializeField] GameObject goalpost1Metal;
@@ -56,15 +53,10 @@ public class Field : MonoBehaviour
         // ### Ground
         // ## Grass
         grass.GetComponent<MeshRenderer>().material = fieldMaterials.grass;
+        stadiumGrass.GetComponent<MeshRenderer>().material = fieldMaterials.grass;
         // ## Endzones
         endzone1.GetComponent<MeshRenderer>().material = fieldMaterials.endzone1;
         endzone2.GetComponent<MeshRenderer>().material = fieldMaterials.endzone2;
-
-        // ### Barriers
-        // ## Barrier L
-        barrierL.GetComponent<MeshRenderer>().material = fieldMaterials.barriers;
-        // ## Barrier R
-        barrierR.GetComponent<MeshRenderer>().material = fieldMaterials.barriers;
 
         // ### Goalposts
         // ## Goalpost 1

@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 JumpPower
     {
-        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * gravityScale)), 0); }
+        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * gravityScale / hangTime)), 0); }
     }
 
 
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Keep the gravity constant
-        PlayerRigidbody.AddForce(Physics.gravity * gravityScale);
+        PlayerRigidbody.AddForce(Physics.gravity * gravityScale / hangTime);
     }
 
     void LateUpdate()

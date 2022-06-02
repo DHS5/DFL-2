@@ -61,28 +61,33 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="collision">Collider of the colliding object</param>
     private void OnCollisionEnter(Collision collision)
     {
-        //if (!playerManager.gameManager.GameOver)
-        //{
-        //    // When the player collides with an enemy --> game over
-        //    if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
-        //    {
-        //        Hurt(collision.gameObject);
-        //        Debug.Log("Hurt by enemy");
-        //    }
-        //    // When the player collides with an obstacle --> game over
-        //    if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
-        //    {
-        //        AudioSource a = collision.gameObject.GetComponent<AudioSource>();
-        //        if (a != null)
-        //        {
-        //            a.Play();
-        //            a.volume = 1f;
-        //        }
-        //        
-        //        Hurt(collision.gameObject);
-        //        Debug.Log("Hurt by obstacle");
-        //    }
-        //}
+        if (!playerManager.gameManager.GameOver)
+        {
+            // When the player collides with an enemy --> game over
+            if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+            {
+                Hurt(collision.gameObject);
+                Debug.Log("Hurt by enemy");
+            }
+            // When the player collides with an obstacle --> game over
+            if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
+            {
+                AudioSource a = collision.gameObject.GetComponent<AudioSource>();
+                if (a != null)
+                {
+                    a.Play();
+                    a.volume = 1f;
+                }
+                
+                Hurt(collision.gameObject);
+                Debug.Log("Hurt by obstacle");
+            }
+            if (collision.gameObject.CompareTag("OutOfBounds"))
+            {
+                Dead(collision.gameObject);
+                Debug.Log("OutOfBounds");
+            }
+        }
     }
 
     private void Hurt(GameObject g)
@@ -111,7 +116,7 @@ public class PlayerGameplay : MonoBehaviour
         //Vector3 dir = g.transform.position - gameManager.player.transform.position;
         //Vector3 playerRot = gameManager.player.transform.rotation.eulerAngles;
         //gameManager.player.transform.rotation = Quaternion.Euler(playerRot.x, Quaternion.LookRotation(dir, gameManager.player.transform.up).eulerAngles.y, playerRot.z);
-        playerManager.gameManager.GameOver = true;
+        //playerManager.gameManager.GameOver = true;
     }
 
 }
