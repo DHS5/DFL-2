@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Mode
 /// </summary>
-[System.Serializable] public enum GameMode { DEFENDERS = 0, TEAM = 1, ZOMBIE = 2, DRILL = 3 }
+[System.Serializable] public enum GameMode { DEFENDERS = 0, TEAM = 1, ZOMBIE = 2, DRILL = 3, TUTORIAL = 4 }
 
 /// <summary>
 /// Game Difficulty
@@ -327,11 +327,12 @@ public class GameManager : MonoBehaviour
         int i = 3;
         while (i > 0)
         {
-            // Display i
+            main.GameUIManager.ResumeGameText(i, true);
             yield return new WaitForSeconds(time);
             i--;
         }
 
+        main.GameUIManager.ResumeGameText(3, false);
         LaunchGame(false);
     }
     /// <summary>

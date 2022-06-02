@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public enum SceneNumber { MENU = 0, GAME = 1, TUTO = 2 }
+public enum SceneNumber { MENU = 0, GAME = 1}
 
 public enum ScreenNumber { SETTINGS = 0, GAMEPLAY, INFO, PLAYER, LEADERBOARD, SHOP }
 
@@ -159,14 +159,14 @@ public class SettingsManager : MonoBehaviour
     // ## Game Scene
     public void PauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME)
+        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME && !gameManager.GameOver)
         {
             gameManager.PauseGame();
         }
     }
     public void UnpauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME)
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME && !gameManager.GameOver)
         {
             gameManager.UnpauseGame();
         }

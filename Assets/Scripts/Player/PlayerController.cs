@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     // Player state variables
     public bool OnGround { get; private set; }
-    public bool CanAccelerate { get; private set; }
+    public bool CanAccelerate { get; set; }
     public bool Sprinting { get; private set; }
 
 
@@ -259,8 +259,9 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SnapDir() { realDir = 0f; }
-
     public void SnapAcc() { realAcc = 0f; }
+
+    public void FullDir(float side) { realDir = side / Mathf.Abs(side); }
 
     /// <summary>
     /// Detects a collision with the ground to know if the player is on the ground

@@ -23,7 +23,8 @@ public class MainManager : MonoBehaviour
 
     // Modes
     [HideInInspector] public TeamManager TeamManager { get; private set; }
-    
+    [HideInInspector] public TutorialManager TutoManager { get; private set; }
+
     // Options
     [HideInInspector] public ObjectifManager ObjectifManager { get; private set; }
     [HideInInspector] public ObstacleManager ObstacleManager { get; private set; }
@@ -51,6 +52,8 @@ public class MainManager : MonoBehaviour
         // Modes
         TeamManager = GetComponent<TeamManager>();
         if (DataManager.gameData.gameMode != GameMode.TEAM) TeamManager.enabled = false;
+        TutoManager = GetComponent<TutorialManager>();
+        if (DataManager.gameData.gameMode != GameMode.TUTORIAL) TutoManager.enabled = false;
 
         // Options
         ObjectifManager = GetComponent<ObjectifManager>();

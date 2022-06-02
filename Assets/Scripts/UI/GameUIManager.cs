@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 
-public enum GameScreen { GAME = 0, RESTART = 1 }
+public enum GameScreen { GAME = 0, RESTART = 1, TUTO = 2 }
 
 
 public class GameUIManager : MonoBehaviour
@@ -24,6 +24,9 @@ public class GameUIManager : MonoBehaviour
 
     [Tooltip("Score UI texts")]
     [SerializeField] private TextMeshProUGUI[] scoreTexts;
+
+    [Tooltip("Resume game (3 2 1) text")]
+    [SerializeField] private TextMeshProUGUI resumeGameText;
 
 
 
@@ -184,5 +187,12 @@ public class GameUIManager : MonoBehaviour
     public void ModifyLife(bool plus, int lifeNumber)
     {
         lifeBonuses[lifeNumber].SetActive(plus);
+    }
+
+
+    public void ResumeGameText(int number, bool state)
+    {
+        resumeGameText.gameObject.SetActive(state);
+        resumeGameText.text = number.ToString();
     }
 }
