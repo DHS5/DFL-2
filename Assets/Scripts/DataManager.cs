@@ -28,7 +28,7 @@ public struct GameplayData
 {
     public float yms;
     public float ysr;
-    public bool fps;
+    public ViewType viewType;
 }
 
 public struct PlayerData

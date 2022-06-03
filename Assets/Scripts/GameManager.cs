@@ -31,6 +31,12 @@ using UnityEngine.Rendering;
 
 
 /// <summary>
+/// Game Option
+/// </summary>
+[System.Serializable] public enum ViewType { FPS = 0, TPS = 1 }
+
+
+/// <summary>
 /// Manages the game
 /// </summary>
 public class GameManager : MonoBehaviour

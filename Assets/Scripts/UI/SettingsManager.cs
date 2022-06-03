@@ -64,6 +64,27 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    public float ViewType
+    {
+        set 
+        {
+            dataManager.gameplayData.viewType = (ViewType) value;
+            if (playerManager != null) playerManager.ViewType = (ViewType) value;
+
+
+            if (value == 0)
+            {
+                sensitivitySlider.interactable = true;
+                smoothRotationSlider.interactable = true;
+            }
+            else if (value == 1)
+            {
+                sensitivitySlider.interactable = false;
+                smoothRotationSlider.interactable = false;
+            }
+        }
+    }
+
     public bool InfoButtonsOn
     {
         get { return infoButtonsOn; }

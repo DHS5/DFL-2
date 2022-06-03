@@ -41,6 +41,20 @@ public class PlayerManager : MonoBehaviour
     {
         set { } // fpsCamera.YSR = value; }
     }
+    public ViewType ViewType
+    {
+        set
+        {
+            if (value == ViewType.FPS)
+            {
+                FPPlayer.SetActive(true);
+            }
+            else if (value == ViewType.TPS)
+            {
+                TPPlayer.SetActive(true);
+            }
+        }
+    }
 
 
 

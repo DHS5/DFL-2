@@ -13,34 +13,52 @@ public abstract class Enemy : MonoBehaviour
 
     [Tooltip("Nav Mesh Agent of the enemy")]
     protected NavMeshAgent navMeshAgent;
-    [Tooltip("Game Object of the player")]
-    protected GameObject player;
 
     [HideInInspector] public AudioSource audioSource;
 
     protected Animator animator;
 
+    protected EnemyState currentState;
+
+
+
+    [Tooltip("Game Object of the player")]
+    [HideInInspector] public GameObject player;
+
+    [Tooltip("PlayerGameplay component of the player")]
+    protected PlayerGameplay playerG;
+
+    [Tooltip("PlayerController component of the player")]
+    protected PlayerController playerC;
+
+
+
     [Header("Behaviour parameters")]
     [Tooltip("Level of intelligence of the enemy (anticipation of the future position)")]
-    [SerializeField] protected int intelligence;
+    [Range(0,1)] public float intelligence;
     [Tooltip("Level of reactivity of the enemy (time between new destination's settings)")]
-    [SerializeField] protected float reactivity;
-    [Tooltip("Reactivity multiplier")] 
-    protected float reactivityM;
+    public float reactivity;
+    [Tooltip("")]
+    public float anticipation;
+    [Tooltip("Level of patience of the enemy")]
+    public float patience;
 
-    [Tooltip("Radius around the enemy in which the player gets the enemy's attention")]
-    [SerializeField] protected float attentionRadius;
-    [Tooltip("Radius around the enemy in which the player activates the enemy's chase")]
-    [SerializeField] protected float chaseRadius;
-    [Tooltip("Radius around the enemy in which the player activates the enemy's attack")]
-    [SerializeField] protected float attackRadius;
+    [Header("Z distances")]
+    [Tooltip("")]
+    public float waitDist;
+    [Tooltip("")]
+    public float positionningDist;
+
+    [Header("Raw distances")]
+    [Tooltip("")]
+    public float chaseDist;
+    [Tooltip("")]
+    public float attackDist;
 
 
     [Header("Physical parameters")]
-    [Tooltip("Attack speed multiplier")]
-    [SerializeField] protected float attackSpeedM;
-    [Tooltip("Whether the enemy is in attack speed")]
-    protected bool attackSpeed = false;
+    [Tooltip("Attack speed of the enemy")]
+    [SerializeField] public float attackSpeed;
 
     [Tooltip("Size of the enemy")]
     [SerializeField] protected float size;
@@ -55,17 +73,40 @@ public abstract class Enemy : MonoBehaviour
     }
 
     [Tooltip("Position of the player")]
-    protected Vector3 playerPosition;
+    [HideInInspector] public Vector3 playerPosition;
     [Tooltip("Direction of the player")]
-    protected Vector3 playerDirection;
+    [HideInInspector] public Vector3 playerDirection;
+    [Tooltip("Speed of the player")]
+    [HideInInspector] public float playerSpeed;
     [Tooltip("Direction from the enemy to the player")]
-    protected Vector3 toPlayerDirection;
-    [Tooltip("Distance between the enemy and the player")]
-    protected float distance;
+    [HideInInspector] public Vector3 toPlayerDirection;
     [Tooltip("Angle between the enemy and the player")]
-    protected float toPlayerAngle;
+    [HideInInspector] public float toPlayerAngle;
+    [Tooltip("Distance between the enemy and the player")]
+    [HideInInspector] public float rawDistance;
+    [Tooltip("Distance between the enemy and the player on the Z-Axis only")]
+    [HideInInspector] public float zDistance;
+
     [Tooltip("Destination of the enemy (on the nav mesh)")]
-    protected Vector3 destination;
+    [HideInInspector] public Vector3 destination;
+
+
+
+    protected void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+    }
+
+    protected virtual void Start()
+    {
+        playerG = player.GetComponent<PlayerGameplay>();
+        playerC = player.GetComponent<PlayerController>();   
+    }
+
+
+    // ### Functions ###
 
     /// <summary>
     /// Stops the enemy
@@ -73,6 +114,7 @@ public abstract class Enemy : MonoBehaviour
     public void Stop()
     {
         navMeshAgent.isStopped = true;
+        animator.enabled = false;
     }
     /// <summary>
     /// Resumes the enemy
@@ -80,6 +122,7 @@ public abstract class Enemy : MonoBehaviour
     public void Resume()
     {
         navMeshAgent.isStopped = false;
+        animator.enabled = true;
     }
 
 
@@ -94,29 +137,16 @@ public abstract class Enemy : MonoBehaviour
             playerPosition = player.transform.position;
             // Gets the player's direction
             playerDirection = player.transform.forward.normalized;
+            // Gets the player's speed
+            playerSpeed = playerC.Speed;
             // Gets the direction to the player
             toPlayerDirection = (playerPosition - transform.position).normalized;
-            // Gets the distance between the player and the enemy
-            distance = Vector3.Distance(playerPosition, transform.position);
             // Gets the angle between the enemy's and the player's directions
             toPlayerAngle = Vector3.Angle(transform.forward, toPlayerDirection);
+            // Gets the distance between the player and the enemy
+            rawDistance = Vector3.Distance(playerPosition, transform.position);
+            // Gets the distance between the player and the enemy on the Z-Axis
+            zDistance = transform.position.z - playerPosition.z;
         }
     }
-
-    /// <summary>
-    /// Method to get the attack speed back to normal
-    /// </summary>
-    protected void NormalSpeed() { navMeshAgent.speed /= attackSpeedM; attackSpeed = false; }
-
-    /// <summary>
-    /// Gets the player Game Object and the NavMesh Agent
-    /// </summary>
-    protected void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        audioSource = GetComponent<AudioSource>();
-        animator = GetComponent<Animator>();
-    }
-
 }
