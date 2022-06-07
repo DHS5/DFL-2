@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpinPS : PlayerState
 {
-    public SpinPS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
+    public SpinPS(Player _player, float _side) : base(_player)
     {
         name = PState.SPIN;
 
@@ -13,7 +13,7 @@ public class SpinPS : PlayerState
 
     public override void Enter()
     {
-        animator.SetTrigger("Spin");
+        SetTrigger("Spin");
         animTime = controller.spinTime;
 
         controller.Speed = controller.SpinSpeed;
@@ -32,20 +32,20 @@ public class SpinPS : PlayerState
             // Acceleration
             if (acc > 0 && controller.CanAccelerate)
             {
-                nextState = new SprintPS(controller, animator);
+                nextState = new SprintPS(player);
             }
             // Slowrun
             else if (acc < 0)
             {
-                nextState = new SlowrunPS(controller, animator);
+                nextState = new SlowrunPS(player);
             }
             // Siderun
             else if (side != 0)
             {
-                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
             }
             // Run
-            else nextState = new RunPS(controller, animator);
+            else nextState = new RunPS(player);
 
             stage = Event.EXIT;
         }
@@ -53,7 +53,7 @@ public class SpinPS : PlayerState
 
     public override void Exit()
     {
-        animator.ResetTrigger("Spin");
+        ResetTrigger("Spin");
 
         base.Exit();
     }

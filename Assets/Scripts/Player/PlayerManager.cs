@@ -7,39 +7,25 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    [HideInInspector] public GameManager gameManager;
 
-
-    [Tooltip("Player controller")]
-    [HideInInspector] public PlayerController controller;
-    [Tooltip("Player gameplay")]
-    [HideInInspector] public PlayerGameplay gameplay;
-    [Tooltip("Player animator")]
-    [HideInInspector] public Animator playerAnimator;
-
-    [Tooltip("First person camera controller")]
-    [HideInInspector] public FirstPersonCameraController fpsCamera;
-    //[Tooltip("Third person camera controller")]
-    [Tooltip("Camera animator")]
-    [HideInInspector] public CameraAnimator cameraAnimator;
-
-    [HideInInspector] public AudioSource audioSource;
+    
 
     [Tooltip("List of player prefabs")]
     [SerializeField] private GameObject[] playerPrefabs;
 
-    [HideInInspector] public GameObject player;
-    [HideInInspector] public GameObject FPPlayer;
-    [HideInInspector] public GameObject TPPlayer;
+    [HideInInspector] public GameObject playerObject;
+    [HideInInspector] public Player player;
     
     // ### Properties ###
     public float YMouseSensitivity
     {
-        set { } // fpsCamera.YMS = value; }
+        get { return main.SettingsManager.YMouseSensitivity; }
+        set { player.fpsCamera.YMS = value; }
     }
     public float YSmoothRotation
     {
-        set { } // fpsCamera.YSR = value; }
+        get { return main.SettingsManager.YSmoothRotation; }
+        set { player.fpsCamera.YSR = value; }
     }
     public ViewType ViewType
     {
@@ -47,11 +33,17 @@ public class PlayerManager : MonoBehaviour
         {
             if (value == ViewType.FPS)
             {
-                FPPlayer.SetActive(true);
+                player.FPPlayer.SetActive(true);
+                player.TPPlayer.SetActive(false);
+
+                player.fpsCamera.enabled = true;
             }
             else if (value == ViewType.TPS)
             {
-                TPPlayer.SetActive(true);
+                player.TPPlayer.SetActive(true);
+                player.FPPlayer.SetActive(false);
+
+                player.fpsCamera.enabled = false;
             }
         }
     }
@@ -68,45 +60,37 @@ public class PlayerManager : MonoBehaviour
 
     public void PreparePlayer()
     {
-        gameManager = main.GameManager;
+        playerObject = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 0, -25), Quaternion.identity);
+        player = playerObject.GetComponent<Player>();
 
-        player = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 0, -25), Quaternion.identity);
-        FPPlayer = GameObject.FindWithTag("FPP");
-        TPPlayer = GameObject.FindWithTag("TPP");
+        player.gameManager = main.GameManager;
+        player.playerManager = this;
 
-        controller = player.GetComponent<PlayerController>();
-        controller.playerManager = this;
 
-        gameplay = player.GetComponent<PlayerGameplay>();
-        gameplay.playerManager = this;
-
-        playerAnimator = player.GetComponentInChildren<Animator>();
-
-        fpsCamera = player.GetComponentInChildren<FirstPersonCameraController>();
-        cameraAnimator = player.GetComponentInChildren<CameraAnimator>();
-
-        audioSource = player.GetComponent<AudioSource>();
+        ViewType = main.DataManager.gameplayData.viewType;
     }
 
     public void StartPlayer()
     {
-        gameplay.freeze = false; // Unfreezes the player
-        gameplay.isChasable = true; // Makes the player chasable
+        player.gameplay.freeze = false; // Unfreezes the player
+        player.gameplay.isChasable = true; // Makes the player chasable
         //fpsCamera.LockCursor(); // Locks the cursor
 
-        playerAnimator.enabled = true;
+        player.fpAnimator.enabled = true;
+        player.tpAnimator.enabled = true;
     }
 
     public void StopPlayer()
     {
-        gameplay.freeze = true; // Freezes the player
+        player.gameplay.freeze = true; // Freezes the player
 
-        playerAnimator.enabled = false;
+        player.fpAnimator.enabled = false;
+        player.tpAnimator.enabled = false;
     }
 
     public void DeadPlayer()
     {
-        gameplay.freeze = true; // Player freezes
+        player.gameplay.freeze = true; // Player freezes
         // Player animator stops
         //playerRunAnimator.SetTrigger("Dead");
     }

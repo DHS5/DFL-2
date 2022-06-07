@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class RunPS : PlayerState
 {
-    public RunPS(PlayerController _controller, Animator _animator) : base(_controller, _animator)
+    public RunPS(Player _player) : base(_player)
     {
         name = PState.RUN;
     }
 
     public override void Enter()
     {
-        animator.SetTrigger("Run");
-        animator.SetFloat("Dir", 0f);
+        SetTrigger("Run");
+        SetFloat("Dir", 0f);
 
         controller.Speed = controller.NormalSpeed;
         controller.SideSpeed = 0f;
@@ -30,32 +30,32 @@ public class RunPS : PlayerState
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextState = new JumpPS(controller, animator);
+            nextState = new JumpPS(player);
             stage = Event.EXIT;
         }
         // Acceleration
         else if (acc > 0 && controller.CanAccelerate)
         {
-            nextState = new SprintPS(controller, animator);
+            nextState = new SprintPS(player);
             stage = Event.EXIT;
         }
         // Slow
         else if (acc < 0)
         {
-            nextState = new SlowrunPS(controller, animator);
+            nextState = new SlowrunPS(player);
             stage = Event.EXIT;
         }
         // Siderun
         else if (side != 0)
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
     }
 
     public override void Exit()
     {
-        animator.ResetTrigger("Run");
+        ResetTrigger("Run");
         
         base.Exit();
     }

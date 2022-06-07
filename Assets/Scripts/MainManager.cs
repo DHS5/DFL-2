@@ -15,6 +15,7 @@ public class MainManager : MonoBehaviour
     // Essentials
     [HideInInspector] public GameManager GameManager { get; private set; }
     [HideInInspector] public PlayerManager PlayerManager { get; private set; }
+    [HideInInspector] public CursorManager CursorManager { get; private set; }
     [HideInInspector] public FieldManager FieldManager { get; private set; }
     [HideInInspector] public EnvironmentManager EnvironmentManager { get; private set; }
     [HideInInspector] public GameUIManager GameUIManager { get; private set; }
@@ -43,6 +44,7 @@ public class MainManager : MonoBehaviour
         // Essentials
         GameManager = GetComponent<GameManager>();
         PlayerManager = GetComponent<PlayerManager>();
+        CursorManager = GetComponent<CursorManager>();
         FieldManager = GetComponent<FieldManager>();
         EnvironmentManager = GetComponent<EnvironmentManager>();
         GameUIManager = GetComponent<GameUIManager>();

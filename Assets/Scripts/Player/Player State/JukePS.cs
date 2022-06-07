@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JukePS : PlayerState
 {
-    public JukePS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
+    public JukePS(Player _player, float _side) : base(_player)
     {
         name = PState.JUKE;
 
@@ -13,8 +13,8 @@ public class JukePS : PlayerState
 
     public override void Enter()
     {
-        animator.SetTrigger("Juke");
-        animator.SetFloat("Dir", startSide);
+        SetTrigger("Juke");
+        SetFloat("Dir", startSide);
         animTime = controller.jukeTime;
 
         controller.Speed = controller.JukeSpeed;
@@ -29,7 +29,7 @@ public class JukePS : PlayerState
 
 
         if (Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
-            nextState = new SpinPS(controller, animator, Input.GetAxisRaw("Horizontal"));
+            nextState = new SpinPS(player, Input.GetAxisRaw("Horizontal"));
 
         if (Time.time >= startTime + animTime)
         {
@@ -38,30 +38,30 @@ public class JukePS : PlayerState
                 // Jump
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    nextState = new JumpPS(controller, animator);
+                    nextState = new JumpPS(player);
                 }
                 // Acceleration
                 else if (acc > 0 && controller.CanAccelerate)
                 {
-                    nextState = new SprintPS(controller, animator);
+                    nextState = new SprintPS(player);
                 }
                 // SlowSiderun
                 else if (acc < 0 && side * startSide > 0)
                 {
-                    nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
+                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
                 }
                 // Siderun
                 else if (acc == 0 && side * startSide > 0)
                 {
-                    nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
+                    nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
                 }
                 // Slowrun
                 else if (acc < 0)
                 {
-                    nextState = new SlowrunPS(controller, animator);
+                    nextState = new SlowrunPS(player);
                 }
                 // Run
-                else nextState = new RunPS(controller, animator);
+                else nextState = new RunPS(player);
             }
             stage = Event.EXIT;
         }
@@ -69,7 +69,7 @@ public class JukePS : PlayerState
 
     public override void Exit()
     {
-        animator.ResetTrigger("Juke");
+        ResetTrigger("Juke");
 
         base.Exit();
     }

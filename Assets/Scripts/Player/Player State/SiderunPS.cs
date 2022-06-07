@@ -6,7 +6,7 @@ public class SiderunPS : PlayerState
 {
     private bool anim;
 
-    public SiderunPS(PlayerController _controller, Animator _animator, float _side, bool _anim) : base(_controller, _animator)
+    public SiderunPS(Player _player, float _side, bool _anim) : base(_player)
     {
         name = PState.SIDERUN;
 
@@ -17,13 +17,13 @@ public class SiderunPS : PlayerState
 
     public override void Enter()
     {
-        animator.SetFloat("Dir", startSide);
+        SetFloat("Dir", startSide);
         if (anim)
         {
-            animator.SetTrigger("Side");
+            SetTrigger("Side");
             animTime = controller.siderunTime;
         }
-        else animator.SetTrigger("Run");
+        else SetTrigger("Run");
         //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         controller.Speed = controller.NormalSpeed;
@@ -50,31 +50,31 @@ public class SiderunPS : PlayerState
                 // Jump
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    nextState = new JumpPS(controller, animator);
+                    nextState = new JumpPS(player);
                     stage = Event.EXIT;
                 }
                 // Sprint
                 else if (acc > 0 && controller.CanAccelerate)
                 {
-                    nextState = new SprintPS(controller, animator);
+                    nextState = new SprintPS(player);
                     stage = Event.EXIT;
                 }
                 // Slowsiderun
                 else if (acc < 0 && side * startSide > 0)
                 {
-                    nextState = new SlowsiderunPS(controller, animator, side / Mathf.Abs(side));
+                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
                     stage = Event.EXIT;
                 }
                 // Slow
                 else if (acc < 0 && side == 0)
                 {
-                    nextState = new SlowrunPS(controller, animator);
+                    nextState = new SlowrunPS(player);
                     stage = Event.EXIT;
                 }
                 // Run
                 else if (side == 0)
                 {
-                    nextState = new RunPS(controller, animator);
+                    nextState = new RunPS(player);
                     stage = Event.EXIT;
                 }
             }
@@ -82,15 +82,15 @@ public class SiderunPS : PlayerState
         }
         else if (anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
         {
-            nextState = new FeintPS(controller, animator, Input.GetAxisRaw("Horizontal"));
-            animator.SetTrigger("Feint");
+            nextState = new FeintPS(player, Input.GetAxisRaw("Horizontal"));
+            SetTrigger("Feint");
         }
     }
 
     public override void Exit()
     {
-        animator.ResetTrigger("Side");
-        animator.ResetTrigger("Run");
+        ResetTrigger("Side");
+        ResetTrigger("Run");
 
         base.Exit();
     }

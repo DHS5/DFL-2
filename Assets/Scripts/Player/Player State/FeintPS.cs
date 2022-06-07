@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FeintPS : PlayerState
 {
-    public FeintPS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
+    public FeintPS(Player _player, float _side) : base(_player)
     {
         name = PState.FEINT;
 
@@ -31,26 +31,26 @@ public class FeintPS : PlayerState
             // Jump
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                nextState = new JumpPS(controller, animator);
+                nextState = new JumpPS(player);
             }
             // Acceleration
             else if (acc > 0 && controller.CanAccelerate)
             {
-                nextState = new SprintPS(controller, animator);
+                nextState = new SprintPS(player);
             }
             // Slowrun
             else if (acc < 0)
             {
-                nextState = new SlowrunPS(controller, animator);
+                nextState = new SlowrunPS(player);
             }
             // Siderun
             else if (side != 0 && side * startSide > 0)
             {
-                nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), false);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
                 stage = Event.EXIT;
             }
             // Run
-            else nextState = new RunPS(controller, animator);
+            else nextState = new RunPS(player);
 
             stage = Event.EXIT;
         }
@@ -58,7 +58,7 @@ public class FeintPS : PlayerState
 
     public override void Exit()
     {
-        animator.ResetTrigger("Feint");
+        ResetTrigger("Feint");
 
         base.Exit();
     }

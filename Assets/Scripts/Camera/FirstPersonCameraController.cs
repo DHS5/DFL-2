@@ -7,9 +7,8 @@ using UnityEngine;
 /// </summary>
 public class FirstPersonCameraController : MonoBehaviour
 {
-    [Header("Useful scripts")]
-    [Tooltip("Singleton Instance of the GameManager")]
-    [SerializeField] private GameManager gameManager;
+    [Tooltip("Player Manager")]
+    [HideInInspector] public Player player;
 
     [Tooltip("Player body game object")]
     [SerializeField] private GameObject playerBody;
@@ -18,7 +17,11 @@ public class FirstPersonCameraController : MonoBehaviour
     [SerializeField] private GameObject head;
 
     [Tooltip("First person camera")]
-    [SerializeField] private Camera fpCamera;
+    private Camera fpCamera;
+
+    [HideInInspector] public CursorManager cursor;
+
+
 
     [Tooltip("Quaternion containing the camera rotation")]
     private Quaternion cameraRotation;
@@ -43,32 +46,45 @@ public class FirstPersonCameraController : MonoBehaviour
     private int cameraZPos = 0;
 
 
-    private bool locked = true;
 
-    /// <summary>
-    /// Locks the cursor and makes it invisible
-    /// </summary>
-    public void LockCursor()
+
+    void Start()
     {
-        // Lock the cursor in the middle of the screen
-        Cursor.lockState = CursorLockMode.Locked;
+        // Gets the player's script
+        player = GetComponentInParent<Player>();
+        
+        // Initializes the camera
+        fpCamera = GetComponent<Camera>();
 
-        // Makes the cursor invisible
-        Cursor.visible = false;
+        // Gets the Cursor Manager
+        cursor = FindObjectOfType<CursorManager>();
 
-        locked = true;
+        // Initializes the camera's rotation
+        cameraRotation = head.transform.rotation;
+
+        // Gets the camera parameters
+        yMouseSensitivity = player.playerManager.YMouseSensitivity;
+        ySmoothRotation = player.playerManager.YSmoothRotation;
     }
 
-    private void UnlockCursor()
+
+    private void LateUpdate()
     {
-        // Unlock the cursor in the middle of the screen
-        Cursor.lockState = CursorLockMode.None;
+        // Gets the look rotation of the camera
+        if (cursor.locked && player.gameManager.GameOn) LookRotation();
 
-        // Makes the cursor visible
-        Cursor.visible = true;
 
-        locked = false;
+        //if (cursor.locked && Input.GetKeyDown(KeyCode.M))
+        //{
+        //    if (cameraZPos == cameraZPositions.Length - 1) cameraZPos = 0;
+        //    else cameraZPos++;
+        //    Debug.Log(cameraZPos);
+        //    fpCamera.transform.localPosition = new Vector3(fpCamera.transform.localPosition.x, fpCamera.transform.localPosition.y, cameraZPositions[cameraZPos]);
+        //}
     }
+
+
+    // ### Functions ###
 
     /// <summary>
     /// Clamps the rotation around the Y axis in the range [-angleMax,angleMax]
@@ -108,13 +124,6 @@ public class FirstPersonCameraController : MonoBehaviour
         // Gets the mouse X position and clamps it
         float yRotation = Mathf.Clamp(Input.GetAxis("Mouse X"), -xClamp, xClamp) * yMouseSensitivity * 1f;
 
-        // Gets the camera rotation
-        //float cameraYRot = Mathf.Abs(head.transform.localRotation.y);
-        // If the player looks behind, reduces his rotation speed to avoid to exceed the maximum rotation angle
-        //if (cameraYRot > (float)angleMax / 100 && ((yRotation > 0 && head.transform.localRotation.eulerAngles.y < 180) || (yRotation < 0 && head.transform.localRotation.eulerAngles.y > 180)))
-        //{
-        //    yRotation = Mathf.Clamp(yRotation, -yMouseSensitivity + cameraYRot * yMouseSensitivity, yMouseSensitivity - cameraYRot * yMouseSensitivity);
-        //}
         // Gets the new camera's rotation
         cameraRotation *= Quaternion.Euler(0f, yRotation, 0f);
         cameraRotation = ClampRotation(cameraRotation);
@@ -124,52 +133,4 @@ public class FirstPersonCameraController : MonoBehaviour
         // Fixes the x-rotation to the head angle and the z-rotation to the body's rotation
         head.transform.rotation = Quaternion.Euler(headAngle, head.transform.rotation.eulerAngles.y, playerBody.transform.rotation.eulerAngles.z);
     }
-
-    /// <summary>
-    /// Locks the cursor and gets the initial parameters
-    /// </summary>
-    void Start()
-    {
-        // Locks the cursor
-        LockCursor();
-
-        // Initializes the camera
-        //head = GetComponent<Camera>();
-
-        // Initializes the camera's rotation
-        cameraRotation = head.transform.rotation;
-
-        //if (DataManager.InstanceDataManager != null && DataManager.InstanceDataManager.yMouseSensitivity != 0)
-        //{
-        //    yMouseSensitivity = DataManager.InstanceDataManager.yMouseSensitivity;
-        //    ySmoothRotation = DataManager.InstanceDataManager.ySmoothRotation;
-        //}
-    }
-
-
-    private void LateUpdate()
-    {
-        // Gets the look rotation of the camera
-        if (locked && gameManager.GameOn) LookRotation();
-
-
-        if (!locked && Input.GetMouseButtonDown(1))
-        {
-            LockCursor();
-        }
-
-        if (locked && (Input.GetKeyDown(KeyCode.Escape) || gameManager.GameOver || !gameManager.GameOn))
-        {
-            UnlockCursor();
-        }
-
-        if (locked && Input.GetKeyDown(KeyCode.M))
-        {
-            if (cameraZPos == cameraZPositions.Length - 1) cameraZPos = 0;
-            else cameraZPos++;
-            Debug.Log(cameraZPos);
-            fpCamera.transform.localPosition = new Vector3(fpCamera.transform.localPosition.x, fpCamera.transform.localPosition.y, cameraZPositions[cameraZPos]);
-        }
-    }    
-
 }

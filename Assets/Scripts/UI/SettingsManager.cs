@@ -47,6 +47,7 @@ public class SettingsManager : MonoBehaviour
     // ### Properties ###
     public float YMouseSensitivity
     {
+        get { return yMouseSensitivity; }
         set 
         {
             yMouseSensitivity = value;
@@ -56,6 +57,7 @@ public class SettingsManager : MonoBehaviour
     }
     public float YSmoothRotation
     {
+        get { return ySmoothRotation; }
         set 
         {
             ySmoothRotation = value;
@@ -121,6 +123,9 @@ public class SettingsManager : MonoBehaviour
         dataManager = DataManager.InstanceDataManager;
 
         GetManagers();
+
+        YMouseSensitivity = sensitivitySlider.value; // Datamanager
+        YSmoothRotation = smoothRotationSlider.value; 
     }
 
 
@@ -162,11 +167,6 @@ public class SettingsManager : MonoBehaviour
         if (scene == 0)
         {
             menuUIManager.InfoButtonsOn = infoButtonsOn;
-        }
-        if (scene == 1)
-        {
-            playerManager.YMouseSensitivity = yMouseSensitivity;
-            playerManager.YSmoothRotation = ySmoothRotation;
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlowsiderunPS : PlayerState
 {
-    public SlowsiderunPS(PlayerController _controller, Animator _animator, float _side) : base(_controller, _animator)
+    public SlowsiderunPS(Player _player, float _side) : base(_player)
     {
         name = PState.SLOWSIDERUN;
 
@@ -13,7 +13,7 @@ public class SlowsiderunPS : PlayerState
 
     public override void Enter()
     {
-        animator.SetTrigger("Run");
+        SetTrigger("Run");
         
         controller.Speed = controller.NormalSpeed;
 
@@ -33,38 +33,38 @@ public class SlowsiderunPS : PlayerState
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextState = new JumpPS(controller, animator);
+            nextState = new JumpPS(player);
             stage = Event.EXIT;
         }
         // Sprint
         else if (acc > 0 && controller.CanAccelerate)
         {
-            nextState = new SprintPS(controller, animator);
+            nextState = new SprintPS(player);
             stage = Event.EXIT;
         }
         // Slow
         else if (side == 0)
         {
-            nextState = new SlowrunPS(controller, animator);
+            nextState = new SlowrunPS(player);
             stage = Event.EXIT;
         }
         // Siderun
         else if (acc == 0 && side != 0)
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
         // Run
         else if (acc == 0)
         {
-            nextState = new RunPS(controller, animator);
+            nextState = new RunPS(player);
             stage = Event.EXIT;
         }
     }
 
     public override void Exit()
     {
-        animator.ResetTrigger("Run");
+        ResetTrigger("Run");
 
         base.Exit();
     }

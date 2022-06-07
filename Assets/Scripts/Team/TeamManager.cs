@@ -43,7 +43,7 @@ public class TeamManager : MonoBehaviour
 
     private void Start()
     {
-        player = main.PlayerManager.player;
+        player = main.PlayerManager.playerObject;
     }
 
 

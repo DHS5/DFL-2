@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerGameplay : MonoBehaviour
 {
-    [Tooltip("Player Manager")]
-    [HideInInspector] public PlayerManager playerManager;
+    [Tooltip("Player script")]
+    private Player player;
 
 
 
@@ -30,6 +30,16 @@ public class PlayerGameplay : MonoBehaviour
     [Tooltip("Whether the player is freezed")]
     [HideInInspector] public bool freeze = true;
 
+
+
+
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+    }
+
+
+
     /// <summary>
     /// Called when the player collide with a trigger
     /// </summary>
@@ -44,7 +54,7 @@ public class PlayerGameplay : MonoBehaviour
 
             transform.position = new Vector3(0, 0, transform.position.z + 40);
 
-            playerManager.gameManager.NextWave();
+            player.gameManager.NextWave();
         }
         // When the player accounter a field limit
         if (other.gameObject.CompareTag("FieldLimit"))
@@ -61,7 +71,7 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="collision">Collider of the colliding object</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (!playerManager.gameManager.GameOver)
+        if (!player.gameManager.GameOver)
         {
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && !isInvincible)

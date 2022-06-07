@@ -56,7 +56,7 @@ public class BonusManager : MonoBehaviour
         // Instantiate the bonus
         bonus = Instantiate(bonusPrefabs[Random.Range(0, bonusPrefabs.Length)], randomPos, Quaternion.identity).GetComponent<Bonus>();
         bonus.bonusManager = this;
-        bonus.player = main.PlayerManager.player;
+        bonus.player = main.PlayerManager.playerObject;
         activeBonus = bonus;
     }
 

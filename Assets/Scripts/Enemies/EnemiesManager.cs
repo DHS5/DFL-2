@@ -160,7 +160,7 @@ public class EnemiesManager : MonoBehaviour
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
-        enemy.player = main.PlayerManager.player;
+        enemy.player = main.PlayerManager.playerObject;
         enemy.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
         if (audios != null)
         {

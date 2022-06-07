@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SprintPS : PlayerState
 {
-    public SprintPS(PlayerController _controller, Animator _animator) : base(_controller, _animator)
+    public SprintPS(Player _player) : base(_player)
     {
         name = PState.SPRINT;
     }
@@ -12,7 +12,7 @@ public class SprintPS : PlayerState
 
     public override void Enter()
     {
-        animator.SetTrigger("Sprint");
+        SetTrigger("Sprint");
 
         controller.Sprint();
 
@@ -34,26 +34,26 @@ public class SprintPS : PlayerState
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextState = new JumpPS(controller, animator);
+            nextState = new JumpPS(player);
             stage = Event.EXIT;
         }
         // Run
         else if ((acc == 0 && side == 0) || (!controller.CanAccelerate && side == 0))
         {
-            nextState = new RunPS(controller, animator);
+            nextState = new RunPS(player);
             stage = Event.EXIT;
         }
         // Siderun
         else if ((acc == 0 && side != 0) || (!controller.CanAccelerate && side != 0))
         {
-            nextState = new SiderunPS(controller, animator, side / Mathf.Abs(side), true);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
     }
 
     public override void Exit()
     {
-        animator.ResetTrigger("Sprint");
+        ResetTrigger("Sprint");
         
         base.Exit();
     }

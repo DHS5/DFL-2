@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
         // Pause the game on press P
         if (Input.GetKeyDown(KeyCode.P)) PauseGame();
 
-        if (main.PlayerManager.gameplay.onField)
+        if (main.PlayerManager.player.gameplay.onField)
         {
             Score = CalculateScore();
         }

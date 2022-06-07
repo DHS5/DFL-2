@@ -56,14 +56,14 @@ public class TutorialManager : MonoBehaviour
     {
         if (step0)
         {
-            main.PlayerManager.controller.SnapAcc();
-            main.PlayerManager.controller.SnapDir();
-            main.PlayerManager.controller.CanAccelerate = false;
+            main.PlayerManager.player.controller.SnapAcc();
+            main.PlayerManager.player.controller.SnapDir();
+            main.PlayerManager.player.controller.CanAccelerate = false;
         }
 
         if (step1)
         {
-            main.PlayerManager.controller.SnapAcc();
+            main.PlayerManager.player.controller.SnapAcc();
 
             if (Input.GetAxisRaw("Horizontal") == 0)
             {
@@ -73,7 +73,7 @@ public class TutorialManager : MonoBehaviour
             {
                 side = Input.GetAxisRaw("Horizontal");
                 main.PlayerManager.StartPlayer();
-                main.PlayerManager.controller.FullDir(side);
+                main.PlayerManager.player.controller.FullDir(side);
                 Debug.Log(side);
             }
 
@@ -87,7 +87,7 @@ public class TutorialManager : MonoBehaviour
 
         else if (step2)
         {
-            main.PlayerManager.controller.SnapDir();
+            main.PlayerManager.player.controller.SnapDir();
 
             if (Input.GetAxisRaw("Vertical") >= 0)
             {
@@ -105,8 +105,8 @@ public class TutorialManager : MonoBehaviour
 
         else if (step3)
         {
-            main.PlayerManager.controller.SnapDir();
-            main.PlayerManager.controller.CanAccelerate = true;
+            main.PlayerManager.player.controller.SnapDir();
+            main.PlayerManager.player.controller.CanAccelerate = true;
 
             if (Input.GetAxisRaw("Vertical") <= 0)
             {

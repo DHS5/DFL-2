@@ -9,8 +9,8 @@ using UnityEngine.Rendering;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    [Tooltip("Player Manager")]
-    [HideInInspector] public PlayerManager playerManager;
+    [Tooltip("Player script")]
+    private Player player;
 
 
     private PlayerState currentState;
@@ -172,12 +172,17 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+
+        PlayerRigidbody = GetComponent<Rigidbody>();
+    }
+
 
     private void Start()
     {
-        currentState = new RunPS(this, playerManager.playerAnimator);
-
-        PlayerRigidbody = GetComponent<Rigidbody>();
+        currentState = new RunPS(player);
 
         CanAccelerate = true;
     }
@@ -200,7 +205,7 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!playerManager.gameplay.freeze)
+        if (!player.gameplay.freeze)
         {
             transform.Translate(Velocity); // Makes the player run
         }

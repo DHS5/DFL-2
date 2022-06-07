@@ -33,7 +33,7 @@ public class ObjectifManager : MonoBehaviour
 
     private void Start()
     {
-        player = main.PlayerManager.player;
+        player = main.PlayerManager.playerObject;
     }
 
 

@@ -18,8 +18,9 @@ public abstract class PlayerState
     protected PlayerState nextState;
 
 
+    public Player player;
     public PlayerController controller;
-    public Animator animator;
+    public Animator[] animators = new Animator[2];
 
 
     protected float acc;
@@ -29,12 +30,16 @@ public abstract class PlayerState
     protected float startTime;
     protected float animTime;
 
-    public PlayerState(PlayerController _controller, Animator _animator)
+    public PlayerState(Player _player)
     {
         stage = Event.ENTER;
 
-        controller = _controller;
-        animator = _animator;
+        player = _player;
+
+        controller = player.controller;
+
+        animators[0] = player.fpAnimator;
+        animators[1] = player.tpAnimator;
     }
 
 
@@ -67,11 +72,39 @@ public abstract class PlayerState
 
     protected void PlayerOrientation()
     {
-        if (controller.playerManager.gameManager.GameOn)
+        if (player.gameManager.GameOn)
         {
-            controller.playerManager.TPPlayer.transform.localRotation =
-            Quaternion.Slerp(controller.playerManager.TPPlayer.transform.localRotation, 
+            player.TPPlayer.transform.localRotation =
+            Quaternion.Slerp(player.TPPlayer.transform.localRotation,
                 Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
+
+            player.FPPlayer.transform.localRotation =
+                Quaternion.Slerp(player.FPPlayer.transform.localRotation,
+                    Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
+        }
+    }
+
+    // Animators functions
+
+    protected void SetTrigger(string name)
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetTrigger(name);
+        }
+    }
+    protected void ResetTrigger(string name)
+    {
+        foreach (Animator a in animators)
+        {
+            a.ResetTrigger(name);
+        }
+    }
+    protected void SetFloat(string name, float value)
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetFloat(name, value);
         }
     }
 }
