@@ -300,6 +300,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
+        main.CursorManager.UnlockCursor();
+        
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
 
         main.PlayerManager.StopPlayer(); // Stops the player
@@ -318,6 +320,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UnpauseGame()
     {
+        main.CursorManager.LockCursor();
+        
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, false);
 
         StartCoroutine(UnpauseCR(0.5f));

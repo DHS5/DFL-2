@@ -52,7 +52,7 @@ public class CursorManager : MonoBehaviour
         locked = true;
     }
 
-    private void UnlockCursor()
+    public void UnlockCursor()
     {
         // Unlock the cursor in the middle of the screen
         Cursor.lockState = CursorLockMode.None;

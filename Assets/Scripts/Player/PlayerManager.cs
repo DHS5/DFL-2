@@ -94,4 +94,9 @@ public class PlayerManager : MonoBehaviour
         // Player animator stops
         //playerRunAnimator.SetTrigger("Dead");
     }
+
+    public void SprintUIAnimation()
+    {
+        StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.accelerationTime, player.controller.accelerationRestTime));
+    }
 }

@@ -72,10 +72,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float accelerationM; public float AccelerationM { get { return accelerationM; } }
 
     [Tooltip("Time during which the player is able to accelerate")]
-    [SerializeField] private float accelerationTime;
+    public float accelerationTime;
 
     [Tooltip("Time during which the player need to rest to accelerate again")]
-    [SerializeField] private float accelerationRestTime;
+    public float accelerationRestTime;
 
     [Tooltip("Side speed during an acceleration of the player")]
     [SerializeField] private float accSideSpeed; public float AccSideSpeed { get { return accSideSpeed; } }

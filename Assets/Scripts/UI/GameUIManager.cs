@@ -37,8 +37,6 @@ public class GameUIManager : MonoBehaviour
     [Tooltip("UI components of the life bonuses")]
     [SerializeField] private GameObject[] lifeBonuses;
 
-
-    [SerializeField] private Animation accBarAnim;
     [SerializeField] private Animation bonusBarAnim;
 
     private float bonusBarSize;
@@ -106,39 +104,64 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     /// <param name="dechargeTime"></param>
     /// <param name="rechargeTime"></param>
-    public void AccBarAnim(float dechargeTime, float rechargeTime)
+    public IEnumerator AccBarAnim(float dechargeTime, float rechargeTime)
     {
-        accelerationBars[0].SetActive(false);
+        float timeOffset = 0.000001f;
+        
+        Animation fullBarAnim = accelerationBars[0].GetComponent<Animation>();
+        Animation chargingBarAnim = accelerationBars[1].GetComponent<Animation>();
 
-        accBarAnim.Stop();
+        fullBarAnim.Stop();
+        chargingBarAnim.Stop();
+
+        accelerationBars[1].SetActive(false);
 
         Keyframe[] keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, 0.0f);
-        keys[1] = new Keyframe(dechargeTime, -accelerationBars[0].GetComponent<RectTransform>().rect.height / 2);
-        keys[2] = new Keyframe(dechargeTime + rechargeTime, 0.0f);
-        keys[0].outTangent = -accelerationBars[0].GetComponent<RectTransform>().rect.height / (2 * dechargeTime);
-        keys[1].inTangent = -accelerationBars[0].GetComponent<RectTransform>().rect.height / (2 * dechargeTime);
-        keys[1].outTangent = accelerationBars[0].GetComponent<RectTransform>().rect.height / (2 * rechargeTime);
-        keys[2].inTangent = accelerationBars[0].GetComponent<RectTransform>().rect.height / (2 * rechargeTime);
-        AnimationCurve curve = new AnimationCurve(keys);
-        accBarAnim.clip.SetCurve("", typeof(RectTransform), "m_AnchoredPosition.y", curve);
-        
-        keys[1].value = -accelerationBars[0].GetComponent<RectTransform>().rect.height;
-        keys[0].outTangent = -accelerationBars[0].GetComponent<RectTransform>().rect.height / dechargeTime;
-        keys[1].inTangent = -accelerationBars[0].GetComponent<RectTransform>().rect.height / dechargeTime;
-        keys[1].outTangent = accelerationBars[0].GetComponent<RectTransform>().rect.height / rechargeTime;
-        keys[2].inTangent = accelerationBars[0].GetComponent<RectTransform>().rect.height / rechargeTime;
+        keys[1] = new Keyframe(dechargeTime, -accelerationBars[2].GetComponent<RectTransform>().rect.height / 2);
+        keys[2] = new Keyframe(dechargeTime + timeOffset, 0.0f);
+        keys[0].outTangent = -accelerationBars[2].GetComponent<RectTransform>().rect.height / (2 * dechargeTime);
+        keys[1].inTangent = -accelerationBars[2].GetComponent<RectTransform>().rect.height / (2 * dechargeTime);
+        AnimationCurve curve = new(keys);
+        fullBarAnim.clip.SetCurve("", typeof(RectTransform), "m_AnchoredPosition.y", curve);
+
+        keys[1].value = -accelerationBars[2].GetComponent<RectTransform>().rect.height;
+        keys[0].outTangent = -accelerationBars[2].GetComponent<RectTransform>().rect.height / dechargeTime;
+        keys[1].inTangent = -accelerationBars[2].GetComponent<RectTransform>().rect.height / dechargeTime;
         curve = new AnimationCurve(keys);
-        accBarAnim.clip.SetCurve("", typeof(RectTransform), "m_SizeDelta.y", curve);
+        fullBarAnim.clip.SetCurve("", typeof(RectTransform), "m_SizeDelta.y", curve);
 
-        accBarAnim.Play();
+        fullBarAnim.Play();
 
-        Invoke(nameof(FullAccBar), dechargeTime + rechargeTime);
+        yield return new WaitForSeconds(dechargeTime);
+
+        keys[0].value = -accelerationBars[2].GetComponent<RectTransform>().rect.height / 2;
+        keys[1] = new Keyframe(rechargeTime, 0.0f);
+        keys[2].time = rechargeTime + timeOffset;
+        keys[0].outTangent = accelerationBars[2].GetComponent<RectTransform>().rect.height / (2 * rechargeTime);
+        keys[1].inTangent = accelerationBars[2].GetComponent<RectTransform>().rect.height / (2 * rechargeTime);
+
+        curve = new AnimationCurve(keys);
+        chargingBarAnim.clip.SetCurve("", typeof(RectTransform), "m_AnchoredPosition.y", curve);
+
+        keys[0].value = -accelerationBars[2].GetComponent<RectTransform>().rect.height;
+        keys[0].outTangent = accelerationBars[2].GetComponent<RectTransform>().rect.height / rechargeTime;
+        keys[1].inTangent = accelerationBars[2].GetComponent<RectTransform>().rect.height / rechargeTime;
+
+        curve = new AnimationCurve(keys);
+        chargingBarAnim.clip.SetCurve("", typeof(RectTransform), "m_SizeDelta.y", curve);
+
+        accelerationBars[1].SetActive(true);
+        chargingBarAnim.Play();
+
+        yield return new WaitForSeconds(timeOffset);
+
+        accelerationBars[0].SetActive(false);
+
+        yield return new WaitForSeconds(rechargeTime - timeOffset);
+
+        accelerationBars[0].SetActive(true);
     }
-    /// <summary>
-    /// Makes the acceleration bar full
-    /// </summary>
-    private void FullAccBar() { accelerationBars[0].SetActive(true); }
 
 
 

@@ -16,6 +16,8 @@ public class SprintPS : PlayerState
 
         controller.Sprint();
 
+        player.playerManager.SprintUIAnimation();
+
         base.Enter();
     }
 

@@ -40,8 +40,10 @@ public class FirstPersonCameraController : MonoBehaviour
     [Range(10, 30)]
     [SerializeField] private float ySmoothRotation = 20f;
     public float YSR { set { ySmoothRotation = value; } }
+
+
     [Tooltip("")]
-    [SerializeField] private float[] cameraZPositions;
+    [SerializeField] private Vector3[] cameraZPositions;
     [Tooltip("")]
     private int cameraZPos = 0;
 
@@ -65,6 +67,8 @@ public class FirstPersonCameraController : MonoBehaviour
         // Gets the camera parameters
         yMouseSensitivity = player.playerManager.YMouseSensitivity;
         ySmoothRotation = player.playerManager.YSmoothRotation;
+
+        fpCamera.transform.localPosition = cameraZPositions[cameraZPos];
     }
 
 
@@ -73,14 +77,12 @@ public class FirstPersonCameraController : MonoBehaviour
         // Gets the look rotation of the camera
         if (cursor.locked && player.gameManager.GameOn) LookRotation();
 
-
-        //if (cursor.locked && Input.GetKeyDown(KeyCode.M))
-        //{
-        //    if (cameraZPos == cameraZPositions.Length - 1) cameraZPos = 0;
-        //    else cameraZPos++;
-        //    Debug.Log(cameraZPos);
-        //    fpCamera.transform.localPosition = new Vector3(fpCamera.transform.localPosition.x, fpCamera.transform.localPosition.y, cameraZPositions[cameraZPos]);
-        //}
+        if (cursor.locked && Input.GetKeyDown(KeyCode.L))
+        {
+            if (cameraZPos == cameraZPositions.Length - 1) cameraZPos = 0;
+            else cameraZPos++;
+            fpCamera.transform.localPosition = cameraZPositions[cameraZPos];
+        }
     }
 
 
