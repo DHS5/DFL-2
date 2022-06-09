@@ -15,8 +15,10 @@ public class WaitWDS : EnemyState
     {
         base.Update();
 
+        enemy.destination = enemy.transform.position;
+
         
-        if (enemy.zDistance < enemy.waitDist)
+        if (!enemy.patient && enemy.zDistance < enemy.waitDist)
         {
             // Intercept
             if (enemy.rawDistance > enemy.chaseDist)
@@ -26,6 +28,28 @@ public class WaitWDS : EnemyState
                 nextState = new ChaseWDS(enemy, agent, animator);
 
             stage = Event.EXIT;
+        }
+
+        if (enemy.patient && enemy.zDistance < enemy.waitDist)
+        {
+            // If out the precision cone
+            if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
+            {
+                // Intercept
+                if (enemy.rawDistance > enemy.chaseDist)
+                    nextState = new InterceptWDS(enemy, agent, animator);
+                // Chase
+                else
+                    nextState = new ChaseWDS(enemy, agent, animator);
+
+                stage = Event.EXIT;
+            }
+            // If in the precision cone and distance < patience --> attack
+            else if (enemy.rawDistance < enemy.patience)
+            {
+                nextState = new AttackWDS(enemy, agent, animator);
+                stage = Event.EXIT;
+            }
         }
     }
 }

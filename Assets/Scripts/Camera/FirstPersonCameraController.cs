@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class FirstPersonCameraController : MonoBehaviour
 {
-    [Tooltip("Player Manager")]
+    [Tooltip("Player script")]
     [HideInInspector] public Player player;
 
     [Tooltip("Player body game object")]
@@ -19,6 +19,7 @@ public class FirstPersonCameraController : MonoBehaviour
     [Tooltip("First person camera")]
     private Camera fpCamera;
 
+    [Tooltip("Cursor Manager")]
     [HideInInspector] public CursorManager cursor;
 
 
@@ -43,9 +44,9 @@ public class FirstPersonCameraController : MonoBehaviour
 
 
     [Tooltip("")]
-    [SerializeField] private Vector3[] cameraZPositions;
+    [SerializeField] private Vector3[] cameraPositions;
     [Tooltip("")]
-    private int cameraZPos = 0;
+    private int cameraPos = 0;
 
 
 
@@ -68,7 +69,7 @@ public class FirstPersonCameraController : MonoBehaviour
         yMouseSensitivity = player.playerManager.YMouseSensitivity;
         ySmoothRotation = player.playerManager.YSmoothRotation;
 
-        fpCamera.transform.localPosition = cameraZPositions[cameraZPos];
+        fpCamera.transform.localPosition = cameraPositions[cameraPos];
     }
 
 
@@ -79,9 +80,9 @@ public class FirstPersonCameraController : MonoBehaviour
 
         if (cursor.locked && Input.GetKeyDown(KeyCode.L))
         {
-            if (cameraZPos == cameraZPositions.Length - 1) cameraZPos = 0;
-            else cameraZPos++;
-            fpCamera.transform.localPosition = cameraZPositions[cameraZPos];
+            if (cameraPos == cameraPositions.Length - 1) cameraPos = 0;
+            else cameraPos++;
+            fpCamera.transform.localPosition = cameraPositions[cameraPos];
         }
     }
 

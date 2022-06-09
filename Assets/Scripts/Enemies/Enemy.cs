@@ -25,6 +25,8 @@ public abstract class Enemy : MonoBehaviour
     [Tooltip("Game Object of the player")]
     [HideInInspector] public GameObject player;
 
+    protected Player playerScript;
+
     [Tooltip("PlayerGameplay component of the player")]
     protected PlayerGameplay playerG;
 
@@ -40,18 +42,15 @@ public abstract class Enemy : MonoBehaviour
     public float reactivity;
     [Tooltip("")]
     public float anticipation;
-    [Tooltip("Level of patience of the enemy")]
-    public float patience;
+    [Tooltip("Level of precision of the enemy (precision in the positionning in degrees)")]
+    public float precision;
+
 
     [Header("Z distances")]
     [Tooltip("")]
     public float waitDist;
-    [Tooltip("")]
-    public float positionningDist;
 
     [Header("Raw distances")]
-    [Tooltip("")]
-    public float chaseDist;
     [Tooltip("")]
     public float attackDist;
 
@@ -62,6 +61,22 @@ public abstract class Enemy : MonoBehaviour
 
     [Tooltip("Size of the enemy")]
     [SerializeField] protected float size;
+
+
+    [Header("Wing Man caracteristics")]
+    public bool patient;
+
+    public float patience;
+    [Tooltip("Distance before chasing (Raw distance)")]
+    public float chaseDist;
+
+
+
+    [Header("Line Man caracteristics")]
+    [Tooltip("Distance before quitting the positionning state (Z - distance)")]
+    public float positionningDist;
+
+
     public float Size
     {
         get { return size; }
@@ -74,8 +89,10 @@ public abstract class Enemy : MonoBehaviour
 
     [Tooltip("Position of the player")]
     [HideInInspector] public Vector3 playerPosition;
-    [Tooltip("Direction of the player")]
-    [HideInInspector] public Vector3 playerDirection;
+    [Tooltip("Look direction of the player")]
+    [HideInInspector] public Vector3 playerLookDirection;
+    [Tooltip("Velocity of the player")]
+    [HideInInspector] public Vector3 playerVelocity;
     [Tooltip("Speed of the player")]
     [HideInInspector] public float playerSpeed;
     [Tooltip("Direction from the enemy to the player")]
@@ -84,6 +101,8 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public float toPlayerAngle;
     [Tooltip("Distance between the enemy and the player")]
     [HideInInspector] public float rawDistance;
+    [Tooltip("Distance between the enemy and the player on the X-Axis only")]
+    [HideInInspector] public float xDistance;
     [Tooltip("Distance between the enemy and the player on the Z-Axis only")]
     [HideInInspector] public float zDistance;
 
@@ -92,18 +111,17 @@ public abstract class Enemy : MonoBehaviour
 
 
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+
+        playerScript = FindObjectOfType<Player>();
+        playerG = playerScript.gameplay;
+        playerC = playerScript.controller;
     }
 
-    protected virtual void Start()
-    {
-        playerG = player.GetComponent<PlayerGameplay>();
-        playerC = player.GetComponent<PlayerController>();   
-    }
 
 
     // ### Functions ###
@@ -131,12 +149,14 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     public virtual void ChasePlayer()
     {
-        if (player.GetComponent<PlayerGameplay>().isVisible)
+        if (playerG.isVisible)
         {
             // Gets the player's position
             playerPosition = player.transform.position;
-            // Gets the player's direction
-            playerDirection = player.transform.forward.normalized;
+            // Gets the player's look direction
+            playerLookDirection = playerScript.activeBody.transform.forward.normalized;
+            // Gets the player's velocity
+            playerVelocity = playerC.Velocity.normalized;
             // Gets the player's speed
             playerSpeed = playerC.Speed;
             // Gets the direction to the player
@@ -145,6 +165,8 @@ public abstract class Enemy : MonoBehaviour
             toPlayerAngle = Vector3.Angle(transform.forward, toPlayerDirection);
             // Gets the distance between the player and the enemy
             rawDistance = Vector3.Distance(playerPosition, transform.position);
+            // Gets the distance between the player and the enemy on the Z-Axis
+            xDistance = Mathf.Abs(transform.position.x - playerPosition.x);
             // Gets the distance between the player and the enemy on the Z-Axis
             zDistance = transform.position.z - playerPosition.z;
         }

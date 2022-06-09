@@ -57,6 +57,7 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
             Destroy(enemies[i]);
+        enemies.Clear();
     }
 
 
@@ -152,17 +153,17 @@ public class EnemiesManager : MonoBehaviour
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
         int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length - 1);
 
         // Gets a random position and instantiate the new enemy
         Vector3 randomPosition = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
-        enemy = Instantiate(enemyPrefabs[Random.Range(minLevel, maxLevel)], pos + randomPosition, Quaternion.identity).GetComponent<Enemy>();
+        enemy = Instantiate(enemyPrefabs[Random.Range(minLevel, maxLevel)], pos + randomPosition, Quaternion.Euler(0, 180, 0)).GetComponent<Enemy>();
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
         enemy.player = main.PlayerManager.playerObject;
         enemy.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
-        if (audios != null)
+        if (audios != null && audios.Length > 0)
         {
             enemy.audioSource.clip = audios[Random.Range(0, audios.Length)];
             enemy.audioSource.PlayDelayed(Random.Range(0f, 1f));

@@ -12,7 +12,7 @@ public class ClassicZombie : Zombie
 
     private void LateUpdate()
     {
-        if (player.GetComponent<PlayerGameplay>().isChasable && navMeshAgent.isOnNavMesh)
+        if (player.GetComponent<PlayerGameplay>().onField && navMeshAgent.isOnNavMesh)
         {
             ChasePlayer();
         }

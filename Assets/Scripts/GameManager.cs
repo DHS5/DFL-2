@@ -107,8 +107,11 @@ public class GameManager : MonoBehaviour
         get { return score; }
         set
         {
-            score = value;
-            main.GameUIManager.ActuScore(value);
+            if (!gameOver)
+            {
+                score = value;
+                main.GameUIManager.ActuScore(value);
+            }
         }
     }
 
@@ -159,7 +162,7 @@ public class GameManager : MonoBehaviour
 
         PrepareGame(true);
 
-        LaunchGame(true);
+        LaunchGame(false);
     }
 
 
@@ -202,6 +205,7 @@ public class GameManager : MonoBehaviour
             gameData.playerIndex = playerIndex;
             gameData.stadiumIndex = stadiumIndex;
         }
+        gameData.gameEnemiesRange = enemiesRange;
 
         waveNumber = 1;
     }
@@ -274,19 +278,19 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Launches the game by activating the player, the enemies, the atackers...
     /// </summary>
-    /// <param name="start">If true launches the first game, if false launches the game after a pause</param>
-    private void LaunchGame(bool start)
+    /// <param name="pause">If true resumes the game after a pause, if false launches a new wave</param>
+    private void LaunchGame(bool pause)
     {
         gameOn = true;
 
         main.PlayerManager.StartPlayer();
-        if (start) main.EnemiesManager.BeginChase();
+        if (!pause) main.EnemiesManager.BeginChase();
         else main.EnemiesManager.ResumeEnemies();
 
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
         {
-            if (start) main.TeamManager.BeginProtection();
+            if (!pause) main.TeamManager.BeginProtection();
             else main.TeamManager.ResumeAttackers();
         }
 
@@ -343,7 +347,7 @@ public class GameManager : MonoBehaviour
         }
 
         main.GameUIManager.ResumeGameText(3, false);
-        LaunchGame(false);
+        LaunchGame(true);
     }
     /// <summary>
     /// Executes game over tasks with a certain timing
@@ -351,9 +355,10 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
-        main.DataManager.PostScore(gameData, score);
-        
-        main.PlayerManager.DeadPlayer();
+        //main.DataManager.PostScore(gameData, score);
+
+        //main.PlayerManager.DeadPlayer();
+        main.PlayerManager.StopPlayer();
         main.GameUIManager.GameOver();
 
         // Call the Ouuuuuh with the game audio manager (currently in field manager)
@@ -378,6 +383,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextWave()
     {
+        Debug.Log("NextWave");
+        
         CleanGame();
 
         PrepareGame(false);

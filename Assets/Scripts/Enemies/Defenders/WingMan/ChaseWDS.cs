@@ -16,7 +16,7 @@ public class ChaseWDS : EnemyState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + enemy.playerDirection * enemy.anticipation;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * enemy.anticipation;
 
         // Attack
         if (enemy.rawDistance < enemy.attackDist)
@@ -25,7 +25,7 @@ public class ChaseWDS : EnemyState
             stage = Event.EXIT;
         }
         // Intercept
-        if (enemy.rawDistance > enemy.chaseDist)
+        if (enemy.rawDistance > enemy.chaseDist && Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
         {
             nextState = new InterceptWDS(enemy, agent, animator);
             stage = Event.EXIT;

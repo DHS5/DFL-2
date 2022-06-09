@@ -423,14 +423,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameUIManager, Assembly-CSharp
-        m_MethodName: Restart
+      - m_Target: {fileID: 6056623954788691228, guid: 03229a0e9ea539d409b43748a2cd5169,
+          type: 3}
+        m_TargetAssemblyTypeName: Tools, Assembly-CSharp
+        m_MethodName: ReloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2117,6 +2118,7 @@ MonoBehaviour:
   - {fileID: 220146158451610779, guid: 0d7ab6fa65797894d946be849bf936e1, type: 3}
   playerObject: {fileID: 0}
   player: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: -30}
 --- !u!114 &675627204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2261,8 +2263,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe0740fe7922a64cada77dee2f30f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wingmenPrefabs: []
-  linemenPrefabs: []
+  wingmenPrefabs:
+  - {fileID: 2035816876248888783, guid: 85287a0918568ab4496d38f922b6a706, type: 3}
+  - {fileID: 2035816876248888783, guid: 548cf6350c0e3034fb6accccecfc3219, type: 3}
+  - {fileID: 2035816876248888783, guid: 479db857fb49b2349be11fa3929bdadc, type: 3}
+  - {fileID: 2035816876248888783, guid: e4b9173b98815d34a8a23d0bead8e270, type: 3}
+  linemenPrefabs:
+  - {fileID: 2035816876248888783, guid: 17152ca51ab00c04c83f099d113c3833, type: 3}
+  - {fileID: 2035816876248888783, guid: 06d8465b5d960ed478fc12b87422c1fc, type: 3}
+  - {fileID: 2035816876248888783, guid: 54f3d2783a16f42479662dfa25a3e9de, type: 3}
   defenderAudios: []
   classicZPrefabs: []
   sleepingZPrefabs: []
@@ -2359,7 +2368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050870490a967034d968e77d19ace58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step1Time: 0.5
+  step1Time: 1
   step2Time: 2
   step3Time: 3
   step4Time: 3
@@ -4267,10 +4276,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameUIManager, Assembly-CSharp
-        m_MethodName: BackToMenu
-        m_Mode: 1
+      - m_Target: {fileID: 6056623954788691228, guid: 03229a0e9ea539d409b43748a2cd5169,
+          type: 3}
+        m_TargetAssemblyTypeName: Tools, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

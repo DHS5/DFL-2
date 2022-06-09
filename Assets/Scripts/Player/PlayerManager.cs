@@ -15,6 +15,11 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector] public GameObject playerObject;
     [HideInInspector] public Player player;
+
+
+    [Tooltip("Player's start position")]
+    [SerializeField] private Vector3 startPosition;
+
     
     // ### Properties ###
     public float YMouseSensitivity
@@ -37,6 +42,8 @@ public class PlayerManager : MonoBehaviour
                 player.TPPlayer.SetActive(false);
 
                 player.fpsCamera.enabled = true;
+
+                player.activeBody = player.FPPlayer;
             }
             else if (value == ViewType.TPS)
             {
@@ -44,6 +51,8 @@ public class PlayerManager : MonoBehaviour
                 player.FPPlayer.SetActive(false);
 
                 player.fpsCamera.enabled = false;
+
+                player.activeBody = player.TPPlayer;
             }
         }
     }
@@ -60,7 +69,7 @@ public class PlayerManager : MonoBehaviour
 
     public void PreparePlayer()
     {
-        playerObject = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], new Vector3(0, 0, -25), Quaternion.identity);
+        playerObject = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], startPosition, Quaternion.identity);
         player = playerObject.GetComponent<Player>();
 
         player.gameManager = main.GameManager;
@@ -73,7 +82,6 @@ public class PlayerManager : MonoBehaviour
     public void StartPlayer()
     {
         player.gameplay.freeze = false; // Unfreezes the player
-        player.gameplay.isChasable = true; // Makes the player chasable
         //fpsCamera.LockCursor(); // Locks the cursor
 
         player.fpAnimator.enabled = true;
@@ -95,8 +103,16 @@ public class PlayerManager : MonoBehaviour
         //playerRunAnimator.SetTrigger("Dead");
     }
 
+
+    // UI functions
+
     public void SprintUIAnimation()
     {
         StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.accelerationTime, player.controller.accelerationRestTime));
+    }
+
+    public void UIModifyLife(bool state, int lifeNumber)
+    {
+        main.GameUIManager.ModifyLife(state, lifeNumber);
     }
 }

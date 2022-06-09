@@ -196,7 +196,7 @@ public class TeamManager : MonoBehaviour
             }
         }
         ActuEnemies();
-        if (player.GetComponent<PlayerGameplay>().isChasable)
+        if (player.GetComponent<PlayerGameplay>().onField)
             Invoke(nameof(ProtectPlayer), teamReactivity);
     }
 

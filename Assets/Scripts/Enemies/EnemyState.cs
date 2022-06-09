@@ -31,6 +31,7 @@ public abstract class EnemyState
     {
         stage = Event.ENTER;
 
+        enemy = _enemy;
         agent = _agent;
         animator = _animator;
     }

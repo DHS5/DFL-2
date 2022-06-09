@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public AudioSource audioSource;
 
+    [HideInInspector] public GameObject activeBody;
+
 
 
     [Header("First Person components")]
@@ -38,6 +40,9 @@ public class Player : MonoBehaviour
     [Tooltip("Animator of the third person player")]
     [HideInInspector] public Animator tpAnimator;
 
+    [Tooltip("Third person camera controller")]
+    [HideInInspector] public ThirdPersonCameraController tpsCamera;
+
 
 
 
@@ -52,6 +57,8 @@ public class Player : MonoBehaviour
         tpAnimator = TPPlayer.GetComponentInChildren<Animator>();
 
         fpsCamera = FPPlayer.GetComponentInChildren<FirstPersonCameraController>();
+
+        tpsCamera = TPPlayer.GetComponentInChildren<ThirdPersonCameraController>();
 
         audioSource = GetComponent<AudioSource>();
     }

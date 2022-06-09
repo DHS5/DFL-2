@@ -24,6 +24,11 @@ public class Tools : MonoBehaviour
         LoadScene((int)scene);
     }
 
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     /// <summary>
     /// Quits the game
     /// </summary>

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WingMan : Defender
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         currentState = new WaitWDS(this, navMeshAgent, animator);
     }
@@ -20,6 +20,11 @@ public class WingMan : Defender
 
         currentState = currentState.Process();
 
+        if (playerG.onField)
+        {
+            navMeshAgent.SetDestination(destination);
+        }
+
         if (reactivity != 0)
         {
             Invoke(nameof(ChasePlayer), reactivity);
@@ -28,9 +33,10 @@ public class WingMan : Defender
 
     private void Update()
     {
-        if (reactivity == 0)
+        if (reactivity == 0 && playerG.onField)
         {
             ChasePlayer();
         }
+
     }
 }
