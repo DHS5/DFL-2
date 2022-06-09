@@ -14,9 +14,9 @@ public class SprintPS : PlayerState
     {
         SetTrigger("Sprint");
 
-        controller.Sprint();
-
         player.playerManager.SprintUIAnimation();
+
+        controller.Sprint();
 
         base.Enter();
     }

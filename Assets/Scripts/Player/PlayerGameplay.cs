@@ -101,9 +101,15 @@ public class PlayerGameplay : MonoBehaviour
                 Debug.Log("Hurt by obstacle");
             }
 
-            if (collision.gameObject.CompareTag("OutOfBounds"))
+            if (collision.gameObject.CompareTag("StadiumLimit"))
             {
                 Dead(collision.impulse.normalized);
+                Debug.Log("OutOfBounds");
+            }
+
+            if (collision.gameObject.CompareTag("OutOfBounds"))
+            {
+                Dead(new Vector3(0, 0, 0));
                 Debug.Log("OutOfBounds");
             }
         }

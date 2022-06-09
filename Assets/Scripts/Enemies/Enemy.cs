@@ -111,6 +111,10 @@ public abstract class Enemy : MonoBehaviour
 
 
 
+    private Vector3 b4StopVelocity;
+
+
+
     protected virtual void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -131,6 +135,8 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     public void Stop()
     {
+        b4StopVelocity = navMeshAgent.velocity;
+        navMeshAgent.velocity = Vector3.zero;
         navMeshAgent.isStopped = true;
         animator.enabled = false;
     }
@@ -140,6 +146,7 @@ public abstract class Enemy : MonoBehaviour
     public void Resume()
     {
         navMeshAgent.isStopped = false;
+        navMeshAgent.velocity = b4StopVelocity;
         animator.enabled = true;
     }
 

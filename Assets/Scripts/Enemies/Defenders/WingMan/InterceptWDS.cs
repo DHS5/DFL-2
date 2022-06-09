@@ -15,7 +15,7 @@ public class InterceptWDS : EnemyState
     {
         base.Update();
 
-        if (Mathf.Abs(enemy.toPlayerAngle) < 90)
+        if (Mathf.Abs(enemy.toPlayerAngle) < 90 || enemy.zDistance < 0)
         {
             enemy.destination = enemy.playerPosition + enemy.playerVelocity * (enemy.anticipation +
                  ((enemy.rawDistance / agent.speed) // Minimum time to reach the destination

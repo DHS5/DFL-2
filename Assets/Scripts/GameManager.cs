@@ -338,6 +338,8 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator UnpauseCR(float time)
     {
+        main.SettingsManager.SetEventSystem(false);
+        
         int i = 3;
         while (i > 0)
         {
@@ -348,6 +350,8 @@ public class GameManager : MonoBehaviour
 
         main.GameUIManager.ResumeGameText(3, false);
         LaunchGame(true);
+
+        main.SettingsManager.SetEventSystem(true);
     }
     /// <summary>
     /// Executes game over tasks with a certain timing
@@ -383,13 +387,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextWave()
     {
-        Debug.Log("NextWave");
-        
+        WaveNumber++;
+
         CleanGame();
 
         PrepareGame(false);
-
-        WaveNumber++;
 
         LaunchGame(false);
     }

@@ -108,7 +108,8 @@ public class PlayerManager : MonoBehaviour
 
     public void SprintUIAnimation()
     {
-        StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.accelerationTime, player.controller.accelerationRestTime));
+        if (!player.controller.Sprinting)
+            StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.accelerationTime, player.controller.accelerationRestTime));
     }
 
     public void UIModifyLife(bool state, int lifeNumber)

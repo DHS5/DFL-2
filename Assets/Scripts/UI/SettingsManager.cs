@@ -17,6 +17,8 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public static SettingsManager InstanceSettingsManager { get; private set; }
 
+    public GameObject EventSystem { get; private set; }
+
     // ### Managers ###
     // Multi scene managers
     [HideInInspector] public DataManager dataManager { get; private set; }
@@ -113,6 +115,8 @@ public class SettingsManager : MonoBehaviour
         }
         InstanceSettingsManager = this;
         DontDestroyOnLoad(gameObject);
+
+        EventSystem = GameObject.Find("EventSystem");
     }
 
     /// <summary>
@@ -194,4 +198,9 @@ public class SettingsManager : MonoBehaviour
     }
 
     // ## Tuto Scene
+
+
+    // ### Tools
+
+    public void SetEventSystem(bool state) { EventSystem.SetActive(state); }
 }
