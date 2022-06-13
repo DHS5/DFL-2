@@ -16,9 +16,13 @@ public class MusicSource : MonoBehaviour
     [Tooltip("Music's list")]
     [SerializeField] private AudioClip[] musics;
 
-    [Header("Music's volume slider")]
+    [Header("UI elements")]
     [Tooltip("Music's volume slider")]
     [SerializeField] private Slider musicSlider;
+    [Tooltip("Music On toggle")]
+    [SerializeField] private Toggle musicOnToggle;
+    [Tooltip("Loop On toggle")]
+    [SerializeField] private Toggle loopOnToggle;
 
 
     private int musicNumber;
@@ -38,6 +42,7 @@ public class MusicSource : MonoBehaviour
         { 
             musicNumber = value;
             dataManager.audioData.musicNumber = value;
+            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -53,6 +58,7 @@ public class MusicSource : MonoBehaviour
 
             musicOn = value;
             dataManager.audioData.musicOn = value;
+            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -66,6 +72,7 @@ public class MusicSource : MonoBehaviour
             musicVolume = value;
             audioSource.volume = musicVolume;
             dataManager.audioData.musicVolume = value;
+            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -79,6 +86,7 @@ public class MusicSource : MonoBehaviour
             loopOn = value;
             audioSource.loop = value;
             dataManager.audioData.loopOn = value;
+            dataManager.SavePlayerData();
         }
     }
 
@@ -102,10 +110,10 @@ public class MusicSource : MonoBehaviour
     {
         dataManager = DataManager.InstanceDataManager;
 
-        PlayFromBeginning(0); // A remplacer !!!
-        MusicOn = true; //
-        MusicVolume = 0.5f; //  par LoadAudioData(dataManager.audioData);
-        musicSlider.value = musicVolume;
+
+        LoadAudioData(dataManager.audioData);
+        if (musicOn)
+            PlayFromBeginning(musicNumber);
     }
 
     private void Update()
@@ -122,10 +130,15 @@ public class MusicSource : MonoBehaviour
     private void LoadAudioData(AudioData data)
     {
         MusicOn = data.musicOn;
+        musicOnToggle.isOn = musicOn;
+
         MusicVolume = data.musicVolume;
+        musicSlider.value = musicVolume;
+
         MusicNumber = data.musicNumber;
 
         LoopOn = data.loopOn;
+        loopOnToggle.isOn = loopOn;
     }
 
 

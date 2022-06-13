@@ -41,6 +41,8 @@ public abstract class EnemyState
     {
         stage = Event.UPDATE;
         startTime = Time.time;
+
+        //enemy.state = name.ToString();
     }
     public virtual void Update()
     {

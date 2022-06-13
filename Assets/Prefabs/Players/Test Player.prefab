@@ -67,6 +67,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   gameplay: {fileID: 0}
   audioSource: {fileID: 0}
+  activeBody: {fileID: 0}
   FPPlayer: {fileID: 5865577980137533388}
   fpAnimator: {fileID: 0}
   fpsCamera: {fileID: 0}
@@ -647,7 +648,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2306164415209805258}
   m_LocalRotation: {x: -0.00000017881393, y: 1.0746975e-14, z: 4.035669e-14, w: 1}
-  m_LocalPosition: {x: 0, y: 0.00217, z: 0.0015}
+  m_LocalPosition: {x: 0, y: 0.00193, z: 0.00063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1382,7 +1383,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 992126944662211343, guid: af0f50771ebb3ce4faebd75d466ccc8b, type: 3}
+  - {fileID: 2100000, guid: 621d175579aee0d4d87cb8f951c16cef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1912,6 +1913,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7868172144481276101, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 621d175579aee0d4d87cb8f951c16cef, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ac6b87a16a357c4b9e7109f4a99faa2, type: 3}
 --- !u!4 &9188605608546851769 stripped

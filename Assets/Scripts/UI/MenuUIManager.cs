@@ -43,6 +43,8 @@ public class MenuUIManager : MonoBehaviour
         dataManager = DataManager.InstanceDataManager;
 
         settingsManager.GetManagers();
+
+        InfoButtonsOn = settingsManager.InfoButtonsOn;
     }
 
 

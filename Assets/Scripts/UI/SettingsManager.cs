@@ -17,7 +17,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public static SettingsManager InstanceSettingsManager { get; private set; }
 
-    public GameObject EventSystem { get; private set; }
+    [SerializeField] private GameObject EventSystem;
 
     // ### Managers ###
     // Multi scene managers
@@ -40,30 +40,29 @@ public class SettingsManager : MonoBehaviour
     [Header("UI elements")]
     [SerializeField] private Slider sensitivitySlider;
     [SerializeField] private Slider smoothRotationSlider;
+    [SerializeField] private Slider viewTypeSlider;
 
-    private bool infoButtonsOn = true;
+    [SerializeField] private Slider soundVolumeSlider;
+    [SerializeField] private Toggle soundOnToggle;
 
-    private float yMouseSensitivity;
-    private float ySmoothRotation;
+    [SerializeField] private Toggle infoButtonsToggle;
 
     // ### Properties ###
     public float YMouseSensitivity
     {
-        get { return yMouseSensitivity; }
         set 
         {
-            yMouseSensitivity = value;
             dataManager.gameplayData.yms = value;
+            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.YMouseSensitivity = value;
         }
     }
     public float YSmoothRotation
     {
-        get { return ySmoothRotation; }
         set 
         {
-            ySmoothRotation = value;
             dataManager.gameplayData.ysr = value;
+            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.YSmoothRotation = value;
         }
     }
@@ -73,6 +72,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             dataManager.gameplayData.viewType = (ViewType) value;
+            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.ViewType = (ViewType) value;
 
 
@@ -91,16 +91,17 @@ public class SettingsManager : MonoBehaviour
 
     public bool InfoButtonsOn
     {
-        get { return infoButtonsOn; }
+        get { return dataManager.playerPrefs.infoButtonsOn; }
         set 
         {
-            infoButtonsOn = value;
+            dataManager.playerPrefs.infoButtonsOn = value;
+            dataManager.SavePlayerData();
             if (menuUIManager != null) menuUIManager.InfoButtonsOn = value;
         }
     }
 
-    public bool SoundOn { set { dataManager.audioData.soundOn = value; } }
-    public float SoundVolume { set { dataManager.audioData.soundVolume = value; } }
+    public bool SoundOn { set { dataManager.audioData.soundOn = value; dataManager.SavePlayerData(); } }
+    public float SoundVolume { set { dataManager.audioData.soundVolume = value; dataManager.SavePlayerData(); } }
 
 
     /// <summary>
@@ -115,8 +116,6 @@ public class SettingsManager : MonoBehaviour
         }
         InstanceSettingsManager = this;
         DontDestroyOnLoad(gameObject);
-
-        EventSystem = GameObject.Find("EventSystem");
     }
 
     /// <summary>
@@ -128,8 +127,11 @@ public class SettingsManager : MonoBehaviour
 
         GetManagers();
 
-        YMouseSensitivity = sensitivitySlider.value; // Datamanager
-        YSmoothRotation = smoothRotationSlider.value; 
+        LoadGameplayData(dataManager.gameplayData);
+        LoadAudioData(dataManager.audioData);
+        LoadPlayerPrefs(dataManager.playerPrefs);
+
+        SetEventSystem(true);
     }
 
 
@@ -160,7 +162,7 @@ public class SettingsManager : MonoBehaviour
         else if (scene == 2)
         { }
 
-        ActuManagers(scene);
+        //ActuManagers(scene);
     }
     /// <summary>
     /// Actualize the managers of the scene
@@ -170,14 +172,43 @@ public class SettingsManager : MonoBehaviour
     {
         if (scene == 0)
         {
-            menuUIManager.InfoButtonsOn = infoButtonsOn;
+            
         }
     }
 
-    public void SetScreen(ScreenNumber screen, bool state)
+    private void LoadGameplayData(GameplayData data)
     {
-        screens[(int)screen].SetActive(state);
+        sensitivitySlider.value = data.yms;
+        smoothRotationSlider.value = data.ysr;
+        viewTypeSlider.value = (float) data.viewType;
+
+        if (data.viewType == 0)
+        {
+            sensitivitySlider.interactable = true;
+            smoothRotationSlider.interactable = true;
+        }
+        else if ((int) data.viewType == 1)
+        {
+            sensitivitySlider.interactable = false;
+            smoothRotationSlider.interactable = false;
+        }
     }
+
+    private void LoadAudioData(AudioData data)
+    {
+        //SoundOn = data.soundOn;
+        //SoundVolume = data.soundVolume;
+
+        soundOnToggle.isOn = data.soundOn;
+        soundVolumeSlider.value = data.soundVolume;
+    }
+
+    private void LoadPlayerPrefs(PlayerPrefs prefs)
+    {
+        infoButtonsToggle.isOn = prefs.infoButtonsOn;
+    }
+
+
 
     // ## Menu Scene
 
@@ -203,4 +234,6 @@ public class SettingsManager : MonoBehaviour
     // ### Tools
 
     public void SetEventSystem(bool state) { EventSystem.SetActive(state); }
+
+    public void SetScreen(ScreenNumber screen, bool state) { screens[(int)screen].SetActive(state); }
 }

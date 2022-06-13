@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 
 
+[System.Serializable]
 public struct LeaderBoard
 {
     public List<string> names;
@@ -12,6 +13,7 @@ public struct LeaderBoard
     public int personnalHighscore;
 }
 
+[System.Serializable]
 public struct AudioData
 {
     public bool soundOn;
@@ -24,6 +26,13 @@ public struct AudioData
     public bool loopOn;
 }
 
+[System.Serializable]
+public struct PlayerPrefs
+{
+    public bool infoButtonsOn;
+}
+
+[System.Serializable]
 public struct GameplayData
 {
     public float yms;
@@ -31,12 +40,14 @@ public struct GameplayData
     public ViewType viewType;
 }
 
+[System.Serializable]
 public struct PlayerData
 {
     public int id;
     public string name;
 }
 
+[System.Serializable]
 public struct ProgressData
 {
     public int coins;
@@ -44,6 +55,7 @@ public struct ProgressData
     public string[] stadiumSkins;
 }
 
+[System.Serializable]
 public struct GameData
 {
     public GameMode gameMode;
@@ -76,6 +88,7 @@ public class DataManager : MonoBehaviour
 
     // Online Savable Data
     [HideInInspector] public AudioData audioData;
+    [HideInInspector] public PlayerPrefs playerPrefs;
     [HideInInspector] public GameplayData gameplayData;
     [HideInInspector] public PlayerData playerData;
     [HideInInspector] public ProgressData progressData;
@@ -92,7 +105,7 @@ public class DataManager : MonoBehaviour
     {
         if (InstanceDataManager != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
             // Clears the options when starting the menu
             InstanceDataManager.ClearGameData();
             return;
@@ -101,7 +114,7 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Load the personnal highscores and player preferences
-        //LoadPlayerData();
+        LoadPlayerData();
 
         // Clear the game data (modes etc... for the first game)
         ClearGameData();
@@ -296,17 +309,27 @@ public class DataManager : MonoBehaviour
     [System.Serializable]
     class SaveData
     {
-        
+        public AudioData audioData;
+
+        public GameplayData gameplayData;
+
+        public PlayerPrefs playerPrefs;
     }
 
 
     public void SavePlayerData()
     {
-        SaveData data = new SaveData();
+        SaveData data = new();
+
+        data.audioData = audioData;
+        data.gameplayData = gameplayData;
+        data.playerPrefs = playerPrefs;
 
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+
+        //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
 
     /// <summary>
@@ -320,6 +343,9 @@ public class DataManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
+            audioData = data.audioData;
+            gameplayData = data.gameplayData;
+            playerPrefs = data.playerPrefs;
         }
     }
 }

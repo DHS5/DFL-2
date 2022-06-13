@@ -57,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
 
     [Header("Physical parameters")]
     [Tooltip("Attack speed of the enemy")]
-    [SerializeField] public float attackSpeed;
+    public float attackSpeed;
 
     [Tooltip("Size of the enemy")]
     [SerializeField] protected float size;
@@ -113,7 +113,7 @@ public abstract class Enemy : MonoBehaviour
 
     private Vector3 b4StopVelocity;
 
-
+    //public string state;
 
     protected virtual void Awake()
     {

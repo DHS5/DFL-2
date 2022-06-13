@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 7799cd2d87d4441419bd21664ab7fc28,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2458e9d02fff15140975947a2f668568,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6808,6 +6810,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 456076350}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &456076352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5245306273603643918, guid: a7184751268082548a1f2281aab11957,
+    type: 3}
+  m_PrefabInstance: {fileID: 456076350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &457616012
 GameObject:
   m_ObjectHideFlags: 0
@@ -11750,6 +11764,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e4f733ac77d324d8aefb63c2cd3e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioData:
+    soundOn: 0
+    soundVolume: 0
+    musicOn: 0
+    musicVolume: 0
+    musicNumber: 0
+    loopOn: 0
+  playerPrefs:
+    infoButtonsOn: 0
+  gameplayData:
+    yms: 0
+    ysr: 0
+    viewType: 0
+  playerData:
+    id: 0
+    name: 
+  progressData:
+    coins: 0
+    playerSkins: []
+    stadiumSkins: []
+  gameData:
+    gameMode: 0
+    gameDifficulty: 0
+    gameWheather: 0
+    gameOptions: 
+    gameDrill: 0
+    gameEnemiesRange: 0
+    playerIndex: 0
+    stadiumIndex: 0
 --- !u!4 &845207701
 Transform:
   m_ObjectHideFlags: 0
@@ -15375,10 +15418,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c736413afe04dd4e8123a9b9a5aef5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EventSystem: {fileID: 1969507599}
   screens:
   - {fileID: 1409817480}
   sensitivitySlider: {fileID: 1392657408}
   smoothRotationSlider: {fileID: 760537483}
+  viewTypeSlider: {fileID: 1378682301}
+  soundVolumeSlider: {fileID: 456076352}
+  soundOnToggle: {fileID: 1680994195}
+  infoButtonsToggle: {fileID: 1295931047}
 --- !u!1 &1111792051
 GameObject:
   m_ObjectHideFlags: 0
@@ -15510,6 +15558,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 717940104297581336}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1130466880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 717940105356739928, guid: c7a71b1b629c69741ad0d9f0894d9b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 717940104297581336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1130653830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17815,6 +17875,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1295931042}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1295931047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 717940105356739928, guid: c7a71b1b629c69741ad0d9f0894d9b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 1295931042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1302220102 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2409900115177633650, guid: 84b7a6668145b314fbae25570f40f97f,
@@ -18944,6 +19016,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1378682299}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1378682301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5245306273603643918, guid: a7184751268082548a1f2281aab11957,
+    type: 3}
+  m_PrefabInstance: {fileID: 1378682299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1392657406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23060,6 +23144,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1621551617}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1621551619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 717940105356739928, guid: c7a71b1b629c69741ad0d9f0894d9b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 1621551617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1629407969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23560,6 +23656,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1657176689}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1680994195 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 717940105356739928, guid: c7a71b1b629c69741ad0d9f0894d9b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 1259477385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1706855839 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9056208483189382447, guid: 2f16e9c70f96706448e102f3a8e90cf0,
@@ -25086,6 +25194,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1555836638cd34283a3780a19b58d4c6, type: 3}
   - {fileID: 8300000, guid: 07f391589664f4e85904fa28802b4aa8, type: 3}
   musicSlider: {fileID: 1418031407}
+  musicOnToggle: {fileID: 1130466880}
+  loopOnToggle: {fileID: 1621551619}
 --- !u!4 &1802871985
 Transform:
   m_ObjectHideFlags: 0
@@ -27734,7 +27844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1969507600
 MonoBehaviour:
   m_ObjectHideFlags: 0

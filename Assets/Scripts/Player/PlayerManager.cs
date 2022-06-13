@@ -24,12 +24,12 @@ public class PlayerManager : MonoBehaviour
     // ### Properties ###
     public float YMouseSensitivity
     {
-        get { return main.SettingsManager.YMouseSensitivity; }
+        get { return main.DataManager.gameplayData.yms; }
         set { player.fpsCamera.YMS = value; }
     }
     public float YSmoothRotation
     {
-        get { return main.SettingsManager.YSmoothRotation; }
+        get { return main.DataManager.gameplayData.ysr; }
         set { player.fpsCamera.YSR = value; }
     }
     public ViewType ViewType
