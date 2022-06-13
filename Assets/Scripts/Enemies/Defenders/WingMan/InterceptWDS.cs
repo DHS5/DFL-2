@@ -10,6 +10,12 @@ public class InterceptWDS : EnemyState
         name = EState.INTERCEPT;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Run");
+    }
 
     public override void Update()
     {
@@ -47,5 +53,12 @@ public class InterceptWDS : EnemyState
             }
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Run");
     }
 }

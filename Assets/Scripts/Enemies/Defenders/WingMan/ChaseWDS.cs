@@ -10,6 +10,13 @@ public class ChaseWDS : EnemyState
         name = EState.CHASE;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Run");
+    }
+
 
     public override void Update()
     {
@@ -30,5 +37,12 @@ public class ChaseWDS : EnemyState
             nextState = new InterceptWDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Run");
     }
 }

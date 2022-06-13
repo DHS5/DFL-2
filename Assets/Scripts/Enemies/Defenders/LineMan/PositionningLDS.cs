@@ -27,7 +27,13 @@ public class PositionningLDS : EnemyState
 
         if (enemy.zDistance < enemy.positionningDist)
         {
-            nextState = new AttackLDS(enemy, agent, animator);
+            // Attack
+            if (enemy.rawDistance < enemy.attackDist)
+                nextState = new AttackLDS(enemy, agent, animator);
+            // Chase
+            else
+                nextState = new ChaseLDS(enemy, agent, animator);
+
             stage = Event.EXIT;
         }
     }

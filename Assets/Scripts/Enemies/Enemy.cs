@@ -105,6 +105,8 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public float xDistance;
     [Tooltip("Distance between the enemy and the player on the Z-Axis only")]
     [HideInInspector] public float zDistance;
+    [Tooltip("Whether the player is on the field")]
+    [HideInInspector] public bool playerOnField;
 
     [Tooltip("Destination of the enemy (on the nav mesh)")]
     [HideInInspector] public Vector3 destination;
@@ -176,6 +178,8 @@ public abstract class Enemy : MonoBehaviour
             xDistance = Mathf.Abs(transform.position.x - playerPosition.x);
             // Gets the distance between the player and the enemy on the Z-Axis
             zDistance = transform.position.z - playerPosition.z;
+
+            playerOnField = playerG.onField;
         }
     }
 }

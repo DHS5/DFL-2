@@ -10,6 +10,12 @@ public class WaitWDS : EnemyState
         name = EState.WAIT;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Wait");
+    }
 
     public override void Update()
     {
@@ -17,23 +23,9 @@ public class WaitWDS : EnemyState
 
         enemy.destination = enemy.transform.position;
 
-        
-        if (!enemy.patient && enemy.zDistance < enemy.waitDist)
+        if (enemy.playerOnField)
         {
-            // Intercept
-            if (enemy.rawDistance > enemy.chaseDist)
-                nextState = new InterceptWDS(enemy, agent, animator);
-            // Chase
-            else
-                nextState = new ChaseWDS(enemy, agent, animator);
-
-            stage = Event.EXIT;
-        }
-
-        if (enemy.patient && enemy.zDistance < enemy.waitDist)
-        {
-            // If out the precision cone
-            if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
+            if (!enemy.patient && enemy.zDistance < enemy.waitDist)
             {
                 // Intercept
                 if (enemy.rawDistance > enemy.chaseDist)
@@ -44,12 +36,35 @@ public class WaitWDS : EnemyState
 
                 stage = Event.EXIT;
             }
-            // If in the precision cone and distance < patience --> attack
-            else if (enemy.rawDistance < enemy.patience)
+
+            if (enemy.patient && enemy.zDistance < enemy.waitDist)
             {
-                nextState = new AttackWDS(enemy, agent, animator);
-                stage = Event.EXIT;
+                // If out the precision cone
+                if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
+                {
+                    // Intercept
+                    if (enemy.rawDistance > enemy.chaseDist)
+                        nextState = new InterceptWDS(enemy, agent, animator);
+                    // Chase
+                    else
+                        nextState = new ChaseWDS(enemy, agent, animator);
+
+                    stage = Event.EXIT;
+                }
+                // If in the precision cone and distance < patience --> attack
+                else if (enemy.rawDistance < enemy.patience)
+                {
+                    nextState = new AttackWDS(enemy, agent, animator);
+                    stage = Event.EXIT;
+                }
             }
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Wait");
     }
 }

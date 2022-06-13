@@ -16,6 +16,13 @@ public class AttackWDS : EnemyState
         agent.speed = enemy.attackSpeed;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Chase");
+    }
+
 
     public override void Update()
     {
@@ -33,6 +40,8 @@ public class AttackWDS : EnemyState
     public override void Exit()
     {
         agent.speed = baseSpeed;
+
+        animator.ResetTrigger("Chase");
 
         base.Exit();
     }
