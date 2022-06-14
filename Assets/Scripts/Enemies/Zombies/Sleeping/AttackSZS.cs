@@ -15,8 +15,10 @@ public class AttackSZS : EnemyState
     }
 
     public override void Enter()
-    {
+    {        
         base.Enter();
+
+        animator.SetTrigger("Attack");
 
         float distP;
 
@@ -63,5 +65,16 @@ public class AttackSZS : EnemyState
         enemy.destination += destinationDir * enemy.anticipation;
 
         agent.velocity = destinationDir * agent.speed;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (agent.remainingDistance < 0.0001f)
+        {
+            animator.SetTrigger("Idle");
+            animator.ResetTrigger("Attack");
+        }
     }
 }

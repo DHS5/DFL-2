@@ -13,6 +13,13 @@ public class ChaseCZS : EnemyState
         enemy = _enemy;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Run");
+    }
+
     public override void Update()
     {
         base.Update();
@@ -25,5 +32,12 @@ public class ChaseCZS : EnemyState
             nextState = new AttackCZS(enemy, agent, animator);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Run");
     }
 }

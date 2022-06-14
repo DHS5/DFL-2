@@ -10,18 +10,23 @@ public class PositionningLDS : EnemyState
         name = EState.POSITIONNING;
     }
 
-
     public override void Update()
     {
         base.Update();
 
 
         if (enemy.xDistance > enemy.precision)
+        {
+            animator.SetTrigger("Run");
+            animator.ResetTrigger("Wait");
             enemy.destination = enemy.playerPosition + enemy.intelligence * enemy.zDistance * enemy.playerLookDirection;
+        }
         else
         {
+            animator.ResetTrigger("Run");
+            animator.SetTrigger("Wait");
             enemy.destination = enemy.transform.position;
-            enemy.transform.localRotation = 
+            enemy.transform.localRotation =
                 Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.playerPosition - enemy.transform.position), 5 * Time.deltaTime);
         }
 
@@ -36,5 +41,13 @@ public class PositionningLDS : EnemyState
 
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Run");
+        animator.ResetTrigger("Wait");
     }
 }

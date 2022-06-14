@@ -22,7 +22,7 @@ public class WaitCZS : EnemyState
         enemy.destination = enemy.transform.position;
 
 
-        if (enemy.zDistance < enemy.waitDist)
+        if (enemy.playerOnField && enemy.zDistance < enemy.waitDist)
         {
             nextState = new ChaseCZS(enemy, agent, animator);
             stage = Event.EXIT;

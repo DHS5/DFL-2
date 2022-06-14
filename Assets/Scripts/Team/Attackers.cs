@@ -13,7 +13,7 @@ public class Attackers : MonoBehaviour
     protected Animator animator;
 
     [HideInInspector] public GameObject player;
-    [HideInInspector] public GameObject target;
+    [HideInInspector] public Enemy target;
 
 
     [HideInInspector] public float playerProtectionRadius;
@@ -88,7 +88,7 @@ public class Attackers : MonoBehaviour
     }
 
 
-    public virtual void TargetEnemy(GameObject enemy)
+    public virtual void TargetEnemy(Enemy enemy)
     {
         if (hasDefender)
         {

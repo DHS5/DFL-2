@@ -27,7 +27,7 @@ public class LineMan : Defender
             navMeshAgent.SetDestination(destination);
         }
 
-        if (reactivity != 0)
+        if (reactivity != 0 && !gameOver)
         {
             Invoke(nameof(ChasePlayer), reactivity);
         }
@@ -35,7 +35,7 @@ public class LineMan : Defender
 
     private void Update()
     {
-        if (reactivity == 0 && playerG.onField)
+        if (reactivity == 0 && playerG.onField && !gameOver)
         {
             ChasePlayer();
         }

@@ -25,10 +25,10 @@ public class TeamManager : MonoBehaviour
     [Tooltip("List of the team's attackers currently busy")]
     private List<Attackers> busyAttackers = new List<Attackers>();
     [Tooltip("List of the enemies currently not taken care of")]
-    [HideInInspector] public List<GameObject> enemies;
+    [HideInInspector] public List<Enemy> enemies;
 
-    private List<GameObject> enemiesToSupp = new List<GameObject>();
-    private List<GameObject> enemiesToAdd = new List<GameObject>();
+    private List<Enemy> enemiesToSupp = new List<Enemy>();
+    private List<Enemy> enemiesToAdd = new List<Enemy>();
 
 
     [SerializeField] private float playerProtectionRadius; // A choisir pour chaque attacker
@@ -76,7 +76,7 @@ public class TeamManager : MonoBehaviour
     /// Add an enemy to the enemies list
     /// </summary>
     /// <param name="enemy">Enemy to add to the list</param>
-    public void AddEnemy(GameObject enemy)
+    public void AddEnemy(Enemy enemy)
     {
         enemiesToAdd.Add(enemy);
     }
@@ -85,18 +85,18 @@ public class TeamManager : MonoBehaviour
     /// Supp an enemy from the enemies list
     /// </summary>
     /// <param name="enemy">Enemy to supp from the list</param>
-    public void SuppEnemy(GameObject enemy)
+    public void SuppEnemy(Enemy enemy)
     {
         enemiesToSupp.Add(enemy);
     }
 
     private void ActuEnemies()
     {
-        foreach (GameObject e in enemiesToSupp)
+        foreach (Enemy e in enemiesToSupp)
         {
             enemies.Remove(e);
         }
-        foreach (GameObject e in enemiesToAdd)
+        foreach (Enemy e in enemiesToAdd)
         {
             enemies.Add(e);
         }
@@ -150,14 +150,14 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void BeginProtection()
     {
-        enemies = new List<GameObject>(main.EnemiesManager.enemies);
+        enemies = new List<Enemy>(main.EnemiesManager.enemies);
 
         ProtectPlayer();
     }
 
     private void ProtectPlayer()
     {
-        foreach (GameObject e in enemies)
+        foreach (Enemy e in enemies)
         {
             float toPlayerAngle = Vector3.Angle(player.transform.forward, e.transform.position - player.transform.position);
             if (Vector3.Distance(e.transform.position, player.transform.position) < playerProtectionRadius * ( 1 - toPlayerAngle/270))

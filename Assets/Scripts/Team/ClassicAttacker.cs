@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClassicAttacker : Attackers
 {
-    public override void TargetEnemy(GameObject enemy)
+    public override void TargetEnemy(Enemy enemy)
     {
         base.TargetEnemy(enemy);
     }

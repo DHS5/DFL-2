@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class AttackLDS : EnemyState
 {
+    readonly float animTime = 1.6f;
+
+    readonly float attackOffset = 0.2f;
+    
     private float baseSpeed;
     
     public AttackLDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
@@ -14,16 +18,26 @@ public class AttackLDS : EnemyState
         baseSpeed = agent.speed;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        animator.SetTrigger("Attack");
+
+        agent.speed = enemy.attackSpeed;
+
+        Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
+
+        enemy.destination = enemy.playerPosition + playerDir * attackOffset * enemy.attackSpeed;
+
+        agent.velocity = playerDir * enemy.attackSpeed;
+    }
 
     public override void Update()
     {
         base.Update();
 
-        agent.speed = enemy.attackSpeed;
-
-        enemy.destination = enemy.playerPosition;
-
-        if (enemy.rawDistance > enemy.attackDist)
+        if (Time.time - startTime > animTime)
         {
             nextState = new ChaseLDS(enemy, agent, animator);
             stage = Event.EXIT;
@@ -33,6 +47,8 @@ public class AttackLDS : EnemyState
     public override void Exit()
     {
         agent.speed = baseSpeed;
+
+        animator.ResetTrigger("Attack");
 
         base.Exit();
     }

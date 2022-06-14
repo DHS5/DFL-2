@@ -111,6 +111,8 @@ public abstract class Enemy : MonoBehaviour
     [Tooltip("Destination of the enemy (on the nav mesh)")]
     [HideInInspector] public Vector3 destination;
 
+    protected bool gameOver;
+
 
 
     private Vector3 b4StopVelocity;
@@ -181,5 +183,13 @@ public abstract class Enemy : MonoBehaviour
 
             playerOnField = playerG.onField;
         }
+    }
+
+
+    public virtual void GameOver()
+    {
+        gameOver = true;
+        animator.SetTrigger("GameOver");
+        navMeshAgent.isStopped = true;
     }
 }

@@ -23,6 +23,8 @@ public class AttackCZS : EnemyState
         baseSpeed = agent.speed;
 
         agent.speed = enemy.attackSpeed;
+
+        animator.SetTrigger("Attack");
     }
 
     public override void Update()
@@ -44,5 +46,7 @@ public class AttackCZS : EnemyState
         base.Exit();
 
         agent.speed = baseSpeed;
+
+        animator.ResetTrigger("Attack");
     }
 }

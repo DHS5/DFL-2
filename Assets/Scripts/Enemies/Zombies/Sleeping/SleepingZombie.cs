@@ -17,7 +17,7 @@ public class SleepingZombie : Zombie
 
         currentState = currentState.Process();
 
-        if (playerG.onField)
+        if (playerG.onField && !gameOver)
         {
             navMeshAgent.SetDestination(destination);
         }
@@ -25,7 +25,7 @@ public class SleepingZombie : Zombie
 
     private void Update()
     {
-        if (playerG.onField)
+        if (playerG.onField && !gameOver)
         {
             ChasePlayer();
         }

@@ -13,8 +13,26 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private Material[] skyboxes;
     [SerializeField] private GameObject[] directionnalLights;
 
-    private EnvironmentStyle envStyleNumber = EnvironmentStyle.SUN;
 
+    [Header("Environment parameters")]
+    [Header("Light")]
+    [SerializeField] private float zombieLightIntensity;
+    [SerializeField] private float nightLightIntensity;
+
+    [Header("Fog")]
+    [SerializeField] private float normalFogIntensity;
+    [SerializeField] private float objectifFogIntensity;
+
+    [SerializeField] private float normalFogIncrease;
+    [SerializeField] private float hardFogIncrease;
+
+
+
+    readonly Quaternion dirLightRotation = Quaternion.Euler(50, -30, 0);
+
+    private EnvironmentStyle envStyleNumber;
+
+    private Light dirLight;
 
 
     private void Awake()
@@ -28,7 +46,7 @@ public class EnvironmentManager : MonoBehaviour
     private void ActuEnvironment()
     {
         RenderSettings.skybox = skyboxes[(int)envStyleNumber];
-        Instantiate(directionnalLights[(int)envStyleNumber], new Vector3(0, 0, 0), Quaternion.Euler(50, -30, 0));
+        dirLight = Instantiate(directionnalLights[(int)envStyleNumber], Vector3.zero, dirLightRotation).GetComponent<Light>();
     }
 
 
@@ -41,7 +59,7 @@ public class EnvironmentManager : MonoBehaviour
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) // ZOMBIE
         {
             envStyleNumber = EnvironmentStyle.ZOMBIE;
-            RenderSettings.ambientIntensity = 0.4f;
+            RenderSettings.ambientIntensity = zombieLightIntensity;
         }
 
         // # Wheather #
@@ -51,9 +69,9 @@ public class EnvironmentManager : MonoBehaviour
 
             // # Options #
             if (main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF)) // OBJECTIF
-                RenderSettings.fogDensity = 0.03f;
+                RenderSettings.fogDensity = objectifFogIntensity;
             else
-                RenderSettings.fogDensity = 0.1f;
+                RenderSettings.fogDensity = normalFogIntensity;
         }
 
         // Generates the environment
@@ -73,9 +91,9 @@ public class EnvironmentManager : MonoBehaviour
             // # Difficulties #
             // Increases the fog according to the difficulty
             if (main.GameManager.gameData.gameDifficulty == GameDifficulty.HARD) // HARD
-                IncreaseFog(0.03f);
+                IncreaseFog(hardFogIncrease);
             else if (main.GameManager.gameData.gameDifficulty == GameDifficulty.NORMAL) // NORMAL
-                IncreaseFog(0.01f);
+                IncreaseFog(normalFogIncrease);
         }
     }
 
@@ -85,16 +103,16 @@ public class EnvironmentManager : MonoBehaviour
     /// <param name="densityAddition">FogDensity += densityAddition</param>
     public void IncreaseFog(float densityAddition)
     {
-        //if (gameManager.gameMode == GameMode.OBJECTIF)
-        //    densityAddition /= 2;
+        if (main.GameManager.gameOptions.Contains(GameOption.OBJECTIF))
+            densityAddition /= 2;
         RenderSettings.fogDensity += densityAddition;
     }
 
     public void BedTime()
     {
         envStyleNumber = EnvironmentStyle.NIGHT;
+        Destroy(dirLight.gameObject);
         ActuEnvironment();
-        //FindObjectOfType<Light>().gameObject.SetActive(false); ???
-        RenderSettings.ambientIntensity = 0.6f;
+        RenderSettings.ambientIntensity = nightLightIntensity;
     }
 }

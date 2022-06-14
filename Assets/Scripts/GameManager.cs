@@ -370,7 +370,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         main.FieldManager.GameOver();
-        main.EnemiesManager.StopEnemies();
+        main.EnemiesManager.GameOver();
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
         {

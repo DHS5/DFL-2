@@ -32,7 +32,10 @@ public class EnemiesManager : MonoBehaviour
 
 
     [Tooltip("List of the enemies on the field")]
-    [HideInInspector] public List<GameObject> enemies;
+    [HideInInspector] public List<Enemy> enemies;
+
+
+    readonly int sleepingZProportion = 5;
 
 
     // Zones of the field
@@ -68,7 +71,7 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].GetComponent<Enemy>().Stop();
+            enemies[i].Stop();
         }
     }
     /// <summary>
@@ -78,7 +81,15 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].GetComponent<Enemy>().Resume();
+            enemies[i].Resume();
+        }
+    }
+
+    public void GameOver()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].GameOver();
         }
     }
 
@@ -89,7 +100,7 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].GetComponent<Enemy>().ChasePlayer();
+            enemies[i].ChasePlayer();
         }
     }
 
@@ -170,7 +181,7 @@ public class EnemiesManager : MonoBehaviour
         }
 
         // Fill the enemies list of the field
-        enemies.Add(enemy.gameObject);
+        enemies.Add(enemy);
     }
 
 
@@ -224,9 +235,9 @@ public class EnemiesManager : MonoBehaviour
         // Spawn on the whole field
         for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
-            r = Random.Range(1, 3);
-            if (r == 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
-            else if (r == 2) CreateEnemy(sleepingZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
+            r = Random.Range(1, sleepingZProportion + 1);
+            if (r != 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
+            else CreateEnemy(sleepingZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
         }
     }
 
