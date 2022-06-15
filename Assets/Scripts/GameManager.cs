@@ -298,6 +298,15 @@ public class GameManager : MonoBehaviour
         main.GameAudioManager.GenerateAudio();
     }
 
+    public void EnterField()
+    {
+        // # Modes #
+        if (gameData.gameMode == GameMode.TEAM)
+        {
+            main.TeamManager.BeginProtection();
+        }
+    }
+
 
     /// <summary>
     /// Pause the game

@@ -25,7 +25,7 @@ public class FrontAttacker : Attacker
             navMeshAgent.SetDestination(destination);
         }
 
-        if (reactivity != 0)
+        if (reactivity != 0 && !gameOver)
         {
             Invoke(nameof(ProtectPlayer), reactivity);
         }

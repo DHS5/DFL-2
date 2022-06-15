@@ -69,6 +69,8 @@ public class PlayerGameplay : MonoBehaviour
 
             // Changes the onField state of the player
             onField = !onField;
+
+            if (onField) player.gameManager.EnterField();
         }
     }
 

@@ -174,12 +174,10 @@ public class TeamManager : MonoBehaviour
     {
         player = main.PlayerManager.player;
 
-        for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty / 2; i++)
+        for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty; i++)
         {
             InstantiateAttacker();
         }
-
-        enemies = new List<Enemy>(main.EnemiesManager.enemies);
     }
 
 
@@ -188,6 +186,7 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void BeginProtection()
     {
+        enemies.Clear();
         enemies = new List<Enemy>(main.EnemiesManager.enemies);
 
         ProtectPlayer();
@@ -204,7 +203,7 @@ public class TeamManager : MonoBehaviour
 
             if (enemyPlayerDist < protectionRadius)
             {
-                float enemyPlayerAngle = Vector3.Angle(player.transform.position - e.transform.position, player.controller.Velocity.normalized);
+                float enemyPlayerAngle = Vector3.Angle(e.transform.position - player.transform.position, player.controller.Velocity.normalized);
                 FindFreeAttackers(enemyPlayerAngle);
 
                 Attacker betterAttacker = null;
@@ -222,7 +221,6 @@ public class TeamManager : MonoBehaviour
                         }
                     }
                     betterAttacker.TargetEnemy(e);
-                    freeAttackers.Clear();
                 }
                 else
                 {
@@ -242,13 +240,14 @@ public class TeamManager : MonoBehaviour
             }
         }
         ActuEnemies();
-        if (player.gameplay.onField)
+        if (player.gameplay.onField && main.GameManager.GameOn && !main.GameManager.GameOver)
             Invoke(nameof(ProtectPlayer), teamReactivity);
     }
 
 
     private void FindFreeAttackers(float angle)
     {
+        Debug.Log(angle);
         // Front
         if (Mathf.Abs(angle) <= 45)
             freeAttackers = new List<Attacker>(frontAttackers);
@@ -264,7 +263,7 @@ public class TeamManager : MonoBehaviour
 
         busyAttackers = new List<Attacker>(freeAttackers);
 
-        foreach (Attacker a in freeAttackers)
+        foreach (Attacker a in busyAttackers)
         {
             if (a.hasDefender)
             {

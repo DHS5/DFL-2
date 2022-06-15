@@ -43,5 +43,7 @@ public class DefendFAS : AttackerState
         base.Exit();
 
         animator.ResetTrigger("Block");
+
+        attacker.UnTarget();
     }
 }
