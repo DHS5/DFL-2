@@ -29,7 +29,7 @@ public class ClassicAttacker : Attacker
             // Gets the player's direction
             Vector3 playerDirection = player.transform.forward.normalized;
 
-            Vector3 destination = transform.position + playerDirection.normalized * ProtectionRadius;
+            Vector3 destination = transform.position + playerDirection * ProtectionRadius;
             destination.x = Mathf.Clamp(destination.x, playerPos.x - 10, playerPos.x + 10);
             destination.z = Mathf.Clamp(destination.z, playerPos.z, playerPos.z + 10);
 

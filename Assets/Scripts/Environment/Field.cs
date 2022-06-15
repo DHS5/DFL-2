@@ -43,6 +43,7 @@ public class Field : MonoBehaviour
     public GameObject frontZone;
     public GameObject middleZone;
     public GameObject endZone;
+    public GameObject enterZone;
 
 
     /// <summary>

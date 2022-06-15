@@ -19,6 +19,8 @@ public class ProtectFAS : AttackerState
         base.Enter();
 
         agent.speed = attacker.player.controller.NormalSpeed;
+
+        animator.SetTrigger("Run");
     }
 
     public override void Update()
@@ -26,13 +28,24 @@ public class ProtectFAS : AttackerState
         base.Update();
 
         attacker.destination = attacker.transform.position + attacker.playerDir * attacker.positionRadius;
-        attacker.destination.x = Mathf.Clamp(attacker.destination.x, attacker.playerPos.x - attacker.positionRadius / 2, attacker.playerPos.x + attacker.positionRadius / 2);
-        attacker.destination.z = Mathf.Clamp(attacker.destination.z, attacker.playerPos.z + attacker.positionRadius / 2, attacker.playerPos.z + attacker.positionRadius);
+        attacker.destination = attacker.ClampInZone(attacker.destination);
 
         if (attacker.hasDefender)
         {
             nextState = new DefendFAS(attacker, agent, animator);
             stage = Event.EXIT;
         }
+        else if (!attacker.InZone(attacker.transform.position))
+        {
+            nextState = new BackFAS(attacker, agent, animator);
+            stage = Event.EXIT;
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Run");
     }
 }

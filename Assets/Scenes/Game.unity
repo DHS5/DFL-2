@@ -2193,10 +2193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13714282c194f0a4aa067b82f8495d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackersPrefabs: []
+  attackersPrefabs:
+  - {fileID: 2634090613693426012, guid: 6ac413ed9465a334dbbb209694cc285c, type: 3}
   enemies: []
-  playerProtectionRadius: 0
-  teamReactivity: 0
+  protectionRadius: 15
+  teamReactivity: 0.05
 --- !u!114 &675627213
 MonoBehaviour:
   m_ObjectHideFlags: 0

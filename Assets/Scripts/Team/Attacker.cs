@@ -14,7 +14,7 @@ public class Attacker : MonoBehaviour
 
     protected AttackerState currentState;
 
-    protected AttackerType type;
+    [HideInInspector] public AttackerType type;
 
 
     [HideInInspector] public Player player;
@@ -24,8 +24,9 @@ public class Attacker : MonoBehaviour
 
     protected bool gameOver;
 
-    [SerializeField] protected float reactivity;
+    public float reactivity;
     public float positionRadius;
+    [Range(0,1)] public float defenseDistMultiplier;
 
     public float back2PlayerSpeed;
 
@@ -35,6 +36,9 @@ public class Attacker : MonoBehaviour
 
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public Vector3 targetDir;
+
+    [HideInInspector] public float playerTargetDist;
+    [HideInInspector] public Vector3 player2TargetDir;
 
 
     [SerializeField] private float size;
@@ -129,36 +133,49 @@ public class Attacker : MonoBehaviour
         // Gets the player direction
         playerDir = player.controller.Velocity.normalized;
 
-        // ### Target
-        // Gets the player's position
-        targetPos = target.transform.position;
-        // Gets the player direction
-        targetDir = target.GetComponent<NavMeshAgent>().velocity.normalized;
+        if (target != null)
+        {
+            // ### Target
+            // Gets the player's position
+            targetPos = target.transform.position;
+            // Gets the player direction
+            targetDir = target.GetComponent<NavMeshAgent>().velocity.normalized;
+
+            // Gets the distance between player and target
+            playerTargetDist = Vector3.Distance(playerPos, targetPos);
+            // Gets the direction from player to target
+            player2TargetDir = (targetPos - playerPos).normalized;
+        }
     }
 
 
 
     public virtual void TargetEnemy(Enemy enemy)
     {
-        if (hasDefender)
-        {
-            teamManager.AddEnemy(target);
-        }
         teamManager.SuppEnemy(enemy);
         hasDefender = true;
         target = enemy;
-        BlockEnemy();
     }
 
     public virtual void UnTarget()
     {
         hasDefender = false;
         teamManager.AddEnemy(target);
-        teamManager.FreeAttacker(this);
     }
 
     protected virtual void BlockEnemy()
     {
 
+    }
+
+
+    public virtual Vector3 ClampInZone(Vector3 destination) 
+    {
+        return Vector3.zero; 
+    }
+
+    public virtual bool InZone(Vector3 destination)
+    {
+        return false;
     }
 }

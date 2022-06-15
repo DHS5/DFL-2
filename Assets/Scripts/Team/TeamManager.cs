@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
-public enum AttackerType { FRONT = 0, SIDE = 1, BACK = 2}
+public enum AttackerType { FRONT = 0, LSIDE = 1, RSIDE = 2, BACK = 3}
 
 /// <summary>
 /// Manages the team effort of the attackers
@@ -22,10 +23,18 @@ public class TeamManager : MonoBehaviour
     [SerializeField] private GameObject[] attackersPrefabs;
 
 
-    [Tooltip("List of the team's attackers currently free")]
+    [Tooltip("List of the team's front attackers")]
+    private List<Attacker> frontAttackers = new List<Attacker>();
+    [Tooltip("List of the team's left side attackers")]
+    private List<Attacker> sideLAttackers = new List<Attacker>();
+    [Tooltip("List of the team's right side attackers")]
+    private List<Attacker> sideRAttackers = new List<Attacker>();
+    [Tooltip("List of the team's back attackers")]
+    private List<Attacker> backAttackers = new List<Attacker>();
+
     private List<Attacker> freeAttackers = new List<Attacker>();
-    [Tooltip("List of the team's attackers currently busy")]
     private List<Attacker> busyAttackers = new List<Attacker>();
+
     [Tooltip("List of the enemies currently not taken care of")]
     [HideInInspector] public List<Enemy> enemies;
 
@@ -34,18 +43,15 @@ public class TeamManager : MonoBehaviour
 
 
     public float protectionRadius;
+    [SerializeField] private float teamReactivity;
 
-    [SerializeField] private float teamReactivity; // idem
+
+    readonly float sizeMultiplier = 0.1f;
 
 
     private void Awake()
     {
         main = GetComponent<MainManager>();
-    }
-
-    private void Start()
-    {
-        player = main.PlayerManager.player;
     }
 
 
@@ -57,10 +63,7 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void StopAttackers()
     {
-        foreach (Attacker a in freeAttackers)
-            a.Stop();
-
-        foreach (Attacker a in busyAttackers)
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers))
             a.Stop();
     }
 
@@ -69,16 +72,14 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void ResumeAttackers()
     {
-        foreach (Attacker a in freeAttackers)
-            a.Resume();
-
-        foreach (Attacker a in busyAttackers)
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers))
             a.Resume();
     }
 
     public void GameOver()
     {
-
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers))
+            a.GameOver();
     }
 
 
@@ -114,18 +115,15 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    public void FreeAttacker(Attacker a)
-    {
-        busyAttackers.Remove(a);
-        freeAttackers.Add(a);
-    }
-
     public void ClearAttackers()
     {
-        foreach (Attacker a in freeAttackers) Destroy(a);
-        foreach (Attacker a in busyAttackers) Destroy(a);
-        freeAttackers.Clear();
-        busyAttackers.Clear();
+        // Attackers
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers)) Destroy(a);
+        frontAttackers.Clear();
+        backAttackers.Clear();
+        sideRAttackers.Clear();
+        sideLAttackers.Clear();
+        // Enemies
         enemies.Clear();
         enemiesToAdd.Clear();
         enemiesToSupp.Clear();
@@ -137,22 +135,51 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     private void InstantiateAttacker()
     {
-        Vector3 playerPos = player.transform.position;
-        Vector3 randomPos = new Vector3(Random.Range(-protectionRadius / 2, protectionRadius / 2), 0, Random.Range(10, protectionRadius / 2)) + playerPos;
+        Vector3 zonePos = main.FieldManager.field.enterZone.transform.position;
+        float xScale = main.FieldManager.field.enterZone.transform.localScale.x / 2;
+        float zScale = main.FieldManager.field.enterZone.transform.localScale.z / 2;
+
+        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
+
         Attacker attacker = Instantiate(attackersPrefabs[0], randomPos, Quaternion.identity).GetComponent<Attacker>();
         attacker.teamManager = this;
         attacker.player = player;
-        attacker.Size *= Random.Range(0.9f, 1.1f);
-        freeAttackers.Add(attacker);
+        attacker.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
+        AddAttackerToList(attacker);
+    }
+
+    private void AddAttackerToList(Attacker a)
+    {
+        switch (a.type)
+        {
+            case AttackerType.FRONT:
+                frontAttackers.Add(a);
+                break;
+            case AttackerType.BACK:
+                backAttackers.Add(a);
+                break;
+            case AttackerType.LSIDE:
+                sideLAttackers.Add(a);
+                break;
+            case AttackerType.RSIDE:
+                sideRAttackers.Add(a);
+                break;
+            default:
+                break;
+        }
     }
 
 
     public void TeamCreation()
     {
+        player = main.PlayerManager.player;
+
         for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty / 2; i++)
         {
             InstantiateAttacker();
         }
+
+        enemies = new List<Enemy>(main.EnemiesManager.enemies);
     }
 
 
@@ -164,41 +191,49 @@ public class TeamManager : MonoBehaviour
         enemies = new List<Enemy>(main.EnemiesManager.enemies);
 
         ProtectPlayer();
+
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers))
+            a.ProtectPlayer();
     }
 
     private void ProtectPlayer()
     {
         foreach (Enemy e in enemies)
         {
-            float toPlayerAngle = Vector3.Angle(player.transform.forward, e.transform.position - player.transform.position);
-            if (Vector3.Distance(e.transform.position, player.transform.position) < protectionRadius * ( 1 - toPlayerAngle/270))
+            float enemyPlayerDist = Vector3.Distance(e.transform.position, player.transform.position);
+
+            if (enemyPlayerDist < protectionRadius)
             {
+                float enemyPlayerAngle = Vector3.Angle(player.transform.position - e.transform.position, player.controller.Velocity.normalized);
+                FindFreeAttackers(enemyPlayerAngle);
+
+                Attacker betterAttacker = null;
+
                 if (freeAttackers.Count > 0)
                 {
                     float minDist = float.PositiveInfinity;
-                    Attacker betterAttacker = null;
                     foreach (Attacker a in freeAttackers)
                     {
-                        if (Vector3.Distance(a.transform.position, e.transform.position) < minDist)
+                        float dist = Vector3.Distance(a.transform.position, e.transform.position);
+                        if (dist < minDist)
                         {
-                            minDist = Vector3.Distance(a.transform.position, e.transform.position);
+                            minDist = dist;
                             betterAttacker = a;
                         }
                     }
                     betterAttacker.TargetEnemy(e);
-                    busyAttackers.Add(betterAttacker);
-                    freeAttackers.Remove(betterAttacker);
+                    freeAttackers.Clear();
                 }
                 else
                 {
-                    float minDist = protectionRadius*2;
-                    Attacker betterAttacker = null;
+                    float maxDist = enemyPlayerDist;
+                    float targetDist;
                     foreach (Attacker a in busyAttackers)
                     {
-                        if (Vector3.Distance(a.GetComponent<Attacker>().target.transform.position, player.transform.position) > protectionRadius &&
-                            Vector3.Distance(a.transform.position, e.transform.position) < minDist)
+                        targetDist = Vector3.Distance(a.target.transform.position, player.transform.position);
+                        if (targetDist > maxDist)
                         {
-                            minDist = Vector3.Distance(a.transform.position, e.transform.position);
+                            maxDist = targetDist;
                             betterAttacker = a;
                         }
                     }
@@ -211,4 +246,30 @@ public class TeamManager : MonoBehaviour
             Invoke(nameof(ProtectPlayer), teamReactivity);
     }
 
+
+    private void FindFreeAttackers(float angle)
+    {
+        // Front
+        if (Mathf.Abs(angle) <= 45)
+            freeAttackers = new List<Attacker>(frontAttackers);
+        // L Side
+        else if (angle < -45 && angle > -135)
+            freeAttackers = new List<Attacker>(sideLAttackers);
+        // R Side
+        else if (angle > 45 && angle < 135)
+            freeAttackers = new List<Attacker>(sideRAttackers);
+        // Back
+        else
+            freeAttackers = new List<Attacker>(backAttackers);
+
+        busyAttackers = new List<Attacker>(freeAttackers);
+
+        foreach (Attacker a in freeAttackers)
+        {
+            if (a.hasDefender)
+            {
+                freeAttackers.Remove(a);
+            }
+        }
+    }
 }

@@ -20,6 +20,28 @@ public class BackFAS : AttackerState
 
         agent.speed = attacker.back2PlayerSpeed;
 
+        animator.SetTrigger("Sprint");
+
         attacker.UnTarget();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        attacker.destination = attacker.playerPos + attacker.playerDir * attacker.positionRadius;
+
+        if (attacker.InZone(attacker.transform.position))
+        {
+            nextState = new ProtectFAS(attacker, agent, animator);
+            stage = Event.EXIT;
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Sprint");
     }
 }

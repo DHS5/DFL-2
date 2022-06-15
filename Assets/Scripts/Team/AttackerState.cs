@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum AState { PROTECT, DEFEND, BACK }
+public enum AState { WAIT, PROTECT, DEFEND, BACK }
 
 
 public abstract class AttackerState
