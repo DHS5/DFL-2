@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClassicAttacker : Attackers
+public class ClassicAttacker : Attacker
 {
     public override void TargetEnemy(Enemy enemy)
     {
@@ -29,7 +29,7 @@ public class ClassicAttacker : Attackers
             // Gets the player's direction
             Vector3 playerDirection = player.transform.forward.normalized;
 
-            Vector3 destination = transform.position + playerDirection.normalized * playerProtectionRadius;
+            Vector3 destination = transform.position + playerDirection.normalized * ProtectionRadius;
             destination.x = Mathf.Clamp(destination.x, playerPos.x - 10, playerPos.x + 10);
             destination.z = Mathf.Clamp(destination.z, playerPos.z, playerPos.z + 10);
 

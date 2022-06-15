@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+public enum AttackerType { FRONT = 0, SIDE = 1, BACK = 2}
+
 /// <summary>
 /// Manages the team effort of the attackers
 /// </summary>
@@ -12,8 +14,8 @@ public class TeamManager : MonoBehaviour
     private MainManager main;
 
 
-    [Tooltip("GameObject of the player")]
-    private GameObject player;
+    [Tooltip("Script of the player")]
+    private Player player;
 
 
     [Tooltip("List of the attackers's prefabs")]
@@ -21,9 +23,9 @@ public class TeamManager : MonoBehaviour
 
 
     [Tooltip("List of the team's attackers currently free")]
-    private List<Attackers> freeAttackers = new List<Attackers>();
+    private List<Attacker> freeAttackers = new List<Attacker>();
     [Tooltip("List of the team's attackers currently busy")]
-    private List<Attackers> busyAttackers = new List<Attackers>();
+    private List<Attacker> busyAttackers = new List<Attacker>();
     [Tooltip("List of the enemies currently not taken care of")]
     [HideInInspector] public List<Enemy> enemies;
 
@@ -31,7 +33,7 @@ public class TeamManager : MonoBehaviour
     private List<Enemy> enemiesToAdd = new List<Enemy>();
 
 
-    [SerializeField] private float playerProtectionRadius; // A choisir pour chaque attacker
+    public float protectionRadius;
 
     [SerializeField] private float teamReactivity; // idem
 
@@ -43,8 +45,11 @@ public class TeamManager : MonoBehaviour
 
     private void Start()
     {
-        player = main.PlayerManager.playerObject;
+        player = main.PlayerManager.player;
     }
+
+
+    // ### Functions ###
 
 
     /// <summary>
@@ -52,10 +57,10 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void StopAttackers()
     {
-        foreach (Attackers a in freeAttackers)
+        foreach (Attacker a in freeAttackers)
             a.Stop();
 
-        foreach (Attackers a in busyAttackers)
+        foreach (Attacker a in busyAttackers)
             a.Stop();
     }
 
@@ -64,12 +69,19 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void ResumeAttackers()
     {
-        foreach (Attackers a in freeAttackers)
+        foreach (Attacker a in freeAttackers)
             a.Resume();
 
-        foreach (Attackers a in busyAttackers)
+        foreach (Attacker a in busyAttackers)
             a.Resume();
     }
+
+    public void GameOver()
+    {
+
+    }
+
+
 
 
     /// <summary>
@@ -102,7 +114,7 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    public void FreeAttacker(Attackers a)
+    public void FreeAttacker(Attacker a)
     {
         busyAttackers.Remove(a);
         freeAttackers.Add(a);
@@ -110,8 +122,8 @@ public class TeamManager : MonoBehaviour
 
     public void ClearAttackers()
     {
-        foreach (Attackers a in freeAttackers) Destroy(a);
-        foreach (Attackers a in busyAttackers) Destroy(a);
+        foreach (Attacker a in freeAttackers) Destroy(a);
+        foreach (Attacker a in busyAttackers) Destroy(a);
         freeAttackers.Clear();
         busyAttackers.Clear();
         enemies.Clear();
@@ -126,11 +138,10 @@ public class TeamManager : MonoBehaviour
     private void InstantiateAttacker()
     {
         Vector3 playerPos = player.transform.position;
-        Vector3 randomPos = new Vector3(Random.Range(-playerProtectionRadius / 2, playerProtectionRadius / 2), 0, Random.Range(10, playerProtectionRadius / 2)) + playerPos;
-        Attackers attacker = Instantiate(attackersPrefabs[0], randomPos, Quaternion.identity).GetComponent<Attackers>();
+        Vector3 randomPos = new Vector3(Random.Range(-protectionRadius / 2, protectionRadius / 2), 0, Random.Range(10, protectionRadius / 2)) + playerPos;
+        Attacker attacker = Instantiate(attackersPrefabs[0], randomPos, Quaternion.identity).GetComponent<Attacker>();
         attacker.teamManager = this;
         attacker.player = player;
-        attacker.playerProtectionRadius = playerProtectionRadius;
         attacker.Size *= Random.Range(0.9f, 1.1f);
         freeAttackers.Add(attacker);
     }
@@ -160,13 +171,13 @@ public class TeamManager : MonoBehaviour
         foreach (Enemy e in enemies)
         {
             float toPlayerAngle = Vector3.Angle(player.transform.forward, e.transform.position - player.transform.position);
-            if (Vector3.Distance(e.transform.position, player.transform.position) < playerProtectionRadius * ( 1 - toPlayerAngle/270))
+            if (Vector3.Distance(e.transform.position, player.transform.position) < protectionRadius * ( 1 - toPlayerAngle/270))
             {
                 if (freeAttackers.Count > 0)
                 {
                     float minDist = float.PositiveInfinity;
-                    Attackers betterAttacker = null;
-                    foreach (Attackers a in freeAttackers)
+                    Attacker betterAttacker = null;
+                    foreach (Attacker a in freeAttackers)
                     {
                         if (Vector3.Distance(a.transform.position, e.transform.position) < minDist)
                         {
@@ -180,11 +191,11 @@ public class TeamManager : MonoBehaviour
                 }
                 else
                 {
-                    float minDist = playerProtectionRadius*2;
-                    Attackers betterAttacker = null;
-                    foreach (Attackers a in busyAttackers)
+                    float minDist = protectionRadius*2;
+                    Attacker betterAttacker = null;
+                    foreach (Attacker a in busyAttackers)
                     {
-                        if (Vector3.Distance(a.GetComponent<Attackers>().target.transform.position, player.transform.position) > playerProtectionRadius &&
+                        if (Vector3.Distance(a.GetComponent<Attacker>().target.transform.position, player.transform.position) > protectionRadius &&
                             Vector3.Distance(a.transform.position, e.transform.position) < minDist)
                         {
                             minDist = Vector3.Distance(a.transform.position, e.transform.position);
@@ -196,7 +207,7 @@ public class TeamManager : MonoBehaviour
             }
         }
         ActuEnemies();
-        if (player.GetComponent<PlayerGameplay>().onField)
+        if (player.gameplay.onField)
             Invoke(nameof(ProtectPlayer), teamReactivity);
     }
 
