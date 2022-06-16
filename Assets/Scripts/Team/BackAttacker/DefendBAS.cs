@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendFAS : AttackerState
+public class DefendBAS : AttackerState
 {
-    new FrontAttacker attacker;
+    new BackAttacker attacker;
 
-    public DefendFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
+    public DefendBAS(BackAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
 
@@ -18,7 +18,7 @@ public class DefendFAS : AttackerState
     {
         base.Enter();
 
-        animator.SetTrigger("Block");
+        animator.SetTrigger("BackBlock");
 
         agent.speed = attacker.defenseSpeed;
     }
@@ -31,9 +31,9 @@ public class DefendFAS : AttackerState
         attacker.destination = attacker.playerPos + attacker.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
-        if (attacker.targetPos.z < attacker.playerPos.z)
+        if (attacker.targetPos.z < attacker.playerPos.z - attacker.ProtectionRadius)
         {
-            nextState = new BackFAS(attacker, agent, animator);
+            nextState = new BackBAS(attacker, agent, animator);
             stage = Event.EXIT;
         }
     }
@@ -42,7 +42,7 @@ public class DefendFAS : AttackerState
     {
         base.Exit();
 
-        animator.ResetTrigger("Block");
+        animator.ResetTrigger("BackBlock");
 
         attacker.UnTarget();
     }

@@ -71,7 +71,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 54395914917287558, guid: fe337cb383a88824e84eb3aa64df90aa, type: 3}
+    - target: {fileID: 54395914917287558, guid: fe337cb383a88824e84eb3aa64df90aa,
+        type: 3}
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
@@ -79,7 +80,8 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: fe337cb383a88824e84eb3aa64df90aa, type: 3}
 --- !u!1 &4544493572597981696 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1575539274977262, guid: fe337cb383a88824e84eb3aa64df90aa, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1575539274977262, guid: fe337cb383a88824e84eb3aa64df90aa,
+    type: 3}
   m_PrefabInstance: {fileID: 4545486769519275502}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &-8043478681772560611
@@ -190,7 +192,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.294, y: 0.50100005, z: 1.0150001}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.50100005, z: 1}
   m_TimeToStationary: 0.5

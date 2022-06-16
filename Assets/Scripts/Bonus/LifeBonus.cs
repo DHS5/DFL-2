@@ -7,7 +7,7 @@ public class LifeBonus : Bonus
     protected override void Start()
     {
         base.Start();
-        bar = false;
+        anim = false;
     }
 
     protected override void TriggerBonus()

@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendFAS : AttackerState
+public class DefendSAS : AttackerState
 {
-    new FrontAttacker attacker;
+    new SideAttacker attacker;
 
-    public DefendFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
+    private int side;
+
+    public DefendSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator, int _side) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
 
         attacker = _attacker;
+
+        side = _side;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        animator.SetTrigger("Block");
+        animator.SetTrigger("SideBlock");
+        animator.SetFloat("Side", side);
 
         agent.speed = attacker.defenseSpeed;
     }
@@ -31,9 +36,9 @@ public class DefendFAS : AttackerState
         attacker.destination = attacker.playerPos + attacker.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
-        if (attacker.targetPos.z < attacker.playerPos.z)
+        if (!attacker.IsThreat())
         {
-            nextState = new BackFAS(attacker, agent, animator);
+            nextState = new BackSAS(attacker, agent, animator, side);
             stage = Event.EXIT;
         }
     }
@@ -42,7 +47,8 @@ public class DefendFAS : AttackerState
     {
         base.Exit();
 
-        animator.ResetTrigger("Block");
+        animator.ResetTrigger("SideBlock");
+        animator.SetFloat("Side", 0f);
 
         attacker.UnTarget();
     }

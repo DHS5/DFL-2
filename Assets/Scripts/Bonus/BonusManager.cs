@@ -70,9 +70,9 @@ public class BonusManager : MonoBehaviour
 
 
 
-    public void BonusAnim(bool anim, float time, Color color)
+    public void BonusAnim(bool anim, float time, Color color, Sprite sprite)
     {
-        if (anim) main.GameUIManager.BonusBarAnim(time, color);
+        if (anim) main.GameUIManager.BonusBarAnim(time, color, sprite);
     }
 
     public void AddLife(int lifeNumber)

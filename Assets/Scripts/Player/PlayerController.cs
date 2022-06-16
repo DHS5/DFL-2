@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [Header("Animation's time")]
     public float siderunTime;
     public float jukeTime;
+    public float jukeDelay;
     public float feintTime;
     public float spinTime;
 

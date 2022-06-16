@@ -29,6 +29,7 @@ public class Attacker : MonoBehaviour
     [Range(0,1)] public float defenseDistMultiplier;
 
     public float back2PlayerSpeed;
+    public float defenseSpeed;
 
 
     [HideInInspector] public Vector3 playerPos;

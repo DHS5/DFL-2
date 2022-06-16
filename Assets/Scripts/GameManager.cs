@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
             main.BonusManager.GenerateBonus();
 
         if (gameData.gameOptions.Contains(GameOption.OBSTACLE))
-            main.ObstacleManager.GenerateObstacles(1); // A remplacer
+            main.ObstacleManager.GenerateObstacles((waveNumber + (int) gameData.gameDifficulty) * 5);
 
         if (gameData.gameOptions.Contains(GameOption.OBJECTIF))
             main.ObjectifManager.GenerateObj();

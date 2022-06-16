@@ -165,11 +165,13 @@ public class GameUIManager : MonoBehaviour
 
 
 
-    public void BonusBarAnim(float bonusTime, Color color)
+    public void BonusBarAnim(float bonusTime, Color color, Sprite sprite)
     {
         bonusBarAnim.Stop();
 
         bonusBars[1].GetComponent<Image>().color = color;
+        bonusBars[2].GetComponent<Image>().sprite = sprite;
+
         bonusBars[0].SetActive(true);
         bonusBars[1].SetActive(true);
         bonusBars[2].SetActive(true);

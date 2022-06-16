@@ -42,8 +42,16 @@ public class TeamManager : MonoBehaviour
     private List<Enemy> enemiesToAdd = new List<Enemy>();
 
 
+    [Header("Team caracteristics")]
     public float protectionRadius;
-    [SerializeField] private float teamReactivity;
+    public float teamReactivity;
+
+
+    [Header("Limit angles")]
+    public float frontAngle;
+    public float backAngle;
+
+    [SerializeField] private int[] team = new int[5];
 
 
     readonly float sizeMultiplier = 0.1f;
@@ -133,7 +141,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Instantiate an attacker from the attackers prefab list with a semi-random position
     /// </summary>
-    private void InstantiateAttacker()
+    private void InstantiateAttacker(int index)
     {
         Vector3 zonePos = main.FieldManager.field.enterZone.transform.position;
         float xScale = main.FieldManager.field.enterZone.transform.localScale.x / 2;
@@ -141,7 +149,7 @@ public class TeamManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        Attacker attacker = Instantiate(attackersPrefabs[0], randomPos, Quaternion.identity).GetComponent<Attacker>();
+        Attacker attacker = Instantiate(attackersPrefabs[index], randomPos, Quaternion.identity).GetComponent<Attacker>();
         attacker.teamManager = this;
         attacker.player = player;
         attacker.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
@@ -176,7 +184,7 @@ public class TeamManager : MonoBehaviour
 
         for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty; i++)
         {
-            InstantiateAttacker();
+            InstantiateAttacker(team[i]);
         }
     }
 
@@ -204,7 +212,7 @@ public class TeamManager : MonoBehaviour
             if (enemyPlayerDist < protectionRadius)
             {
                 float enemyPlayerAngle = Vector3.Angle(e.transform.position - player.transform.position, player.controller.Velocity.normalized);
-                FindFreeAttackers(enemyPlayerAngle);
+                FindFreeAttackers(enemyPlayerAngle, e.transform.position.x - player.transform.position.x);
 
                 Attacker betterAttacker = null;
 
@@ -245,21 +253,21 @@ public class TeamManager : MonoBehaviour
     }
 
 
-    private void FindFreeAttackers(float angle)
+    private void FindFreeAttackers(float angle, float xDist)
     {
-        Debug.Log(angle);
         // Front
-        if (Mathf.Abs(angle) <= 45)
+        if (angle <= frontAngle)
             freeAttackers = new List<Attacker>(frontAttackers);
+        // Back
+        else if (angle >= backAngle)
+            freeAttackers = new List<Attacker>(backAttackers);
         // L Side
-        else if (angle < -45 && angle > -135)
+        else if (xDist < 0)
             freeAttackers = new List<Attacker>(sideLAttackers);
         // R Side
-        else if (angle > 45 && angle < 135)
-            freeAttackers = new List<Attacker>(sideRAttackers);
-        // Back
         else
-            freeAttackers = new List<Attacker>(backAttackers);
+            freeAttackers = new List<Attacker>(sideRAttackers);
+        
 
         busyAttackers = new List<Attacker>(freeAttackers);
 

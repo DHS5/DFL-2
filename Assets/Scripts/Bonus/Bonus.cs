@@ -20,8 +20,9 @@ public class Bonus : MonoBehaviour
 
     [SerializeField] private float bonusTime;
     [SerializeField] private Color bonusColor;
+    [SerializeField] private Sprite sprite;
 
-    protected bool bar = true;
+    protected bool anim = true;
 
 
     protected virtual void Start()
@@ -40,7 +41,7 @@ public class Bonus : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             TriggerBonus();
-            bonusManager.BonusAnim(bar, bonusTime, bonusColor);
+            bonusManager.BonusAnim(anim, bonusTime, bonusColor, sprite);
         }
     }
 

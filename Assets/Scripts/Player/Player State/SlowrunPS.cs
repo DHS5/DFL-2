@@ -30,7 +30,7 @@ public class SlowrunPS : PlayerState
 
 
         // Juke
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (Time.time - startTime > player.controller.jukeDelay && Input.GetAxisRaw("Horizontal") != 0)
         {
             nextState = new JukePS(player, Input.GetAxisRaw("Horizontal"));
             stage = Event.EXIT;
