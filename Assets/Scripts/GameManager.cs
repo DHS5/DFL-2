@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Pause the game on press P
-        if (Input.GetKeyDown(KeyCode.P)) PauseGame();
+        if (Input.GetKeyDown(KeyCode.P) && GameOn) GameOn = false;
 
         if (main.PlayerManager.player.gameplay.onField)
         {
@@ -313,6 +313,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
+        gameOn = false;
+
         main.CursorManager.UnlockCursor();
         
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
