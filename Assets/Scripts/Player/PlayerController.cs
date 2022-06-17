@@ -133,6 +133,7 @@ public class PlayerController : MonoBehaviour
     public bool OnGround { get; private set; }
     public bool CanAccelerate { get; set; }
     public bool Sprinting { get; private set; }
+    public float SprintStartTime { get; private set; }
 
 
 
@@ -286,7 +287,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void Sprint() { if (!Sprinting) { Sprinting = true; Invoke(nameof(Rest), accelerationTime); } }
+    public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), accelerationTime); } }
     private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
     private void Rested() { CanAccelerate = true; }
 }

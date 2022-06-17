@@ -114,6 +114,8 @@ public class GameUIManager : MonoBehaviour
         fullBarAnim.Stop();
         chargingBarAnim.Stop();
 
+        // Decharge
+
         accelerationBars[1].SetActive(false);
 
         Keyframe[] keys = new Keyframe[3];
@@ -134,6 +136,9 @@ public class GameUIManager : MonoBehaviour
         fullBarAnim.Play();
 
         yield return new WaitForSeconds(dechargeTime);
+
+
+        // Recharge
 
         keys[0].value = -accelerationBars[2].GetComponent<RectTransform>().rect.height / 2;
         keys[1] = new Keyframe(rechargeTime, 0.0f);
@@ -206,6 +211,8 @@ public class GameUIManager : MonoBehaviour
         bonusBars[0].SetActive(false);
         bonusBars[1].SetActive(false);
         bonusBars[2].SetActive(false);
+
+        main.PlayerManager.player.effects.BonusVolume(Color.black, false);
     }
 
 

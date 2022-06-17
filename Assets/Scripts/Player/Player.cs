@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerController controller;
     [Tooltip("Player gameplay")]
     [HideInInspector] public PlayerGameplay gameplay;
+    [Tooltip("Player effects")]
+    [HideInInspector] public PlayerEffects effects;
 
     [HideInInspector] public AudioSource audioSource;
 
@@ -46,11 +48,14 @@ public class Player : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
 
         gameplay = GetComponent<PlayerGameplay>();
+
+        effects = GetComponent<PlayerEffects>();
 
         fpAnimator = FPPlayer.GetComponentInChildren<Animator>();
 

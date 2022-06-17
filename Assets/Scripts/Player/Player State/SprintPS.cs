@@ -18,6 +18,8 @@ public class SprintPS : PlayerState
 
         controller.Sprint();
 
+        player.effects.SprintVolume(true, controller.accelerationTime - (Time.time - controller.SprintStartTime));
+
         base.Enter();
     }
 
@@ -56,6 +58,8 @@ public class SprintPS : PlayerState
     public override void Exit()
     {
         ResetTrigger("Sprint");
+
+        player.effects.SprintVolume(false, controller.accelerationRestTime - (controller.accelerationTime - (Time.time - controller.SprintStartTime)));
         
         base.Exit();
     }
