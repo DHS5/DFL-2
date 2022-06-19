@@ -321,16 +321,14 @@ public class GameManager : MonoBehaviour
         
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
 
-        main.PlayerManager.StopPlayer(); // Stops the player
-        main.EnemiesManager.StopEnemies(); // Stops the enemies
 
-        // # Modes #
-        if (gameData.gameMode == GameMode.TEAM)
-            main.TeamManager.StopAttackers(); // Stops the attackers
+        // # Data #
+        main.DataManager.SavePlayerData();
 
         // # Audio #
         if (main.DataManager.audioData.soundOn) main.GameAudioManager.MuteSound(true);
     }
+
     /// <summary>
     /// Unpause the game
     /// Close the settings screen and start UnpauseCR coroutine
@@ -342,6 +340,10 @@ public class GameManager : MonoBehaviour
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, false);
 
         StartCoroutine(UnpauseCR(0.5f));
+
+
+        // # Data #
+        main.DataManager.SavePlayerData();
     }
 
     /// <summary>
@@ -364,9 +366,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
 
         main.GameUIManager.ResumeGameText(3, false);
-        LaunchGame(true);
 
         main.SettingsManager.SetEventSystem(true);
+
+        gameOn = true;
     }
     /// <summary>
     /// Executes game over tasks with a certain timing
@@ -374,7 +377,9 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
-        //main.DataManager.PostScore(gameData, score);
+        // # Data #
+        main.DataManager.SavePlayerData();
+
 
         //main.PlayerManager.DeadPlayer();
         main.PlayerManager.StopPlayer();

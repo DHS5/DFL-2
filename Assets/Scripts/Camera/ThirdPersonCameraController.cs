@@ -16,8 +16,11 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     [Tooltip("")]
     [SerializeField] private Vector3[] cameraPositions;
-    [Tooltip("")]
-    private int cameraPos = 0;
+    private int CameraPos
+    {
+        get { return player.playerManager.TpCameraPos; }
+        set { player.playerManager.TpCameraPos = value; }
+    }
 
     private void Start()
     {
@@ -30,17 +33,16 @@ public class ThirdPersonCameraController : MonoBehaviour
         // Gets the Cursor Manager
         cursor = FindObjectOfType<CursorManager>();
 
-
-        tpCamera.transform.localPosition = cameraPositions[cameraPos];
+        tpCamera.transform.localPosition = cameraPositions[CameraPos];
     }
 
     private void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            if (cameraPos == cameraPositions.Length - 1) cameraPos = 0;
-            else cameraPos++;
-            tpCamera.transform.localPosition = cameraPositions[cameraPos];
+            if (CameraPos == cameraPositions.Length - 1) CameraPos = 0;
+            else CameraPos++;
+            tpCamera.transform.localPosition = cameraPositions[CameraPos];
         }
     }
 }

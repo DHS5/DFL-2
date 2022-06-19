@@ -53,7 +53,6 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             dataManager.gameplayData.yms = value;
-            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.YMouseSensitivity = value;
         }
     }
@@ -62,7 +61,6 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             dataManager.gameplayData.ysr = value;
-            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.YSmoothRotation = value;
         }
     }
@@ -72,7 +70,6 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             dataManager.gameplayData.viewType = (ViewType) value;
-            dataManager.SavePlayerData();
             if (playerManager != null) playerManager.ViewType = (ViewType) value;
 
 
@@ -95,13 +92,12 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             dataManager.playerPrefs.infoButtonsOn = value;
-            dataManager.SavePlayerData();
             if (menuUIManager != null) menuUIManager.InfoButtonsOn = value;
         }
     }
 
-    public bool SoundOn { set { dataManager.audioData.soundOn = value; dataManager.SavePlayerData(); } }
-    public float SoundVolume { set { dataManager.audioData.soundVolume = value; dataManager.SavePlayerData(); } }
+    public bool SoundOn { set { dataManager.audioData.soundOn = value; } }
+    public float SoundVolume { set { dataManager.audioData.soundVolume = value; } }
 
 
     /// <summary>

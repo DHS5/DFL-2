@@ -56,6 +56,16 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+    public int FpCameraPos
+    {
+        get { return main.DataManager.gameplayData.fpCameraPos; }
+        set { main.DataManager.gameplayData.fpCameraPos = value; }
+    }
+    public int TpCameraPos
+    {
+        get { return main.DataManager.gameplayData.tpCameraPos; }
+        set { main.DataManager.gameplayData.tpCameraPos = value; }
+    }
 
 
 

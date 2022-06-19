@@ -38,6 +38,8 @@ public struct GameplayData
     public float yms;
     public float ysr;
     public ViewType viewType;
+    public int fpCameraPos;
+    public int tpCameraPos;
 }
 
 [System.Serializable]

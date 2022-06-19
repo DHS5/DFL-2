@@ -42,7 +42,6 @@ public class MusicSource : MonoBehaviour
         { 
             musicNumber = value;
             dataManager.audioData.musicNumber = value;
-            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -58,7 +57,6 @@ public class MusicSource : MonoBehaviour
 
             musicOn = value;
             dataManager.audioData.musicOn = value;
-            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -72,7 +70,6 @@ public class MusicSource : MonoBehaviour
             musicVolume = value;
             audioSource.volume = musicVolume;
             dataManager.audioData.musicVolume = value;
-            dataManager.SavePlayerData();
         }
     }
     /// <summary>
@@ -86,7 +83,6 @@ public class MusicSource : MonoBehaviour
             loopOn = value;
             audioSource.loop = value;
             dataManager.audioData.loopOn = value;
-            dataManager.SavePlayerData();
         }
     }
 

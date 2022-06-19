@@ -46,7 +46,11 @@ public class FirstPersonCameraController : MonoBehaviour
     [Tooltip("")]
     [SerializeField] private Vector3[] cameraPositions;
     [Tooltip("")]
-    private int cameraPos = 0;
+    private int CameraPos
+    {
+        get { return player.playerManager.FpCameraPos; }
+        set { player.playerManager.FpCameraPos = value; }
+    }
 
 
 
@@ -69,7 +73,7 @@ public class FirstPersonCameraController : MonoBehaviour
         yMouseSensitivity = player.playerManager.YMouseSensitivity;
         ySmoothRotation = player.playerManager.YSmoothRotation;
 
-        fpCamera.transform.localPosition = cameraPositions[cameraPos];
+        fpCamera.transform.localPosition = cameraPositions[CameraPos];
     }
 
 
@@ -80,9 +84,9 @@ public class FirstPersonCameraController : MonoBehaviour
 
         if (cursor.locked && Input.GetKeyDown(KeyCode.L))
         {
-            if (cameraPos == cameraPositions.Length - 1) cameraPos = 0;
-            else cameraPos++;
-            fpCamera.transform.localPosition = cameraPositions[cameraPos];
+            if (CameraPos == cameraPositions.Length - 1) CameraPos = 0;
+            else CameraPos++;
+            fpCamera.transform.localPosition = cameraPositions[CameraPos];
         }
     }
 
