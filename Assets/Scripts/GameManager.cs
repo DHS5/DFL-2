@@ -315,6 +315,8 @@ public class GameManager : MonoBehaviour
     {
         gameOn = false;
 
+        Time.timeScale = 0f;
+
         main.CursorManager.UnlockCursor();
         
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
@@ -355,9 +357,11 @@ public class GameManager : MonoBehaviour
         while (i > 0)
         {
             main.GameUIManager.ResumeGameText(i, true);
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSecondsRealtime(time);
             i--;
         }
+
+        Time.timeScale = 1.0f;
 
         main.GameUIManager.ResumeGameText(3, false);
         LaunchGame(true);

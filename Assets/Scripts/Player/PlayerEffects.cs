@@ -24,6 +24,9 @@ public class PlayerEffects : MonoBehaviour
     readonly private float minBlur = 0f, maxBlur = 1f;
 
 
+    private Coroutine sprintCR;
+    private Coroutine restCR;
+
 
     private void Awake()
     {
@@ -60,13 +63,15 @@ public class PlayerEffects : MonoBehaviour
 
         if (state)
         {
-            StopCoroutine(nameof(RestVolumeCR));
-            StartCoroutine(SprintVolumeCR(vignette, distorsion, blur, time));
+            if (restCR != null)
+                StopCoroutine(restCR);
+            sprintCR = StartCoroutine(SprintVolumeCR(vignette, distorsion, blur, time));
         }
         else
         {
-            StopCoroutine(nameof(SprintVolumeCR));
-            StartCoroutine(RestVolumeCR(vignette, distorsion, blur, time));
+            if (sprintCR != null)
+                StopCoroutine(sprintCR);
+            restCR = StartCoroutine(RestVolumeCR(vignette, distorsion, blur, time));
         }
     }
 
@@ -102,7 +107,7 @@ public class PlayerEffects : MonoBehaviour
             distorsion.intensity.value -= (currentDistorsion - minDistorsion) / 100;
             distorsion.scale.value -= (currentScale - minScale) / 100;
             blur.intensity.value -= (currentBlur - minBlur) / 100;
-            yield return new WaitForSeconds(restTime / 200);
+            yield return new WaitForSeconds(restTime / 400);
         }
 
         accVolume.gameObject.SetActive(false);

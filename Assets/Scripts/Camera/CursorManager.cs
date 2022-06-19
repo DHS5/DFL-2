@@ -29,7 +29,7 @@ public class CursorManager : MonoBehaviour
             LockCursor();
         }
 
-        if (locked && (Input.GetKeyDown(KeyCode.Escape) || main.GameManager.GameOver || !main.GameManager.GameOn))
+        if (locked && (Input.GetKeyDown(KeyCode.Escape) || main.GameManager.GameOver))
         {
             UnlockCursor();
         }
