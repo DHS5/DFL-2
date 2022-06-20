@@ -19,6 +19,11 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private float zombieLightIntensity;
     [SerializeField] private float nightLightIntensity;
 
+    [Header("Rain")]
+    [SerializeField] private float rainFogDensity;
+    [SerializeField] private int normalRainAddition;
+    [SerializeField] private int hardRainAddition;
+
     [Header("Fog")]
     [SerializeField] private float normalFogIntensity;
     [SerializeField] private float objectifFogIntensity;
@@ -63,6 +68,16 @@ public class EnvironmentManager : MonoBehaviour
         }
 
         // # Wheather #
+        if (main.GameManager.gameData.gameWheather == GameWheather.RAIN) // RAIN
+        {
+            envStyleNumber = EnvironmentStyle.RAIN;
+
+            main.PlayerManager.player.effects.Rain(true, 0);
+            main.PlayerManager.player.controller.Rain();
+
+            RenderSettings.fog = true;
+            RenderSettings.fogDensity = rainFogDensity;
+        }
         if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
         {
             RenderSettings.fog = true;
@@ -86,6 +101,14 @@ public class EnvironmentManager : MonoBehaviour
             BedTime(); // Night time when player reaching wave 10
 
         // # Wheather #
+        if (main.GameManager.gameData.gameWheather == GameWheather.RAIN) // RAIN
+        {
+            // Increases the rain according to the difficulty
+            if (main.GameManager.gameData.gameDifficulty == GameDifficulty.HARD) // HARD
+                IncreaseRain(hardRainAddition);
+            else if (main.GameManager.gameData.gameDifficulty == GameDifficulty.NORMAL) // NORMAL
+                IncreaseRain(normalRainAddition);
+        }
         if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
         {
             // # Difficulties #
@@ -101,11 +124,16 @@ public class EnvironmentManager : MonoBehaviour
     /// Increases the density of the fog
     /// </summary>
     /// <param name="densityAddition">FogDensity += densityAddition</param>
-    public void IncreaseFog(float densityAddition)
+    private void IncreaseFog(float densityAddition)
     {
         if (main.GameManager.gameOptions.Contains(GameOption.OBJECTIF))
             densityAddition /= 2;
         RenderSettings.fogDensity += densityAddition;
+    }
+
+    private void IncreaseRain(int particleAddition)
+    {
+        main.PlayerManager.player.effects.Rain(true, particleAddition);
     }
 
     public void BedTime()

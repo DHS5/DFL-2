@@ -54,4 +54,12 @@ public class Tools : MonoBehaviour
         if (dataManager != null)
             dataManager.SavePlayerData();
     }
+
+
+    // # UI #
+
+    public void InverseState(GameObject g)
+    {
+        g.SetActive(!g.activeSelf);
+    }
 }

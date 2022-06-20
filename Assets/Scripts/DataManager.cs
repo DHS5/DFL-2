@@ -30,6 +30,8 @@ public struct AudioData
 public struct PlayerPrefs
 {
     public bool infoButtonsOn;
+    public int playerIndex;
+    public int stadiumIndex;
 }
 
 [System.Serializable]
@@ -69,6 +71,7 @@ public struct GameData
 
     public int playerIndex;
     public int stadiumIndex;
+    public int enemyIndex;
 }
 
 
@@ -121,6 +124,9 @@ public class DataManager : MonoBehaviour
         // Clear the game data (modes etc... for the first game)
         ClearGameData();
 
+        // Initialize favorite player and stadium indexes
+        InitGameData();
+
         // Starts a LootLocker session and load the leaderboards
         //StartSession();
     }
@@ -129,6 +135,12 @@ public class DataManager : MonoBehaviour
     // ### Functions ###
 
     // ## Data Management ##
+
+    private void InitGameData()
+    {
+        gameData.playerIndex = playerPrefs.playerIndex;
+        gameData.stadiumIndex = playerPrefs.stadiumIndex;
+    }
 
     public void ClearGameData()
     {

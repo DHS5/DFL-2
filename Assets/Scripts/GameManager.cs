@@ -73,6 +73,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Index of the stadium's prefab")]
     [Range(0, 10)] public int stadiumIndex;
 
+    [Tooltip("Index of the enemy's prefab")]
+    [Range(0, 10)] public int enemyIndex;
+
 
 
     [Tooltip("Current wave number")]
@@ -204,6 +207,7 @@ public class GameManager : MonoBehaviour
 
             gameData.playerIndex = playerIndex;
             gameData.stadiumIndex = stadiumIndex;
+            gameData.enemyIndex = enemyIndex;
         }
         gameData.gameEnemiesRange = enemiesRange;
 
@@ -245,8 +249,8 @@ public class GameManager : MonoBehaviour
         // # Essential #
         if (start)
         {
-            main.EnvironmentManager.StartEnvironment(); // Environment
             main.PlayerManager.PreparePlayer();
+            main.EnvironmentManager.StartEnvironment(); // Environment
         }
         else main.EnvironmentManager.GenerateEnvironment();
         main.FieldManager.GenerateField(); // Field

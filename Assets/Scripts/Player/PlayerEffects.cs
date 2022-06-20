@@ -10,12 +10,16 @@ public class PlayerEffects : MonoBehaviour
     private Player player;
 
 
-    [Header("Effects game object")]
+    [Header("Post Processing game object")]
     [Tooltip("Volume for the bonus post processing")]
     [SerializeField] private Volume accVolume;
 
     [Tooltip("Volume for the bonus post processing")]
     [SerializeField] private Volume bonusVolume;
+
+    [Header("VFX game objects")]
+    [Tooltip("Rain particle system")]
+    [SerializeField] private ParticleSystem rainParticleSystem;
 
 
     readonly private float minVignette = 0f, maxVignette = 1f;
@@ -41,6 +45,7 @@ public class PlayerEffects : MonoBehaviour
 
     // ### Functions ###
 
+    // # Post Processing #
     private void InitSprintVolume()
     {
         accVolume.profile.TryGet(out Vignette vignette);
@@ -124,5 +129,16 @@ public class PlayerEffects : MonoBehaviour
             bonusVolume.profile.TryGet(out Vignette vignette);
             vignette.color.value = color;
         }
+    }
+
+    // # VFX #
+
+    public void Rain(bool state, float particleAddition)
+    {
+        var emission = rainParticleSystem.emission;
+        float emi = emission.rateOverTime.constant;
+        emission.rateOverTime = emi + particleAddition;
+
+        rainParticleSystem.gameObject.SetActive(state);
     }
 }

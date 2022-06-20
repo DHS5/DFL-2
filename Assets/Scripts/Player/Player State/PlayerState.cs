@@ -72,7 +72,7 @@ public abstract class PlayerState
 
     protected void PlayerOrientation()
     {
-        if (player.gameManager.GameOn)
+        if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
         {
             player.TPPlayer.transform.localRotation =
             Quaternion.Slerp(player.TPPlayer.transform.localRotation,

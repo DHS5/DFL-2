@@ -45,6 +45,8 @@ public class Field : MonoBehaviour
     public GameObject endZone;
     public GameObject enterZone;
 
+    public Vector3 oneVOneEnemyPos;
+
 
     /// <summary>
     /// Sets all the materials of the new field

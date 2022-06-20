@@ -30,11 +30,16 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("")]
     [SerializeField] private AudioClip[] zombieAudios;
 
+    [Header("One v One drill enemies")]
+    [Tooltip("Prefab of the enemy chose to play 1v1")]
+    [SerializeField] private GameObject[] oneVOneEnemyPrefabs;
+
 
     [Tooltip("List of the enemies on the field")]
     [HideInInspector] public List<Enemy> enemies;
 
 
+    readonly Quaternion enemyRot = Quaternion.Euler(0, 180, 0);
     readonly int sleepingZProportion = 5;
 
 
@@ -155,20 +160,13 @@ public class EnemiesManager : MonoBehaviour
     /// <param name="xScale">X scale of the zone</param>
     /// <param name="zScale">Z scale of the zone</param>
     /// <param name="sizeMultiplier">Size multiplier with which create the enemy</param>
-    private void CreateEnemy(GameObject[] enemyPrefabs, Vector3 pos, float xScale, float zScale, float sizeMultiplier, AudioClip[] audios)
-    {
-        GameData gd = main.GameManager.gameData;
-        
+    private void CreateEnemy(GameObject enemyPrefab, Vector3 pos, float sizeMultiplier, AudioClip[] audios)
+    {        
         // Game Object of the enemy
         Enemy enemy;
 
-        // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length - 1);
-
-        // Gets a random position and instantiate the new enemy
-        Vector3 randomPosition = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
-        enemy = Instantiate(enemyPrefabs[Random.Range(minLevel, maxLevel)], pos + randomPosition, Quaternion.Euler(0, 180, 0)).GetComponent<Enemy>();
+        // Instantiate the new enemy
+        enemy = Instantiate(enemyPrefab, pos, enemyRot).GetComponent<Enemy>();
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
@@ -182,6 +180,22 @@ public class EnemiesManager : MonoBehaviour
 
         // Fill the enemies list of the field
         enemies.Add(enemy);
+    }
+
+    private GameObject GetRandomEnemy(GameObject[] enemyPrefabs)
+    {
+        GameData gd = main.GameManager.gameData;
+
+        // Clamps the level so it doesn't get out of the enemyPrefabs length
+        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length - 1);
+
+        return enemyPrefabs[Random.Range(minLevel, maxLevel)];
+    }
+
+    private Vector3 GetRandomPos(Vector3 pos, float xScale, float zScale)
+    {
+        return pos + new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale));
     }
 
 
@@ -198,7 +212,7 @@ public class EnemiesManager : MonoBehaviour
         // 5 Linemen in the center
         for (int i = 0; i < 5; i++)
         {
-            CreateEnemy(linemenPrefabs, center, xScale, zScale, 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(linemenPrefabs), GetRandomPos(center, xScale, zScale), 0.1f, defenderAudios);
         }
 
         // Spawn in the left zone
@@ -208,7 +222,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the left
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(wingmenPrefabs, left, xScale, zScale, 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmenPrefabs), GetRandomPos(left, xScale, zScale), 0.1f, defenderAudios);
         }
 
         // Spawn in the right zone
@@ -218,7 +232,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the right
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(wingmenPrefabs, right, xScale, zScale, 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmenPrefabs), GetRandomPos(right, xScale, zScale), 0.1f, defenderAudios);
         }
 
     }
@@ -236,8 +250,11 @@ public class EnemiesManager : MonoBehaviour
         for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
             r = Random.Range(1, sleepingZProportion + 1);
-            if (r != 1) CreateEnemy(classicZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
-            else CreateEnemy(sleepingZPrefabs, field, xScale, zScale, 0.1f, zombieAudios);
+            GameObject enemy;
+            if (r != 1) enemy = GetRandomEnemy(classicZPrefabs);
+            else enemy = GetRandomEnemy(sleepingZPrefabs);
+
+            CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), 0.1f, zombieAudios);
         }
     }
 
@@ -247,6 +264,10 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void DrillWave()
     {
-
+        if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE)
+        {
+            int index = main.GameManager.gameData.enemyIndex;
+            CreateEnemy(oneVOneEnemyPrefabs[index], main.FieldManager.field.oneVOneEnemyPos, 0.1f, defenderAudios);
+        }
     }
 }

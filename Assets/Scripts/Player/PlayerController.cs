@@ -290,4 +290,14 @@ public class PlayerController : MonoBehaviour
     public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), accelerationTime); } }
     private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
     private void Rested() { CanAccelerate = true; }
+
+
+    public void Rain()
+    {
+        dirGravity /= 2;
+        dirSensitivity /= 2;
+
+        accGravity /= 2;
+        accSensitivity /= 2;
+    }
 }
