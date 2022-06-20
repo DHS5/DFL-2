@@ -73,8 +73,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Index of the stadium's prefab")]
     [Range(0, 10)] public int stadiumIndex;
 
-    [Tooltip("Index of the enemy's prefab")]
-    [Range(0, 10)] public int enemyIndex;
+    [Tooltip("One v One enemy's prefab")]
+    public GameObject enemyPrefab;
 
 
 
@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
 
             gameData.playerIndex = playerIndex;
             gameData.stadiumIndex = stadiumIndex;
-            gameData.enemyIndex = enemyIndex;
+            gameData.enemy = enemyPrefab;
         }
         gameData.gameEnemiesRange = enemiesRange;
 

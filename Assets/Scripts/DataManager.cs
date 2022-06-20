@@ -71,7 +71,8 @@ public struct GameData
 
     public int playerIndex;
     public int stadiumIndex;
-    public int enemyIndex;
+    public GameObject enemy;
+    public GameObject[] team;
 }
 
 

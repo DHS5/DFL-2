@@ -8,14 +8,20 @@ public class MenuUIManager : MonoBehaviour
     private SettingsManager settingsManager;
     private DataManager dataManager;
 
+    [Header("Game Screen")]
     [SerializeField] private Image playerImage;
     [SerializeField] private Sprite[] playerSprites;
     [SerializeField] private Image stadiumImage;
     [SerializeField] private Sprite[] stadiumSprites;
 
 
-
     [SerializeField] private GameObject infoButtons;
+
+
+    [Header("Enemy Choice Screen")]
+    [SerializeField] private GameObject enemyCardsObject;
+    private EnemyCard[] enemyCards;
+    private int enemyCardsIndex;
 
 
     // ### Properties ###
@@ -71,6 +77,8 @@ public class MenuUIManager : MonoBehaviour
         settingsManager.GetManagers();
 
         ActuData();
+
+        GetCards();
     }
 
 
@@ -124,6 +132,42 @@ public class MenuUIManager : MonoBehaviour
 
         stadiumImage.sprite = stadiumSprites[StadiumIndex];
     }
+
+
+    private void GetCards()
+    {
+        enemyCards = enemyCardsObject.GetComponentsInChildren<EnemyCard>();
+        foreach (EnemyCard ec in enemyCards)
+            ec.gameObject.SetActive(false);
+        enemyCards[enemyCardsIndex].gameObject.SetActive(true);
+    }
+
+    private void NextCard(Card[] cards, ref int index)
+    {
+        bool infoActive = cards[index].InfoActive;
+        cards[index].gameObject.SetActive(false);
+
+        if (index == cards.Length - 1) { index = 0; }
+        else { index++; }
+
+        cards[index].gameObject.SetActive(true);
+        cards[index].InfoActive = infoActive;
+        dataManager.gameData.enemy = cards[index].prefab;
+    }
+    private void PrevCard(Card[] cards, ref int index)
+    {
+        bool infoActive = cards[index].InfoActive;
+        cards[index].gameObject.SetActive(false);
+
+        if (index == 0) { index = cards.Length - 1; }
+        else { index--; }
+
+        cards[index].gameObject.SetActive(true);
+        cards[index].InfoActive = infoActive;
+        dataManager.gameData.enemy = cards[index].prefab;
+    }
+    public void NextCardEnemy() { NextCard(enemyCards, ref enemyCardsIndex); }
+    public void PrevCardEnemy() { PrevCard(enemyCards, ref enemyCardsIndex); }
 
 
     // ### Tools ###

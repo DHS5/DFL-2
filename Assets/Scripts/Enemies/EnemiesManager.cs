@@ -30,10 +30,6 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("")]
     [SerializeField] private AudioClip[] zombieAudios;
 
-    [Header("One v One drill enemies")]
-    [Tooltip("Prefab of the enemy chose to play 1v1")]
-    [SerializeField] private GameObject[] oneVOneEnemyPrefabs;
-
 
     [Tooltip("List of the enemies on the field")]
     [HideInInspector] public List<Enemy> enemies;
@@ -266,8 +262,7 @@ public class EnemiesManager : MonoBehaviour
     {
         if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE)
         {
-            int index = main.GameManager.gameData.enemyIndex;
-            CreateEnemy(oneVOneEnemyPrefabs[index], main.FieldManager.field.oneVOneEnemyPos, 0.1f, defenderAudios);
+            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.oneVOneEnemyPos, 0.1f, defenderAudios);
         }
     }
 }
