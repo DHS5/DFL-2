@@ -39,7 +39,7 @@ public abstract class Enemy : MonoBehaviour
     [Tooltip("Level of intelligence of the enemy (anticipation of the future position)")]
     [Range(0,1)] public float intelligence;
     [Tooltip("Level of reactivity of the enemy (time between new destination's settings)")]
-    public float reactivity;
+    [Range(0, 1)] public float reactivity;
     [Tooltip("")]
     public float anticipation;
     [Tooltip("Level of precision of the enemy (precision in the positionning in degrees)")]
