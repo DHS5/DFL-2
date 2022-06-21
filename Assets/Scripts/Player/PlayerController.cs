@@ -26,11 +26,11 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Control parameters")]
-    [SerializeField] private float dirSensitivity;
-    [SerializeField] private float dirGravity;
+    [SerializeField] private float dirSensitivity; public float DirSensitivity { get { return dirSensitivity; } }
+    [SerializeField] private float dirGravity; public float DirGravity { get { return dirGravity; } }
 
-    [SerializeField] private float accSensitivity;
-    [SerializeField] private float accGravity;
+    [SerializeField] private float accSensitivity; public float AccSensitivity { get { return accSensitivity; } }
+    [SerializeField] private float accGravity; public float AccGravity { get { return accGravity; } }
 
     [SerializeField] private float snap;
 
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump parameters")]
     [Tooltip("Height the player is reaching when jumping")]
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float jumpHeight; public float JumpHeight { get { return jumpHeight; } }
 
     [Tooltip("Hang time when the player's jumping")]
     [SerializeField] private float hangTime;

@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviour
 
     public void PreparePlayer()
     {
-        playerObject = Instantiate(playerPrefabs[main.GameManager.gameData.playerIndex], startPosition, Quaternion.identity);
+        playerObject = Instantiate(main.GameManager.gameData.player, startPosition, Quaternion.identity);
         player = playerObject.GetComponent<Player>();
 
         player.gameManager = main.GameManager;

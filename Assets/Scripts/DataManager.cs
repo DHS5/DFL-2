@@ -32,6 +32,7 @@ public struct PlayerPrefs
     public bool infoButtonsOn;
     public int playerIndex;
     public int stadiumIndex;
+    public int enemyIndex;
 }
 
 [System.Serializable]
@@ -69,7 +70,7 @@ public struct GameData
     public GameDrill gameDrill;
     public int gameEnemiesRange;
 
-    public int playerIndex;
+    public GameObject player;
     public int stadiumIndex;
     public GameObject enemy;
     public GameObject[] team;
@@ -139,7 +140,6 @@ public class DataManager : MonoBehaviour
 
     private void InitGameData()
     {
-        gameData.playerIndex = playerPrefs.playerIndex;
         gameData.stadiumIndex = playerPrefs.stadiumIndex;
     }
 

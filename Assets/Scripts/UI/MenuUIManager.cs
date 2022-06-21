@@ -9,8 +9,9 @@ public class MenuUIManager : MonoBehaviour
     private DataManager dataManager;
 
     [Header("Game Screen")]
-    [SerializeField] private Image playerImage;
-    [SerializeField] private Sprite[] playerSprites;
+    [SerializeField] private GameObject playerSimpleCardsObject;
+    private PlayerSimpleCard[] playerSimpleCards;
+
     [SerializeField] private Image stadiumImage;
     [SerializeField] private Sprite[] stadiumSprites;
 
@@ -18,10 +19,14 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField] private GameObject infoButtons;
 
 
+    [Header("Player Choice Screen")]
+    [SerializeField] private GameObject playerCompCardsObject;
+    private PlayerCompleteCard[] playerCompCards;
+
+
     [Header("Enemy Choice Screen")]
     [SerializeField] private GameObject enemyCardsObject;
     private EnemyCard[] enemyCards;
-    private int enemyCardsIndex;
 
 
     // ### Properties ###
@@ -51,11 +56,7 @@ public class MenuUIManager : MonoBehaviour
     public int PlayerIndex
     {
         get { return dataManager.playerPrefs.playerIndex; }
-        set
-        {
-            dataManager.playerPrefs.playerIndex = value;
-            dataManager.gameData.playerIndex = value;
-        }
+        set { dataManager.playerPrefs.playerIndex = value; }
     }
     public int StadiumIndex
     {
@@ -65,6 +66,11 @@ public class MenuUIManager : MonoBehaviour
             dataManager.playerPrefs.stadiumIndex = value;
             dataManager.gameData.stadiumIndex = value;
         }
+    }
+    public int EnemyIndex
+    {
+        get { return dataManager.playerPrefs.enemyIndex; }
+        set { dataManager.playerPrefs.enemyIndex = value; }
     }
 
 
@@ -88,7 +94,6 @@ public class MenuUIManager : MonoBehaviour
     {
         InfoButtonsOn = settingsManager.InfoButtonsOn;
 
-        playerImage.sprite = playerSprites[PlayerIndex];
         stadiumImage.sprite = stadiumSprites[StadiumIndex];
     }
 
@@ -104,20 +109,6 @@ public class MenuUIManager : MonoBehaviour
     }
 
 
-    public void NextPlayer()
-    {
-        if (PlayerIndex == playerSprites.Length - 1) { PlayerIndex = 0; }
-        else { PlayerIndex++; }
-
-        playerImage.sprite = playerSprites[PlayerIndex];
-    }
-    public void PrevPlayer()
-    {
-        if (PlayerIndex == 0) { PlayerIndex = playerSprites.Length - 1; }
-        else { PlayerIndex--; }
-
-        playerImage.sprite = playerSprites[PlayerIndex];
-    }
     public void NextStadium()
     {
         if (StadiumIndex == stadiumSprites.Length - 1) { StadiumIndex = 0; }
@@ -134,46 +125,81 @@ public class MenuUIManager : MonoBehaviour
     }
 
 
+
+    private void GetCard<T>(out T[] cards, GameObject cardObject, int index, ref GameObject g)
+    {
+        cards = cardObject.GetComponentsInChildren<T>();
+        Card[] cardsBis = cardObject.GetComponentsInChildren<Card>();
+        foreach (Card c in cardsBis)
+            c.gameObject.SetActive(false);
+        cardsBis[index].gameObject.SetActive(true);
+        g = cardsBis[index].prefab;
+    }
+
     private void GetCards()
     {
-        enemyCards = enemyCardsObject.GetComponentsInChildren<EnemyCard>();
-        foreach (EnemyCard ec in enemyCards)
-            ec.gameObject.SetActive(false);
-        enemyCards[enemyCardsIndex].gameObject.SetActive(true);
+        // Player simple cards
+        GetCard(out playerSimpleCards, playerSimpleCardsObject, PlayerIndex, ref dataManager.gameData.player);
+
+        // Player complete cards
+        GetCard(out playerCompCards, playerCompCardsObject, PlayerIndex, ref dataManager.gameData.player);
+
+        // Enemy simple cards
+        GetCard(out enemyCards, enemyCardsObject, EnemyIndex, ref dataManager.gameData.enemy);
     }
 
-    private void NextCard(Card[] cards, ref int index)
+    private int NextCard(Card[] cards, int index, ref GameObject g)
     {
         bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
-        if (index == cards.Length - 1) { index = 0; }
-        else { index++; }
+        Next(ref index, cards.Length - 1);
 
         cards[index].gameObject.SetActive(true);
         cards[index].InfoActive = infoActive;
-        dataManager.gameData.enemy = cards[index].prefab;
+        g = cards[index].prefab;
+
+        return index;
     }
-    private void PrevCard(Card[] cards, ref int index)
+    private int PrevCard(Card[] cards, int index, ref GameObject g)
     {
         bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
-        if (index == 0) { index = cards.Length - 1; }
-        else { index--; }
+        Prev(ref index, cards.Length - 1);
 
         cards[index].gameObject.SetActive(true);
         cards[index].InfoActive = infoActive;
-        dataManager.gameData.enemy = cards[index].prefab;
+        g = cards[index].prefab;
+
+        return index;
     }
-    public void NextCardEnemy() { NextCard(enemyCards, ref enemyCardsIndex); }
-    public void PrevCardEnemy() { PrevCard(enemyCards, ref enemyCardsIndex); }
+
+
+    public void NextCardPlayer() 
+    {
+        NextCard(playerCompCards, PlayerIndex, ref dataManager.gameData.player);
+        PlayerIndex = NextCard(playerSimpleCards, PlayerIndex, ref dataManager.gameData.player); 
+    }
+    public void PrevCardPlayer() 
+    {
+        PrevCard(playerCompCards, PlayerIndex, ref dataManager.gameData.player);
+        PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex, ref dataManager.gameData.player);
+    }
+    public void NextCardEnemy() { EnemyIndex = NextCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
+    public void PrevCardEnemy() { EnemyIndex = PrevCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
 
 
     // ### Tools ###
 
-    public void SetAsLastSibling(GameObject go)
+    private void Next(ref int index, int limit)
     {
-        go.transform.SetAsLastSibling();
+        if (index == limit) { index = 0; }
+        else { index++; }
+    }
+    private void Prev(ref int index, int limit)
+    {
+        if (index == 0) { index = limit; }
+        else { index--; }
     }
 }

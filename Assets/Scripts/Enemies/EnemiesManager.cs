@@ -60,7 +60,7 @@ public class EnemiesManager : MonoBehaviour
     public void SuppEnemies()
     {
         for (int i = 0; i < enemies.Count; i++)
-            Destroy(enemies[i]);
+            Destroy(enemies[i].gameObject);
         enemies.Clear();
     }
 
@@ -262,7 +262,7 @@ public class EnemiesManager : MonoBehaviour
     {
         if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE)
         {
-            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.oneVOneEnemyPos, 0.1f, defenderAudios);
+            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.OneVOneEnemyPos, 0.1f, defenderAudios);
         }
     }
 }

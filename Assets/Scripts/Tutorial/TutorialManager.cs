@@ -7,6 +7,8 @@ public class TutorialManager : MonoBehaviour
     private MainManager main;
     private DataManager dataManager;
 
+    [SerializeField] private GameObject tutorialPlayer;
+
 
     private bool step0 = true;
     private bool step1 = false;
@@ -40,7 +42,7 @@ public class TutorialManager : MonoBehaviour
             dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
             dataManager.gameData.gameOptions.Clear();
             dataManager.gameData.gameWheather = GameWheather.SUN;
-            dataManager.gameData.playerIndex = 0;
+            dataManager.gameData.player = tutorialPlayer;
             dataManager.gameData.stadiumIndex = 0;
         }
     }

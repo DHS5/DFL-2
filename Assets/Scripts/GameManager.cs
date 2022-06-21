@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Range of different enemies that can spawn in one wave")]
     [Range(0, 5)] public int enemiesRange;
 
-    [Tooltip("Index of the player's prefab")]
-    [Range(0, 10)] public int playerIndex;
+    [Tooltip("Player's prefab")]
+    public GameObject playerPrefab;
 
     [Tooltip("Index of the stadium's prefab")]
     [Range(0, 10)] public int stadiumIndex;
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
             gameData.gameDrill = gameDrill;
             gameData.gameEnemiesRange = enemiesRange;
 
-            gameData.playerIndex = playerIndex;
+            gameData.player = playerPrefab;
             gameData.stadiumIndex = stadiumIndex;
             gameData.enemy = enemyPrefab;
         }
