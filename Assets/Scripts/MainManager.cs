@@ -59,7 +59,7 @@ public class MainManager : MonoBehaviour
 
         // Options
         ObjectifManager = GetComponent<ObjectifManager>();
-        if (!DataManager.gameData.gameOptions.Contains(GameOption.OBJECTIF)) ObjectifManager.enabled = false;
+        if (!DataManager.gameData.gameOptions.Contains(GameOption.OBJECTIF) && !(DataManager.gameData.gameDrill == GameDrill.OBJECTIF)) ObjectifManager.enabled = false;
         ObstacleManager = GetComponent<ObstacleManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.OBSTACLE)) ObstacleManager.enabled = false;
         BonusManager = GetComponent<BonusManager>();

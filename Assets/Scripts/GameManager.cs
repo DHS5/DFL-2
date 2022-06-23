@@ -260,6 +260,11 @@ public class GameManager : MonoBehaviour
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
             main.TeamManager.TeamCreation();
+        if (gameData.gameMode == GameMode.DRILL)
+        {
+            if (gameData.gameDrill == GameDrill.OBJECTIF)
+                main.ObjectifManager.GenerateObj(waveNumber * (5 + (int)gameData.gameDifficulty));
+        }
 
 
         // # Options #
@@ -286,6 +291,8 @@ public class GameManager : MonoBehaviour
     private void LaunchGame(bool pause)
     {
         gameOn = true;
+
+        Time.timeScale = 1.0f;
 
         main.PlayerManager.StartPlayer();
         if (!pause) main.EnemiesManager.BeginChase();

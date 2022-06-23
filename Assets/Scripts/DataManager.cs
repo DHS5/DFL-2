@@ -33,6 +33,7 @@ public struct PlayerPrefs
     public int playerIndex;
     public int stadiumIndex;
     public int enemyIndex;
+    public int[] teamIndex;
 }
 
 [System.Serializable]
@@ -138,9 +139,17 @@ public class DataManager : MonoBehaviour
 
     // ## Data Management ##
 
+    private void InitPlayerPrefs()
+    {
+        if (playerPrefs.teamIndex == null)
+            playerPrefs.teamIndex = new int[5];
+    }
+
     private void InitGameData()
     {
         gameData.stadiumIndex = playerPrefs.stadiumIndex;
+
+        gameData.team = new GameObject[5];
     }
 
     public void ClearGameData()
@@ -362,5 +371,7 @@ public class DataManager : MonoBehaviour
             gameplayData = data.gameplayData;
             playerPrefs = data.playerPrefs;
         }
+
+        InitPlayerPrefs();
     }
 }

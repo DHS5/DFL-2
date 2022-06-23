@@ -18,8 +18,8 @@ public class ObjectifManager : MonoBehaviour
     [Tooltip("Current objectif for the player to go through")]
     private Objectif currentObjectif;
 
-    [Tooltip("Game object of the player")]
-    private GameObject player;
+    [Tooltip("Player script")]
+    private Player player;
 
 
     [Tooltip("Zones of the field on which to place the objectives")]
@@ -31,10 +31,17 @@ public class ObjectifManager : MonoBehaviour
         main = GetComponent<MainManager>();
     }
 
-    private void Start()
+
+    private void Update()
     {
-        player = main.PlayerManager.playerObject;
+        // Checks if the player misses an objectif
+        if (currentObjectif != null && player.transform.position.z > currentObjectif.gameObject.transform.position.z + 5 && !main.GameManager.GameOver)
+        {
+            Debug.Log("Missed an objectif");
+            main.GameManager.GameOver = true;
+        }
     }
+
 
 
     // ### Functions ###
@@ -64,7 +71,13 @@ public class ObjectifManager : MonoBehaviour
     /// </summary>
     public void GenerateObj()
     {
-        Objectif obj;
+        player = main.PlayerManager.player;
+
+
+        Vector3 randomPos;
+        Vector3 zonePos;
+        float xScale;
+        float zScale;
 
         // Gets the field zones
         GetZones();
@@ -72,31 +85,49 @@ public class ObjectifManager : MonoBehaviour
         for (int i = 0; i < zones.Length; i++)
         {
             // Gets the zones position and scale info
-            Vector3 zonePos = zones[i].transform.position;
-            float xScale = zones[i].transform.localScale.x/2 - 10;
-            float zScale = zones[i].transform.localScale.z/2;
+            zonePos = zones[i].transform.position;
+            xScale = zones[i].transform.localScale.x/2 - 10;
+            zScale = zones[i].transform.localScale.z/2;
 
             // Gets a random position in the current zone
-            Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
+            randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
             // Instantiate the objectif
-            obj = Instantiate(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty / 2], randomPos, Quaternion.identity).GetComponent<Objectif>();
-            obj.objectifManager = this;
-            objectives.Enqueue(obj);
+            InstantiateObj(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty], randomPos);
         }
 
         // Gets the first objectif
         NextObj();
     }
 
-
-    private void Update()
+    public void GenerateObj(int number)
     {
-        // Checks if the player misses an objectif
-        if (currentObjectif != null && player.transform.position.z > currentObjectif.gameObject.transform.position.z + 5 && !main.GameManager.GameOver)
+        player = main.PlayerManager.player;
+
+
+        Vector3 fieldPos = main.FieldManager.field.transform.position;
+        float xScale = main.FieldManager.field.fieldZone.transform.localScale.x / 2 - 5;
+        float zRange = main.FieldManager.field.fieldZone.transform.localScale.z / (number + 1);
+        float xRange = zRange * Mathf.Tan(Mathf.Asin(player.controller.SlowSideSpeed / player.controller.NormalSpeed));
+        
+        Vector3 randomPos = Vector3.zero;
+
+        for (int i = 1; i < number + 1; i++)
         {
-            Debug.Log("Missed an objectif");
-            main.GameManager.GameOver = true;
+            float x = Mathf.Clamp(Random.Range(xRange / 2, xRange) * (Random.Range(0, 2) == 0 ? -1 : 1) + randomPos.x, -xScale, xScale);
+            randomPos = new Vector3(x, 0, zRange * i) + fieldPos;
+            InstantiateObj(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty], randomPos);
         }
+
+        NextObj();
+    }
+
+    private void InstantiateObj(GameObject prefab, Vector3 position)
+    {
+        Objectif obj;
+
+        obj = Instantiate(prefab, position, Quaternion.identity).GetComponent<Objectif>();
+        obj.objectifManager = this;
+        objectives.Enqueue(obj);
     }
 }

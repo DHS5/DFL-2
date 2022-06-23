@@ -42,6 +42,7 @@ public class TeamManager : MonoBehaviour
     private List<Enemy> enemiesToAdd = new List<Enemy>();
 
 
+
     [Header("Team caracteristics")]
     public float protectionRadius;
     public float teamReactivity;
@@ -51,7 +52,6 @@ public class TeamManager : MonoBehaviour
     public float frontAngle;
     public float backAngle;
 
-    [SerializeField] private int[] team = new int[5];
 
 
     readonly float sizeMultiplier = 0.1f;
@@ -141,7 +141,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Instantiate an attacker from the attackers prefab list with a semi-random position
     /// </summary>
-    private void InstantiateAttacker(int index)
+    private void InstantiateAttacker(GameObject attackerPrefab)
     {
         Vector3 zonePos = main.FieldManager.field.enterZone.transform.position;
         float xScale = main.FieldManager.field.enterZone.transform.localScale.x / 2;
@@ -149,7 +149,7 @@ public class TeamManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        Attacker attacker = Instantiate(attackersPrefabs[index], randomPos, Quaternion.identity).GetComponent<Attacker>();
+        Attacker attacker = Instantiate(attackerPrefab, randomPos, Quaternion.identity).GetComponent<Attacker>();
         attacker.teamManager = this;
         attacker.player = player;
         attacker.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
@@ -184,7 +184,7 @@ public class TeamManager : MonoBehaviour
 
         for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty; i++)
         {
-            InstantiateAttacker(team[i]);
+            InstantiateAttacker(main.GameManager.gameData.team[i]);
         }
     }
 

@@ -29,6 +29,11 @@ public class MenuUIManager : MonoBehaviour
     private EnemyCard[] enemyCards;
 
 
+    [Header("Team Choice Screen")]
+    [SerializeField] private GameObject[] attackerCardsObjects;
+    private AttackerCard[][] attackerCards = new AttackerCard[5][];
+
+
     // ### Properties ###
 
     public bool InfoButtonsOn
@@ -71,6 +76,11 @@ public class MenuUIManager : MonoBehaviour
     {
         get { return dataManager.playerPrefs.enemyIndex; }
         set { dataManager.playerPrefs.enemyIndex = value; }
+    }
+    public int[] AttackerIndex
+    {
+        get { return dataManager.playerPrefs.teamIndex; }
+        set { dataManager.playerPrefs.teamIndex = value; }
     }
 
 
@@ -144,8 +154,12 @@ public class MenuUIManager : MonoBehaviour
         // Player complete cards
         GetCard(out playerCompCards, playerCompCardsObject, PlayerIndex, ref dataManager.gameData.player);
 
-        // Enemy simple cards
+        // Enemy cards
         GetCard(out enemyCards, enemyCardsObject, EnemyIndex, ref dataManager.gameData.enemy);
+
+        // Attacker cards
+        for (int i = 0; i < attackerCardsObjects.Length; i++)
+            GetCard(out attackerCards[i], attackerCardsObjects[i], AttackerIndex[i], ref dataManager.gameData.team[i]);
     }
 
     private int NextCard(Card[] cards, int index, ref GameObject g)
@@ -188,6 +202,9 @@ public class MenuUIManager : MonoBehaviour
     }
     public void NextCardEnemy() { EnemyIndex = NextCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
     public void PrevCardEnemy() { EnemyIndex = PrevCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
+
+    public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
+    public void PrevCardAttacker(int i) { AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
 
 
     // ### Tools ###

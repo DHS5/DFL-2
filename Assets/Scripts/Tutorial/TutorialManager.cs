@@ -76,7 +76,6 @@ public class TutorialManager : MonoBehaviour
                 side = Input.GetAxisRaw("Horizontal");
                 main.PlayerManager.StartPlayer();
                 main.PlayerManager.player.controller.FullDir(side);
-                Debug.Log(side);
             }
 
             if (Mathf.Abs(main.PlayerManager.player.transform.position.x) > 2.5f)
