@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
         if (gameData.gameMode == GameMode.DRILL)
         {
             if (gameData.gameDrill == GameDrill.OBJECTIF)
-                main.ObjectifManager.GenerateObj(waveNumber * (5 + (int)gameData.gameDifficulty));
+                main.ObjectifManager.GenerateObj(3 + ((int) gameData.gameDifficulty + waveNumber) * 2);
         }
 
 

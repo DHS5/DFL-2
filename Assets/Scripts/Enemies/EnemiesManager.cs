@@ -11,7 +11,8 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-
+    private enum DefenderType { WINGMAN, LINEMAN }
+    [SerializeField] private DifficultyArray[] defenderPrefabs;
 
     [Header("Defenders")]
     [Header("Enemy's prefab lists")]
@@ -183,8 +184,8 @@ public class EnemiesManager : MonoBehaviour
         GameData gd = main.GameManager.gameData;
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty, (int)gd.gameDifficulty, enemyPrefabs.Length);
-        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber + (int)gd.gameDifficulty - gd.gameEnemiesRange, (int)gd.gameDifficulty, enemyPrefabs.Length - 1);
+        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber, 1, enemyPrefabs.Length);
+        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber - gd.gameEnemiesRange, 0, enemyPrefabs.Length - 1);
 
         return enemyPrefabs[Random.Range(minLevel, maxLevel)];
     }
@@ -200,7 +201,10 @@ public class EnemiesManager : MonoBehaviour
     /// (11 defenders, 5 in the center, 3 on each side)
     /// </summary>
     private void DefendersWave()
-    {        
+    {
+        GameObject[] wingmanPrefabs = defenderPrefabs[(int)main.GameManager.gameData.gameDifficulty].enemyTypes[(int)DefenderType.WINGMAN].prefabs;
+        GameObject[] linemanPrefabs = defenderPrefabs[(int)main.GameManager.gameData.gameDifficulty].enemyTypes[(int)DefenderType.LINEMAN].prefabs;
+
         // Spawn in the center zone
         Vector3 center = centerZone.transform.position;
         float xScale = centerZone.transform.localScale.x / 2;
@@ -208,7 +212,7 @@ public class EnemiesManager : MonoBehaviour
         // 5 Linemen in the center
         for (int i = 0; i < 5; i++)
         {
-            CreateEnemy(GetRandomEnemy(linemenPrefabs), GetRandomPos(center, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(linemanPrefabs), GetRandomPos(center, xScale, zScale), 0.1f, defenderAudios);
         }
 
         // Spawn in the left zone
@@ -218,7 +222,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the left
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmenPrefabs), GetRandomPos(left, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(left, xScale, zScale), 0.1f, defenderAudios);
         }
 
         // Spawn in the right zone
@@ -228,7 +232,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the right
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmenPrefabs), GetRandomPos(right, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(right, xScale, zScale), 0.1f, defenderAudios);
         }
 
     }
@@ -265,4 +269,16 @@ public class EnemiesManager : MonoBehaviour
             CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.OneVOneEnemyPos, 0.1f, defenderAudios);
         }
     }
+}
+
+[System.Serializable]
+public class DifficultyArray
+{
+    public GameObjectArray[] enemyTypes;
+}
+
+[System.Serializable]
+public class GameObjectArray
+{
+    public GameObject[] prefabs;
 }

@@ -109,14 +109,16 @@ public class ObjectifManager : MonoBehaviour
         float xScale = main.FieldManager.field.fieldZone.transform.localScale.x / 2 - 5;
         float zRange = main.FieldManager.field.fieldZone.transform.localScale.z / (number + 1);
         float xRange = zRange * Mathf.Tan(Mathf.Asin(player.controller.SlowSideSpeed / player.controller.NormalSpeed));
-        
+        int diff = (int)main.GameManager.gameData.gameDifficulty;
+
+
         Vector3 randomPos = Vector3.zero;
 
         for (int i = 1; i < number + 1; i++)
         {
-            float x = Mathf.Clamp(Random.Range(xRange / 2, xRange) * (Random.Range(0, 2) == 0 ? -1 : 1) + randomPos.x, -xScale, xScale);
+            float x = Mathf.Clamp(Random.Range(xRange * ((diff + 1) / (2 + diff)), xRange) * (Random.Range(0, 2) == 0 ? -1 : 1) + randomPos.x, -xScale, xScale);
             randomPos = new Vector3(x, 0, zRange * i) + fieldPos;
-            InstantiateObj(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty], randomPos);
+            InstantiateObj(objectifPrefabs[diff], randomPos);
         }
 
         NextObj();
