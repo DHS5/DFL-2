@@ -11,8 +11,7 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    private enum DefenderType { WINGMAN, LINEMAN }
-    [SerializeField] private DifficultyArray[] defenderPrefabs;
+    [SerializeField] private DifficultyArrays defenderPrefabs;
 
     [Header("Defenders")]
     [Header("Enemy's prefab lists")]
@@ -202,8 +201,8 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void DefendersWave()
     {
-        GameObject[] wingmanPrefabs = defenderPrefabs[(int)main.GameManager.gameData.gameDifficulty].enemyTypes[(int)DefenderType.WINGMAN].prefabs;
-        GameObject[] linemanPrefabs = defenderPrefabs[(int)main.GameManager.gameData.gameDifficulty].enemyTypes[(int)DefenderType.LINEMAN].prefabs;
+        GameObject[] wingmanPrefabs = defenderPrefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).wingmen;
+        GameObject[] linemanPrefabs = defenderPrefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).linemen;
 
         // Spawn in the center zone
         Vector3 center = centerZone.transform.position;
@@ -272,13 +271,29 @@ public class EnemiesManager : MonoBehaviour
 }
 
 [System.Serializable]
-public class DifficultyArray
+public class DifficultyArrays
 {
-    public GameObjectArray[] enemyTypes;
+    public DefenderTypeArrays easy;
+    public DefenderTypeArrays normal;
+    public DefenderTypeArrays hard;
+
+    public DefenderTypeArrays GetArrays(int difficulty)
+    {
+        switch (difficulty)
+        {
+            case 0:
+                return easy;
+            case 1:
+                return normal;
+            default:
+                return hard;
+        }
+    }
 }
 
 [System.Serializable]
-public class GameObjectArray
+public class DefenderTypeArrays
 {
-    public GameObject[] prefabs;
+    public GameObject[] wingmen;
+    public GameObject[] linemen;
 }

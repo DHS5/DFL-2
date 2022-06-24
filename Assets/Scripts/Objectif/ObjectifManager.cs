@@ -48,16 +48,6 @@ public class ObjectifManager : MonoBehaviour
 
 
     /// <summary>
-    /// Gets the field zones
-    /// </summary>
-    private void GetZones()
-    {
-        zones[0] = main.FieldManager.field.frontZone;
-        zones[1] = main.FieldManager.field.middleZone;
-        zones[2] = main.FieldManager.field.endZone;
-    }
-
-    /// <summary>
     /// Gets the next objectif
     /// </summary>
     public void NextObj()
@@ -66,40 +56,11 @@ public class ObjectifManager : MonoBehaviour
     }
 
 
+    
     /// <summary>
     /// Generates the objectives
     /// </summary>
-    public void GenerateObj()
-    {
-        player = main.PlayerManager.player;
-
-
-        Vector3 randomPos;
-        Vector3 zonePos;
-        float xScale;
-        float zScale;
-
-        // Gets the field zones
-        GetZones();
-
-        for (int i = 0; i < zones.Length; i++)
-        {
-            // Gets the zones position and scale info
-            zonePos = zones[i].transform.position;
-            xScale = zones[i].transform.localScale.x/2 - 10;
-            zScale = zones[i].transform.localScale.z/2;
-
-            // Gets a random position in the current zone
-            randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
-
-            // Instantiate the objectif
-            InstantiateObj(objectifPrefabs[(int) main.GameManager.gameData.gameDifficulty], randomPos);
-        }
-
-        // Gets the first objectif
-        NextObj();
-    }
-
+    /// <param name="number">Number of objectives to generate</param>
     public void GenerateObj(int number)
     {
         player = main.PlayerManager.player;
@@ -123,7 +84,19 @@ public class ObjectifManager : MonoBehaviour
 
         NextObj();
     }
+    /// <summary>
+    /// Generates the objectives
+    /// </summary>
+    public void GenerateObj()
+    {
+        GenerateObj(3 + (int)main.GameManager.gameData.gameDifficulty);
+    }
 
+    /// <summary>
+    /// Instantiate an objectif
+    /// </summary>
+    /// <param name="prefab">Prefab of the objectif</param>
+    /// <param name="position">Position of the objectif</param>
     private void InstantiateObj(GameObject prefab, Vector3 position)
     {
         Objectif obj;
