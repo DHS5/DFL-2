@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     [Tooltip("First person camera controller")]
     [HideInInspector] public FirstPersonCameraController fpsCamera;
 
+    [Tooltip("Game Object of the football")]
+    public GameObject fpFootball;
+
 
 
     [Header("Third Person components")]
@@ -44,6 +47,9 @@ public class Player : MonoBehaviour
 
     [Tooltip("Third person camera controller")]
     [HideInInspector] public ThirdPersonCameraController tpsCamera;
+
+    [Tooltip("Game Object of the football")]
+    public GameObject tpFootball;
 
 
 

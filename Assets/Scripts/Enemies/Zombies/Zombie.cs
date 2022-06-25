@@ -29,4 +29,9 @@ public class Zombie : Enemy
     //        animator.SetTrigger("Attack");
     //    }
     //}
+
+    public virtual void Dead()
+    {
+
+    }
 }
