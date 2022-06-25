@@ -14,8 +14,11 @@ public class TPPlayer : MonoBehaviour
     [Tooltip("Third person camera controller")]
     [HideInInspector] public ThirdPersonCameraController tpsCamera;
 
+    [Tooltip("Game Object of the player's right hand")]
+    public GameObject rightHand;
+
     [Tooltip("Game Object of the football")]
-    public GameObject tpFootball;
+    public GameObject football;
 
 
     private void Awake()

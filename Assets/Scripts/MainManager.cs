@@ -30,6 +30,7 @@ public class MainManager : MonoBehaviour
     [HideInInspector] public ObjectifManager ObjectifManager { get; private set; }
     [HideInInspector] public ObstacleManager ObstacleManager { get; private set; }
     [HideInInspector] public BonusManager BonusManager { get; private set; }
+    [HideInInspector] public WeaponsManager WeaponsManager { get; private set; }
 
 
     private void Awake()
@@ -64,6 +65,8 @@ public class MainManager : MonoBehaviour
         if (!DataManager.gameData.gameOptions.Contains(GameOption.OBSTACLE)) ObstacleManager.enabled = false;
         BonusManager = GetComponent<BonusManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.BONUS)) BonusManager.enabled = false;
+        WeaponsManager = GetComponent<WeaponsManager>();
+        if (!DataManager.gameData.gameOptions.Contains(GameOption.WEAPONS)) WeaponsManager.enabled = false;
 
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers

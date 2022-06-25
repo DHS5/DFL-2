@@ -32,6 +32,8 @@ public class Zombie : Enemy
 
     public virtual void Dead()
     {
-
+        Debug.Log(this + " is Dead");
+        Destroy(this);
+        Destroy(gameObject);
     }
 }

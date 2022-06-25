@@ -12,7 +12,7 @@ public struct WeaponInfo
     public int maxVictim;
 }
 
-public abstract class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     private Player player;
 
@@ -65,14 +65,20 @@ public abstract class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = audioClip;
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = audioClip;
+    }
+
+    private void Start()
+    {
+        CanShoot = true;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1) && CanShoot)
+        if (Input.GetMouseButtonUp(0) && CanShoot)
         {
+            Debug.Log("want to shoot");
             Shoot();
         }
     }
@@ -98,6 +104,8 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     protected virtual void Shoot()
     {
+        Debug.Log("Shoot");
+
         // Initialization of the zombie's list & useful variables
         List<Enemy> zombieList = new(enemiesManager.enemies);
         Zombie z;
@@ -110,7 +118,8 @@ public abstract class Weapon : MonoBehaviour
 
 
         CanShoot = false;
-        audioSource.Play();
+        ammunition--;
+        //audioSource.Play();
 
         while (victims < maxVictim && zNum < zombieList.Count)
         {
@@ -121,7 +130,6 @@ public abstract class Weapon : MonoBehaviour
 
             if (dist < range && toZAngle < angle)
             {
-                ammunition--;
                 victims++;
                 z.Dead();
             }

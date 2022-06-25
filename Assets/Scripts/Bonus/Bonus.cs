@@ -8,7 +8,7 @@ public class Bonus : MonoBehaviour
     [HideInInspector] public BonusManager bonusManager;
 
     [Tooltip("Game object of the player")]
-    [HideInInspector] public GameObject player;
+    [HideInInspector] public Player player;
 
     [Tooltip("PlayerController of the player\n" +
         "bonusSpeed / bonusJump")]
@@ -27,8 +27,8 @@ public class Bonus : MonoBehaviour
 
     protected virtual void Start()
     {
-        playerC = player.GetComponent<PlayerController>();
-        playerG = player.GetComponent<PlayerGameplay>();
+        playerC = player.controller;
+        playerG = player.gameplay;
     }
 
 

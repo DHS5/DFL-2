@@ -277,8 +277,8 @@ public class GameManager : MonoBehaviour
         if (gameData.gameOptions.Contains(GameOption.OBJECTIF))
             main.ObjectifManager.GenerateObj();
 
-        if (gameData.gameOptions.Contains(GameOption.WEAPONS)) { }
-            //main.
+        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+            main.WeaponsManager.GenerateWeaponBonus();
 
 
         main.GameAudioManager.GenerateAudio(); // Actualize the audio volume etc...

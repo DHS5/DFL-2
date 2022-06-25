@@ -11,8 +11,11 @@ public class FPPlayer : MonoBehaviour
     [Tooltip("First person camera controller")]
     [HideInInspector] public FirstPersonCameraController fpsCamera;
 
+    [Tooltip("Game Object of the player's right hand")]
+    public GameObject rightHand;
+
     [Tooltip("Game Object of the football")]
-    public GameObject fpFootball;
+    public GameObject football;
 
 
 

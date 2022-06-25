@@ -1986,6 +1986,7 @@ GameObject:
   - component: {fileID: 675627213}
   - component: {fileID: 675627214}
   - component: {fileID: 675627215}
+  - component: {fileID: 675627218}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -2337,6 +2338,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
+--- !u!114 &675627218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675627202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc750872bed903143a9b3091810adcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponBonusPrefabs:
+  - {fileID: 7909370676192376379, guid: 68f75f1b9c43ae549936e1fadb00256f, type: 3}
 --- !u!1 &710684370
 GameObject:
   m_ObjectHideFlags: 0

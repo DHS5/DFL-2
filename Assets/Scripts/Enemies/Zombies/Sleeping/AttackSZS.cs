@@ -34,8 +34,6 @@ public class AttackSZS : EnemyState
 
         if (delta > 0)
         {
-            Debug.Log("Delta > 0");
-
             distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
 
             if (distP < 0)
