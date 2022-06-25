@@ -21,35 +21,16 @@ public class Player : MonoBehaviour
 
 
 
-    [Header("First Person components")]
-    [Tooltip("Game Object of the first person player")]
-    public GameObject FPPlayer;
-
-    [Tooltip("Animator of the first person player")]
-    [HideInInspector] public Animator fpAnimator;
-
-    [Tooltip("First person camera controller")]
-    [HideInInspector] public FirstPersonCameraController fpsCamera;
-
-    [Tooltip("Game Object of the football")]
-    public GameObject fpFootball;
+    [Header("First person player")]
+    [Tooltip("First person player")]
+    [HideInInspector] public FPPlayer fPPlayer;
 
 
 
-    [Header("Third Person components")]
-    [Tooltip("Game Object of the third person player")]
-    public GameObject TPPlayer;
+    [Header("Third Person player")]
+    [Tooltip("Third person player")]
+    [HideInInspector] public TPPlayer tPPlayer;
 
-    public Camera TPCamera;
-
-    [Tooltip("Animator of the third person player")]
-    [HideInInspector] public Animator tpAnimator;
-
-    [Tooltip("Third person camera controller")]
-    [HideInInspector] public ThirdPersonCameraController tpsCamera;
-
-    [Tooltip("Game Object of the football")]
-    public GameObject tpFootball;
 
 
 
@@ -71,13 +52,9 @@ public class Player : MonoBehaviour
 
         effects = GetComponent<PlayerEffects>();
 
-        fpAnimator = FPPlayer.GetComponentInChildren<Animator>();
+        fPPlayer = GetComponentInChildren<FPPlayer>();
 
-        tpAnimator = TPPlayer.GetComponentInChildren<Animator>();
-
-        fpsCamera = FPPlayer.GetComponentInChildren<FirstPersonCameraController>();
-
-        tpsCamera = TPPlayer.GetComponentInChildren<ThirdPersonCameraController>();
+        tPPlayer = GetComponentInChildren<TPPlayer>();
 
         audioSource = GetComponent<AudioSource>();
     }

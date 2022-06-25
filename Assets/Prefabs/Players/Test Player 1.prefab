@@ -73,15 +73,8 @@ MonoBehaviour:
   effects: {fileID: 0}
   audioSource: {fileID: 0}
   activeBody: {fileID: 0}
-  FPPlayer: {fileID: 5865577980137533388}
-  fpAnimator: {fileID: 0}
-  fpsCamera: {fileID: 0}
-  fpFootball: {fileID: 0}
-  TPPlayer: {fileID: 6330750729721195925}
-  TPCamera: {fileID: 6264315450918731087}
-  tpAnimator: {fileID: 0}
-  tpsCamera: {fileID: 0}
-  tpFootball: {fileID: 6406769276653581341}
+  fPPlayer: {fileID: 0}
+  tPPlayer: {fileID: 0}
   physical: 6
   handling: 7
   skills: 4
@@ -652,6 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711999341271282069}
   - component: {fileID: 4693334102996200431}
+  - component: {fileID: 6901173996921036072}
   m_Layer: 0
   m_Name: BasicPlayer v0.5 1
   m_TagString: Untagged
@@ -696,6 +690,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6901173996921036072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056437453968714543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b91ff40563488241a678eb321593271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  fpsCamera: {fileID: 0}
+  fpFootball: {fileID: 0}
 --- !u!1 &2306164415209805258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,6 +2324,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2343889420500303632}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8417136111300149507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6073253291412684307, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2343889420500303632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &445296652996843035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8417136111300149507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eece60cb034fbd34d8550be07599b2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tPCamera: {fileID: 6264315450918731087}
+  animator: {fileID: 0}
+  tpsCamera: {fileID: 0}
+  tpFootball: {fileID: 6406769276653581341}
 --- !u!4 &9188605608546851769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6846411638236488873, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,

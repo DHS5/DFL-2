@@ -38,8 +38,8 @@ public abstract class PlayerState
 
         controller = player.controller;
 
-        animators[0] = player.fpAnimator;
-        animators[1] = player.tpAnimator;
+        animators[0] = player.fPPlayer.animator;
+        animators[1] = player.tPPlayer.animator;
     }
 
 
@@ -74,12 +74,12 @@ public abstract class PlayerState
     {
         if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
         {
-            player.TPPlayer.transform.localRotation =
-            Quaternion.Slerp(player.TPPlayer.transform.localRotation,
+            player.tPPlayer.transform.localRotation =
+            Quaternion.Slerp(player.tPPlayer.transform.localRotation,
                 Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
 
-            player.FPPlayer.transform.localRotation =
-                Quaternion.Slerp(player.FPPlayer.transform.localRotation,
+            player.fPPlayer.transform.localRotation =
+                Quaternion.Slerp(player.fPPlayer.transform.localRotation,
                     Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
         }
     }

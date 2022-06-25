@@ -25,34 +25,37 @@ public class PlayerManager : MonoBehaviour
     public float YMouseSensitivity
     {
         get { return main.DataManager.gameplayData.yms; }
-        set { player.fpsCamera.YMS = value; }
+        set { player.fPPlayer.fpsCamera.YMS = value; }
     }
     public float YSmoothRotation
     {
         get { return main.DataManager.gameplayData.ysr; }
-        set { player.fpsCamera.YSR = value; }
+        set { player.fPPlayer.fpsCamera.YSR = value; }
     }
     public ViewType ViewType
     {
+        get { return main.DataManager.gameplayData.viewType; }
         set
         {
             if (value == ViewType.FPS)
             {
-                player.FPPlayer.SetActive(true);
-                player.TPPlayer.SetActive(false);
+                player.fPPlayer.gameObject.SetActive(true);
+                player.tPPlayer.gameObject.SetActive(false);
 
-                player.fpsCamera.enabled = true;
+                player.fPPlayer.fpsCamera.enabled = true;
+                player.tPPlayer.tpsCamera.enabled = false;
 
-                player.activeBody = player.FPPlayer;
+                player.activeBody = player.fPPlayer.gameObject;
             }
             else if (value == ViewType.TPS)
             {
-                player.TPPlayer.SetActive(true);
-                player.FPPlayer.SetActive(false);
+                player.tPPlayer.gameObject.SetActive(true);
+                player.fPPlayer.gameObject.SetActive(false);
 
-                player.fpsCamera.enabled = false;
+                player.tPPlayer.tpsCamera.enabled = true;
+                player.fPPlayer.fpsCamera.enabled = false;
 
-                player.activeBody = player.TPPlayer;
+                player.activeBody = player.tPPlayer.gameObject;
             }
         }
     }
@@ -94,16 +97,16 @@ public class PlayerManager : MonoBehaviour
         player.gameplay.freeze = false; // Unfreezes the player
         //fpsCamera.LockCursor(); // Locks the cursor
 
-        player.fpAnimator.enabled = true;
-        player.tpAnimator.enabled = true;
+        player.fPPlayer.animator.enabled = true;
+        player.tPPlayer.animator.enabled = true;
     }
 
     public void StopPlayer()
     {
         player.gameplay.freeze = true; // Freezes the player
 
-        player.fpAnimator.enabled = false;
-        player.tpAnimator.enabled = false;
+        player.fPPlayer.animator.enabled = false;
+        player.tPPlayer.animator.enabled = false;
     }
 
     public void DeadPlayer()

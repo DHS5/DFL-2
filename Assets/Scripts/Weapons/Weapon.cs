@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public struct WeaponInfo
+{
+    public float range;
+    public float angle;
+    public int ammunition;
+    public float reloadTime;
+    public int maxVictim;
+}
+
 public abstract class Weapon : MonoBehaviour
 {
     private Player player;
@@ -31,7 +41,26 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private AudioClip audioClip;
 
 
-    private bool canShoot;
+    public bool CanShoot { get; private set; }
+    public float ReloadEndTime { get; private set; }
+
+
+    // ### Properties ###
+
+    public WeaponInfo WeaponInfo
+    {
+        get { return new WeaponInfo 
+        { range = range, angle = angle, ammunition = ammunition, reloadTime = reloadTime, maxVictim = maxVictim }; }
+        set
+        {
+            range = value.range;
+            angle = value.angle;
+            ammunition = value.ammunition;
+            reloadTime = value.reloadTime;
+            maxVictim = value.maxVictim;
+        }
+    }
+
 
 
     private void Awake()
@@ -42,7 +71,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1) && canShoot)
+        if (Input.GetMouseButtonUp(1) && CanShoot)
         {
             Shoot();
         }
@@ -56,7 +85,17 @@ public abstract class Weapon : MonoBehaviour
         player = _player;
         enemiesManager = _enemiesManager;
     }
+    public void Getter(in Player _player, in EnemiesManager _enemiesManager, WeaponInfo info)
+    {
+        Getter(_player, _enemiesManager);
 
+        WeaponInfo = info;
+    }
+
+
+    /// <summary>
+    /// Uses the weapon to kill zombies targetable
+    /// </summary>
     protected virtual void Shoot()
     {
         // Initialization of the zombie's list & useful variables
@@ -70,7 +109,7 @@ public abstract class Weapon : MonoBehaviour
         int zNum = 0;
 
 
-        canShoot = false;
+        CanShoot = false;
         audioSource.Play();
 
         while (victims < maxVictim && zNum < zombieList.Count)
@@ -91,14 +130,21 @@ public abstract class Weapon : MonoBehaviour
         }
 
         if (ammunition > 0)
+        {
             Invoke(nameof(Reload), reloadTime);
+            ReloadEndTime = Time.time + reloadTime;
+        }
 
         else
             Destroy(gameObject);
     }
 
-    protected void Reload()
+
+    /// <summary>
+    /// Make the player able to shoot again
+    /// </summary>
+    public void Reload()
     {
-        canShoot = true;
+        CanShoot = true;
     }
 }
