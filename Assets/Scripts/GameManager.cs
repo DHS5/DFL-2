@@ -396,6 +396,9 @@ public class GameManager : MonoBehaviour
         main.PlayerManager.StopPlayer();
         main.GameUIManager.GameOver();
 
+        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+            main.WeaponsManager.GameOver();
+
         // Call the Ouuuuuh with the game audio manager (currently in field manager)
 
         yield return new WaitForSeconds(0.75f);

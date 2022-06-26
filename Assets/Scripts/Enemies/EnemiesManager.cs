@@ -60,7 +60,8 @@ public class EnemiesManager : MonoBehaviour
     public void SuppEnemies()
     {
         for (int i = 0; i < enemies.Count; i++)
-            Destroy(enemies[i].gameObject);
+            if (enemies[i] != null)
+                Destroy(enemies[i].gameObject);
         enemies.Clear();
     }
 
@@ -72,7 +73,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].Stop();
+            if (enemies[i] != null)
+                enemies[i].Stop();
         }
     }
     /// <summary>
@@ -82,7 +84,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].Resume();
+            if (enemies[i] != null)
+                enemies[i].Resume();
         }
     }
 
@@ -90,7 +93,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].GameOver();
+            if (enemies[i] != null)
+                enemies[i].GameOver();
         }
     }
 
@@ -101,7 +105,8 @@ public class EnemiesManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].ChasePlayer();
+            if (enemies[i] != null)
+                enemies[i].ChasePlayer();
         }
     }
 

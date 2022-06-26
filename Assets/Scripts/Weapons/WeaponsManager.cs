@@ -16,6 +16,15 @@ public class WeaponsManager : MonoBehaviour
 
     private Weapon currentWeapon;
 
+
+    // ### Properties ###
+    public bool GameOn
+    {
+        get { return main.GameManager.GameOn; }
+    }
+
+
+
     private void Awake()
     {
         main = GetComponent<MainManager>();
@@ -46,12 +55,14 @@ public class WeaponsManager : MonoBehaviour
 
     public void InstantiateWeapon(GameObject prefab)
     {
+        if (currentWeapon != null) Destroy(currentWeapon.gameObject);
+
         //fpWeapon = Instantiate(prefab, main.PlayerManager.player.fPPlayer.rightHand.transform).GetComponent<Weapon>();
         tpWeapon = Instantiate(prefab, main.PlayerManager.player.tPPlayer.rightHand.transform).GetComponent<Weapon>();
 
         currentWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
 
-        currentWeapon.Getter(main.PlayerManager.player, main.EnemiesManager);
+        currentWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager);
     }
 
     private void ViewChange()
@@ -59,7 +70,7 @@ public class WeaponsManager : MonoBehaviour
         if (currentWeapon != null)
         {
             Weapon newWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
-            newWeapon.Getter(main.PlayerManager.player, main.EnemiesManager, currentWeapon.WeaponInfo);
+            newWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, currentWeapon.WeaponInfo);
 
             if (!currentWeapon.CanShoot)
                 newWeapon.Invoke(nameof(newWeapon.Reload), currentWeapon.ReloadEndTime);
@@ -69,6 +80,7 @@ public class WeaponsManager : MonoBehaviour
 
     public void GameOver()
     {
-        Destroy(currentWeapon.gameObject);
+        if (currentWeapon != null)
+            Destroy(currentWeapon.gameObject);
     }
 }

@@ -73,13 +73,8 @@ MonoBehaviour:
   effects: {fileID: 0}
   audioSource: {fileID: 0}
   activeBody: {fileID: 0}
-  FPPlayer: {fileID: 5865577980137533388}
-  fpAnimator: {fileID: 0}
-  fpsCamera: {fileID: 0}
-  TPPlayer: {fileID: 6330750729721195925}
-  TPCamera: {fileID: 6264315450918731087}
-  tpAnimator: {fileID: 0}
-  tpsCamera: {fileID: 0}
+  fPPlayer: {fileID: 0}
+  tPPlayer: {fileID: 0}
   physical: 8
   handling: 9
   skills: 4
@@ -650,6 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711999341271282069}
   - component: {fileID: 4693334102996200431}
+  - component: {fileID: 2193611649569546893}
   m_Layer: 0
   m_Name: BasicPlayer v0.5 1
   m_TagString: Untagged
@@ -694,6 +690,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2193611649569546893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056437453968714543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b91ff40563488241a678eb321593271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  fpsCamera: {fileID: 0}
+  rightHand: {fileID: 3394180481110154554}
+  football: {fileID: 0}
 --- !u!1 &2306164415209805258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2237,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5405139228286897681}
     m_Modifications:
+    - target: {fileID: -4362321172444093215, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+        type: 3}
+      propertyPath: tPCamera
+      value: 
+      objectReference: {fileID: 6264315450918731087}
     - target: {fileID: 712549269110947539, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
         type: 3}
       propertyPath: m_Controller

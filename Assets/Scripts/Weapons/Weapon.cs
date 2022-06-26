@@ -14,6 +14,8 @@ public struct WeaponInfo
 
 public class Weapon : MonoBehaviour
 {
+    private WeaponsManager weaponsManager;
+
     private Player player;
 
     private EnemiesManager enemiesManager;
@@ -72,11 +74,13 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         CanShoot = true;
+
+        Debug.Log("Start weapon");
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0) && CanShoot)
+        if (Input.GetMouseButtonUp(0) && CanShoot && weaponsManager.GameOn)
         {
             Debug.Log("want to shoot");
             Shoot();
@@ -86,14 +90,15 @@ public class Weapon : MonoBehaviour
 
     // ### Functions ###
 
-    public void Getter(in Player _player, in EnemiesManager _enemiesManager)
+    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager)
     {
+        weaponsManager = _weaponsManager;
         player = _player;
         enemiesManager = _enemiesManager;
     }
-    public void Getter(in Player _player, in EnemiesManager _enemiesManager, WeaponInfo info)
+    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager, WeaponInfo info)
     {
-        Getter(_player, _enemiesManager);
+        Getter(_weaponsManager, _player, _enemiesManager);
 
         WeaponInfo = info;
     }
@@ -125,13 +130,16 @@ public class Weapon : MonoBehaviour
         {
             z = (Zombie) zombieList[zNum];
 
-            dist = z.rawDistance;
-            toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
-
-            if (dist < range && toZAngle < angle)
+            if (z != null)
             {
-                victims++;
-                z.Dead();
+                dist = z.rawDistance;
+                toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
+
+                if (dist < range && toZAngle < angle)
+                {
+                    victims++;
+                    z.Dead();
+                }
             }
 
             zNum++;

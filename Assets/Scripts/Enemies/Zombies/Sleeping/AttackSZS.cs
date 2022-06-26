@@ -32,7 +32,14 @@ public class AttackSZS : EnemyState
 
         float delta = (B * B) - (4 * A * C);
 
-        if (delta > 0)
+        if (A == 0)
+        {
+            distP = C / -B;
+            if (distP < 0)
+                distP = enemy.anticipation;
+        }
+
+        else if (delta > 0)
         {
             distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
 
