@@ -30,6 +30,7 @@ public class GameUIManager : MonoBehaviour
 
 
 
+    [Header("Bonus & sprint")]
     [Tooltip("UI components of the acceleration bar")]
     [SerializeField] private GameObject[] accelerationBars;
     [Tooltip("UI components of the bonus bar")]
@@ -40,6 +41,23 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private Animation bonusBarAnim;
 
     private float bonusBarSize;
+
+
+    [Header("Weapons")]
+    [Tooltip("")]
+    [SerializeField] private GameObject weaponsObject;
+
+    [Tooltip("")]
+    [SerializeField] private GameObject weaponsBackground;
+
+    [Tooltip("Text indicating the number of shoot left")]
+    [SerializeField] private TextMeshProUGUI shootLeftText;
+
+    [Tooltip("")]
+    [SerializeField] private Image knifeIcon;
+
+    [Tooltip("")]
+    [SerializeField] private Image bulletIcon;
 
 
     /// <summary>
@@ -226,5 +244,19 @@ public class GameUIManager : MonoBehaviour
     {
         resumeGameText.gameObject.SetActive(state);
         resumeGameText.text = number.ToString();
+    }
+
+
+    // # Weapons #
+
+    public void DisplayWeapon(int ammunition, bool fireArm, bool canShoot, bool state)
+    {
+        weaponsObject.SetActive(state);
+        weaponsBackground.SetActive(canShoot);
+
+        shootLeftText.text = ammunition.ToString();
+
+        bulletIcon.enabled = state & fireArm;
+        knifeIcon.enabled = state & !fireArm;
     }
 }

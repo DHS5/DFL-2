@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Zombie : Enemy
 {
+    public bool dead;
+
+    private void Start()
+    {
+        dead = false;
+    }
+
     //private void Start()
     //{
     //    animator.Play("Base Layer.Walk", 0, Random.Range(0f, 1f));
@@ -30,10 +37,17 @@ public class Zombie : Enemy
     //    }
     //}
 
+
     public virtual void Dead()
     {
-        Debug.Log(this + " is Dead");
-        Destroy(this);
-        Destroy(gameObject);
+        dead = true;
+        navMeshAgent.isStopped = true;
+
+        animator.SetBool("Dead", true);
+        animator.SetTrigger("Die");
+        foreach (CapsuleCollider c in GetComponentsInChildren<CapsuleCollider>())
+        {
+            c.enabled = false;
+        }
     }
 }

@@ -36,6 +36,7 @@ public class Weapon : MonoBehaviour
     [Tooltip("Max number of zombies possible to kill in one shot")]
     [SerializeField] private int maxVictim;
 
+    public bool fireArm;
 
     private AudioSource audioSource;
 
@@ -114,36 +115,57 @@ public class Weapon : MonoBehaviour
         // Initialization of the zombie's list & useful variables
         List<Enemy> zombieList = new(enemiesManager.enemies);
         Zombie z;
+        Zombie target;
 
         float dist;
         float toZAngle;
 
+        float score;
+        float minScore;
+
         int victims = 0;
-        int zNum = 0;
 
 
+        // Direct effects of shoot
         CanShoot = false;
         ammunition--;
         //audioSource.Play();
 
-        while (victims < maxVictim && zNum < zombieList.Count)
+        // Enemy kill
+        do
         {
-            z = (Zombie) zombieList[zNum];
+            minScore = range;
+            target = null;
 
-            if (z != null)
+            for (int zNum = 0; zNum < zombieList.Count; zNum++)
             {
-                dist = z.rawDistance;
-                toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
+                z = (Zombie)zombieList[zNum];
 
-                if (dist < range && toZAngle < angle)
+                if (z != null && !z.dead)
                 {
-                    victims++;
-                    z.Dead();
+                    dist = z.rawDistance;
+                    toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
+
+                    if (dist < range && toZAngle < angle)
+                    {
+                        score = dist * (toZAngle / angle);
+                        if (score < minScore)
+                        {
+                            target = z;
+                            minScore = score;
+                        }
+                    }
                 }
             }
 
-            zNum++;
-        }
+            if (target != null)
+            {
+                victims++;
+                target.Dead();
+            }
+        } while (victims < maxVictim && target != null);
+
+        weaponsManager.ActuGameUI(CanShoot, ammunition > 0);
 
         if (ammunition > 0)
         {
@@ -162,5 +184,7 @@ public class Weapon : MonoBehaviour
     public void Reload()
     {
         CanShoot = true;
+
+        weaponsManager.ActuGameUI(CanShoot, ammunition > 0);
     }
 }

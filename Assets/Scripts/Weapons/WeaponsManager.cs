@@ -36,6 +36,7 @@ public class WeaponsManager : MonoBehaviour
 
     public void GenerateWeaponBonus()
     {
+        main.PlayerManager.player.fPPlayer.football.SetActive(false);
         main.PlayerManager.player.tPPlayer.football.SetActive(false);
 
         // Gets the zones position and scale info
@@ -57,12 +58,14 @@ public class WeaponsManager : MonoBehaviour
     {
         if (currentWeapon != null) Destroy(currentWeapon.gameObject);
 
-        //fpWeapon = Instantiate(prefab, main.PlayerManager.player.fPPlayer.rightHand.transform).GetComponent<Weapon>();
+        fpWeapon = Instantiate(prefab, main.PlayerManager.player.fPPlayer.rightHand.transform).GetComponent<Weapon>();
         tpWeapon = Instantiate(prefab, main.PlayerManager.player.tPPlayer.rightHand.transform).GetComponent<Weapon>();
 
         currentWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
 
         currentWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager);
+
+        ActuGameUI(true, true);
     }
 
     private void ViewChange()
@@ -82,5 +85,11 @@ public class WeaponsManager : MonoBehaviour
     {
         if (currentWeapon != null)
             Destroy(currentWeapon.gameObject);
+    }
+
+
+    public void ActuGameUI(bool canShoot, bool state)
+    {
+        main.GameUIManager.DisplayWeapon(currentWeapon.WeaponInfo.ammunition, currentWeapon.fireArm, canShoot, state);
     }
 }

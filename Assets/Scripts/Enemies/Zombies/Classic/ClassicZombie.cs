@@ -17,12 +17,12 @@ public class ClassicZombie : Zombie
 
         currentState = currentState.Process();
 
-        if (playerG.onField)
+        if (playerG.onField && !dead)
         {
             navMeshAgent.SetDestination(destination);
         }
 
-        if (reactivity != 0 && !gameOver)
+        if (reactivity != 0 && !gameOver && !dead)
         {
             Invoke(nameof(ChasePlayer), reactivity);
         }
@@ -30,10 +30,9 @@ public class ClassicZombie : Zombie
 
     private void Update()
     {
-        if (reactivity == 0 && playerG.onField && !gameOver)
+        if (reactivity == 0 && playerG.onField && !gameOver && !dead)
         {
             ChasePlayer();
         }
-
     }
 }
