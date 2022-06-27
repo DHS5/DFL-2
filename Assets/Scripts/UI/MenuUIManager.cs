@@ -8,6 +8,9 @@ public class MenuUIManager : MonoBehaviour
     private SettingsManager settingsManager;
     private DataManager dataManager;
 
+    private List<GameOption> defenderOptions = new List<GameOption>();
+    private List<GameOption> zombieOptions = new List<GameOption>();
+
     [Header("Game Screen")]
     [SerializeField] private GameObject playerSimpleCardsObject;
     private PlayerSimpleCard[] playerSimpleCards;
@@ -114,8 +117,17 @@ public class MenuUIManager : MonoBehaviour
     /// <param name="option">Game option to add/remove</param>
     public void ChooseOption(int option)
     {
-        if (!dataManager.gameData.gameOptions.Contains((GameOption)option)) { dataManager.gameData.gameOptions.Add((GameOption)option); }
-        else { dataManager.gameData.gameOptions.Remove((GameOption)option); }
+        List<GameOption> gameOptions = (dataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
+
+        if (!gameOptions.Contains((GameOption)option)) { gameOptions.Add((GameOption)option); }
+        else { gameOptions.Remove((GameOption)option); }
+
+        dataManager.gameData.gameOptions = new List<GameOption>(gameOptions);
+
+        foreach (GameOption go in dataManager.gameData.gameOptions)
+        {
+            Debug.Log(go.ToString());
+        }
     }
 
 

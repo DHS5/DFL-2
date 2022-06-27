@@ -12,4 +12,12 @@ public class Stadium : MonoBehaviour
     public AudioSource[] boohAS;
 
     public Camera stadiumCamera;
+
+    [SerializeField] private ParticleSystem rain;
+
+
+    public void Rain()
+    {
+        rain.gameObject.SetActive(true);
+    }
 }

@@ -114,6 +114,7 @@ public class PlayerManager : MonoBehaviour
         player.gameplay.freeze = true; // Player freezes
         // Player animator stops
         //playerRunAnimator.SetTrigger("Dead");
+        player.effects.Rain(false, 0);
     }
 
 

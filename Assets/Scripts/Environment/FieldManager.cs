@@ -24,10 +24,6 @@ public class FieldManager : MonoBehaviour
     [Tooltip("Current stadium game object")]
     private GameObject stadiumObject;
 
-
-    [Tooltip("Stadium's camera")]
-    public Camera StadiumCamera { get; private set; }
-
     public Field field { get; private set; }
     public Stadium stadium { get; private set; }
 

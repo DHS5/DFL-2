@@ -262,6 +262,7 @@ public class GameManager : MonoBehaviour
             main.TeamManager.TeamCreation();
         if (gameData.gameMode == GameMode.DRILL)
         {
+            gameData.gameOptions.Clear();
             if (gameData.gameDrill == GameDrill.OBJECTIF)
                 main.ObjectifManager.GenerateObj(3 + ((int) gameData.gameDifficulty + waveNumber) * 2);
         }
@@ -409,6 +410,11 @@ public class GameManager : MonoBehaviour
         if (gameData.gameMode == GameMode.TEAM)
         {
             main.TeamManager.StopAttackers(); // Stop attackers
+        }
+
+        if (gameData.gameWheather == GameWheather.RAIN)
+        {
+            main.FieldManager.stadium.Rain();
         }
 
         // Call the Booouuh with the game audio manager
