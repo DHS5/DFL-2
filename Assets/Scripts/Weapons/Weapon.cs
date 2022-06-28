@@ -37,6 +37,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int maxVictim;
 
     public bool fireArm;
+    public bool bigWeapon;
 
     private AudioSource audioSource;
 
@@ -129,6 +130,7 @@ public class Weapon : MonoBehaviour
         // Direct effects of shoot
         CanShoot = false;
         ammunition--;
+        player.controller.CurrentState.Shoot(fireArm);
         //audioSource.Play();
 
         // Enemy kill
@@ -174,9 +176,16 @@ public class Weapon : MonoBehaviour
         }
 
         else
-            Destroy(gameObject);
+        {
+            DestroyWeapon();
+        }
     }
 
+    public void DestroyWeapon()
+    {
+        player.controller.CurrentState.SetWeapon(false, bigWeapon);
+        Destroy(gameObject);
+    }
 
     /// <summary>
     /// Make the player able to shoot again

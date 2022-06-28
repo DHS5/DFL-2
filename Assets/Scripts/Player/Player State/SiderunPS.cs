@@ -24,7 +24,6 @@ public class SiderunPS : PlayerState
             animTime = controller.siderunTime;
         }
         else SetTrigger("Run");
-        //Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         controller.Speed = controller.NormalSpeed;
         controller.SideSpeed = controller.NormalSideSpeed * side;
@@ -71,6 +70,12 @@ public class SiderunPS : PlayerState
                     nextState = new SlowrunPS(player);
                     stage = Event.EXIT;
                 }
+                // Other side
+                else if (side * startSide < 0)
+                {
+                    nextState = new SiderunPS(player, -startSide, false);
+                    stage = Event.EXIT;
+                }
                 // Run
                 else if (side == 0)
                 {
@@ -82,7 +87,8 @@ public class SiderunPS : PlayerState
         }
         else if (anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
         {
-            nextState = new FeintPS(player, Input.GetAxisRaw("Horizontal"));
+            nextState = new FeintPS(player, -startSide);
+            SetFloat("Dir", -startSide);
             SetTrigger("Feint");
         }
     }

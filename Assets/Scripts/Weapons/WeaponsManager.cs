@@ -56,7 +56,10 @@ public class WeaponsManager : MonoBehaviour
 
     public void InstantiateWeapon(GameObject prefab)
     {
-        if (currentWeapon != null) Destroy(currentWeapon.gameObject);
+        if (currentWeapon != null)
+        {
+            currentWeapon.DestroyWeapon();
+        }
 
         fpWeapon = Instantiate(prefab, main.PlayerManager.player.fPPlayer.rightHand.transform).GetComponent<Weapon>();
         tpWeapon = Instantiate(prefab, main.PlayerManager.player.tPPlayer.rightHand.transform).GetComponent<Weapon>();
@@ -66,6 +69,7 @@ public class WeaponsManager : MonoBehaviour
         currentWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager);
 
         ActuGameUI(true, true);
+        main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
     }
 
     private void ViewChange()

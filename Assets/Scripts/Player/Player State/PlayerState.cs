@@ -107,5 +107,21 @@ public abstract class PlayerState
             a.SetFloat(name, value);
         }
     }
+
+    public void SetWeapon(bool state, bool bigWeapon)
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetLayerWeight(a.GetLayerIndex(bigWeapon ? "BigWeapon Layer" : "SmallWeapon Layer"), state ? 1 : 0);
+        }
+    }
+
+    public void Shoot(bool fireArm)
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetTrigger(fireArm ? "Shoot" : "Cut");
+        }
+    }
 }
 

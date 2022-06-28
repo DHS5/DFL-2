@@ -14,6 +14,8 @@ public class SpinPS : PlayerState
     public override void Enter()
     {
         SetTrigger("Spin");
+        SetFloat("Dir", startSide);
+
         animTime = controller.spinTime;
 
         controller.Speed = controller.SpinSpeed;

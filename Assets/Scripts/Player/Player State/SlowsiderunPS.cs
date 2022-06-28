@@ -51,7 +51,7 @@ public class SlowsiderunPS : PlayerState
         // Siderun
         else if (acc == 0 && side != 0)
         {
-            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
             stage = Event.EXIT;
         }
         // Run

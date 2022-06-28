@@ -123,11 +123,6 @@ public class MenuUIManager : MonoBehaviour
         else { gameOptions.Remove((GameOption)option); }
 
         dataManager.gameData.gameOptions = new List<GameOption>(gameOptions);
-
-        foreach (GameOption go in dataManager.gameData.gameOptions)
-        {
-            Debug.Log(go.ToString());
-        }
     }
 
 

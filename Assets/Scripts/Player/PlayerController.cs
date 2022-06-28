@@ -13,10 +13,10 @@ public class PlayerController : MonoBehaviour
     private Player player;
 
 
-    private PlayerState currentState;
+    public PlayerState CurrentState { get; private set; }
 
 
-    
+
     [Tooltip("Rigidbody of the player")]
     public Rigidbody PlayerRigidbody { get; private set; }
 
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        currentState = new RunPS(player);
+        CurrentState = new RunPS(player);
 
         CanAccelerate = true;
     }
@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
         FilterDir();
         FilterAcc();
         
-        currentState = currentState.Process();
+        CurrentState = CurrentState.Process();
 
         Velocity = ( Vector3.forward * FSpeed + Vector3.right * sideSpeed ) * Time.deltaTime;
     }

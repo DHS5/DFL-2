@@ -192,8 +192,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487774384131766}
-  m_LocalRotation: {x: 0.45451945, y: -0.54167527, z: 0.45451945, w: 0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.35355335, y: -0.61237246, z: 0.5416752, w: 0.45451954}
+  m_LocalPosition: {x: -0.00063, y: 0.00213, z: 0.0001}
   m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -202,7 +202,7 @@ Transform:
   - {fileID: 4628190596468080}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 80, y: -90, z: 20}
 --- !u!33 &33705837635148522
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   reloadTime: 0.1
   maxVictim: 1
   fireArm: 1
+  bigWeapon: 1
   audioClip: {fileID: 0}
 --- !u!1 &1927369336514790
 GameObject:

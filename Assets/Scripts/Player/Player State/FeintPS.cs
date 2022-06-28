@@ -15,6 +15,8 @@ public class FeintPS : PlayerState
     {
         animTime = controller.feintTime;
 
+        Debug.Log(startSide);
+
         controller.Speed = controller.FeintSpeed;
         controller.SideSpeed = controller.FeintSideSpeed * startSide;
 
