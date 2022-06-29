@@ -5,11 +5,9 @@ using UnityEngine;
 
 public struct WeaponInfo
 {
-    public float range;
-    public float angle;
-    public int ammunition;
-    public float reloadTime;
-    public int maxVictim;
+    public int ammunitionLeft;
+    public bool canShoot;
+    public float reloadEndTime;
 }
 
 public class Weapon : MonoBehaviour
@@ -19,6 +17,8 @@ public class Weapon : MonoBehaviour
     private Player player;
 
     private EnemiesManager enemiesManager;
+
+    private CursorManager cursor;
     
     
     [Tooltip("Distance max at which the player can shoot a zombie")]
@@ -45,8 +45,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private AudioClip audioClip;
 
 
-    public bool CanShoot { get; private set; }
-    public float ReloadEndTime { get; private set; }
+    private bool canShoot;
+    private float reloadEndTime;
 
 
     // ### Properties ###
@@ -54,14 +54,12 @@ public class Weapon : MonoBehaviour
     public WeaponInfo WeaponInfo
     {
         get { return new WeaponInfo 
-        { range = range, angle = angle, ammunition = ammunition, reloadTime = reloadTime, maxVictim = maxVictim }; }
+        { ammunitionLeft = ammunition, canShoot = canShoot, reloadEndTime = reloadEndTime }; }
         set
         {
-            range = value.range;
-            angle = value.angle;
-            ammunition = value.ammunition;
-            reloadTime = value.reloadTime;
-            maxVictim = value.maxVictim;
+            ammunition = value.ammunitionLeft;
+            reloadEndTime = value.reloadEndTime;
+            canShoot = value.canShoot;
         }
     }
 
@@ -75,16 +73,15 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        CanShoot = true;
+        canShoot = true;
 
-        Debug.Log("Start weapon");
+        weaponsManager.ActuGameUI();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0) && CanShoot && weaponsManager.GameOn)
+        if (Input.GetMouseButtonUp(0) && canShoot && weaponsManager.GameOn && cursor.locked)
         {
-            Debug.Log("want to shoot");
             Shoot();
         }
     }
@@ -92,17 +89,20 @@ public class Weapon : MonoBehaviour
 
     // ### Functions ###
 
-    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager)
+    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager, in CursorManager _cursor)
     {
         weaponsManager = _weaponsManager;
         player = _player;
         enemiesManager = _enemiesManager;
+        cursor = _cursor;
     }
-    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager, WeaponInfo info)
+    public void Getter(in WeaponsManager _weaponsManager, in Player _player, in EnemiesManager _enemiesManager, in CursorManager _cursor, WeaponInfo info)
     {
-        Getter(_weaponsManager, _player, _enemiesManager);
+        Getter(_weaponsManager, _player, _enemiesManager, _cursor);
 
         WeaponInfo = info;
+        if (!canShoot)
+            Invoke(nameof(Reload), reloadEndTime - Time.time);
     }
 
 
@@ -111,8 +111,6 @@ public class Weapon : MonoBehaviour
     /// </summary>
     protected virtual void Shoot()
     {
-        Debug.Log("Shoot");
-
         // Initialization of the zombie's list & useful variables
         List<Enemy> zombieList = new(enemiesManager.enemies);
         Zombie z;
@@ -128,7 +126,7 @@ public class Weapon : MonoBehaviour
 
 
         // Direct effects of shoot
-        CanShoot = false;
+        canShoot = false;
         ammunition--;
         player.controller.CurrentState.Shoot(fireArm);
         //audioSource.Play();
@@ -167,12 +165,12 @@ public class Weapon : MonoBehaviour
             }
         } while (victims < maxVictim && target != null);
 
-        weaponsManager.ActuGameUI(CanShoot, ammunition > 0);
+        weaponsManager.ActuGameUI();
 
         if (ammunition > 0)
         {
             Invoke(nameof(Reload), reloadTime);
-            ReloadEndTime = Time.time + reloadTime;
+            reloadEndTime = Time.time + reloadTime;
         }
 
         else
@@ -183,7 +181,8 @@ public class Weapon : MonoBehaviour
 
     public void DestroyWeapon()
     {
-        player.controller.CurrentState.SetWeapon(false, bigWeapon);
+        if (player != null)
+            player.controller.CurrentState.SetWeapon(false, bigWeapon);
         Destroy(gameObject);
     }
 
@@ -192,8 +191,8 @@ public class Weapon : MonoBehaviour
     /// </summary>
     public void Reload()
     {
-        CanShoot = true;
+        canShoot = true;
 
-        weaponsManager.ActuGameUI(CanShoot, ammunition > 0);
+        weaponsManager.ActuGameUI();
     }
 }

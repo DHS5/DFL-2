@@ -437,6 +437,15 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+    public void ViewChange()
+    {
+        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+            main.WeaponsManager.ViewChange();
+    }
+
+
+
     private int CalculateScore()
     {
         return waveNumber * 100 -

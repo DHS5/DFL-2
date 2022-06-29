@@ -57,6 +57,8 @@ public class PlayerManager : MonoBehaviour
 
                 player.activeBody = player.tPPlayer.gameObject;
             }
+
+            main.GameManager.ViewChange();
         }
     }
     public int FpCameraPos

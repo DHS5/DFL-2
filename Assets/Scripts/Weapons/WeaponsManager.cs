@@ -59,6 +59,7 @@ public class WeaponsManager : MonoBehaviour
         if (currentWeapon != null)
         {
             currentWeapon.DestroyWeapon();
+            ((main.PlayerManager.ViewType != ViewType.FPS) ? fpWeapon : tpWeapon).DestroyWeapon();
         }
 
         fpWeapon = Instantiate(prefab, main.PlayerManager.player.fPPlayer.rightHand.transform).GetComponent<Weapon>();
@@ -66,21 +67,19 @@ public class WeaponsManager : MonoBehaviour
 
         currentWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
 
-        currentWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager);
+        currentWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, main.CursorManager);
 
-        ActuGameUI(true, true);
         main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
     }
 
-    private void ViewChange()
+    public void ViewChange()
     {
         if (currentWeapon != null)
         {
             Weapon newWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
-            newWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, currentWeapon.WeaponInfo);
-
-            if (!currentWeapon.CanShoot)
-                newWeapon.Invoke(nameof(newWeapon.Reload), currentWeapon.ReloadEndTime);
+            newWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, main.CursorManager, currentWeapon.WeaponInfo);
+            currentWeapon = newWeapon;
+            main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
         }
     }
 
@@ -92,8 +91,8 @@ public class WeaponsManager : MonoBehaviour
     }
 
 
-    public void ActuGameUI(bool canShoot, bool state)
+    public void ActuGameUI()
     {
-        main.GameUIManager.DisplayWeapon(currentWeapon.WeaponInfo.ammunition, currentWeapon.fireArm, canShoot, state);
+        main.GameUIManager.DisplayWeapon(currentWeapon.WeaponInfo.ammunitionLeft, currentWeapon.fireArm, currentWeapon.WeaponInfo.canShoot, currentWeapon.WeaponInfo.ammunitionLeft > 0);
     }
 }

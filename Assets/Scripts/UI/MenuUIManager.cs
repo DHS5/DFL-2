@@ -125,6 +125,11 @@ public class MenuUIManager : MonoBehaviour
         dataManager.gameData.gameOptions = new List<GameOption>(gameOptions);
     }
 
+    public void ActuOptions()
+    {
+        dataManager.gameData.gameOptions = (dataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
+    }
+
 
     public void NextStadium()
     {
