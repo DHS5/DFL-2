@@ -37,6 +37,12 @@ public class MenuUIManager : MonoBehaviour
     private AttackerCard[][] attackerCards = new AttackerCard[5][];
 
 
+    [Header("Parkour Choice Screen")]
+    [SerializeField] private GameObject parkourCardsObject;
+    private ParkourCard[] parkourCards;
+
+
+
     // ### Properties ###
 
     public bool InfoButtonsOn
@@ -84,6 +90,10 @@ public class MenuUIManager : MonoBehaviour
     {
         get { return dataManager.playerPrefs.teamIndex; }
         set { dataManager.playerPrefs.teamIndex = value; }
+    }
+    public int ParkourIndex
+    {
+        get { return dataManager.playerPrefs.parkourIndex; }
     }
 
 
@@ -157,6 +167,13 @@ public class MenuUIManager : MonoBehaviour
         cardsBis[index].gameObject.SetActive(true);
         g = cardsBis[index].prefab;
     }
+    private void GetCard(out ParkourCard[] cards, GameObject cardObject, int index)
+    {
+        cards = cardObject.GetComponentsInChildren<ParkourCard>();
+        for (int i = 0; i < cards.Length; i++)
+            cards[i].GetIndex(i);
+        cards[index].On();
+    }
 
     private void GetCards()
     {
@@ -172,6 +189,9 @@ public class MenuUIManager : MonoBehaviour
         // Attacker cards
         for (int i = 0; i < attackerCardsObjects.Length; i++)
             GetCard(out attackerCards[i], attackerCardsObjects[i], AttackerIndex[i], ref dataManager.gameData.team[i]);
+
+        // Parkour cards
+        GetCard(out parkourCards, parkourCardsObject, ParkourIndex);
     }
 
     private int NextCard(Card[] cards, int index, ref GameObject g)

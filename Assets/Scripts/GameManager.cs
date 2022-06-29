@@ -41,6 +41,7 @@ using UnityEngine.Rendering;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Main Manager")]
     private MainManager main;
 
 
@@ -75,6 +76,12 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("One v One enemy's prefab")]
     public GameObject enemyPrefab;
+
+    [Tooltip("Team prefabs")]
+    public GameObject[] team;
+
+    [Tooltip("Parkour's prefab")]
+    public GameObject parkour;
 
 
 
@@ -208,7 +215,10 @@ public class GameManager : MonoBehaviour
             gameData.player = playerPrefab;
             gameData.stadiumIndex = stadiumIndex;
             gameData.enemy = enemyPrefab;
+            gameData.team = team;
+            gameData.parkour = parkour;
         }
+
         gameData.gameEnemiesRange = enemiesRange;
 
         waveNumber = 1;
@@ -280,6 +290,10 @@ public class GameManager : MonoBehaviour
 
         if (gameData.gameOptions.Contains(GameOption.WEAPONS))
             main.WeaponsManager.GenerateWeaponBonus();
+
+        // # Drills #
+        if (gameData.gameDrill == GameDrill.PARKOUR)
+            main.ParkourManager.GenerateParkour();
 
 
         main.GameAudioManager.GenerateAudio(); // Actualize the audio volume etc...

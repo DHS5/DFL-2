@@ -32,6 +32,9 @@ public class MainManager : MonoBehaviour
     [HideInInspector] public BonusManager BonusManager { get; private set; }
     [HideInInspector] public WeaponsManager WeaponsManager { get; private set; }
 
+    // Drills
+    [HideInInspector] public ParkourManager ParkourManager { get; private set; }
+
 
     private void Awake()
     {
@@ -67,6 +70,10 @@ public class MainManager : MonoBehaviour
         if (!DataManager.gameData.gameOptions.Contains(GameOption.BONUS)) BonusManager.enabled = false;
         WeaponsManager = GetComponent<WeaponsManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.WEAPONS)) WeaponsManager.enabled = false;
+
+        // Drills
+        ParkourManager = GetComponent<ParkourManager>();
+        if (DataManager.gameData.gameDrill != GameDrill.PARKOUR) ParkourManager.enabled = false;
 
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers

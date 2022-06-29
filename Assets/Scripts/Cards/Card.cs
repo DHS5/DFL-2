@@ -16,7 +16,7 @@ public abstract class Card : MonoBehaviour
     [Tooltip("")]
     [SerializeField] protected Toggle infoToggle;
 
-    [Tooltip("")]
+    [Tooltip("Prefab")]
     public GameObject prefab;
 
 

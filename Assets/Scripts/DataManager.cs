@@ -34,6 +34,7 @@ public struct PlayerPrefs
     public int stadiumIndex;
     public int enemyIndex;
     public int[] teamIndex;
+    public int parkourIndex;
 }
 
 [System.Serializable]
@@ -75,6 +76,7 @@ public struct GameData
     public int stadiumIndex;
     public GameObject enemy;
     public GameObject[] team;
+    public GameObject parkour;
 }
 
 

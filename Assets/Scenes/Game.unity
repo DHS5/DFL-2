@@ -2101,6 +2101,7 @@ GameObject:
   - component: {fileID: 675627214}
   - component: {fileID: 675627215}
   - component: {fileID: 675627218}
+  - component: {fileID: 675627219}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -2149,6 +2150,7 @@ MonoBehaviour:
     stadiumIndex: 0
     enemy: {fileID: 0}
     team: []
+    parkour: {fileID: 0}
   gameMode: 3
   gameDifficulty: 0
   gameWheather: 0
@@ -2158,6 +2160,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 0}
   stadiumIndex: 0
   enemyPrefab: {fileID: 0}
+  team: []
+  parkour: {fileID: 0}
 --- !u!114 &675627205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2476,6 +2480,18 @@ MonoBehaviour:
   - {fileID: 7909370676192376379, guid: 143b2e42cc9576641bddde6cb39dacc4, type: 3}
   - {fileID: 7909370676192376379, guid: 0b48100090a30a7489c79385dff3c3fe, type: 3}
   - {fileID: 7909370676192376379, guid: dad28d38ae09e8048a83796c80041575, type: 3}
+--- !u!114 &675627219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675627202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88652541649812747b8d0fd31f4f3ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &710684370
 GameObject:
   m_ObjectHideFlags: 0
