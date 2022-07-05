@@ -17,7 +17,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Option
 /// </summary>
-[System.Serializable] public enum GameOption { BONUS = 0, OBSTACLE = 1, OBJECTIF = 2, NONE = 3, WEAPONS = 4 }
+[System.Serializable] public enum GameOption { BONUS = 0, OBSTACLE = 1, OBJECTIF = 2, WEAPONS = 3 }
 
 /// <summary>
 /// Game Option

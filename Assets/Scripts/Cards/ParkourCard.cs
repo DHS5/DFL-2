@@ -27,11 +27,12 @@ public class ParkourCard : TerrainCard
 
     public void On()
     {
+        toggle.isOn = true;
+    }
+    public void SetData()
+    {
         DataManager.InstanceDataManager.playerPrefs.parkourIndex = index;
         DataManager.InstanceDataManager.gameData.parkour = prefab;
-
-        if (!toggle.isOn)
-            toggle.isOn = true;
     }
     public void GetIndex(int _index)
     {

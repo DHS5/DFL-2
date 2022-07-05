@@ -22,7 +22,7 @@ public class ParkourManager : MonoBehaviour
 
     public void GenerateParkour()
     {
-        Vector3 position = main.FieldManager.field.fieldZone.transform.position;
+        Vector3 position = main.FieldManager.field.enterZone.transform.position;
 
         parkour = Instantiate(main.GameManager.gameData.parkour, position, Quaternion.identity);
     }

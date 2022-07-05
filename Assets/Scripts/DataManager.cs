@@ -172,10 +172,9 @@ public class DataManager : MonoBehaviour
     {
         int Result = 0;
 
-        if (GOs.Contains(GameOption.BONUS)) Result += 10000;
-        if (GOs.Contains(GameOption.OBSTACLE)) Result += 1000;
-        if (GOs.Contains(GameOption.OBJECTIF)) Result += 100;
-        if (GOs.Contains(GameOption.NONE)) Result += 10;
+        if (GOs.Contains(GameOption.BONUS)) Result += 1000;
+        if (GOs.Contains(GameOption.OBSTACLE)) Result += 100;
+        if (GOs.Contains(GameOption.OBJECTIF)) Result += 10;
         if (GOs.Contains(GameOption.WEAPONS)) Result += 1;
 
         return Result;
