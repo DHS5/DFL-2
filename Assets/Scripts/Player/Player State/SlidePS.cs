@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpPS : PlayerState
+public class SlidePS : PlayerState
 {
-    public JumpPS(Player _player) : base(_player)
+    public SlidePS(Player _player) : base(_player)
     {
-        name = PState.JUMP;
+        name = PState.SLIDE;
     }
 
 
     public override void Enter()
     {
-        SetTrigger("Jump");
-        SetFloat("HangTime", 1 / controller.HangTime);
+        SetTrigger("Slide");
 
-        controller.Jump();
+        controller.Slide();
+        controller.Speed = controller.SlideSpeed;
         
         base.Enter();
     }
@@ -25,7 +25,7 @@ public class JumpPS : PlayerState
         base.Update();
 
 
-        if (controller.OnGround)
+        if (Time.time > startTime + controller.slideTime)
         {
             // Sprint
             if (acc > 0 && controller.CanAccelerate)
@@ -49,7 +49,7 @@ public class JumpPS : PlayerState
 
     public override void Exit()
     {
-        ResetTrigger("Jump");
+        ResetTrigger("Slide");
 
         base.Exit();
     }

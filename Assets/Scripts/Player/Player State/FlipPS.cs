@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpPS : PlayerState
+public class FlipPS : PlayerState
 {
-    public JumpPS(Player _player) : base(_player)
+    public FlipPS(Player _player) : base(_player)
     {
-        name = PState.JUMP;
+        name = PState.FLIP;
     }
 
 
     public override void Enter()
     {
-        SetTrigger("Jump");
+        SetTrigger("Flip");
         SetFloat("HangTime", 1 / controller.HangTime);
 
+        controller.Speed = controller.FlipSpeed;
+        controller.bonusJump = controller.FlipHeight;
         controller.Jump();
         
         base.Enter();
@@ -49,7 +51,7 @@ public class JumpPS : PlayerState
 
     public override void Exit()
     {
-        ResetTrigger("Jump");
+        ResetTrigger("Flip");
 
         base.Exit();
     }

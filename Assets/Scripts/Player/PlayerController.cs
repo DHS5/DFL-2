@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
 
 
     [Tooltip("Gravity multiplier constant")]
-    readonly float gravityScale = 10f;
+    readonly float gravityScale = 6f;
+    readonly float jumpCst = 1.25f;
 
 
     [Header("Control parameters")]
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public float jukeDelay;
     public float feintTime;
     public float spinTime;
+    public float slideTime;
 
 
     /// <summary>
@@ -95,9 +97,12 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [Tooltip("Height the player is reaching when jumping")]
     [SerializeField] private float jumpHeight; public float JumpHeight { get { return jumpHeight; } }
+    
+    [Tooltip("Bonus height the player is reaching when fliping")]
+    [SerializeField] private float flipHeight; public Vector3 FlipHeight { get { return new Vector3(0, flipHeight, 0); } }
 
     [Tooltip("Hang time when the player's jumping")]
-    [SerializeField] private float hangTime;
+    public float HangTime { get { return 0.5f + 0.09f * (jumpHeight - 2); } }
 
 
 
@@ -120,18 +125,25 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Feint speed of the player")]
     [SerializeField] private float feintSpeed; public float FeintSpeed { get { return feintSpeed; } }
 
+    [Tooltip("Slide speed of the player")]
+    [SerializeField] private float slideSpeed; public float SlideSpeed { get { return slideSpeed; } }
+    
+    [Tooltip("Flip speed of the player")]
+    [SerializeField] private float flipSpeed; public float FlipSpeed { get { return flipSpeed; } }
+
 
 
     [Tooltip("Bonus speed attribute of the player (changed by the bonus)")]
     [HideInInspector] public float bonusSpeed = 0f;
     [Tooltip("Bonus jump attribute of the player (changed by the bonus)")]
-    [HideInInspector] public Vector3 bonusJump = new Vector3(0, 0, 0);
+    [HideInInspector] public Vector3 bonusJump = Vector3.zero;
 
 
 
     // Player state variables
     public bool OnGround { get; private set; }
     public bool CanAccelerate { get; set; }
+    public bool CanSlide { get; private set; }
     public bool Sprinting { get; private set; }
     public float SprintStartTime { get; private set; }
 
@@ -170,7 +182,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 JumpPower
     {
-        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * gravityScale / hangTime)), 0); }
+        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * jumpCst * -2 * (Physics.gravity.y * gravityScale)), 0); }
     }
 
 
@@ -187,6 +199,7 @@ public class PlayerController : MonoBehaviour
         CurrentState = new RunPS(player);
 
         CanAccelerate = true;
+        CanSlide = true;
     }
 
     private void Update()
@@ -202,7 +215,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Keep the gravity constant
-        PlayerRigidbody.AddForce(Physics.gravity * gravityScale / hangTime);
+        PlayerRigidbody.AddForce(Physics.gravity * gravityScale);
     }
 
     void LateUpdate()
@@ -211,6 +224,9 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(Velocity); // Makes the player run
         }
+
+        if (!OnGround)
+            Debug.Log(gameObject.transform.position.y);
     }
 
 
@@ -289,7 +305,8 @@ public class PlayerController : MonoBehaviour
 
     public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), accelerationTime); } }
     private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
-    private void Rested() { CanAccelerate = true; }
+    private void Rested() { CanAccelerate = true; CanSlide = true; }
+    public void Slide() { CanSlide = false; }
 
 
     public void Rain()

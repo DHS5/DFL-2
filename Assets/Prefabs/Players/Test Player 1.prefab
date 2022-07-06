@@ -100,6 +100,7 @@ MonoBehaviour:
   jukeDelay: 0.25
   feintTime: 0.15
   spinTime: 0.5
+  slideTime: 0.9
   normalSpeed: 12
   normalSideSpeed: 6
   accelerationM: 1.4
@@ -108,14 +109,16 @@ MonoBehaviour:
   accSideSpeed: 2
   slowM: 0.6
   slowSideSpeed: 9
-  jumpHeight: 3
-  hangTime: 1.5
+  jumpHeight: 2
+  flipHeight: 0.1
   jukeSideSpeed: 11
   jukeSpeed: 12
   spinSideSpeed: 18
   spinSpeed: 20
   feintSideSpeed: 20
   feintSpeed: 22
+  slideSpeed: 20
+  flipSpeed: 10
   bonusSpeed: 0
   bonusJump: {x: 0, y: 0, z: 0}
 --- !u!114 &6311295625380012603
@@ -460,7 +463,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5106377025707358787}
   - component: {fileID: 6214934239810674777}
-  - component: {fileID: 9175371193931303031}
   - component: {fileID: 8158371165956746255}
   m_Layer: 0
   m_Name: Test 3P Camera
@@ -527,14 +529,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &9175371193931303031
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832301856147215166}
-  m_Enabled: 1
 --- !u!114 &8158371165956746255
 MonoBehaviour:
   m_ObjectHideFlags: 0

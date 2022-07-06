@@ -38,7 +38,7 @@ public class SlowrunPS : PlayerState
         // Jump
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextState = new JumpPS(player);
+            nextState = new FlipPS(player);
             stage = Event.EXIT;
         }
         // Sprint
