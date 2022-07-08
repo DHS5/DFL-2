@@ -24,9 +24,8 @@ public class PlayerGameplay : MonoBehaviour
     [Tooltip("Whether the player is visible")]
     [HideInInspector] public bool isVisible = true;
 
-    [Tooltip("Whether the player is freezed")]
+    [Tooltip("Whether the player is frozen")]
     [HideInInspector] public bool freeze = true;
-
 
 
 
@@ -140,7 +139,11 @@ public class PlayerGameplay : MonoBehaviour
     /// <param name="g"></param>
     private void Dead(Vector3 collisionVector)
     {
+        // Player animator dead
+        player.controller.CurrentState.Dead();
+        player.activeBody.gameObject.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(-collisionVector).eulerAngles.y, 0);
         player.controller.PlayerRigidbody.AddForce(collisionVector * 25, ForceMode.Impulse);
-        player.gameManager.GameOver = true;
+
+        player.playerManager.DeadPlayer();
     }
 }

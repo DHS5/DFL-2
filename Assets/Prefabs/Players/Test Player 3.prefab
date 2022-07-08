@@ -109,7 +109,7 @@ MonoBehaviour:
   accSideSpeed: 4
   slowM: 0.4
   slowSideSpeed: 10
-  jumpHeight: 2.5
+  jumpHeight: 3.5
   flipHeight: 0.25
   jukeSideSpeed: 11
   jukeSpeed: 12
@@ -961,6 +961,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 4441f3d96771ed54c94b0956f2840137, type: 2}
+    - target: {fileID: 2899343944663474909, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4471289947589926843, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
         type: 3}
       propertyPath: m_IsActive
@@ -1033,9 +1038,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868172144481276101, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
         type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 9305f54276462ef439fc689fddd2e097, type: 2}
+    - target: {fileID: 7868172144481276101, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 621d175579aee0d4d87cb8f951c16cef, type: 2}
+      objectReference: {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - target: {fileID: 8677945773362891533, guid: 6ac6b87a16a357c4b9e7109f4a99faa2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ac6b87a16a357c4b9e7109f4a99faa2, type: 3}
 --- !u!4 &9188605608546851769 stripped

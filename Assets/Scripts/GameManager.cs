@@ -406,9 +406,7 @@ public class GameManager : MonoBehaviour
         // # Data #
         main.DataManager.SavePlayerData();
 
-
-        //main.PlayerManager.DeadPlayer();
-        main.PlayerManager.StopPlayer();
+        // # UI #
         main.GameUIManager.GameOver();
 
         if (gameData.gameOptions.Contains(GameOption.WEAPONS))

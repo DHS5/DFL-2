@@ -206,8 +206,9 @@ public class PlayerController : MonoBehaviour
     {
         FilterDir();
         FilterAcc();
-        
-        CurrentState = CurrentState.Process();
+
+        if (!player.gameplay.freeze)
+            CurrentState = CurrentState.Process();
 
         Velocity = ( Vector3.forward * FSpeed + Vector3.right * sideSpeed ) * Time.deltaTime;
     }
@@ -224,9 +225,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(Velocity); // Makes the player run
         }
-
-        if (!OnGround)
-            Debug.Log(gameObject.transform.position.y);
     }
 
 
