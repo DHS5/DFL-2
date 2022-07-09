@@ -40,6 +40,7 @@ public class SettingsManager : MonoBehaviour
     [Header("UI elements")]
     [SerializeField] private Slider sensitivitySlider;
     [SerializeField] private Slider smoothRotationSlider;
+    [SerializeField] private Slider headAngleSlider;
     [SerializeField] private Slider viewTypeSlider;
 
     [SerializeField] private Slider soundVolumeSlider;
@@ -48,6 +49,14 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Toggle infoButtonsToggle;
 
     // ### Properties ###
+    public float HeadAngle
+    {
+        set 
+        {
+            dataManager.gameplayData.headAngle = value;
+            if (playerManager != null) playerManager.HeadAngle = value;
+        }
+    }
     public float YMouseSensitivity
     {
         set 
@@ -77,11 +86,13 @@ public class SettingsManager : MonoBehaviour
             {
                 sensitivitySlider.interactable = true;
                 smoothRotationSlider.interactable = true;
+                headAngleSlider.interactable = true;
             }
             else if (value == 1)
             {
                 sensitivitySlider.interactable = false;
                 smoothRotationSlider.interactable = false;
+                headAngleSlider.interactable = false;
             }
         }
     }
@@ -176,17 +187,20 @@ public class SettingsManager : MonoBehaviour
     {
         sensitivitySlider.value = data.yms;
         smoothRotationSlider.value = data.ysr;
+        headAngleSlider.value = data.headAngle;
         viewTypeSlider.value = (float) data.viewType;
 
         if (data.viewType == 0)
         {
             sensitivitySlider.interactable = true;
             smoothRotationSlider.interactable = true;
+            headAngleSlider.interactable = true;
         }
         else if ((int) data.viewType == 1)
         {
             sensitivitySlider.interactable = false;
             smoothRotationSlider.interactable = false;
+            headAngleSlider.interactable = false;
         }
     }
 

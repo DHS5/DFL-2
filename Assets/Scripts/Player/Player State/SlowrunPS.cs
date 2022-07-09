@@ -30,15 +30,21 @@ public class SlowrunPS : PlayerState
 
 
         // Juke
-        if (Time.time - startTime > player.controller.jukeDelay && Input.GetAxisRaw("Horizontal") != 0)
+        if (controller.CanJuke && Time.time - startTime > player.controller.jukeDelay && Input.GetAxisRaw("Horizontal") != 0)
         {
             nextState = new JukePS(player, Input.GetAxisRaw("Horizontal"));
             stage = Event.EXIT;
         }
-        // Jump
-        else if (Input.GetKeyDown(KeyCode.Space))
+        // Flip
+        else if (controller.CanFlip && Input.GetKeyDown(KeyCode.Space))
         {
             nextState = new FlipPS(player);
+            stage = Event.EXIT;
+        }
+        // Jump
+        else if (!controller.CanFlip && Input.GetKeyDown(KeyCode.Space))
+        {
+            nextState = new JumpPS(player);
             stage = Event.EXIT;
         }
         // Sprint
@@ -51,6 +57,12 @@ public class SlowrunPS : PlayerState
         else if (acc == 0)
         {
             nextState = new RunPS(player);
+            stage = Event.EXIT;
+        }
+        // Slowsiderun
+        else if (!controller.CanJuke && side != 0)
+        {
+            nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
             stage = Event.EXIT;
         }
     }

@@ -85,7 +85,7 @@ public class SiderunPS : PlayerState
             }
             else stage = Event.EXIT;
         }
-        else if (anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        else if (controller.CanFeint && anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
         {
             nextState = new FeintPS(player, -startSide);
             SetFloat("Dir", -startSide);

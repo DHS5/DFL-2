@@ -29,8 +29,9 @@ public class FirstPersonCameraController : MonoBehaviour
 
     [Header("First person camera parameters")]
     [Tooltip("Angle at which the player's head is rotated around the X-axis")]
-    [Range(-10, 15)]
+    [Range(0, 25)]
     [SerializeField] private float headAngle = 10f;
+    public float HeadAngle { set { headAngle = value; } }
     [Tooltip("Max angle at which the player is able to look behind")]
     [SerializeField] private int angleMax = 150;
     [Tooltip("Mouse sensitivity along the Y axis")]
@@ -70,6 +71,7 @@ public class FirstPersonCameraController : MonoBehaviour
         cameraRotation = head.transform.rotation;
 
         // Gets the camera parameters
+        headAngle = player.playerManager.HeadAngle;
         yMouseSensitivity = player.playerManager.YMouseSensitivity;
         ySmoothRotation = player.playerManager.YSmoothRotation;
 

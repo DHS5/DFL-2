@@ -42,6 +42,7 @@ public struct GameplayData
 {
     public float yms;
     public float ysr;
+    public float headAngle;
     public ViewType viewType;
     public int fpCameraPos;
     public int tpCameraPos;

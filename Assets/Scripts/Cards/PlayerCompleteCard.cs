@@ -42,6 +42,8 @@ public class PlayerCompleteCard : Card
     [Tooltip("")]
     [SerializeField] private Toggle slideToggle;
     [Tooltip("")]
+    [SerializeField] private Toggle flipToggle;
+    [Tooltip("")]
     [SerializeField] private Toggle extraLifeToggle;
 
 
@@ -61,6 +63,12 @@ public class PlayerCompleteCard : Card
         dirGravitySlider.value = p.DirGravity;
         accSensitivitySlider.value = p.AccSensitivity;
         accGravitySlider.value = p.AccGravity;
+
+        jukeToggle.isOn = p.CanJuke;
+        feintToggle.isOn = p.CanFeint;
+        spinToggle.isOn = p.CanSpin;
+        slideToggle.isOn = p.CanSlide;
+        flipToggle.isOn = p.CanFlip;
 
         skillMovesSlider.value = prefab.GetComponent<Player>().skills;
     }

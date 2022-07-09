@@ -75,9 +75,9 @@ MonoBehaviour:
   activeBody: {fileID: 0}
   fPPlayer: {fileID: 0}
   tPPlayer: {fileID: 0}
-  physical: 6
-  handling: 7
-  skills: 4
+  physical: 5
+  handling: 5
+  skills: 1
 --- !u!114 &1156203471869818464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807fb6fa73a02de4ea5d6542adf5ee44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: {x: 1, y: 1, z: 1}
   dirSensitivity: 10
   dirGravity: 3
   accSensitivity: 10
@@ -111,6 +112,11 @@ MonoBehaviour:
   slowSideSpeed: 9
   jumpHeight: 2
   flipHeight: 0.1
+  canJuke: 1
+  canSpin: 0
+  canFeint: 0
+  canSlide: 0
+  canFlip: 0
   jukeSideSpeed: 11
   jukeSpeed: 12
   spinSideSpeed: 18

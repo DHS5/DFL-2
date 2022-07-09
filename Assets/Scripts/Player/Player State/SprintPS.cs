@@ -42,7 +42,7 @@ public class SprintPS : PlayerState
             stage = Event.EXIT;
         }
         // Slide
-        else if (Input.GetAxisRaw("Vertical") < 0 && controller.CanSlide)
+        else if (Input.GetAxisRaw("Vertical") < 0 && controller.CanSlide && !controller.AlreadySlide)
         {
             nextState = new SlidePS(player);
             stage = Event.EXIT;

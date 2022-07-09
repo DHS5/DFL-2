@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     readonly float jumpCst = 1.25f;
 
 
+    [Header("Physic parameters")]
+    [SerializeField] private Vector3 size;
+
+
     [Header("Control parameters")]
     [SerializeField] private float dirSensitivity; public float DirSensitivity { get { return dirSensitivity; } }
     [SerializeField] private float dirGravity; public float DirGravity { get { return dirGravity; } }
@@ -105,6 +109,13 @@ public class PlayerController : MonoBehaviour
     public float HangTime { get { return 0.5f + 0.09f * (jumpHeight - 2); } }
 
 
+    [Header("Skill moves")]
+    [SerializeField] private bool canJuke; public bool CanJuke { get { return canJuke; } }
+    [SerializeField] private bool canSpin; public bool CanSpin { get { return canSpin; } }
+    [SerializeField] private bool canFeint; public bool CanFeint { get { return canFeint; } }
+    [SerializeField] private bool canSlide; public bool CanSlide { get { return canSlide; } }
+    [SerializeField] private bool canFlip; public bool CanFlip { get { return canFlip; } }
+
 
     [Header("Skill moves speed")]
     [Tooltip("Juke side speed of the player")]
@@ -143,7 +154,7 @@ public class PlayerController : MonoBehaviour
     // Player state variables
     public bool OnGround { get; private set; }
     public bool CanAccelerate { get; set; }
-    public bool CanSlide { get; private set; }
+    public bool AlreadySlide { get; private set; }
     public bool Sprinting { get; private set; }
     public float SprintStartTime { get; private set; }
 
@@ -196,10 +207,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        PlayerRescale();
+
         CurrentState = new RunPS(player);
 
         CanAccelerate = true;
-        CanSlide = true;
+        AlreadySlide = false;
     }
 
     private void Update()
@@ -229,6 +242,14 @@ public class PlayerController : MonoBehaviour
 
 
     // ### Functions ###
+    private void PlayerRescale()
+    {
+        var fpScale = player.fPPlayer.gameObject.transform.localScale;
+        var tpScale = player.tPPlayer.gameObject.transform.localScale;
+        player.fPPlayer.gameObject.transform.localScale = new Vector3(fpScale.x * size.x, fpScale.y * size.y, fpScale.z * size.z);
+        player.tPPlayer.gameObject.transform.localScale = new Vector3(tpScale.x * size.x, tpScale.y * size.y, tpScale.z * size.z);
+    }
+
 
     private void FilterDir()
     {
@@ -303,8 +324,8 @@ public class PlayerController : MonoBehaviour
 
     public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), accelerationTime); } }
     private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
-    private void Rested() { CanAccelerate = true; CanSlide = true; }
-    public void Slide() { CanSlide = false; }
+    private void Rested() { CanAccelerate = true; AlreadySlide = false; }
+    public void Slide() { AlreadySlide = true; }
 
 
     public void Rain()

@@ -22,6 +22,11 @@ public class PlayerManager : MonoBehaviour
 
     
     // ### Properties ###
+    public float HeadAngle
+    {
+        get { return main.DataManager.gameplayData.headAngle; }
+        set { player.fPPlayer.fpsCamera.HeadAngle = value; }
+    }
     public float YMouseSensitivity
     {
         get { return main.DataManager.gameplayData.yms; }

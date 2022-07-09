@@ -28,7 +28,7 @@ public class JukePS : PlayerState
         base.Update();
 
 
-        if (Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        if (controller.CanSpin && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
             nextState = new SpinPS(player, Input.GetAxisRaw("Horizontal"));
 
         if (Time.time >= startTime + animTime)
