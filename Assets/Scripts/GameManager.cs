@@ -403,6 +403,9 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
+        // # Coins #
+        main.SettingsManager.ShopManager.GameCoins(gameData, Score);
+
         // # Data #
         main.DataManager.SavePlayerData();
 
@@ -430,6 +433,24 @@ public class GameManager : MonoBehaviour
         }
 
         // Call the Booouuh with the game audio manager
+    }
+
+
+    public void Win()
+    {
+        gameOver = true;
+
+        // # Coins #
+        main.SettingsManager.ShopManager.WinCoins(gameData);
+
+        // # Data #
+        main.DataManager.SavePlayerData();
+
+        // # UI #
+        main.GameUIManager.Win();
+
+        // # Cursor #
+        main.CursorManager.UnlockCursor();
     }
 
 

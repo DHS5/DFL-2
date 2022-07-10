@@ -93,6 +93,7 @@ public class PlayerManager : MonoBehaviour
         player = playerObject.GetComponent<Player>();
 
         player.gameManager = main.GameManager;
+        player.fieldManager = main.FieldManager;
         player.playerManager = this;
 
 
@@ -123,6 +124,13 @@ public class PlayerManager : MonoBehaviour
         player.gameplay.freeze = true; // Player freezes
 
         player.effects.Rain(false, 0); // Stops eventual rain
+    }
+
+    public void WinPlayer()
+    {
+        main.GameManager.Win();
+
+        player.gameplay.freeze = true; // Player freezes
     }
 
 

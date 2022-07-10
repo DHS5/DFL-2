@@ -21,7 +21,8 @@ public class SettingsManager : MonoBehaviour
 
     // ### Managers ###
     // Multi scene managers
-    [HideInInspector] public DataManager dataManager { get; private set; }
+    public DataManager DataManager { get; private set; }
+    public ShopManager  ShopManager { get; private set; }
 
     // Menu scene managers
     private MenuUIManager menuUIManager;
@@ -53,7 +54,7 @@ public class SettingsManager : MonoBehaviour
     {
         set 
         {
-            dataManager.gameplayData.headAngle = value;
+            DataManager.gameplayData.headAngle = value;
             if (playerManager != null) playerManager.HeadAngle = value;
         }
     }
@@ -61,7 +62,7 @@ public class SettingsManager : MonoBehaviour
     {
         set 
         {
-            dataManager.gameplayData.yms = value;
+            DataManager.gameplayData.yms = value;
             if (playerManager != null) playerManager.YMouseSensitivity = value;
         }
     }
@@ -69,7 +70,7 @@ public class SettingsManager : MonoBehaviour
     {
         set 
         {
-            dataManager.gameplayData.ysr = value;
+            DataManager.gameplayData.ysr = value;
             if (playerManager != null) playerManager.YSmoothRotation = value;
         }
     }
@@ -78,7 +79,7 @@ public class SettingsManager : MonoBehaviour
     {
         set 
         {
-            dataManager.gameplayData.viewType = (ViewType) value;
+            DataManager.gameplayData.viewType = (ViewType) value;
             if (playerManager != null) playerManager.ViewType = (ViewType) value;
 
 
@@ -99,16 +100,16 @@ public class SettingsManager : MonoBehaviour
 
     public bool InfoButtonsOn
     {
-        get { return dataManager.playerPrefs.infoButtonsOn; }
+        get { return DataManager.playerPrefs.infoButtonsOn; }
         set 
         {
-            dataManager.playerPrefs.infoButtonsOn = value;
+            DataManager.playerPrefs.infoButtonsOn = value;
             if (menuUIManager != null) menuUIManager.InfoButtonsOn = value;
         }
     }
 
-    public bool SoundOn { set { dataManager.audioData.soundOn = value; } }
-    public float SoundVolume { set { dataManager.audioData.soundVolume = value; } }
+    public bool SoundOn { set { DataManager.audioData.soundOn = value; } }
+    public float SoundVolume { set { DataManager.audioData.soundVolume = value; } }
 
 
     /// <summary>
@@ -130,13 +131,14 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        dataManager = DataManager.InstanceDataManager;
+        DataManager = DataManager.InstanceDataManager;
+        ShopManager = GetComponent<ShopManager>();
 
         GetManagers();
 
-        LoadGameplayData(dataManager.gameplayData);
-        LoadAudioData(dataManager.audioData);
-        LoadPlayerPrefs(dataManager.playerPrefs);
+        LoadGameplayData(DataManager.gameplayData);
+        LoadAudioData(DataManager.audioData);
+        LoadPlayerPrefs(DataManager.playerPrefs);
 
         SetEventSystem(true);
     }

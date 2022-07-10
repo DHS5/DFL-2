@@ -59,8 +59,10 @@ public struct PlayerData
 public struct ProgressData
 {
     public int coins;
-    public string[] playerSkins;
-    public string[] stadiumSkins;
+    public string[] players;
+    public string[] stadiums;
+    public string[] weapons;
+    public string[] parkours;
 }
 
 [System.Serializable]
@@ -340,6 +342,8 @@ public class DataManager : MonoBehaviour
         public GameplayData gameplayData;
 
         public PlayerPrefs playerPrefs;
+
+        public ProgressData progressData;
     }
 
 
@@ -350,6 +354,7 @@ public class DataManager : MonoBehaviour
         data.audioData = audioData;
         data.gameplayData = gameplayData;
         data.playerPrefs = playerPrefs;
+        data.progressData = progressData;
 
         string json = JsonUtility.ToJson(data);
 
@@ -372,6 +377,7 @@ public class DataManager : MonoBehaviour
             audioData = data.audioData;
             gameplayData = data.gameplayData;
             playerPrefs = data.playerPrefs;
+            progressData = data.progressData;
         }
 
         InitPlayerPrefs();

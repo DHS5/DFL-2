@@ -11,6 +11,7 @@ public class Stadium : MonoBehaviour
     public AudioSource[] ouuhAS;
     public AudioSource[] boohAS;
 
+    public GameObject SpawnPosition;
     public Camera stadiumCamera;
 
     [SerializeField] private ParticleSystem rain;

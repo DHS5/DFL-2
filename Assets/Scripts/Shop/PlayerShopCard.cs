@@ -44,9 +44,9 @@ public class PlayerShopCard : ShopCard
     [SerializeField] private Toggle extraLifeToggle;
 
 
-    public override void GenerateCard(GameObject prefab, string title, Sprite sprite)
+    public override void GenerateCard(GameObject prefab, string title, Sprite sprite, int _price)
     {
-        base.GenerateCard(prefab, title, sprite);
+        base.GenerateCard(prefab, title, sprite, _price);
 
         PlayerController p = prefab.GetComponent<PlayerController>();
 

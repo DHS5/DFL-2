@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [HideInInspector] public GameManager gameManager;
+    [HideInInspector] public FieldManager fieldManager;
 
     [HideInInspector] public PlayerManager playerManager;
 

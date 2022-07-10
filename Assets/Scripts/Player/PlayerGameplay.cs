@@ -29,7 +29,6 @@ public class PlayerGameplay : MonoBehaviour
 
 
 
-    private float nextFieldOffset = 40f;
     private float tunnelWidth = 5f;
     private float recupTime = 1.5f;
 
@@ -53,11 +52,11 @@ public class PlayerGameplay : MonoBehaviour
             // Deactivates the trigger (prevent from triggering several times)
             other.gameObject.SetActive(false);
 
-            // Goes to the next field
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -tunnelWidth, tunnelWidth), 0, transform.position.z + nextFieldOffset);
-
             // Calls the next wave
             player.gameManager.NextWave();
+
+            // Goes to the next field
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -tunnelWidth, tunnelWidth), 0, player.fieldManager.stadium.SpawnPosition.transform.position.z);
         }
 
         // When the player accounter a field limit
@@ -113,6 +112,12 @@ public class PlayerGameplay : MonoBehaviour
                 Dead(new Vector3(0, 0, 0));
                 Debug.Log("OutOfBounds");
             }
+
+            if (collision.gameObject.CompareTag("Buzzer"))
+            {
+                Win();
+                Debug.Log("Win");
+            }
         }
     }
 
@@ -145,5 +150,16 @@ public class PlayerGameplay : MonoBehaviour
         player.controller.PlayerRigidbody.AddForce(collisionVector * 25, ForceMode.Impulse);
 
         player.playerManager.DeadPlayer();
+    }
+
+
+    private void Win()
+    {
+        player.controller.PlayerRigidbody.AddForce(new Vector3(0, 0, -5), ForceMode.Impulse);
+        player.activeBody.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        player.controller.CurrentState.Win();
+
+        player.playerManager.WinPlayer();
     }
 }

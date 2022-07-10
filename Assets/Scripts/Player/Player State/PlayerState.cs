@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , DEAD }
+public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , DEAD , WIN }
 
 
 public abstract class PlayerState
 {
-    protected enum Event { ENTER , UPDATE , EXIT , DEAD }
+    protected enum Event { ENTER , UPDATE , EXIT , DEAD , WIN }
 
 
     public PState name;
@@ -60,6 +60,7 @@ public abstract class PlayerState
     public PlayerState Process()
     {
         if (stage == Event.DEAD) { return new DeadPS(player); }
+        if (stage == Event.WIN) { return new WinPS(player); }
 
         if (stage == Event.ENTER) Enter();
         else if (stage == Event.UPDATE) Update();
@@ -129,6 +130,11 @@ public abstract class PlayerState
     public void Dead()
     {
         stage = Event.DEAD;
+        Process();
+    }
+    public void Win()
+    {
+        stage = Event.WIN;
         Process();
     }
 }
