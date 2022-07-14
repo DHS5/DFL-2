@@ -10,8 +10,6 @@ public class ParkourCard : TerrainCard
     [SerializeField] private Toggle toggle;
 
     private Slider difficultyGauge;
-    
-    [SerializeField] private int difficulty;
 
     private int index;
 
@@ -22,8 +20,10 @@ public class ParkourCard : TerrainCard
 
         difficultyGauge = GetComponentInChildren<Slider>();
 
-        difficultyGauge.value = difficulty;
+        difficultyGauge.value = cardSO.physical;
     }
+
+    protected override void Start() { }
 
     public void On()
     {
@@ -32,7 +32,7 @@ public class ParkourCard : TerrainCard
     public void SetData()
     {
         DataManager.InstanceDataManager.playerPrefs.parkourIndex = index;
-        DataManager.InstanceDataManager.gameData.parkour = prefab;
+        DataManager.InstanceDataManager.gameData.parkour = cardSO.prefab;
     }
     public void GetIndex(int _index)
     {

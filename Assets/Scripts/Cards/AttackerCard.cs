@@ -8,8 +8,6 @@ using TMPro;
 public class AttackerCard : Card
 {
     [Header("Enemy card's specifics")]
-    [Tooltip("")]
-    [SerializeField] private string position;
 
     [Tooltip("")]
     [SerializeField] private TextMeshProUGUI positionText;
@@ -28,8 +26,10 @@ public class AttackerCard : Card
     {
         base.Start();
 
-        Attacker a = prefab.GetComponent<Attacker>();
-        positionText.text += position;
+        image.sprite = cardSO.sprite100x120;
+
+        Attacker a = cardSO.prefab.GetComponent<Attacker>();
+        positionText.text += cardSO.position;
         speedSlider.value = (a.back2PlayerSpeed + a.defenseSpeed) / 2;
         proximitySlider.value = a.positionRadius;
         reactivitySlider.value = 1 - a.reactivity;

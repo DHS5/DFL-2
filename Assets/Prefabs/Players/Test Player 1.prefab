@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  fieldManager: {fileID: 0}
   playerManager: {fileID: 0}
   controller: {fileID: 0}
   gameplay: {fileID: 0}
@@ -75,9 +76,6 @@ MonoBehaviour:
   activeBody: {fileID: 0}
   fPPlayer: {fileID: 0}
   tPPlayer: {fileID: 0}
-  physical: 5
-  handling: 5
-  skills: 1
 --- !u!114 &1156203471869818464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,11 +293,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.25, y: 1, z: 0.25}
+  m_Extents: {x: 0.25, y: 0.5, z: 0.25}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
   m_TimeToStationary: 0.5
 --- !u!1 &240005478374005680
 GameObject:

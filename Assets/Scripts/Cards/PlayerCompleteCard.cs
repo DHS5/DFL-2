@@ -51,7 +51,9 @@ public class PlayerCompleteCard : Card
     {
         base.Start();
 
-        PlayerController p = prefab.GetComponent<PlayerController>();
+        image.sprite = cardSO.sprite100x120;
+
+        PlayerController p = cardSO.prefab.GetComponent<PlayerController>();
 
         speedSlider.value = p.NormalSpeed;
         sideSpeedSlider.value = p.NormalSideSpeed;
@@ -70,6 +72,6 @@ public class PlayerCompleteCard : Card
         slideToggle.isOn = p.CanSlide;
         flipToggle.isOn = p.CanFlip;
 
-        skillMovesSlider.value = prefab.GetComponent<Player>().skills;
+        skillMovesSlider.value = cardSO.skills;
     }
 }

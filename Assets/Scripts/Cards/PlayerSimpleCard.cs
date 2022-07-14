@@ -16,15 +16,14 @@ public class PlayerSimpleCard : Card
     [Tooltip("")]
     [SerializeField] private Slider skillsSlider;
 
-
     protected override void Start()
     {
         base.Start();
 
-        Player p = prefab.GetComponent<Player>();
+        image.sprite = cardSO.sprite100x120;
 
-        physicalSlider.value = p.physical;
-        handlingSlider.value = p.handling;
-        skillsSlider.value = p.skills;
+        physicalSlider.value = cardSO.physical;
+        handlingSlider.value = cardSO.handling;
+        skillsSlider.value = cardSO.skills;
     }
 }

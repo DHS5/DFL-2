@@ -21,9 +21,11 @@ public class EnemyCard : Card
     {
         base.Start();
 
-        speedSlider.value = prefab.GetComponent<NavMeshAgent>().speed;
+        image.sprite = cardSO.sprite100x120;
 
-        Enemy e = prefab.GetComponent<Enemy>();
+        speedSlider.value = cardSO.prefab.GetComponent<NavMeshAgent>().speed;
+
+        Enemy e = cardSO.prefab.GetComponent<Enemy>();
         intelligenceSlider.value = e.intelligence;
         reactivitySlider.value = 1 - e.reactivity;
     }

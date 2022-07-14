@@ -61,6 +61,6 @@ public class PlayerShopCard : ShopCard
         accSensitivitySlider.value = p.AccSensitivity;
         accGravitySlider.value = p.AccGravity;
 
-        skillMovesSlider.value = prefab.GetComponent<Player>().skills;
+        //skillMovesSlider.value = prefab.GetComponent<Player>().skills;
     }
 }

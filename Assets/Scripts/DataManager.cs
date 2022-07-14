@@ -79,6 +79,7 @@ public struct GameData
     public int stadiumIndex;
     public GameObject enemy;
     public GameObject[] team;
+    public GameObject stadium;
     public GameObject parkour;
 }
 
@@ -108,6 +109,9 @@ public class DataManager : MonoBehaviour
 
     // Current game data
     [HideInInspector] public GameData gameData;
+
+
+    public CardsContainerSO cardsContainer;
 
 
 
@@ -148,6 +152,13 @@ public class DataManager : MonoBehaviour
     {
         if (playerPrefs.teamIndex == null)
             playerPrefs.teamIndex = new int[5];
+
+        if (playerPrefs.playerIndex >= cardsContainer.playerCards.Count) playerPrefs.playerIndex = 0;
+        if (playerPrefs.enemyIndex >= cardsContainer.enemyCards.Count) playerPrefs.enemyIndex = 0;
+        if (playerPrefs.stadiumIndex >= cardsContainer.stadiumCards.Count) playerPrefs.stadiumIndex = 0;
+        if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
+        for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
+            if (playerPrefs.teamIndex[i] >= cardsContainer.teamCards.Count) playerPrefs.teamIndex[i] = 0;
     }
 
     private void InitGameData()

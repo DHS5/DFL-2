@@ -8,15 +8,14 @@ using UnityEngine.AI;
 public struct FieldMaterials
 {
     public Material grass;
-    public Material endzone1;
-    public Material endzone2;
-    public Material goalpostBase1;
-    public Material goalpostMetal1;
-    public Material goalpostBase2;
-    public Material goalpostMetal2;
+    public Material endzone;
+    public Material goalpostBase;
+    public Material goalpostMetal;
+    public Material sideline;
 }
 
 
+[ExecuteInEditMode]
 public class Field : MonoBehaviour
 {   
     [Tooltip("Struct containing the materials to use on the field")]
@@ -25,9 +24,10 @@ public class Field : MonoBehaviour
 
     [Header("Prefab objects of the field")]
     [SerializeField] GameObject grass;
-    [SerializeField] GameObject stadiumGrass;
     [SerializeField] GameObject endzone1;
     [SerializeField] GameObject endzone2;
+    [SerializeField] GameObject sidelineL;
+    [SerializeField] GameObject sidelineR;
 
     [SerializeField] GameObject goalpost1Base;
     [SerializeField] GameObject goalpost1Metal;
@@ -57,17 +57,25 @@ public class Field : MonoBehaviour
         // ### Ground
         // ## Grass
         grass.GetComponent<MeshRenderer>().material = fieldMaterials.grass;
-        stadiumGrass.GetComponent<MeshRenderer>().material = fieldMaterials.grass;
         // ## Endzones
-        endzone1.GetComponent<MeshRenderer>().material = fieldMaterials.endzone1;
-        endzone2.GetComponent<MeshRenderer>().material = fieldMaterials.endzone2;
+        endzone1.GetComponent<MeshRenderer>().material = fieldMaterials.endzone;
+        endzone2.GetComponent<MeshRenderer>().material = fieldMaterials.endzone;
+        // ## Sidelines
+        sidelineL.GetComponent<MeshRenderer>().material = fieldMaterials.sideline;
+        sidelineR.GetComponent<MeshRenderer>().material = fieldMaterials.sideline;
 
         // ### Goalposts
         // ## Goalpost 1
-        goalpost1Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase1;
-        goalpost1Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal1;
+        goalpost1Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
+        goalpost1Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
         // ## Goalpost 2
-        goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase2;
-        goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal2;
+        goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
+        goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
+    }
+
+
+    private void OnValidate()
+    {
+        CreateField();
     }
 }

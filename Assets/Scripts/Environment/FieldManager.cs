@@ -16,10 +16,6 @@ public class FieldManager : MonoBehaviour
     [Tooltip("Nav Mesh Surface of the current field")]
     [SerializeField] private NavMeshSurface surface;
 
-    [Header("Stadium prefabs")]
-    [Tooltip("Prefab list of the stadiums")]
-    [SerializeField] private GameObject[] stadiumPrefabs;
-
 
     [Tooltip("Current stadium game object")]
     private GameObject stadiumObject;
@@ -54,7 +50,7 @@ public class FieldManager : MonoBehaviour
 
         // ### Creation of the field and the stadium
         // ## Instantiation of the prefabs
-        stadiumObject = Instantiate(stadiumPrefabs[main.GameManager.gameData.stadiumIndex], fieldPosition, Quaternion.identity);
+        stadiumObject = Instantiate(main.GameManager.gameData.stadium, fieldPosition, Quaternion.identity);
 
         field = stadiumObject.GetComponentInChildren<Field>();
         stadium = stadiumObject.GetComponentInChildren<Stadium>();

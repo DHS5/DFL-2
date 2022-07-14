@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Team prefabs")]
     public GameObject[] team;
 
+    [Tooltip("Stadium's prefab")]
+    public GameObject stadium;
+    
     [Tooltip("Parkour's prefab")]
     public GameObject parkour;
 
@@ -216,6 +219,7 @@ public class GameManager : MonoBehaviour
             gameData.stadiumIndex = stadiumIndex;
             gameData.enemy = enemyPrefab;
             gameData.team = team;
+            gameData.stadium = stadium;
             gameData.parkour = parkour;
         }
 

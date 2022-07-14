@@ -16,18 +16,11 @@ public abstract class Card : MonoBehaviour
     [Tooltip("")]
     [SerializeField] protected Toggle infoToggle;
 
-    [Tooltip("Prefab")]
-    public GameObject prefab;
+    [Tooltip("Card scriptable object")]
+    [HideInInspector] public CardSO cardSO;
 
 
-    [Header("Card's attributes")]
-    [Tooltip("")]
-    [SerializeField] protected string title;
-    [Tooltip("")]
-    [SerializeField] protected Sprite sprite;
-
-
-    public bool InfoActive
+    public virtual bool InfoActive
     {
         get { return infoToggle.isOn; }
         set { infoToggle.isOn = value; }
@@ -36,7 +29,6 @@ public abstract class Card : MonoBehaviour
 
     protected virtual void Start()
     {
-        titleText.text = title;
-        image.sprite = sprite;
+        titleText.text = cardSO.Title;
     }
 }

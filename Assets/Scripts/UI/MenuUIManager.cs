@@ -11,35 +11,45 @@ public class MenuUIManager : MonoBehaviour
     private List<GameOption> defenderOptions = new List<GameOption>();
     private List<GameOption> zombieOptions = new List<GameOption>();
 
+
+
     [Header("Game Screen")]
-    [SerializeField] private GameObject playerSimpleCardsObject;
-    private PlayerSimpleCard[] playerSimpleCards;
+    [SerializeField] private GameObject playerSimpleCContainer;
+    [SerializeField] private GameObject playerSimpleCardPrefab;
+    private List<PlayerSimpleCard> playerSimpleCards = new List<PlayerSimpleCard>();
 
-    [SerializeField] private Image stadiumImage;
-    [SerializeField] private Sprite[] stadiumSprites;
-
+    [SerializeField] private GameObject stadiumCContainer;
+    [SerializeField] private GameObject stadiumCardPrefab;
+    private List<StadiumCard> stadiumCards = new List<StadiumCard>();
 
     [SerializeField] private GameObject infoButtons;
 
 
+
     [Header("Player Choice Screen")]
-    [SerializeField] private GameObject playerCompCardsObject;
-    private PlayerCompleteCard[] playerCompCards;
+    [SerializeField] private GameObject playerCompCContainer;
+    [SerializeField] private GameObject playerCompCardPrefab;
+    private List<PlayerCompleteCard> playerCompCards = new List<PlayerCompleteCard>();
+
 
 
     [Header("Enemy Choice Screen")]
-    [SerializeField] private GameObject enemyCardsObject;
-    private EnemyCard[] enemyCards;
+    [SerializeField] private GameObject enemyCContainer;
+    [SerializeField] private GameObject enemyCardPrefab;
+    private List<EnemyCard> enemyCards = new List<EnemyCard>();
+
 
 
     [Header("Team Choice Screen")]
-    [SerializeField] private GameObject[] attackerCardsObjects;
-    private AttackerCard[][] attackerCards = new AttackerCard[5][];
+    [SerializeField] private GameObject[] attackerCContainers;
+    [SerializeField] private GameObject attackerCardPrefab;
+    private List<AttackerCard>[] attackerCards = new List<AttackerCard>[5];
 
 
     [Header("Parkour Choice Screen")]
-    [SerializeField] private GameObject parkourCardsObject;
-    private ParkourCard[] parkourCards;
+    [SerializeField] private GameObject parkourCContainer;
+    [SerializeField] private GameObject parkourCardPrefab;
+    private List<ParkourCard> parkourCards = new List<ParkourCard>();
 
 
 
@@ -75,11 +85,7 @@ public class MenuUIManager : MonoBehaviour
     public int StadiumIndex
     {
         get { return dataManager.playerPrefs.stadiumIndex; }
-        set
-        {
-            dataManager.playerPrefs.stadiumIndex = value;
-            dataManager.gameData.stadiumIndex = value;
-        }
+        set { dataManager.playerPrefs.stadiumIndex = value; }
     }
     public int EnemyIndex
     {
@@ -117,7 +123,8 @@ public class MenuUIManager : MonoBehaviour
     {
         InfoButtonsOn = settingsManager.InfoButtonsOn;
 
-        stadiumImage.sprite = stadiumSprites[StadiumIndex];
+        for (int i = 0; i < attackerCards.Length; i++)
+            attackerCards[i] = new List<AttackerCard>();
     }
 
     /// <summary>
@@ -141,82 +148,80 @@ public class MenuUIManager : MonoBehaviour
     }
 
 
-    public void NextStadium()
+
+
+    private void GetCard<T>(List<CardSO> cardSOs, GameObject prefab, ref List<T> cards, GameObject container, int index, ref GameObject g) where T : Card
     {
-        if (StadiumIndex == stadiumSprites.Length - 1) { StadiumIndex = 0; }
-        else { StadiumIndex++; }
+        int i = 0;
+        foreach (CardSO cardSO in cardSOs)
+        {
+            T card = Instantiate(prefab, container.transform).GetComponent<T>();
+            card.cardSO = cardSO;
+            if (i != index) card.gameObject.SetActive(false);
+            else g = card.cardSO.prefab;
 
-        stadiumImage.sprite = stadiumSprites[StadiumIndex];
+            if (card as ParkourCard != null)
+            {
+                (card as ParkourCard).GetIndex(i);
+                if (i == index) (card as ParkourCard).On();
+            }
+            cards.Add(card);
+            i++;
+        }
     }
-    public void PrevStadium()
-    {
-        if (StadiumIndex == 0) { StadiumIndex = stadiumSprites.Length - 1; }
-        else { StadiumIndex--; }
-
-        stadiumImage.sprite = stadiumSprites[StadiumIndex];
-    }
-
-
-
-    private void GetCard<T>(out T[] cards, GameObject cardObject, int index, ref GameObject g)
-    {
-        cards = cardObject.GetComponentsInChildren<T>();
-        Card[] cardsBis = cardObject.GetComponentsInChildren<Card>();
-        foreach (Card c in cardsBis)
-            c.gameObject.SetActive(false);
-        cardsBis[index].gameObject.SetActive(true);
-        g = cardsBis[index].prefab;
-    }
-    private void GetCard(out ParkourCard[] cards, GameObject cardObject, int index)
-    {
-        cards = cardObject.GetComponentsInChildren<ParkourCard>();
-        for (int i = 0; i < cards.Length; i++)
-            cards[i].GetIndex(i);
-        cards[index].On();
-    }
+    //private void GetCard(out ParkourCard[] cards, GameObject cardObject, int index)
+    //{
+    //    cards = cardObject.GetComponentsInChildren<ParkourCard>();
+    //    for (int i = 0; i < cards.Length; i++)
+    //        cards[i].GetIndex(i);
+    //    cards[index].On();
+    //}
 
     private void GetCards()
     {
         // Player simple cards
-        GetCard(out playerSimpleCards, playerSimpleCardsObject, PlayerIndex, ref dataManager.gameData.player);
+        GetCard(dataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex, ref dataManager.gameData.player);
 
         // Player complete cards
-        GetCard(out playerCompCards, playerCompCardsObject, PlayerIndex, ref dataManager.gameData.player);
+        GetCard(dataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex, ref dataManager.gameData.player);
 
         // Enemy cards
-        GetCard(out enemyCards, enemyCardsObject, EnemyIndex, ref dataManager.gameData.enemy);
+        GetCard(dataManager.cardsContainer.enemyCards, enemyCardPrefab, ref enemyCards, enemyCContainer, EnemyIndex, ref dataManager.gameData.enemy);
 
         // Attacker cards
-        for (int i = 0; i < attackerCardsObjects.Length; i++)
-            GetCard(out attackerCards[i], attackerCardsObjects[i], AttackerIndex[i], ref dataManager.gameData.team[i]);
+        for (int i = 0; i < attackerCContainers.Length; i++)
+            GetCard(dataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], ref dataManager.gameData.team[i]);
+
+        // Stadium cards
+        GetCard(dataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex, ref dataManager.gameData.stadium);
 
         // Parkour cards
-        GetCard(out parkourCards, parkourCardsObject, ParkourIndex);
+        GetCard(dataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex, ref dataManager.gameData.parkour);
     }
 
-    private int NextCard(Card[] cards, int index, ref GameObject g)
+    private int NextCard<T>(List<T> cards, int index, ref GameObject g) where T : Card
     {
         bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
-        Next(ref index, cards.Length - 1);
+        Next(ref index, cards.Count - 1);
 
         cards[index].gameObject.SetActive(true);
         cards[index].InfoActive = infoActive;
-        g = cards[index].prefab;
+        g = cards[index].cardSO.prefab;
 
         return index;
     }
-    private int PrevCard(Card[] cards, int index, ref GameObject g)
+    private int PrevCard<T>(List<T> cards, int index, ref GameObject g) where T : Card
     {
         bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
-        Prev(ref index, cards.Length - 1);
+        Prev(ref index, cards.Count - 1);
 
         cards[index].gameObject.SetActive(true);
         cards[index].InfoActive = infoActive;
-        g = cards[index].prefab;
+        g = cards[index].cardSO.prefab;
 
         return index;
     }
@@ -237,6 +242,9 @@ public class MenuUIManager : MonoBehaviour
 
     public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
     public void PrevCardAttacker(int i) { AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
+
+    public void NextCardStadium() { StadiumIndex = NextCard(stadiumCards, StadiumIndex, ref dataManager.gameData.stadium); }
+    public void PrevCardStadium() { StadiumIndex = PrevCard(stadiumCards, StadiumIndex, ref dataManager.gameData.stadium); }
 
 
     // ### Tools ###

@@ -34,17 +34,6 @@ public class Player : MonoBehaviour
 
 
 
-
-    [Header("Player level attributes")]
-    [Tooltip("")]
-    [Range(1, 10)] public int physical;
-    [Tooltip("")]
-    [Range(1, 10)] public int handling;
-    [Tooltip("")]
-    [Range(1, 5)] public int skills;
-
-
-
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
