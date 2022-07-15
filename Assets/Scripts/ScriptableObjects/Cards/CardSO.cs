@@ -6,9 +6,8 @@ using UnityEngine;
 public class CardSO : ScriptableObject
 {
     public string Title;
-    public Sprite sprite100x120;
-    public Sprite sprite100x80;
-    public Sprite sprite150x100;
+    public Sprite mainSprite;
+    public Sprite shopSprite;
     public GameObject prefab;
     public int price;
 

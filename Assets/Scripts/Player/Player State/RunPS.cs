@@ -14,7 +14,7 @@ public class RunPS : PlayerState
         SetTrigger("Run");
         SetFloat("Dir", 0f);
 
-        controller.Speed = controller.NormalSpeed;
+        controller.Speed = att.NormalSpeed;
         controller.SideSpeed = 0f;
 
         base.Enter();

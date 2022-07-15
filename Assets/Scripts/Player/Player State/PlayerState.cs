@@ -23,6 +23,9 @@ public abstract class PlayerState
     public Animator[] animators = new Animator[2];
 
 
+    protected PlayerAttributesSO att;
+    protected PlayerUniversalDataSO UD;
+
     protected float acc;
     protected float side;
     protected float startSide;
@@ -37,6 +40,8 @@ public abstract class PlayerState
         player = _player;
 
         controller = player.controller;
+        att = controller.playerAtt;
+        UD = controller.playerUD;
 
         animators[0] = player.fPPlayer.animator;
         animators[1] = player.tPPlayer.animator;

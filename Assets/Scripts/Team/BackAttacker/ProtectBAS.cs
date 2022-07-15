@@ -18,7 +18,7 @@ public class ProtectBAS : AttackerState
     {
         base.Enter();
 
-        agent.speed = attacker.player.controller.NormalSpeed;
+        agent.speed = attacker.player.controller.playerAtt.NormalSpeed;
 
         animator.SetTrigger("Run");
     }

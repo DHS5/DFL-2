@@ -13,12 +13,12 @@ public class FeintPS : PlayerState
 
     public override void Enter()
     {
-        animTime = controller.feintTime;
+        animTime = UD.feintTime;
 
         Debug.Log(startSide);
 
-        controller.Speed = controller.FeintSpeed;
-        controller.SideSpeed = controller.FeintSideSpeed * startSide;
+        controller.Speed = att.FeintSpeed;
+        controller.SideSpeed = att.FeintSideSpeed * startSide;
 
         base.Enter();
     }

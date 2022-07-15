@@ -73,7 +73,7 @@ public class MainManager : MonoBehaviour
 
         // Drills
         ParkourManager = GetComponent<ParkourManager>();
-        if (DataManager.gameData.gameDrill != GameDrill.PARKOUR) ParkourManager.enabled = false;
+        if (DataManager.gameData.gameMode != GameMode.DRILL || DataManager.gameData.gameDrill != GameDrill.PARKOUR) ParkourManager.enabled = false;
 
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers

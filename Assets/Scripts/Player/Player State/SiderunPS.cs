@@ -21,12 +21,12 @@ public class SiderunPS : PlayerState
         if (anim)
         {
             SetTrigger("Side");
-            animTime = controller.siderunTime;
+            animTime = UD.siderunTime;
         }
         else SetTrigger("Run");
 
-        controller.Speed = controller.NormalSpeed;
-        controller.SideSpeed = controller.NormalSideSpeed * side;
+        controller.Speed = att.NormalSpeed;
+        controller.SideSpeed = att.NormalSideSpeed * side;
 
         base.Enter();
     }
@@ -39,7 +39,7 @@ public class SiderunPS : PlayerState
         PlayerOrientation();
 
 
-        controller.SideSpeed = controller.NormalSideSpeed * side;
+        controller.SideSpeed = att.NormalSideSpeed * side;
 
 
         if (Time.time >= startTime + animTime)
@@ -85,7 +85,7 @@ public class SiderunPS : PlayerState
             }
             else stage = Event.EXIT;
         }
-        else if (controller.CanFeint && anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        else if (att.CanFeint && anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
         {
             nextState = new FeintPS(player, -startSide);
             SetFloat("Dir", -startSide);

@@ -18,7 +18,7 @@ public class SprintPS : PlayerState
 
         controller.Sprint();
 
-        player.effects.SprintVolume(true, controller.accelerationTime - (Time.time - controller.SprintStartTime));
+        player.effects.SprintVolume(true, att.accelerationTime - (Time.time - controller.SprintStartTime));
 
         base.Enter();
     }
@@ -30,9 +30,9 @@ public class SprintPS : PlayerState
         PlayerOrientation();
 
 
-        controller.Speed = controller.NormalSpeed * (1 - (1 - controller.AccelerationM) * acc);
+        controller.Speed = att.NormalSpeed * (1 - (1 - att.AccelerationM) * acc);
 
-        controller.SideSpeed = controller.AccSideSpeed * side;
+        controller.SideSpeed = att.AccSideSpeed * side;
 
         
         // Jump
@@ -42,7 +42,7 @@ public class SprintPS : PlayerState
             stage = Event.EXIT;
         }
         // Slide
-        else if (Input.GetAxisRaw("Vertical") < 0 && controller.CanSlide && !controller.AlreadySlide)
+        else if (Input.GetAxisRaw("Vertical") < 0 && att.CanSlide && !controller.AlreadySlide)
         {
             nextState = new SlidePS(player);
             stage = Event.EXIT;
@@ -65,7 +65,7 @@ public class SprintPS : PlayerState
     {
         ResetTrigger("Sprint");
 
-        player.effects.SprintVolume(false, controller.accelerationRestTime - (controller.accelerationTime - (Time.time - controller.SprintStartTime)));
+        player.effects.SprintVolume(false, att.accelerationRestTime - (att.accelerationTime - (Time.time - controller.SprintStartTime)));
         
         base.Exit();
     }

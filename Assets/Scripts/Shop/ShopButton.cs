@@ -21,11 +21,14 @@ public class ShopButton : MonoBehaviour
     [Tooltip("Sprite to display on the shop card")]
     [SerializeField] private Sprite shopCardSprite;
     [Tooltip("Shop card prefab")]
-    [SerializeField] private GameObject shopCardPrefab;
+    [HideInInspector] public GameObject shopCardPrefab;
     [Tooltip("Shop object prefab (object to buy)")]
     [SerializeField] private GameObject shopObjectPrefab;
     [Tooltip("Price of the object")]
     [SerializeField] private int price;
+
+
+    [HideInInspector] public CardSO cardSO;
 
 
     private ShopCard shopCard;
@@ -35,8 +38,8 @@ public class ShopButton : MonoBehaviour
     {
         shopManager = FindObjectOfType<ShopManager>();
 
-        text.text = title;
-        button.image.sprite = sprite;
+        text.text = cardSO.Title;
+        button.image.sprite = cardSO.shopSprite;
     }
 
 
@@ -49,7 +52,7 @@ public class ShopButton : MonoBehaviour
         if (shopCard == null)
         {
             shopCard = Instantiate(shopCardPrefab, shopManager.OpenShop().transform).GetComponent<ShopCard>();
-            shopCard.GenerateCard(shopObjectPrefab, title, shopCardSprite, price);
+            shopCard.GenerateCard(cardSO);
         }
         else
         {

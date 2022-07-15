@@ -41,26 +41,34 @@ public class PlayerShopCard : ShopCard
     [Tooltip("")]
     [SerializeField] private Toggle slideToggle;
     [Tooltip("")]
+    [SerializeField] private Toggle flipToggle;
+    [Tooltip("")]
     [SerializeField] private Toggle extraLifeToggle;
 
 
-    public override void GenerateCard(GameObject prefab, string title, Sprite sprite, int _price)
+    public override void GenerateCard(CardSO _cardSO)
     {
-        base.GenerateCard(prefab, title, sprite, _price);
+        base.GenerateCard(_cardSO);
 
-        PlayerController p = prefab.GetComponent<PlayerController>();
+        PlayerController p = cardSO.prefab.GetComponent<PlayerController>();
 
-        speedSlider.value = p.NormalSpeed;
-        sideSpeedSlider.value = p.NormalSideSpeed;
-        sprintSlider.value = p.AccelerationM;
-        staminaSlider.value = p.accelerationTime / p.accelerationRestTime;
-        jumpSlider.value = p.JumpHeight;
+        speedSlider.value = p.playerAtt.NormalSpeed;
+        sideSpeedSlider.value = p.playerAtt.NormalSideSpeed;
+        sprintSlider.value = p.playerAtt.AccelerationM;
+        staminaSlider.value = p.playerAtt.accelerationTime / p.playerAtt.accelerationRestTime;
+        jumpSlider.value = p.playerAtt.JumpHeight;
 
-        dirSensitivitySlider.value = p.DirSensitivity;
-        dirGravitySlider.value = p.DirGravity;
-        accSensitivitySlider.value = p.AccSensitivity;
-        accGravitySlider.value = p.AccGravity;
+        dirSensitivitySlider.value = p.playerAtt.DirSensitivity;
+        dirGravitySlider.value = p.playerAtt.DirGravity;
+        accSensitivitySlider.value = p.playerAtt.AccSensitivity;
+        accGravitySlider.value = p.playerAtt.AccGravity;
 
-        //skillMovesSlider.value = prefab.GetComponent<Player>().skills;
+        jukeToggle.isOn = p.playerAtt.CanJuke;
+        feintToggle.isOn = p.playerAtt.CanFeint;
+        spinToggle.isOn = p.playerAtt.CanSpin;
+        slideToggle.isOn = p.playerAtt.CanSlide;
+        flipToggle.isOn = p.playerAtt.CanFlip;
+
+        skillMovesSlider.value = cardSO.skills;
     }
 }

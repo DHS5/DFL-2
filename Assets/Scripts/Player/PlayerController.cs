@@ -23,33 +23,25 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("Gravity multiplier constant")]
     readonly float gravityScale = 6f;
+    [Tooltip("Jump multiplier constant")]
     readonly float jumpCst = 1.25f;
 
 
-    [Header("Physic parameters")]
-    [SerializeField] private Vector3 size;
+
+    public PlayerAttributesSO playerAtt;
+    public PlayerUniversalDataSO playerUD;
+
+    // Control parameters
+    private float dirSensitivity;
+    private float dirGravity;
+    private float accSensitivity;
+    private float accGravity;
+    private float snap;
 
 
-    [Header("Control parameters")]
-    [SerializeField] private float dirSensitivity; public float DirSensitivity { get { return dirSensitivity; } }
-    [SerializeField] private float dirGravity; public float DirGravity { get { return dirGravity; } }
-
-    [SerializeField] private float accSensitivity; public float AccSensitivity { get { return accSensitivity; } }
-    [SerializeField] private float accGravity; public float AccGravity { get { return accGravity; } }
-
-    [SerializeField] private float snap;
 
     private float realDir;
     private float realAcc;
-
-
-    [Header("Animation's time")]
-    public float siderunTime;
-    public float jukeTime;
-    public float jukeDelay;
-    public float feintTime;
-    public float spinTime;
-    public float slideTime;
 
 
     /// <summary>
@@ -64,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private float sideSpeed;
 
 
-
+    /*
     [Header("Normal speed variables of the player")]
     [Tooltip("Forward speed of the player when running forward")]
     [SerializeField] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
@@ -141,7 +133,7 @@ public class PlayerController : MonoBehaviour
     
     [Tooltip("Flip speed of the player")]
     [SerializeField] private float flipSpeed; public float FlipSpeed { get { return flipSpeed; } }
-
+    */
 
 
     [Tooltip("Bonus speed attribute of the player (changed by the bonus)")]
@@ -193,7 +185,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 JumpPower
     {
-        get { return new Vector3(0, Mathf.Sqrt(jumpHeight * jumpCst * -2 * (Physics.gravity.y * gravityScale)), 0); }
+        get { return new Vector3(0, Mathf.Sqrt(playerAtt.JumpHeight * jumpCst * -2 * (Physics.gravity.y * gravityScale)), 0); ; }
     }
 
 
@@ -208,6 +200,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         PlayerRescale();
+        GetControlParams();
 
         CurrentState = new RunPS(player);
 
@@ -246,8 +239,17 @@ public class PlayerController : MonoBehaviour
     {
         var fpScale = player.fPPlayer.gameObject.transform.localScale;
         var tpScale = player.tPPlayer.gameObject.transform.localScale;
-        player.fPPlayer.gameObject.transform.localScale = new Vector3(fpScale.x * size.x, fpScale.y * size.y, fpScale.z * size.z);
-        player.tPPlayer.gameObject.transform.localScale = new Vector3(tpScale.x * size.x, tpScale.y * size.y, tpScale.z * size.z);
+        player.fPPlayer.gameObject.transform.localScale = new Vector3(fpScale.x * playerAtt.size.x, fpScale.y * playerAtt.size.y, fpScale.z * playerAtt.size.z);
+        player.tPPlayer.gameObject.transform.localScale = new Vector3(tpScale.x * playerAtt.size.x, tpScale.y * playerAtt.size.y, tpScale.z * playerAtt.size.z);
+    }
+
+    private void GetControlParams()
+    {
+        dirSensitivity = playerAtt.DirSensitivity;
+        dirGravity = playerAtt.DirGravity;
+        accSensitivity = playerAtt.AccSensitivity;
+        accGravity = playerAtt.AccGravity;
+        snap = playerAtt.snap;
     }
 
 
@@ -322,8 +324,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), accelerationTime); } }
-    private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , accelerationRestTime) ; }
+    public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), playerAtt.accelerationTime); } }
+    private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , playerAtt.accelerationRestTime) ; }
     private void Rested() { CanAccelerate = true; AlreadySlide = false; }
     public void Slide() { AlreadySlide = true; }
 

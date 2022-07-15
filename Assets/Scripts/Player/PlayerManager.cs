@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
     public void PreparePlayer()
     {
         playerObject = Instantiate(main.GameManager.gameData.player, startPosition, Quaternion.identity);
-        player = playerObject.GetComponent<Player>();
+        player = playerObject.GetComponentInChildren<Player>();
 
         player.gameManager = main.GameManager;
         player.fieldManager = main.FieldManager;
@@ -139,7 +139,7 @@ public class PlayerManager : MonoBehaviour
     public void SprintUIAnimation()
     {
         if (!player.controller.Sprinting)
-            StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.accelerationTime, player.controller.accelerationRestTime));
+            StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.playerAtt.accelerationTime, player.controller.playerAtt.accelerationRestTime));
     }
 
     public void UIModifyLife(bool state, int lifeNumber)

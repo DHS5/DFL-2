@@ -69,7 +69,7 @@ public class ObjectifManager : MonoBehaviour
         Vector3 fieldPos = main.FieldManager.field.transform.position;
         float xScale = main.FieldManager.field.fieldZone.transform.localScale.x / 2 - 5;
         float zRange = main.FieldManager.field.fieldZone.transform.localScale.z / (number + 1);
-        float xRange = zRange * Mathf.Tan(Mathf.Asin(player.controller.SlowSideSpeed / player.controller.NormalSpeed));
+        float xRange = zRange * Mathf.Tan(Mathf.Asin(player.controller.playerAtt.SlowSideSpeed / player.controller.playerAtt.NormalSpeed));
         int diff = (int)main.GameManager.gameData.gameDifficulty;
 
 

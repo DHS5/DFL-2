@@ -13,10 +13,10 @@ public class FlipPS : PlayerState
     public override void Enter()
     {
         SetTrigger("Flip");
-        SetFloat("HangTime", 1 / controller.HangTime);
+        SetFloat("HangTime", 1 / att.HangTime);
 
-        controller.Speed = controller.FlipSpeed;
-        controller.bonusJump = controller.FlipHeight;
+        controller.Speed = att.FlipSpeed;
+        controller.bonusJump = att.FlipHeight;
         controller.Jump();
         
         base.Enter();

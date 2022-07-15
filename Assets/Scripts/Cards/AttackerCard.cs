@@ -26,8 +26,6 @@ public class AttackerCard : Card
     {
         base.Start();
 
-        image.sprite = cardSO.sprite100x120;
-
         Attacker a = cardSO.prefab.GetComponent<Attacker>();
         positionText.text += cardSO.position;
         speedSlider.value = (a.back2PlayerSpeed + a.defenseSpeed) / 2;

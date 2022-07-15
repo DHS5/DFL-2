@@ -15,6 +15,8 @@ public class FirstPersonCameraController : MonoBehaviour
 
     [Tooltip("Head game object, parent of the first person camera")]
     [SerializeField] private GameObject head;
+    [Tooltip("Hips game object, root bone of the player")]
+    [SerializeField] private GameObject hips;
 
     [Tooltip("First person camera")]
     private Camera fpCamera;
@@ -53,6 +55,11 @@ public class FirstPersonCameraController : MonoBehaviour
         set { player.playerManager.FpCameraPos = value; }
     }
 
+    private float hipsXStartRot = 0;
+    private float HipsXAngle
+    {
+        get { return hips.transform.rotation.eulerAngles.x - hipsXStartRot; }
+    }
 
 
 
@@ -69,6 +76,7 @@ public class FirstPersonCameraController : MonoBehaviour
 
         // Initializes the camera's rotation
         cameraRotation = head.transform.rotation;
+        hipsXStartRot = HipsXAngle;
 
         // Gets the camera parameters
         headAngle = player.playerManager.HeadAngle;
@@ -140,6 +148,6 @@ public class FirstPersonCameraController : MonoBehaviour
         // Slerps to the new rotation
         head.transform.localRotation = Quaternion.Slerp(head.transform.localRotation, cameraRotation, ySmoothRotation * Time.deltaTime);
         // Fixes the x-rotation to the head angle and the z-rotation to the body's rotation
-        head.transform.rotation = Quaternion.Euler(headAngle, head.transform.rotation.eulerAngles.y, playerBody.transform.rotation.eulerAngles.z);
+        head.transform.rotation = Quaternion.Euler(headAngle + HipsXAngle, head.transform.rotation.eulerAngles.y, hips.transform.rotation.eulerAngles.z);//playerBody.transform.rotation.eulerAngles.z);
     }
 }

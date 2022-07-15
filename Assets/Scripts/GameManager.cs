@@ -176,6 +176,8 @@ public class GameManager : MonoBehaviour
         PrepareGame(true);
 
         LaunchGame(false);
+
+        Physics.IgnoreLayerCollision(7, 8);
     }
 
 
@@ -296,7 +298,7 @@ public class GameManager : MonoBehaviour
             main.WeaponsManager.GenerateWeaponBonus();
 
         // # Drills #
-        if (gameData.gameDrill == GameDrill.PARKOUR)
+        if (gameData.gameMode == GameMode.DRILL && gameData.gameDrill == GameDrill.PARKOUR)
             main.ParkourManager.GenerateParkour();
 
 

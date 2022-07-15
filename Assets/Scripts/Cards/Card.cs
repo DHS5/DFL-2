@@ -30,5 +30,6 @@ public abstract class Card : MonoBehaviour
     protected virtual void Start()
     {
         titleText.text = cardSO.Title;
+        image.sprite = cardSO.mainSprite;
     }
 }

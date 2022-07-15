@@ -16,10 +16,10 @@ public class SpinPS : PlayerState
         SetTrigger("Spin");
         SetFloat("Dir", startSide);
 
-        animTime = controller.spinTime;
+        animTime = UD.spinTime;
 
-        controller.Speed = controller.SpinSpeed;
-        controller.SideSpeed = controller.SpinSideSpeed * startSide;
+        controller.Speed = att.SpinSpeed;
+        controller.SideSpeed = att.SpinSideSpeed * startSide;
 
         base.Enter();
     }

@@ -15,10 +15,10 @@ public class JukePS : PlayerState
     {
         SetTrigger("Juke");
         SetFloat("Dir", startSide);
-        animTime = controller.jukeTime;
+        animTime = UD.jukeTime;
 
-        controller.Speed = controller.JukeSpeed;
-        controller.SideSpeed = controller.JukeSideSpeed * startSide;
+        controller.Speed = att.JukeSpeed;
+        controller.SideSpeed = att.JukeSideSpeed * startSide;
 
         base.Enter();
     }
@@ -28,7 +28,7 @@ public class JukePS : PlayerState
         base.Update();
 
 
-        if (controller.CanSpin && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        if (att.CanSpin && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
             nextState = new SpinPS(player, Input.GetAxisRaw("Horizontal"));
 
         if (Time.time >= startTime + animTime)

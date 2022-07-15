@@ -13,15 +13,18 @@ public abstract class ShopCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI popupText;
 
+    protected CardSO cardSO;
     protected int price;
 
-    public virtual void GenerateCard(GameObject prefab, string title, Sprite sprite, int _price)
+    public virtual void GenerateCard(CardSO _cardSO)
     {
-        text.text = title;
-        image.sprite = sprite;
-        price = _price;
+        cardSO = _cardSO;
+
+        text.text = cardSO.Title;
+        image.sprite = cardSO.mainSprite;
+        price = cardSO.price;
         buttonText.text = price.ToString();
-        popupText.text = "Are you sure you want to buy " + title + " ?";
+        popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
     }
 
     public virtual void Buy()

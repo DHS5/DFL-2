@@ -15,7 +15,7 @@ public class SlowsiderunPS : PlayerState
     {
         SetTrigger("Run");
         
-        controller.Speed = controller.NormalSpeed;
+        controller.Speed = att.NormalSpeed;
 
         base.Enter();
     }
@@ -27,7 +27,7 @@ public class SlowsiderunPS : PlayerState
         PlayerOrientation();
 
 
-        controller.SideSpeed = controller.SlowSideSpeed * side;
+        controller.SideSpeed = att.SlowSideSpeed * side;
 
 
         // Jump

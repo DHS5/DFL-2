@@ -51,26 +51,24 @@ public class PlayerCompleteCard : Card
     {
         base.Start();
 
-        image.sprite = cardSO.sprite100x120;
-
         PlayerController p = cardSO.prefab.GetComponent<PlayerController>();
 
-        speedSlider.value = p.NormalSpeed;
-        sideSpeedSlider.value = p.NormalSideSpeed;
-        sprintSlider.value = p.AccelerationM;
-        staminaSlider.value = p.accelerationTime / p.accelerationRestTime;
-        jumpSlider.value = p.JumpHeight;
+        speedSlider.value = p.playerAtt.NormalSpeed;
+        sideSpeedSlider.value = p.playerAtt.NormalSideSpeed;
+        sprintSlider.value = p.playerAtt.AccelerationM;
+        staminaSlider.value = p.playerAtt.accelerationTime / p.playerAtt.accelerationRestTime;
+        jumpSlider.value = p.playerAtt.JumpHeight;
 
-        dirSensitivitySlider.value = p.DirSensitivity;
-        dirGravitySlider.value = p.DirGravity;
-        accSensitivitySlider.value = p.AccSensitivity;
-        accGravitySlider.value = p.AccGravity;
+        dirSensitivitySlider.value = p.playerAtt.DirSensitivity;
+        dirGravitySlider.value = p.playerAtt.DirGravity;
+        accSensitivitySlider.value = p.playerAtt.AccSensitivity;
+        accGravitySlider.value = p.playerAtt.AccGravity;
 
-        jukeToggle.isOn = p.CanJuke;
-        feintToggle.isOn = p.CanFeint;
-        spinToggle.isOn = p.CanSpin;
-        slideToggle.isOn = p.CanSlide;
-        flipToggle.isOn = p.CanFlip;
+        jukeToggle.isOn = p.playerAtt.CanJuke;
+        feintToggle.isOn = p.playerAtt.CanFeint;
+        spinToggle.isOn = p.playerAtt.CanSpin;
+        slideToggle.isOn = p.playerAtt.CanSlide;
+        flipToggle.isOn = p.playerAtt.CanFlip;
 
         skillMovesSlider.value = cardSO.skills;
     }

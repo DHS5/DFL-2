@@ -11,7 +11,7 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    [SerializeField] private DifficultyArrays defenderPrefabs;
+    [SerializeField] private DifficultyArrays prefabs;
 
     [Header("Defenders")]
     [Header("Enemy's prefab lists")]
@@ -171,7 +171,6 @@ public class EnemiesManager : MonoBehaviour
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
-        enemy.player = main.PlayerManager.playerObject;
         enemy.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
         if (audios != null && audios.Length > 0)
         {
@@ -206,8 +205,8 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void DefendersWave()
     {
-        GameObject[] wingmanPrefabs = defenderPrefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).wingmen;
-        GameObject[] linemanPrefabs = defenderPrefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).linemen;
+        GameObject[] wingmanPrefabs = prefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).wingmen;
+        GameObject[] linemanPrefabs = prefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).linemen;
 
         // Spawn in the center zone
         Vector3 center = centerZone.transform.position;
@@ -246,6 +245,9 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void ZombiesWave()
     {
+        GameObject[] classicZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).classic;
+        GameObject[] sleepingZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).sleeping;
+
         Vector3 field = fieldZone.transform.position;
         float xScale = fieldZone.transform.localScale.x / 2;
         float zScale = fieldZone.transform.localScale.z / 2;
@@ -278,20 +280,39 @@ public class EnemiesManager : MonoBehaviour
 [System.Serializable]
 public class DifficultyArrays
 {
-    public DefenderTypeArrays easy;
-    public DefenderTypeArrays normal;
-    public DefenderTypeArrays hard;
+    [Header("Defenders")]
+    public DefenderTypeArrays easyD;
+    public DefenderTypeArrays normalD;
+    public DefenderTypeArrays hardD;
 
     public DefenderTypeArrays GetArrays(int difficulty)
     {
         switch (difficulty)
         {
             case 0:
-                return easy;
+                return easyD;
             case 1:
-                return normal;
+                return normalD;
             default:
-                return hard;
+                return hardD;
+        }
+    }
+
+    [Header("Zombies")]
+    public ZombieTypeArrays easyZ;
+    public ZombieTypeArrays normalZ;
+    public ZombieTypeArrays hardZ;
+
+    public ZombieTypeArrays GetZArrays(int difficulty)
+    {
+        switch (difficulty)
+        {
+            case 0:
+                return easyZ;
+            case 1:
+                return normalZ;
+            default:
+                return hardZ;
         }
     }
 }
@@ -301,4 +322,11 @@ public class DefenderTypeArrays
 {
     public GameObject[] wingmen;
     public GameObject[] linemen;
+}
+
+[System.Serializable]
+public class ZombieTypeArrays
+{
+    public GameObject[] classic;
+    public GameObject[] sleeping;
 }

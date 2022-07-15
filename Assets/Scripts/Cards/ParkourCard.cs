@@ -14,16 +14,17 @@ public class ParkourCard : TerrainCard
     private int index;
 
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
-
         difficultyGauge = GetComponentInChildren<Slider>();
 
         difficultyGauge.value = cardSO.physical;
     }
 
-    protected override void Start() { }
+    protected override void Start() 
+    {
+        image.sprite = cardSO.mainSprite; 
+    }
 
     public void On()
     {

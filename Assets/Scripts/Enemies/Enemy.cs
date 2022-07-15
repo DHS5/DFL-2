@@ -22,10 +22,7 @@ public abstract class Enemy : MonoBehaviour
 
 
 
-    [Tooltip("Game Object of the player")]
-    [HideInInspector] public GameObject player;
-
-    protected Player playerScript;
+    [HideInInspector] public Player player;
 
     [Tooltip("PlayerGameplay component of the player")]
     protected PlayerGameplay playerG;
@@ -125,9 +122,9 @@ public abstract class Enemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
 
-        playerScript = FindObjectOfType<Player>();
-        playerG = playerScript.gameplay;
-        playerC = playerScript.controller;
+        player = FindObjectOfType<Player>();
+        playerG = player.gameplay;
+        playerC = player.controller;
     }
 
 
@@ -165,7 +162,7 @@ public abstract class Enemy : MonoBehaviour
             // Gets the player's position
             playerPosition = player.transform.position;
             // Gets the player's look direction
-            playerLookDirection = playerScript.activeBody.transform.forward.normalized;
+            playerLookDirection = player.activeBody.transform.forward.normalized;
             // Gets the player's velocity
             playerVelocity = playerC.Velocity.normalized;
             // Gets the player's speed

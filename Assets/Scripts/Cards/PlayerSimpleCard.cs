@@ -20,8 +20,6 @@ public class PlayerSimpleCard : Card
     {
         base.Start();
 
-        image.sprite = cardSO.sprite100x120;
-
         physicalSlider.value = cardSO.physical;
         handlingSlider.value = cardSO.handling;
         skillsSlider.value = cardSO.skills;

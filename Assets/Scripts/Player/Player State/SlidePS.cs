@@ -15,7 +15,7 @@ public class SlidePS : PlayerState
         SetTrigger("Slide");
 
         controller.Slide();
-        controller.Speed = controller.SlideSpeed;
+        controller.Speed = att.SlideSpeed;
         
         base.Enter();
     }
@@ -25,7 +25,7 @@ public class SlidePS : PlayerState
         base.Update();
 
 
-        if (Time.time > startTime + controller.slideTime)
+        if (Time.time > startTime + UD.slideTime)
         {
             // Sprint
             if (acc > 0 && controller.CanAccelerate)

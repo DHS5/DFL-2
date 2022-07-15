@@ -13,7 +13,7 @@ public class JumpPS : PlayerState
     public override void Enter()
     {
         SetTrigger("Jump");
-        SetFloat("HangTime", 1 / controller.HangTime);
+        SetFloat("HangTime", 1 / att.HangTime);
 
         controller.Jump();
         

@@ -26,23 +26,23 @@ public class SlowrunPS : PlayerState
         PlayerOrientation();
 
 
-        controller.Speed = controller.NormalSpeed * ( 1 + (1 - controller.SlowM) * acc );
+        controller.Speed = att.NormalSpeed * ( 1 + (1 - att.SlowM) * acc );
 
 
         // Juke
-        if (controller.CanJuke && Time.time - startTime > player.controller.jukeDelay && Input.GetAxisRaw("Horizontal") != 0)
+        if (att.CanJuke && Time.time - startTime > UD.jukeDelay && Input.GetAxisRaw("Horizontal") != 0)
         {
             nextState = new JukePS(player, Input.GetAxisRaw("Horizontal"));
             stage = Event.EXIT;
         }
         // Flip
-        else if (controller.CanFlip && Input.GetKeyDown(KeyCode.Space))
+        else if (att.CanFlip && Input.GetKeyDown(KeyCode.Space))
         {
             nextState = new FlipPS(player);
             stage = Event.EXIT;
         }
         // Jump
-        else if (!controller.CanFlip && Input.GetKeyDown(KeyCode.Space))
+        else if (!att.CanFlip && Input.GetKeyDown(KeyCode.Space))
         {
             nextState = new JumpPS(player);
             stage = Event.EXIT;
@@ -60,7 +60,7 @@ public class SlowrunPS : PlayerState
             stage = Event.EXIT;
         }
         // Slowsiderun
-        else if (!controller.CanJuke && side != 0)
+        else if (!att.CanJuke && side != 0)
         {
             nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
             stage = Event.EXIT;

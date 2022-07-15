@@ -2189,6 +2189,7 @@ MonoBehaviour:
     stadiumIndex: 0
     enemy: {fileID: 0}
     team: []
+    stadium: {fileID: 0}
     parkour: {fileID: 0}
   gameMode: 3
   gameDifficulty: 0
@@ -2200,6 +2201,7 @@ MonoBehaviour:
   stadiumIndex: 0
   enemyPrefab: {fileID: 0}
   team: []
+  stadium: {fileID: 0}
   parkour: {fileID: 0}
 --- !u!114 &675627205
 MonoBehaviour:
@@ -2272,9 +2274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surface: {fileID: 1150082292}
-  stadiumPrefabs:
-  - {fileID: 6485454774237646178, guid: e113c52eef3369e489e0d709589c64f3, type: 3}
-  - {fileID: 6860910561386467110, guid: a98cd49e6f03f274dad8368f8430411c, type: 3}
 --- !u!114 &675627209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2341,29 +2340,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe0740fe7922a64cada77dee2f30f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defenderPrefabs:
-    easy:
+  prefabs:
+    easyD:
       wingmen:
       - {fileID: 2035816876248888783, guid: 85287a0918568ab4496d38f922b6a706, type: 3}
       - {fileID: 2035816876248888783, guid: 548cf6350c0e3034fb6accccecfc3219, type: 3}
       - {fileID: 2035816876248888783, guid: 479db857fb49b2349be11fa3929bdadc, type: 3}
-      - {fileID: 2035816876248888783, guid: e4b9173b98815d34a8a23d0bead8e270, type: 3}
       linemen:
       - {fileID: 2035816876248888783, guid: 17152ca51ab00c04c83f099d113c3833, type: 3}
       - {fileID: 2035816876248888783, guid: 06d8465b5d960ed478fc12b87422c1fc, type: 3}
       - {fileID: 2035816876248888783, guid: 54f3d2783a16f42479662dfa25a3e9de, type: 3}
-    normal:
+    normalD:
       wingmen:
+      - {fileID: 2035816876248888783, guid: 479db857fb49b2349be11fa3929bdadc, type: 3}
       - {fileID: 2035816876248888783, guid: e4b9173b98815d34a8a23d0bead8e270, type: 3}
-      - {fileID: 2035816876248888783, guid: 08e4bafa6fc568d498010ff36548cd23, type: 3}
       linemen:
       - {fileID: 2035816876248888783, guid: 06d8465b5d960ed478fc12b87422c1fc, type: 3}
       - {fileID: 2035816876248888783, guid: 54f3d2783a16f42479662dfa25a3e9de, type: 3}
-    hard:
+    hardD:
       wingmen:
       - {fileID: 2035816876248888783, guid: 08e4bafa6fc568d498010ff36548cd23, type: 3}
       linemen:
       - {fileID: 2035816876248888783, guid: 54f3d2783a16f42479662dfa25a3e9de, type: 3}
+    easyZ:
+      classic:
+      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
+      sleeping:
+      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
+    normalZ:
+      classic:
+      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
+      sleeping:
+      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
+    hardZ:
+      classic:
+      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
+      sleeping:
+      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
   wingmenPrefabs:
   - {fileID: 2035816876248888783, guid: 85287a0918568ab4496d38f922b6a706, type: 3}
   - {fileID: 2035816876248888783, guid: 548cf6350c0e3034fb6accccecfc3219, type: 3}
@@ -2478,7 +2491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050870490a967034d968e77d19ace58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialPlayer: {fileID: 220146158451610779, guid: 0d7ab6fa65797894d946be849bf936e1,
+  tutorialPlayer: {fileID: 8812354164878341571, guid: 3e14e6c0b20fbf249af987f63e94886c,
     type: 3}
   step1Time: 1
   step2Time: 2
@@ -2819,10 +2832,10 @@ RectTransform:
   m_Father: {fileID: 404330672}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1093957249
 GameObject:
@@ -3049,7 +3062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1122621283
@@ -4550,7 +4563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -300.00003, y: -66.45442}
+  m_AnchoredPosition: {x: 50, y: 60}
   m_SizeDelta: {x: 20, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1644863233
