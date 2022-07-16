@@ -27,7 +27,7 @@ public class PositionningLDS : EnemyState
             animator.SetTrigger("Wait");
             enemy.destination = enemy.transform.position;
             enemy.transform.localRotation =
-                Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.playerPosition - enemy.transform.position), 5 * Time.deltaTime);
+                Quaternion.Slerp(enemy.transform.localRotation, Quaternion.LookRotation(enemy.playerPosition - enemy.transform.position), 5 * Time.deltaTime);
         }
 
         if (enemy.zDistance < enemy.positionningDist)

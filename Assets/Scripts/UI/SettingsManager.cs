@@ -43,6 +43,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Slider smoothRotationSlider;
     [SerializeField] private Slider headAngleSlider;
     [SerializeField] private Slider viewTypeSlider;
+    [SerializeField] private Toggle goalpostToggle;
 
     [SerializeField] private Slider soundVolumeSlider;
     [SerializeField] private Toggle soundOnToggle;
@@ -96,6 +97,11 @@ public class SettingsManager : MonoBehaviour
                 headAngleSlider.interactable = false;
             }
         }
+    }
+
+    public bool Goalpost
+    {
+        set { DataManager.gameplayData.goalpost = value; }
     }
 
     public bool InfoButtonsOn
@@ -191,6 +197,7 @@ public class SettingsManager : MonoBehaviour
         smoothRotationSlider.value = data.ysr;
         headAngleSlider.value = data.headAngle;
         viewTypeSlider.value = (float) data.viewType;
+        goalpostToggle.isOn = data.goalpost;
 
         if (data.viewType == 0)
         {

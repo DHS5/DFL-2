@@ -13,4 +13,6 @@ public class PlayerUniversalDataSO : ScriptableObject
     public float feintTime;
     public float spinTime;
     public float slideTime;
+    public float slipTime;
+    public float slipSpeed;
 }

@@ -7,6 +7,7 @@ public class AttackLDS : EnemyState
 {
     readonly float animTime = 1.6f;
 
+    // Compensation for : * enemy.attackSpeed
     readonly float attackOffset = 0.2f;
     
     private float baseSpeed;
@@ -26,16 +27,30 @@ public class AttackLDS : EnemyState
 
         agent.speed = enemy.attackSpeed;
 
-        Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
+        if (enemy.intelligence == 1) Attack();
 
-        enemy.destination = enemy.playerPosition + playerDir * attackOffset * enemy.attackSpeed;
-
-        agent.velocity = playerDir * enemy.attackSpeed;
+        else
+        {
+            Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
+            
+            enemy.destination = enemy.playerPosition + playerDir * attackOffset * enemy.attackSpeed;
+            
+            agent.velocity = playerDir * enemy.attackSpeed;
+        }
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
+        {
+            enemy.destination = enemy.transform.position;
+        }
+        if (Time.time - startTime > 3 * animTime / 4)
+        {
+            enemy.destination = enemy.playerPosition;
+        }
 
         if (Time.time - startTime > animTime)
         {
@@ -51,5 +66,59 @@ public class AttackLDS : EnemyState
         animator.ResetTrigger("Attack");
 
         base.Exit();
+    }
+
+
+
+    private void Attack()
+    {
+        float distP;
+
+        float speedC = enemy.playerSpeed / agent.speed;
+
+        float A = 1 - (1 / (speedC * speedC));
+
+        float B = -Mathf.Cos(Vector3.Angle(-enemy.toPlayerDirection, enemy.playerVelocity) * Mathf.Deg2Rad) * 2 * enemy.rawDistance;
+
+        float C = enemy.rawDistance * enemy.rawDistance;
+
+        float delta = (B * B) - (4 * A * C);
+
+        if (A == 0)
+        {
+            Debug.Log("A == 0");
+            distP = C / -B;
+            if (distP < 0)
+                distP = enemy.anticipation;
+        }
+
+        else if (delta > 0)
+        {
+            Debug.Log("Delta > 0");
+            distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
+
+            if (distP < 0)
+            {
+                distP = Mathf.Abs(-B + Mathf.Sqrt(delta)) / (2 * A);
+            }
+        }
+
+        else if (delta == 0)
+        {
+            Debug.Log("delta = 0");
+
+            distP = -B / (2 * A);
+        }
+
+        else
+        {
+            Debug.Log("delta < 0");
+
+            distP = enemy.anticipation;
+        }
+
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * distP;
+
+        agent.velocity = (enemy.destination - enemy.transform.position).normalized * enemy.attackSpeed;
     }
 }

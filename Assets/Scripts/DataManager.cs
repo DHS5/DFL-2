@@ -46,6 +46,7 @@ public struct GameplayData
     public ViewType viewType;
     public int fpCameraPos;
     public int tpCameraPos;
+    public bool goalpost;
 }
 
 [System.Serializable]

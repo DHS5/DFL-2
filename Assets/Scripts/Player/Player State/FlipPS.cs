@@ -29,8 +29,11 @@ public class FlipPS : PlayerState
 
         if (controller.OnGround)
         {
+            // Slip
+            if (IsRaining)
+                nextState = new SlipPS(player);
             // Sprint
-            if (acc > 0 && controller.CanAccelerate)
+            else if (acc > 0 && controller.CanAccelerate)
                 nextState = new SprintPS(player);
             // Slow
             else if (acc < 0)

@@ -14,6 +14,8 @@ public class TutorialManager : MonoBehaviour
     private bool step1 = false;
     private bool step2 = false;
     private bool step3 = false;
+    private bool step4 = false;
+    private bool step5 = false;
 
 
     [SerializeField] private float step1Time;
@@ -21,11 +23,15 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private float step3Time;
     [SerializeField] private float step4Time;
     [SerializeField] private float step5Time;
+    [SerializeField] private float step6Time;
+    [SerializeField] private float lastStepTime;
 
     [SerializeField] private GameObject step1Text;
     [SerializeField] private GameObject step2Text;
     [SerializeField] private GameObject step3Text;
     [SerializeField] private GameObject step4Text;
+    [SerializeField] private GameObject step5Text;
+    [SerializeField] private GameObject step6Text;
 
 
     private float side = 0f;
@@ -52,6 +58,8 @@ public class TutorialManager : MonoBehaviour
         main.GameUIManager.SetScreen(GameScreen.TUTO, true);
         
         Invoke(nameof(Step1), step1Time);
+
+        main.FieldManager.field.entryGoalpost.SetActive(true);
     }
 
     private void Update()
@@ -62,7 +70,7 @@ public class TutorialManager : MonoBehaviour
             main.PlayerManager.player.controller.SnapDir();
             main.PlayerManager.player.controller.CanAccelerate = false;
         }
-
+        // Side
         if (step1)
         {
             main.PlayerManager.player.controller.SnapAcc();
@@ -85,7 +93,7 @@ public class TutorialManager : MonoBehaviour
                 Invoke(nameof(Step2), step2Time);
             }
         }
-
+        // Slow
         else if (step2)
         {
             main.PlayerManager.player.controller.SnapDir();
@@ -103,7 +111,7 @@ public class TutorialManager : MonoBehaviour
                 Invoke(nameof(Step3), step3Time);
             }
         }
-
+        // Sprint
         else if (step3)
         {
             main.PlayerManager.player.controller.SnapDir();
@@ -120,6 +128,33 @@ public class TutorialManager : MonoBehaviour
                 step3 = false;
                 step3Text.SetActive(false);
                 Invoke(nameof(Step4), step4Time);
+            }
+        }
+        // Jump
+        else if (step4)
+        {
+            main.PlayerManager.player.controller.SnapDir();
+            main.PlayerManager.player.controller.SnapAcc();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                main.PlayerManager.StartPlayer();
+
+                step4 = false;
+                step4Text.SetActive(false);
+                Invoke(nameof(Step5), step5Time);
+            }
+        }
+        // Slowsiderun
+        else if (step5)
+        {
+            if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Vertical") < 0)
+            {
+                main.PlayerManager.StartPlayer();
+
+                step5 = false;
+                step5Text.SetActive(false);
+                Invoke(nameof(Step6), step6Time);
             }
         }
     }
@@ -148,17 +183,30 @@ public class TutorialManager : MonoBehaviour
 
     private void Step4()
     {
+        step4 = true;
         step4Text.SetActive(true);
-
         main.PlayerManager.StopPlayer();
-
-        Invoke(nameof(Step5), step5Time);
+        main.PlayerManager.player.controller.CanAccelerate = false;
     }
 
     private void Step5()
     {
-        step4Text.SetActive(false);
+        step5 = true;
+        step5Text.SetActive(true);
+        main.PlayerManager.StopPlayer();
+    }
 
+    private void Step6()
+    {
+        step6Text.SetActive(true);
+
+        main.PlayerManager.StopPlayer();
+        Invoke(nameof(LastStep), lastStepTime);
+    }
+
+    private void LastStep()
+    {
+        step6Text.SetActive(false);
         main.PlayerManager.StartPlayer();
     }
 }

@@ -35,8 +35,11 @@ public class JukePS : PlayerState
         {
             if (nextState == null)
             {
+                // Slip
+                if (IsRaining)
+                    nextState = new SlipPS(player);
                 // Jump
-                if (Input.GetKeyDown(KeyCode.Space))
+                else if (Input.GetKeyDown(KeyCode.Space))
                 {
                     nextState = new JumpPS(player);
                 }

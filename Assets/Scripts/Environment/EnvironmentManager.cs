@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum EnvironmentStyle { SUN = 0, RAIN = 1, NIGHT = 2, ZOMBIE = 3 }
+public enum EnvironmentStyle { SUN = 0, RAIN = 1, NIGHT = 2, ZOMBIE = 3, FOG = 4 }
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -80,6 +80,7 @@ public class EnvironmentManager : MonoBehaviour
         }
         if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
         {
+            envStyleNumber = EnvironmentStyle.FOG;
             RenderSettings.fog = true;
 
             // # Options #

@@ -28,11 +28,13 @@ public class Field : MonoBehaviour
     [SerializeField] GameObject endzone2;
     [SerializeField] GameObject sidelineL;
     [SerializeField] GameObject sidelineR;
-
+    [Space]
     [SerializeField] GameObject goalpost1Base;
     [SerializeField] GameObject goalpost1Metal;
     [SerializeField] GameObject goalpost2Base;
     [SerializeField] GameObject goalpost2Metal;
+    [Space]
+    public GameObject entryGoalpost;
 
 
     [Header("Zones of the field")]
@@ -71,6 +73,9 @@ public class Field : MonoBehaviour
         // ## Goalpost 2
         goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
         goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
+
+        if (DataManager.InstanceDataManager != null)
+            entryGoalpost.SetActive(DataManager.InstanceDataManager.gameplayData.goalpost);
     }
 
 

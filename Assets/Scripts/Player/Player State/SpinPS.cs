@@ -31,8 +31,11 @@ public class SpinPS : PlayerState
 
         if (Time.time >= startTime + animTime)
         {
+            // Slip
+            if (IsRaining)
+                nextState = new SlipPS(player);
             // Acceleration
-            if (acc > 0 && controller.CanAccelerate)
+            else if (acc > 0 && controller.CanAccelerate)
             {
                 nextState = new SprintPS(player);
             }

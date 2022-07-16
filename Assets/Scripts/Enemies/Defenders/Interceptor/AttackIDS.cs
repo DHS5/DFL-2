@@ -35,10 +35,22 @@ public class AttackIDS : EnemyState
     {
         base.Update();
 
-
-        if (Time.time - startTime > animTime && enemy.rawDistance > enemy.attackDist)
+        if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
         {
-            nextState = new InterceptIDS(enemy, agent, animator);
+            enemy.destination = enemy.transform.position;
+        }
+        if (Time.time - startTime > 3 * animTime / 4)
+        {
+            enemy.destination = enemy.playerPosition;
+        }
+
+        if (Time.time - startTime > animTime)
+        {
+            if (enemy.rawDistance > enemy.attackDist)
+                nextState = new InterceptIDS(enemy, agent, animator);
+            else 
+                nextState = new AttackIDS(enemy, agent, animator);
+
             stage = Event.EXIT;
         }
     }
@@ -57,7 +69,7 @@ public class AttackIDS : EnemyState
     {
         float distP;
 
-        float speedC = enemy.playerSpeed / enemy.attackSpeed;
+        float speedC = enemy.playerSpeed / agent.speed;
 
         float A = 1 - (1 / (speedC * speedC));
 
@@ -67,7 +79,14 @@ public class AttackIDS : EnemyState
 
         float delta = (B * B) - (4 * A * C);
 
-        if (delta > 0)
+        if (A == 0)
+        {
+            distP = C / -B;
+            if (distP < 0)
+                distP = enemy.anticipation;
+        }
+
+        else if (delta > 0)
         {
             distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
 
@@ -79,12 +98,16 @@ public class AttackIDS : EnemyState
 
         else if (delta == 0)
         {
+            Debug.Log("delta = 0");
+
             distP = -B / (2 * A);
         }
 
         else
         {
-            distP = 0;
+            Debug.Log("delta < 0");
+
+            distP = enemy.anticipation;
         }
 
         enemy.destination = enemy.playerPosition + enemy.playerVelocity * distP;

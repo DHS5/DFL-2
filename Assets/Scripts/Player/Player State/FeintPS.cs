@@ -15,8 +15,6 @@ public class FeintPS : PlayerState
     {
         animTime = UD.feintTime;
 
-        Debug.Log(startSide);
-
         controller.Speed = att.FeintSpeed;
         controller.SideSpeed = att.FeintSideSpeed * startSide;
 
@@ -30,8 +28,11 @@ public class FeintPS : PlayerState
 
         if (Time.time >= startTime + animTime)
         {
+            // Slip
+            if (IsRaining)
+                nextState = new SlipPS(player);
             // Jump
-            if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 nextState = new JumpPS(player);
             }

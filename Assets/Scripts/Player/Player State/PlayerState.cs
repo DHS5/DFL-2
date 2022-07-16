@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , DEAD , WIN }
+public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , DEAD , WIN , SLIP }
 
 
 public abstract class PlayerState
@@ -32,6 +32,13 @@ public abstract class PlayerState
 
     protected float startTime;
     protected float animTime;
+
+
+    protected bool IsRaining
+    {
+        get { return player.gameManager.gameData.gameWheather == GameWheather.RAIN; }
+    }
+
 
     public PlayerState(Player _player)
     {
