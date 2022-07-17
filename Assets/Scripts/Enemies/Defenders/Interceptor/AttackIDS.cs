@@ -92,7 +92,7 @@ public class AttackIDS : EnemyState
 
             if (distP < 0)
             {
-                distP = (-B + Mathf.Sqrt(delta)) / (2 * A);
+                distP = Mathf.Abs(-B + Mathf.Sqrt(delta)) / (2 * A);
             }
         }
 
@@ -110,7 +110,7 @@ public class AttackIDS : EnemyState
             distP = enemy.anticipation;
         }
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * distP;
+        enemy.destination = enemy.playerPosition + distP * enemy.intelligence * enemy.playerVelocity;
 
         agent.velocity = (enemy.destination - enemy.transform.position).normalized * enemy.attackSpeed;
     }

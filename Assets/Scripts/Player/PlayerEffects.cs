@@ -20,6 +20,8 @@ public class PlayerEffects : MonoBehaviour
     [Header("VFX game objects")]
     [Tooltip("Rain particle system")]
     [SerializeField] private ParticleSystem rainParticleSystem;
+    [Tooltip("Rain splash particle system")]
+    [SerializeField] private ParticleSystem rainSplashParticleSystem;
 
 
     readonly private float minVignette = 0f, maxVignette = 1f;
@@ -140,5 +142,6 @@ public class PlayerEffects : MonoBehaviour
         emission.rateOverTime = emi + particleAddition;
 
         rainParticleSystem.gameObject.SetActive(state);
+        rainSplashParticleSystem.gameObject.SetActive(state);
     }
 }

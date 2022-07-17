@@ -3,53 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class InterceptIDS : EnemyState
+public class AttackSDS : EnemyState
 {
-    new Interceptor enemy;
-
-    private float interceptTime;
-
-    public InterceptIDS(Interceptor _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    readonly float animTime = 1.6f;
+    
+    private float baseSpeed;
+    
+    public AttackSDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
-        name = EState.INTERCEPT;
+        name = EState.ATTACK;
 
-        enemy = _enemy;
+        baseSpeed = agent.speed;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        animator.SetTrigger("Run");
+        animator.SetTrigger("Attack");
+
+        agent.speed = enemy.attackSpeed;
+
+        Attack();
     }
 
     public override void Update()
     {
         base.Update();
 
-        Intercept();
-
-        if (!enemy.modeTime && enemy.rawDistance < enemy.attackDist)
+        if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
         {
-            nextState = new AttackIDS(enemy, agent, animator);
-            stage = Event.EXIT;
+            enemy.destination = enemy.transform.position;
         }
-        else if (enemy.modeTime && interceptTime < enemy.attackTime)
+        if (Time.time - startTime > 3 * animTime / 4)
         {
-            nextState = new AttackIDS(enemy, agent, animator);
+            enemy.destination = enemy.playerPosition;
+        }
+
+        if (Time.time - startTime > animTime)
+        {
+            nextState = new ChaseLDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
     }
 
     public override void Exit()
     {
-        base.Exit();
+        agent.speed = baseSpeed;
 
-        animator.ResetTrigger("Run");
+        animator.ResetTrigger("Attack");
+
+        base.Exit();
     }
 
 
-    private void Intercept()
+
+    private void Attack()
     {
         float distP;
 
@@ -65,6 +74,7 @@ public class InterceptIDS : EnemyState
 
         if (A == 0)
         {
+            Debug.Log("A == 0");
             distP = C / -B;
             if (distP < 0)
                 distP = enemy.anticipation;
@@ -72,6 +82,7 @@ public class InterceptIDS : EnemyState
 
         else if (delta > 0)
         {
+            Debug.Log("Delta > 0");
             distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
 
             if (distP < 0)
@@ -94,8 +105,8 @@ public class InterceptIDS : EnemyState
             distP = enemy.anticipation;
         }
 
-        enemy.destination = enemy.playerPosition + distP * enemy.playerVelocity;
+        enemy.destination = enemy.playerPosition + distP * enemy.intelligence * enemy.playerVelocity;
 
-        interceptTime = Vector3.Distance(enemy.destination, enemy.transform.position) / agent.speed;
+        agent.velocity = (enemy.destination - enemy.transform.position).normalized * enemy.attackSpeed;
     }
 }

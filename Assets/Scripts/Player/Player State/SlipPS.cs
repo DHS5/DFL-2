@@ -25,7 +25,7 @@ public class SlipPS : PlayerState
     {
         base.Update();
 
-        PlayerOrientation();
+        //PlayerOrientation();
 
         if (Time.time >= startTime + animTime)
         {

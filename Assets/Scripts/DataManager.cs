@@ -107,6 +107,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public GameplayData gameplayData;
     [HideInInspector] public PlayerData playerData;
     [HideInInspector] public ProgressData progressData;
+    [HideInInspector] public ProgressionData progressionData;
 
     // Current game data
     [HideInInspector] public GameData gameData;
