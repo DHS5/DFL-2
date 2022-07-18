@@ -9,5 +9,6 @@ public class DropdownLock : MonoBehaviour
     private void Start()
     {
         Instantiate(prefab, gameObject.transform);
+        FindObjectOfType<ProgressionManager>().ApplyDropdownLocks();
     }
 }

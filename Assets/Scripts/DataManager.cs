@@ -141,6 +141,8 @@ public class DataManager : MonoBehaviour
         // Initialize favorite player and stadium indexes
         InitGameData();
 
+        ResetProgression();
+
         // Starts a LootLocker session and load the leaderboards
         //StartSession();
     }
@@ -161,6 +163,23 @@ public class DataManager : MonoBehaviour
         if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
         for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
             if (playerPrefs.teamIndex[i] >= cardsContainer.teamCards.Count) playerPrefs.teamIndex[i] = 0;
+    }
+
+    private void ResetProgression()
+    {
+        progressionData.teamMode = true;
+        progressionData.zombieMode = true;
+
+        progressionData.normalDiff = true;
+        progressionData.hardDiff = true;
+
+        progressionData.rainWheather = true;
+        progressionData.fogWheather = true;
+
+        progressionData.bonusOpt = true;
+        progressionData.objectifOpt = true;
+        progressionData.obstacleOpt = true;
+        progressionData.weaponOpt = true;
     }
 
     private void InitGameData()
