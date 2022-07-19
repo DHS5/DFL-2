@@ -6,22 +6,6 @@ using TMPro;
 using UnityEngine.EventSystems;
 
 
-public struct ProgressionData
-{
-    public bool teamMode;
-    public bool zombieMode;
-
-    public bool normalDiff;
-    public bool hardDiff;
-
-    public bool rainWheather;
-    public bool fogWheather;
-
-    public bool bonusOpt;
-    public bool obstacleOpt;
-    public bool objectifOpt;
-    public bool weaponOpt;
-}
 
 public class ProgressionManager : MonoBehaviour
 {

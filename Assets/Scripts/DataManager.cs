@@ -67,6 +67,24 @@ public struct ProgressData
 }
 
 [System.Serializable]
+public struct ProgressionData
+{
+    public bool teamMode;
+    public bool zombieMode;
+
+    public bool normalDiff;
+    public bool hardDiff;
+
+    public bool rainWheather;
+    public bool fogWheather;
+
+    public bool bonusOpt;
+    public bool obstacleOpt;
+    public bool objectifOpt;
+    public bool weaponOpt;
+}
+
+[System.Serializable]
 public struct GameData
 {
     public GameMode gameMode;
@@ -140,8 +158,6 @@ public class DataManager : MonoBehaviour
 
         // Initialize favorite player and stadium indexes
         InitGameData();
-
-        ResetProgression();
 
         // Starts a LootLocker session and load the leaderboards
         //StartSession();
@@ -376,6 +392,8 @@ public class DataManager : MonoBehaviour
         public PlayerPrefs playerPrefs;
 
         public ProgressData progressData;
+
+        public ProgressionData progressionData;
     }
 
 
@@ -387,6 +405,7 @@ public class DataManager : MonoBehaviour
         data.gameplayData = gameplayData;
         data.playerPrefs = playerPrefs;
         data.progressData = progressData;
+        data.progressionData = progressionData;
 
         string json = JsonUtility.ToJson(data);
 
@@ -410,8 +429,12 @@ public class DataManager : MonoBehaviour
             gameplayData = data.gameplayData;
             playerPrefs = data.playerPrefs;
             progressData = data.progressData;
+            progressionData = data.progressionData;
         }
 
         InitPlayerPrefs();
     }
+
+
+    // C:/Users/tomnd/AppData/LocalLow/DefaultCompany/DFL 2/savefile.json
 }

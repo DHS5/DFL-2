@@ -12,7 +12,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Difficulty
 /// </summary>
-[System.Serializable] public enum GameDifficulty { EASY = 0 , NORMAL = 1 , HARD = 2 }
+[System.Serializable] public enum GameDifficulty { NULL = -1, EASY = 0 , NORMAL = 1 , HARD = 2 }
 
 /// <summary>
 /// Game Option
@@ -22,7 +22,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Option
 /// </summary>
-[System.Serializable] public enum GameWheather { SUN = 0, RAIN = 1, FOG = 2 }
+[System.Serializable] public enum GameWheather { NULL = -1, SUN = 0, RAIN = 1, FOG = 2 }
 
 /// <summary>
 /// Game Option
@@ -411,6 +411,9 @@ public class GameManager : MonoBehaviour
     {
         // # Coins #
         main.SettingsManager.ShopManager.GameCoins(gameData, Score);
+
+        // # Missions #
+        main.MissionManager.CompleteMissions(gameData, waveNumber);
 
         // # Data #
         main.DataManager.SavePlayerData();

@@ -2465,6 +2465,7 @@ GameObject:
   - component: {fileID: 675627210}
   - component: {fileID: 675627209}
   - component: {fileID: 675627211}
+  - component: {fileID: 675627220}
   - component: {fileID: 675627212}
   - component: {fileID: 675627216}
   - component: {fileID: 675627213}
@@ -2884,6 +2885,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88652541649812747b8d0fd31f4f3ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &675627220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675627202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9379906b8bb7d4e85d7c9608f903ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamMission:
+    gameModes: 0000000002000000
+    gameDifficulties: 00000000
+    gameWheathers: 000000000100000002000000
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 6
+  zombieMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  normalMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  hardMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  rainMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  fogMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  bonusMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  obstacleMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  objectifMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
+  weaponMission:
+    gameModes: 
+    gameDifficulties: 
+    gameWheathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 0
 --- !u!1 &710684370
 GameObject:
   m_ObjectHideFlags: 0

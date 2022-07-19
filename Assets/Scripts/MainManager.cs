@@ -21,6 +21,7 @@ public class MainManager : MonoBehaviour
     [HideInInspector] public GameUIManager GameUIManager { get; private set; }
     [HideInInspector] public GameAudioManager GameAudioManager { get; private set; }
     [HideInInspector] public EnemiesManager EnemiesManager { get; private set; }
+    [HideInInspector] public MissionManager MissionManager { get; private set; }
 
     // Modes
     [HideInInspector] public TeamManager TeamManager { get; private set; }
@@ -54,6 +55,7 @@ public class MainManager : MonoBehaviour
         GameUIManager = GetComponent<GameUIManager>();
         GameAudioManager = GetComponent<GameAudioManager>();
         EnemiesManager = GetComponent<EnemiesManager>();
+        MissionManager = GetComponent<MissionManager>();
 
         // Modes
         TeamManager = GetComponent<TeamManager>();
