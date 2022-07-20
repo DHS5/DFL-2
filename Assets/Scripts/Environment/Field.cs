@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 
 [System.Serializable]
@@ -35,6 +35,9 @@ public class Field : MonoBehaviour
     [SerializeField] GameObject goalpost2Metal;
     [Space]
     public GameObject entryGoalpost;
+    [Space, Space]
+    [SerializeField] private Volume ambianceGlobalVolume;
+    [SerializeField] private VolumeProfile ambianceProfile;
 
 
     [Header("Zones of the field")]
@@ -76,6 +79,10 @@ public class Field : MonoBehaviour
 
         if (DataManager.InstanceDataManager != null)
             entryGoalpost.SetActive(DataManager.InstanceDataManager.gameplayData.goalpost);
+
+        if (ambianceProfile != null)
+            ambianceGlobalVolume.profile = ambianceProfile;
+        else ambianceGlobalVolume = null;
     }
 
 

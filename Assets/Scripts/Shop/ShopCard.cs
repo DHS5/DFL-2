@@ -6,6 +6,8 @@ using TMPro;
 
 public abstract class ShopCard : MonoBehaviour
 {
+    private InventoryManager inventoryManager;
+
     [Header("UI components")]
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text;
@@ -16,9 +18,11 @@ public abstract class ShopCard : MonoBehaviour
     protected CardSO cardSO;
     protected int price;
 
-    public virtual void GenerateCard(CardSO _cardSO)
+
+    public virtual void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager)
     {
         cardSO = _cardSO;
+        inventoryManager = _inventoryManager;
 
         text.text = cardSO.Title;
         image.sprite = cardSO.mainSprite;
@@ -32,9 +36,10 @@ public abstract class ShopCard : MonoBehaviour
         DataManager dataManager = DataManager.InstanceDataManager;
         if (dataManager != null)
         {
-            if (dataManager.progressData.coins >= price)
+            if (dataManager.inventoryData.coins >= price)
             {
                 Debug.Log("Buy");
+                inventoryManager.AddToInventory(cardSO.type.GetObject());
             }
             else
             {

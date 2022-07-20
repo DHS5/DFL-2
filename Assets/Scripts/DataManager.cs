@@ -26,6 +26,7 @@ public struct AudioData
     public bool loopOn;
 }
 
+
 [System.Serializable]
 public struct PlayerPrefs
 {
@@ -57,13 +58,13 @@ public struct PlayerData
 }
 
 [System.Serializable]
-public struct ProgressData
+public struct InventoryData
 {
     public int coins;
-    public string[] players;
-    public string[] stadiums;
-    public string[] weapons;
-    public string[] parkours;
+    public int[] players;
+    public int[] stadiums;
+    public int[] attackers;
+    public int[] weapons;
 }
 
 [System.Serializable]
@@ -124,7 +125,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public PlayerPrefs playerPrefs;
     [HideInInspector] public GameplayData gameplayData;
     [HideInInspector] public PlayerData playerData;
-    [HideInInspector] public ProgressData progressData;
+    [HideInInspector] public InventoryData inventoryData;
     [HideInInspector] public ProgressionData progressionData;
 
     // Current game data
@@ -173,12 +174,12 @@ public class DataManager : MonoBehaviour
         if (playerPrefs.teamIndex == null)
             playerPrefs.teamIndex = new int[5];
 
-        if (playerPrefs.playerIndex >= cardsContainer.playerCards.Count) playerPrefs.playerIndex = 0;
+        if (playerPrefs.playerIndex >= inventoryData.players.Length) playerPrefs.playerIndex = 0;
         if (playerPrefs.enemyIndex >= cardsContainer.enemyCards.Count) playerPrefs.enemyIndex = 0;
-        if (playerPrefs.stadiumIndex >= cardsContainer.stadiumCards.Count) playerPrefs.stadiumIndex = 0;
+        if (playerPrefs.stadiumIndex >= inventoryData.stadiums.Length) playerPrefs.stadiumIndex = 0;
         if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
         for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
-            if (playerPrefs.teamIndex[i] >= cardsContainer.teamCards.Count) playerPrefs.teamIndex[i] = 0;
+            if (playerPrefs.teamIndex[i] >= inventoryData.attackers.Length) playerPrefs.teamIndex[i] = 0;
     }
 
     private void ResetProgression()
@@ -196,6 +197,20 @@ public class DataManager : MonoBehaviour
         progressionData.objectifOpt = true;
         progressionData.obstacleOpt = true;
         progressionData.weaponOpt = true;
+    }
+
+    private void ResetInventory()
+    {
+        // Coins
+        inventoryData.coins = 0;
+        // Players
+        inventoryData.players = new int[1] {1};
+        // Stadiums
+        inventoryData.stadiums = new int[1] {1};
+        // Team
+        inventoryData.attackers = new int[4] { 1, 2, 3, 4 };
+        // Weapons
+        inventoryData.weapons = new int[2] { 1, 2 };
     }
 
     private void InitGameData()
@@ -391,7 +406,7 @@ public class DataManager : MonoBehaviour
 
         public PlayerPrefs playerPrefs;
 
-        public ProgressData progressData;
+        public InventoryData inventoryData;
 
         public ProgressionData progressionData;
     }
@@ -404,7 +419,7 @@ public class DataManager : MonoBehaviour
         data.audioData = audioData;
         data.gameplayData = gameplayData;
         data.playerPrefs = playerPrefs;
-        data.progressData = progressData;
+        data.inventoryData = inventoryData;
         data.progressionData = progressionData;
 
         string json = JsonUtility.ToJson(data);
@@ -428,7 +443,7 @@ public class DataManager : MonoBehaviour
             audioData = data.audioData;
             gameplayData = data.gameplayData;
             playerPrefs = data.playerPrefs;
-            progressData = data.progressData;
+            inventoryData = data.inventoryData;
             progressionData = data.progressionData;
         }
 
@@ -436,5 +451,5 @@ public class DataManager : MonoBehaviour
     }
 
 
-    // C:/Users/tomnd/AppData/LocalLow/DefaultCompany/DFL 2/savefile.json
+    // C:/Users/tomnd/AppData/LocalLow/DefaultCompany/DFL 2/
 }

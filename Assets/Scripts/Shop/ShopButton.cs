@@ -7,6 +7,7 @@ using TMPro;
 public class ShopButton : MonoBehaviour
 {
     private ShopManager shopManager;
+    private InventoryManager inventoryManager;
 
 
     [Header("UI components")]
@@ -37,6 +38,7 @@ public class ShopButton : MonoBehaviour
     private void Start()
     {
         shopManager = FindObjectOfType<ShopManager>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
 
         text.text = cardSO.Title;
         button.image.sprite = cardSO.shopSprite;
@@ -52,7 +54,7 @@ public class ShopButton : MonoBehaviour
         if (shopCard == null)
         {
             shopCard = Instantiate(shopCardPrefab, shopManager.OpenShop().transform).GetComponent<ShopCard>();
-            shopCard.GenerateCard(cardSO);
+            shopCard.GenerateCard(cardSO, inventoryManager);
         }
         else
         {

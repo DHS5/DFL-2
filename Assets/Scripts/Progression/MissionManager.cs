@@ -33,12 +33,14 @@ public class MissionManager : MonoBehaviour
         ProgressionData pData = main.DataManager.progressionData;
 
         // Team
+        Debug.Log("team");
         if (pData.teamMode)
         {
             if (teamMission.CompleteMission(data, wave))
                 main.DataManager.progressionData.teamMode = false;
         }
         // Zombie
+        Debug.Log("zomb");
         if (pData.zombieMode)
         {
             if (zombieMission.CompleteMission(data, wave))
@@ -46,12 +48,14 @@ public class MissionManager : MonoBehaviour
         }
 
         // Normal
+        Debug.Log("norm");
         if (pData.normalDiff)
         {
             if (normalMission.CompleteMission(data, wave))
                 main.DataManager.progressionData.normalDiff = false;
         }
         // Hard
+        Debug.Log("hard");
         if (pData.hardDiff)
         {
             if (hardMission.CompleteMission(data, wave))
@@ -59,12 +63,14 @@ public class MissionManager : MonoBehaviour
         }
 
         // Rain
+        Debug.Log("rain");
         if (pData.rainWheather)
         {
             if (rainMission.CompleteMission(data, wave))
                 main.DataManager.progressionData.rainWheather = false;
         }
         // Fog
+        Debug.Log("fog");
         if (pData.fogWheather)
         {
             if (fogMission.CompleteMission(data, wave))
@@ -78,18 +84,21 @@ public class MissionManager : MonoBehaviour
                 main.DataManager.progressionData.bonusOpt = false;
         }
         // Obstacle
+        Debug.Log("obs");
         if (pData.obstacleOpt)
         {
             if (obstacleMission.CompleteMission(data, wave))
                 main.DataManager.progressionData.obstacleOpt = false;
         }
         // Objectif
+        Debug.Log("obj");
         if (pData.objectifOpt)
         {
             if (objectifMission.CompleteMission(data, wave))
                 main.DataManager.progressionData.objectifOpt = false;
         }
         // Weapon
+        Debug.Log("weap");
         if (pData.weaponOpt)
         {
             if (weaponMission.CompleteMission(data, wave))

@@ -24,6 +24,9 @@ public class GameUIManager : MonoBehaviour
 
     [Tooltip("Score UI texts")]
     [SerializeField] private TextMeshProUGUI[] scoreTexts;
+    
+    [Tooltip("Coins UI texts")]
+    [SerializeField] private TextMeshProUGUI coinsText;
 
     [Tooltip("Resume game (3 2 1) text")]
     [SerializeField] private TextMeshProUGUI resumeGameText;
@@ -103,6 +106,15 @@ public class GameUIManager : MonoBehaviour
         {
             t.text = score.ToString();
         }
+    }
+    
+    /// <summary>
+    /// Actualize the coins text
+    /// </summary>
+    /// <param name="score"></param>
+    public void ActuCoins(int coins)
+    {
+        coinsText.text = coins.ToString();
     }
 
     /// <summary>

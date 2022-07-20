@@ -38,7 +38,7 @@ public class ObjectifManager : MonoBehaviour
         if (currentObjectif != null && player.transform.position.z > currentObjectif.gameObject.transform.position.z + 5 && !main.GameManager.GameOver)
         {
             Debug.Log("Missed an objectif");
-            main.GameManager.GameOver = true;
+            main.PlayerManager.player.gameplay.Lose();
         }
     }
 

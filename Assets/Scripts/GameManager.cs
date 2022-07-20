@@ -410,7 +410,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverCR()
     {
         // # Coins #
-        main.SettingsManager.ShopManager.GameCoins(gameData, Score);
+        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, waveNumber);
+        main.GameUIManager.ActuCoins(coins);
 
         // # Missions #
         main.MissionManager.CompleteMissions(gameData, waveNumber);

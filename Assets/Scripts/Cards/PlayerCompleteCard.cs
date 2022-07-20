@@ -51,7 +51,7 @@ public class PlayerCompleteCard : Card
     {
         base.Start();
 
-        PlayerController p = cardSO.prefab.GetComponent<PlayerController>();
+        PlayerController p = cardSO.prefab.GetComponentInChildren<PlayerController>();
 
         speedSlider.value = p.playerAtt.NormalSpeed;
         sideSpeedSlider.value = p.playerAtt.NormalSideSpeed;

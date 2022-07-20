@@ -523,7 +523,7 @@ PrefabInstance:
     - target: {fileID: 4304137502867359948, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4664941875595415435, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
@@ -533,7 +533,7 @@ PrefabInstance:
     - target: {fileID: 7420581533686950899, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: m_text
-      value: Reach wave 5 in any mode (except drill) five times to unlock team mode
+      value: Reach wave 6 in any mode (except drill) to unlock team mode
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -4944,6 +4944,82 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 269134141}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &272499981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272499982}
+  - component: {fileID: 272499984}
+  - component: {fileID: 272499983}
+  m_Layer: 5
+  m_Name: Coins Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &272499982
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272499981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743306324}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -30, y: -30}
+  m_SizeDelta: {x: 35, y: 35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &272499983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272499981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 079cfdf78ee53744f92a2be6f4d34879, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &272499984
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272499981}
+  m_CullTransparentMesh: 1
 --- !u!1 &293837945
 GameObject:
   m_ObjectHideFlags: 0
@@ -6174,7 +6250,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.45599997
+      value: 0.456
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -6184,7 +6260,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.00000003051758
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143783079841, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -9379,7 +9455,7 @@ PrefabInstance:
     - target: {fileID: 4304137502867359948, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 70
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 4664941875595415435, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
@@ -9389,7 +9465,7 @@ PrefabInstance:
     - target: {fileID: 7420581533686950899, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: m_text
-      value: Reach wave 8 in any mode (except drill) to unlock zombie mode
+      value: Reach wave 6 in team mode to unlock zombie mode
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -14219,6 +14295,82 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5910937143571200605}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &832233483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 832233484}
+  - component: {fileID: 832233486}
+  - component: {fileID: 832233485}
+  m_Layer: 5
+  m_Name: Coins Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &832233484
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832233483}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2058263387}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -30, y: -30}
+  m_SizeDelta: {x: 35, y: 35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &832233485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832233483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 079cfdf78ee53744f92a2be6f4d34879, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &832233486
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832233483}
+  m_CullTransparentMesh: 1
 --- !u!1 &832363175
 GameObject:
   m_ObjectHideFlags: 0
@@ -14387,12 +14539,23 @@ MonoBehaviour:
   playerData:
     id: 0
     name: 
-  progressData:
+  inventoryData:
     coins: 0
-    players: []
-    stadiums: []
-    weapons: []
-    parkours: []
+    players: 
+    stadiums: 
+    attackers: 
+    weapons: 
+  progressionData:
+    teamMode: 0
+    zombieMode: 0
+    normalDiff: 0
+    hardDiff: 0
+    rainWheather: 0
+    fogWheather: 0
+    bonusOpt: 0
+    obstacleOpt: 0
+    objectifOpt: 0
+    weaponOpt: 0
   gameData:
     gameMode: 0
     gameDifficulty: 0
@@ -14598,7 +14761,7 @@ PrefabInstance:
     - target: {fileID: 3925944617494105235, guid: 0863bec102919aa4d94e2ed2a42450fa,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.48148155
+      value: 0.4814815
       objectReference: {fileID: 0}
     - target: {fileID: 3925944617789442538, guid: 0863bec102919aa4d94e2ed2a42450fa,
         type: 3}
@@ -17448,8 +17611,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4280882085
+  m_fontColor: {r: 0.64705884, g: 0.07450981, b: 0.16078432, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -28011,6 +28174,7 @@ GameObject:
   - component: {fileID: 1569061919}
   - component: {fileID: 1569061918}
   - component: {fileID: 1569061920}
+  - component: {fileID: 1569061921}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -28081,6 +28245,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1630ab410d7a55d489251242f252c932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressionData:
+    teamMode: 0
+    zombieMode: 0
+    normalDiff: 0
+    hardDiff: 0
+    rainWheather: 0
+    fogWheather: 0
+    bonusOpt: 0
+    obstacleOpt: 0
+    objectifOpt: 0
+    weaponOpt: 0
   difficultyDropdown: {fileID: 1421778158}
   wheatherDropdown: {fileID: 1459837915}
   teamLock: {fileID: 27964157}
@@ -28093,6 +28268,18 @@ MonoBehaviour:
   - {fileID: 1320715576}
   - {fileID: 125596904}
   weaponLock: {fileID: 613845302}
+--- !u!114 &1569061921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569061917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec309e81d93d616489e6a258ac7c7cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1569573574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29567,8 +29754,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4280882085
+  m_fontColor: {r: 0.64705884, g: 0.07450981, b: 0.16078432, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -31033,6 +31220,7 @@ RectTransform:
   - {fileID: 1059418768}
   - {fileID: 1468528974}
   - {fileID: 1638125639}
+  - {fileID: 272499982}
   m_Father: {fileID: 1749302991}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31812,7 +32000,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.45599997
+      value: 0.456
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -31822,7 +32010,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.00000003051758
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143783079841, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -35914,6 +36102,7 @@ RectTransform:
   - {fileID: 248599187}
   - {fileID: 720702229}
   - {fileID: 1025117401}
+  - {fileID: 832233484}
   m_Father: {fileID: 1749302991}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -36800,7 +36989,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.45599997
+      value: 0.456
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -36810,7 +36999,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.00000003051758
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143783079841, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -38492,7 +38681,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.45599997
+      value: 0.456
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
@@ -38502,7 +38691,7 @@ PrefabInstance:
     - target: {fileID: 5910937143553180116, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.00000003051758
       objectReference: {fileID: 0}
     - target: {fileID: 5910937143783079840, guid: 9513d92d7e4aaea47a45e0a3280dccd4,
         type: 3}

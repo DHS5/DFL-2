@@ -109,7 +109,7 @@ public class PlayerGameplay : MonoBehaviour
 
             if (collision.gameObject.CompareTag("OutOfBounds"))
             {
-                Dead(new Vector3(0, 0, 0));
+                Lose();
                 Debug.Log("OutOfBounds");
             }
 
@@ -162,4 +162,12 @@ public class PlayerGameplay : MonoBehaviour
 
         player.playerManager.WinPlayer();
     }
+    
+    public void Lose()
+    {
+        player.controller.CurrentState.Lose();
+
+        player.playerManager.DeadPlayer();
+    }
+
 }

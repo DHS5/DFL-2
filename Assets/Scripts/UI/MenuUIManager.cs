@@ -7,6 +7,7 @@ public class MenuUIManager : MonoBehaviour
 {
     private SettingsManager settingsManager;
     private DataManager dataManager;
+    private InventoryManager inventoryManager;
 
     private List<GameOption> defenderOptions = new List<GameOption>();
     private List<GameOption> zombieOptions = new List<GameOption>();
@@ -104,25 +105,38 @@ public class MenuUIManager : MonoBehaviour
 
 
 
+
+    // ### Functions ###
+
+    private void Awake()
+    {
+        InitAttackerCardList();
+    }
+
     private void Start()
     {
-        settingsManager = SettingsManager.InstanceSettingsManager;
-        dataManager = DataManager.InstanceDataManager;
+        GetManagers();
 
         settingsManager.GetManagers();
 
         ActuData();
-
-        GetCards();
     }
 
 
-    // ### Functions ###
+    public void GetManagers()
+    {
+        settingsManager = SettingsManager.InstanceSettingsManager;
+        dataManager = DataManager.InstanceDataManager;
+        inventoryManager = GetComponent<InventoryManager>();
+    }
+
 
     private void ActuData()
     {
         InfoButtonsOn = settingsManager.InfoButtonsOn;
-
+    }
+    private void InitAttackerCardList()
+    {
         for (int i = 0; i < attackerCards.Length; i++)
             attackerCards[i] = new List<AttackerCard>();
     }
@@ -155,18 +169,21 @@ public class MenuUIManager : MonoBehaviour
         int i = 0;
         foreach (CardSO cardSO in cardSOs)
         {
-            T card = Instantiate(prefab, container.transform).GetComponent<T>();
-            card.cardSO = cardSO;
-            if (i != index) card.gameObject.SetActive(false);
-            else g = card.cardSO.prefab;
-
-            if (card as ParkourCard != null)
+            if (inventoryManager.IsInInventory(cardSO.type.GetObject()))
             {
-                (card as ParkourCard).GetIndex(i);
-                if (i == index) (card as ParkourCard).On();
+                T card = Instantiate(prefab, container.transform).GetComponent<T>();
+                card.cardSO = cardSO;
+                if (i != index) card.gameObject.SetActive(false);
+                else g = card.cardSO.prefab;
+
+                if (card as ParkourCard != null)
+                {
+                    (card as ParkourCard).GetIndex(i);
+                    if (i == index) (card as ParkourCard).On();
+                }
+                cards.Add(card);
+                i++;
             }
-            cards.Add(card);
-            i++;
         }
     }
     //private void GetCard(out ParkourCard[] cards, GameObject cardObject, int index)
@@ -177,7 +194,7 @@ public class MenuUIManager : MonoBehaviour
     //    cards[index].On();
     //}
 
-    private void GetCards()
+    public void GetCards()
     {
         // Player simple cards
         GetCard(dataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex, ref dataManager.gameData.player);

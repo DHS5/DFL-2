@@ -20,13 +20,14 @@ public class Mission
     {
         if (wave >= waveToReach)
         {
-            if (gameModes != null && !gameModes.Contains(data.gameMode))
+            Debug.Log(waveToReach);
+            if (gameModes.Count > 0 && !gameModes.Contains(data.gameMode))
                 return false;
-            if (gameDifficulties != null && !gameDifficulties.Contains(data.gameDifficulty))
+            if (gameDifficulties.Count > 0 && !gameDifficulties.Contains(data.gameDifficulty))
                 return false;
-            if (gameWheathers != null && !gameWheathers.Contains(data.gameWheather))
+            if (gameWheathers.Count > 0 && !gameWheathers.Contains(data.gameWheather))
                 return false;
-            if (gameOptions != null)
+            if (gameOptions.Count > 0)
             {
                 foreach (GameOption option in gameOptions)
                 {
@@ -37,7 +38,6 @@ public class Mission
             if (gameModes.Contains(GameMode.DRILL) && gameDrill != data.gameDrill)
                 return false;
 
-            Debug.Log(this + " complete !");
             return true;
         }
 
