@@ -49,6 +49,7 @@ public class Field : MonoBehaviour
     public GameObject middleZone;
     public GameObject endZone;
     public GameObject enterZone;
+    public GameObject bonusZone;
 
     [SerializeField] private Vector3 oneVOneEnemyPos;
     public Vector3 OneVOneEnemyPos { get { return oneVOneEnemyPos + transform.position; } }
@@ -82,7 +83,7 @@ public class Field : MonoBehaviour
 
         if (ambianceProfile != null)
             ambianceGlobalVolume.profile = ambianceProfile;
-        else ambianceGlobalVolume = null;
+        else ambianceGlobalVolume.profile = null;
     }
 
 

@@ -14,7 +14,7 @@ public class BonusManager : MonoBehaviour
     private Bonus activeBonus;
 
 
-    private GameObject fieldZone;
+    private GameObject bonusZone;
 
 
     private void Awake()
@@ -31,7 +31,7 @@ public class BonusManager : MonoBehaviour
     /// </summary>
     private void GetZone()
     {
-        fieldZone = main.FieldManager.field.fieldZone;
+        bonusZone = main.FieldManager.field.bonusZone;
     }
 
 
@@ -46,12 +46,12 @@ public class BonusManager : MonoBehaviour
         GetZone();
 
         // Gets the zones position and scale info
-        Vector3 zonePos = fieldZone.transform.position;
-        float xScale = fieldZone.transform.localScale.x / 2;
-        float zScale = fieldZone.transform.localScale.z / 2.5f;
+        Vector3 zonePos = bonusZone.transform.position;
+        float xScale = bonusZone.transform.localScale.x / 2;
+        float zScale = bonusZone.transform.localScale.z / 2;
 
         // Gets a random position in the first part of the field zone
-        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, 0)) + zonePos;
+        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, zScale)) + zonePos;
 
         // Instantiate the bonus
         bonus = Instantiate(bonusPrefabs[Random.Range(0, bonusPrefabs.Length)], randomPos, Quaternion.identity).GetComponent<Bonus>();
@@ -75,7 +75,7 @@ public class BonusManager : MonoBehaviour
         if (anim)
         {
             main.GameUIManager.BonusBarAnim(time, color, sprite);
-            main.PlayerManager.player.effects.BonusVolume(color, true);
+            main.PlayerManager.player.effects.BonusVolume(color, time);
         }
     }
 

@@ -122,15 +122,25 @@ public class PlayerEffects : MonoBehaviour
 
 
 
-    public void BonusVolume(Color color, bool state)
+    public void BonusVolume(Color color, float time)
     {
-        bonusVolume.gameObject.SetActive(state);
+        bonusVolume.gameObject.SetActive(true);
 
-        if (state)
+        bonusVolume.profile.TryGet(out Vignette vignette);
+        vignette.color.value = color;
+        StartCoroutine(BonusVolumeCR(time));
+    }
+
+    private IEnumerator BonusVolumeCR(float time)
+    {
+        for (int i = 0; i < 100; i++)
         {
-            bonusVolume.profile.TryGet(out Vignette vignette);
-            vignette.color.value = color;
+            yield return new WaitForSeconds(time / 100);
+            bonusVolume.weight -= 0.004f;
         }
+
+        bonusVolume.gameObject.SetActive(false);
+        bonusVolume.weight = 1;
     }
 
     // # VFX #

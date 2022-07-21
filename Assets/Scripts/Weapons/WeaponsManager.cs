@@ -40,14 +40,14 @@ public class WeaponsManager : MonoBehaviour
         main.PlayerManager.player.tPPlayer.football.SetActive(false);
 
         // Gets the zones position and scale info
-        GameObject fieldZone = main.FieldManager.field.fieldZone;
+        GameObject weaponZone = main.FieldManager.field.bonusZone;
         
-        Vector3 zonePos = fieldZone.transform.position;
-        float xScale = fieldZone.transform.localScale.x / 2;
-        float zScale = fieldZone.transform.localScale.z / 2.5f;
+        Vector3 zonePos = weaponZone.transform.position;
+        float xScale = weaponZone.transform.localScale.x / 2;
+        float zScale = weaponZone.transform.localScale.z / 2;
 
         // Gets a random position in the first part of the field zone
-        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, 0)) + zonePos;
+        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, zScale)) + zonePos;
 
         WeaponBonus bonus = Instantiate(weaponBonusPrefabs[Random.Range(0, weaponBonusPrefabs.Length)], randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
         bonus.Getter(this);

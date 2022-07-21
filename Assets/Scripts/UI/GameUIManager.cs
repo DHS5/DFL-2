@@ -251,8 +251,6 @@ public class GameUIManager : MonoBehaviour
         bonusBars[0].SetActive(false);
         bonusBars[1].SetActive(false);
         bonusBars[2].SetActive(false);
-
-        main.PlayerManager.player.effects.BonusVolume(Color.black, false);
     }
 
 
