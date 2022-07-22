@@ -128,8 +128,10 @@ public class GameUIManager : MonoBehaviour
     {
         killsText.gameObject.SetActive(true);
         killsText.text = kills.ToString();
-    }
 
+        Vector2 pos = coinsText.rectTransform.anchoredPosition;
+        coinsText.rectTransform.anchoredPosition = new Vector2(-200, pos.y);
+    }
 
 
 

@@ -50,6 +50,7 @@ public class Field : MonoBehaviour
     public GameObject endZone;
     public GameObject enterZone;
     public GameObject bonusZone;
+    public GameObject obstacleZone;
 
     [SerializeField] private Vector3 oneVOneEnemyPos;
     public Vector3 OneVOneEnemyPos { get { return oneVOneEnemyPos + transform.position; } }

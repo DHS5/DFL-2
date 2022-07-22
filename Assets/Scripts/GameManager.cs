@@ -403,6 +403,7 @@ public class GameManager : MonoBehaviour
 
         gameOn = true;
     }
+
     /// <summary>
     /// Executes game over tasks with a certain timing
     /// </summary>
@@ -410,7 +411,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverCR()
     {
         // # Coins #
-        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, waveNumber);
+        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, waveNumber, main.WeaponsManager.numberOfKill);
         main.GameUIManager.ActuCoins(coins);
 
         // # Missions #
@@ -422,8 +423,13 @@ public class GameManager : MonoBehaviour
         // # UI #
         main.GameUIManager.GameOver();
 
-        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+        // Weapons
+        if (gameData.gameMode == GameMode.ZOMBIE && gameData.gameOptions.Contains(GameOption.WEAPONS))
+        {
+            main.GameUIManager.ActuKills(main.WeaponsManager.numberOfKill);
             main.WeaponsManager.GameOver();
+        }
+            
 
         // Call the Ouuuuuh with the game audio manager (currently in field manager)
 
@@ -441,12 +447,6 @@ public class GameManager : MonoBehaviour
         if (gameData.gameWheather == GameWheather.RAIN)
         {
             main.FieldManager.stadium.Rain();
-        }
-
-        // # Options #
-        if (gameData.gameMode == GameMode.ZOMBIE && gameData.gameOptions.Contains(GameOption.WEAPONS))
-        {
-            main.GameUIManager.ActuKills(main.WeaponsManager.numberOfKill);
         }
 
         // Call the Booouuh with the game audio manager

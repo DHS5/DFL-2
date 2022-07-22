@@ -120,25 +120,30 @@ public class ShopManager : MonoBehaviour
             t.text = dataManager.inventoryData.coins.ToString();
     }
 
-    public int GameCoins(GameData data, int score, int wave)
+    public int GameCoins(GameData data, int score, int wave, int kills)
     {
         int coins = 0;
 
         if (data.gameMode != GameMode.DRILL)
         {
-            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWheather + 1) + 100 * (wave * (wave + 1))/2;
+            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWheather + 1) + 100 * (wave * (wave + 1)) / 2;
 
-            if (data.gameOptions.Contains(GameOption.BONUS) || data.gameOptions.Contains(GameOption.WEAPONS))
+            if (data.gameOptions.Contains(GameOption.BONUS))
                 coins /= 3;
             if (data.gameOptions.Contains(GameOption.OBSTACLE))
                 coins = (int)(coins * 1.5f);
             if (data.gameOptions.Contains(GameOption.OBJECTIF))
                 coins = (int)(coins * 1.5f);
+            if (data.gameOptions.Contains(GameOption.WEAPONS))
+            {
+                coins /= 3; 
+                coins += kills * 10;
+            }
+            else if (data.gameDrill == GameDrill.OBJECTIF)
+                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWheather);
+            else if (data.gameDrill == GameDrill.ONEVONE)
+                coins = score / (10 - (int)data.gameWheather);
         }
-        else if (data.gameDrill == GameDrill.OBJECTIF)
-            coins = score / (10 - (int) data.gameDifficulty - (int) data.gameWheather);
-        else if (data.gameDrill == GameDrill.ONEVONE)
-            coins = score / (10 - (int) data.gameWheather);
 
         dataManager.inventoryData.coins += coins;
         ActuCoinsTexts();

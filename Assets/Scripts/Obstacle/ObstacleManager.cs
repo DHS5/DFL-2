@@ -21,7 +21,7 @@ public class ObstacleManager : MonoBehaviour
     private List<GameObject> obstacles = new List<GameObject>();
 
     [Tooltip("Field zone where the obstacles are placable")]
-    private GameObject fieldZone;
+    private GameObject obstacleZone;
 
     
 
@@ -40,7 +40,7 @@ public class ObstacleManager : MonoBehaviour
     /// </summary>
     private void GetZone()
     {
-        fieldZone = main.FieldManager.field.fieldZone;
+        obstacleZone = main.FieldManager.field.obstacleZone;
     }
 
 
@@ -55,9 +55,9 @@ public class ObstacleManager : MonoBehaviour
         
         Vector3 randomPos;
         Quaternion randomOrientation;
-        Vector3 fieldPos = fieldZone.transform.position;
-        float xScale = fieldZone.transform.localScale.x / 2;
-        float zScale = fieldZone.transform.localScale.z / 2;
+        Vector3 fieldPos = obstacleZone.transform.position;
+        float xScale = obstacleZone.transform.localScale.x / 2;
+        float zScale = obstacleZone.transform.localScale.z / 2;
 
         number = Mathf.Clamp(number, 0, obstaclesLimit);
 
