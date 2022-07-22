@@ -8,13 +8,12 @@ public class WeaponsManager : MonoBehaviour
     private MainManager main;
 
 
-    [SerializeField] private GameObject[] weaponBonusPrefabs;
-
-
     private Weapon fpWeapon;
     private Weapon tpWeapon;
 
     private Weapon currentWeapon;
+
+    [HideInInspector] public int numberOfKill = 0;
 
 
     // ### Properties ###
@@ -49,7 +48,7 @@ public class WeaponsManager : MonoBehaviour
         // Gets a random position in the first part of the field zone
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, zScale)) + zonePos;
 
-        WeaponBonus bonus = Instantiate(weaponBonusPrefabs[Random.Range(0, weaponBonusPrefabs.Length)], randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
+        WeaponBonus bonus = Instantiate(main.GameManager.gameData.weapons[Random.Range(0, main.GameManager.gameData.weapons.Count)], randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
         bonus.Getter(this);
     }
 

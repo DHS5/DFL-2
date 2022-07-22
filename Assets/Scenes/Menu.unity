@@ -14569,6 +14569,7 @@ MonoBehaviour:
     team: []
     stadium: {fileID: 0}
     parkour: {fileID: 0}
+    weapons: []
   cardsContainer: {fileID: 11400000, guid: e5eb614b2732f864fb7e885bebe0c160, type: 2}
 --- !u!4 &845207701
 Transform:
@@ -19574,17 +19575,20 @@ MonoBehaviour:
   - {fileID: 1025117402}
   shopBackground: {fileID: 2058263386}
   shopCardContainer: {fileID: 720702228}
-  playerShopCContainer: {fileID: 829532226}
-  stadiumShopCContainer: {fileID: 1999667474}
-  teamShopCContainer: {fileID: 1108880777}
-  weaponShopCContainer: {fileID: 1714059404}
+  playerShopBContainer: {fileID: 829532226}
+  stadiumShopBContainer: {fileID: 1999667474}
+  teamShopBContainer: {fileID: 1108880777}
+  weaponShopBContainer: {fileID: 1714059404}
   shopButtonPrefab: {fileID: 6656830810731857986, guid: 9964f8f0ce1d57a4a9b18f1af46f0b56,
     type: 3}
   playerShopCPrefab: {fileID: 4873859077804606181, guid: 9262ddc9d14e8ec42be0443a290561f0,
     type: 3}
-  stadiumShopCPrefab: {fileID: 0}
-  attackerShopCPrefab: {fileID: 0}
-  weaponShopCPrefab: {fileID: 0}
+  stadiumShopCPrefab: {fileID: 4873859077804606181, guid: 66ffd1eafdb347b4099ed5a3b5df84f9,
+    type: 3}
+  attackerShopCPrefab: {fileID: 4873859077804606181, guid: 7c2268eb1224c3f47a522de11da9945a,
+    type: 3}
+  weaponShopCPrefab: {fileID: 4873859077804606181, guid: 318f40cb0e79f5e4f98de519e2ad9a7a,
+    type: 3}
 --- !u!1 &1113500234
 GameObject:
   m_ObjectHideFlags: 0

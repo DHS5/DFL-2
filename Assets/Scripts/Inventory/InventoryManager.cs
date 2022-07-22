@@ -112,6 +112,20 @@ public class InventoryManager : MonoBehaviour
             attackers.Add((AttackerEnum) i);
         // Weapons
         foreach (int i in dataManager.inventoryData.weapons)
+        {
             weapons.Add((WeaponEnum)i);
+        }
+        GetWeaponsFromInventory();
+    }
+
+    private void GetWeaponsFromInventory()
+    {
+        dataManager.gameData.weapons = new List<GameObject>();
+
+        foreach (CardSO wCard in dataManager.cardsContainer.weaponCards)
+        {
+            if (IsInInventory(wCard.type.GetObject()))
+                dataManager.gameData.weapons.Add(wCard.prefab);
+        }
     }
 }

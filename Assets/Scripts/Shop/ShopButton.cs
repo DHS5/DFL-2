@@ -37,9 +37,6 @@ public class ShopButton : MonoBehaviour
 
     private void Start()
     {
-        shopManager = FindObjectOfType<ShopManager>();
-        inventoryManager = FindObjectOfType<InventoryManager>();
-
         text.text = cardSO.Title;
         button.image.sprite = cardSO.shopSprite;
     }
@@ -54,12 +51,18 @@ public class ShopButton : MonoBehaviour
         if (shopCard == null)
         {
             shopCard = Instantiate(shopCardPrefab, shopManager.OpenShop().transform).GetComponent<ShopCard>();
-            shopCard.GenerateCard(cardSO, inventoryManager);
+            shopCard.GenerateCard(cardSO, inventoryManager, shopManager);
         }
         else
         {
             shopCard.gameObject.SetActive(true);
             shopManager.OpenShop();
         }
+    }
+
+    public void GetManagers(in InventoryManager inv, in ShopManager shop)
+    {
+        inventoryManager = inv;
+        shopManager = shop;
     }
 }

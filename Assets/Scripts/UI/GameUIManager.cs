@@ -27,6 +27,9 @@ public class GameUIManager : MonoBehaviour
     
     [Tooltip("Coins UI texts")]
     [SerializeField] private TextMeshProUGUI coinsText;
+    
+    [Tooltip("Kills UI texts")]
+    [SerializeField] private TextMeshProUGUI killsText;
 
     [Tooltip("Resume game (3 2 1) text")]
     [SerializeField] private TextMeshProUGUI resumeGameText;
@@ -116,6 +119,21 @@ public class GameUIManager : MonoBehaviour
     {
         coinsText.text = coins.ToString();
     }
+    
+    /// <summary>
+    /// Actualize the coins text
+    /// </summary>
+    /// <param name="score"></param>
+    public void ActuKills(int kills)
+    {
+        killsText.gameObject.SetActive(true);
+        killsText.text = kills.ToString();
+    }
+
+
+
+
+
 
     /// <summary>
     /// Called when the game is over

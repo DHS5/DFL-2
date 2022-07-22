@@ -101,6 +101,7 @@ public struct GameData
     public GameObject[] team;
     public GameObject stadium;
     public GameObject parkour;
+    public List<GameObject> weapons;
 }
 
 

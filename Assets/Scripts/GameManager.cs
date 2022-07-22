@@ -437,9 +437,16 @@ public class GameManager : MonoBehaviour
             main.TeamManager.StopAttackers(); // Stop attackers
         }
 
+        // # Wheather #
         if (gameData.gameWheather == GameWheather.RAIN)
         {
             main.FieldManager.stadium.Rain();
+        }
+
+        // # Options #
+        if (gameData.gameMode == GameMode.ZOMBIE && gameData.gameOptions.Contains(GameOption.WEAPONS))
+        {
+            main.GameUIManager.ActuKills(main.WeaponsManager.numberOfKill);
         }
 
         // Call the Booouuh with the game audio manager

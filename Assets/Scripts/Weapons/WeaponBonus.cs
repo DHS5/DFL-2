@@ -7,7 +7,7 @@ public class WeaponBonus : MonoBehaviour
     private WeaponsManager weaponsManager;
 
 
-    [SerializeField] private GameObject prefab;
+    public GameObject prefab;
 
 
 

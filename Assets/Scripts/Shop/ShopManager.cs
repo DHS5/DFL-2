@@ -17,10 +17,10 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject shopBackground;
     [SerializeField] private GameObject shopCardContainer;
     [Space]
-    [SerializeField] private GameObject playerShopCContainer;
-    [SerializeField] private GameObject stadiumShopCContainer;
-    [SerializeField] private GameObject teamShopCContainer;
-    [SerializeField] private GameObject weaponShopCContainer;
+    [SerializeField] private GameObject playerShopBContainer;
+    [SerializeField] private GameObject stadiumShopBContainer;
+    [SerializeField] private GameObject teamShopBContainer;
+    [SerializeField] private GameObject weaponShopBContainer;
 
     [Header("UI prefabs")]
     [SerializeField] private GameObject shopButtonPrefab;
@@ -28,6 +28,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject stadiumShopCPrefab;
     [SerializeField] private GameObject attackerShopCPrefab;
     [SerializeField] private GameObject weaponShopCPrefab;
+
+    private List<ShopButton> shopButtons = new(); 
 
 
     private bool cardsGenerated = false;
@@ -57,7 +59,14 @@ public class ShopManager : MonoBehaviour
         if (!cardsGenerated)
         {
             // Player shop buttons
-            GenerateShopButton(cardsContainer.playerCards, playerShopCContainer, playerShopCPrefab);
+            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCPrefab);
+            // Stadium shop buttons
+            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCPrefab);
+            // Team shop buttons
+            GenerateShopButton(cardsContainer.teamCards, teamShopBContainer, attackerShopCPrefab);
+            // Weapon shop buttons
+            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCPrefab);
+
             cardsGenerated = true;
         }
     }
@@ -71,6 +80,9 @@ public class ShopManager : MonoBehaviour
                 ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
                 sb.shopCardPrefab = shopCPrefab;
                 sb.cardSO = card;
+                sb.GetManagers(in inventoryManager, this);
+
+                shopButtons.Add(sb);
             }
         }
     }
@@ -88,6 +100,15 @@ public class ShopManager : MonoBehaviour
 
         foreach(ShopCard sc in shopCardContainer.GetComponentsInChildren<ShopCard>())
             sc.gameObject.SetActive(false);
+    }
+
+    public void DestroyShopButton(CardSO card)
+    {
+        foreach (ShopButton sb in shopButtons)
+        {
+            if (sb.cardSO == card)
+                Destroy(sb.gameObject);
+        }
     }
 
 
@@ -123,6 +144,12 @@ public class ShopManager : MonoBehaviour
         ActuCoinsTexts();
 
         return coins;
+    }
+
+    public void Buy(int price)
+    {
+        dataManager.inventoryData.coins -= price;
+        ActuCoinsTexts();
     }
 
     public int WinCoins(GameData data)

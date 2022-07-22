@@ -140,8 +140,19 @@ public abstract class PlayerState
         }
     }
 
+    private void DeactivateWeaponLayer()
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetLayerWeight(a.GetLayerIndex("BigWeapon Layer"), 0);
+            a.SetLayerWeight(a.GetLayerIndex("SmallWeapon Layer"), 0);
+        }
+    }
+
     public void Dead()
     {
+        DeactivateWeaponLayer();
+
         stage = Event.DEAD;
         Process();
     }
@@ -152,6 +163,8 @@ public abstract class PlayerState
     }
     public void Lose()
     {
+        DeactivateWeaponLayer();
+
         stage = Event.LOSE;
         Process();
     }

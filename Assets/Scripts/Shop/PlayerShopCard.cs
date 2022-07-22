@@ -46,9 +46,9 @@ public class PlayerShopCard : ShopCard
     [SerializeField] private Toggle extraLifeToggle;
 
 
-    public override void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager)
+    public override void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
     {
-        base.GenerateCard(_cardSO, _inventoryManager);
+        base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
 
         PlayerController p = cardSO.prefab.GetComponentInChildren<PlayerController>();
         

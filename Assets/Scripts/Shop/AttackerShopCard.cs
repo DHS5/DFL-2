@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 using TMPro;
 
-public class AttackerCard : Card
+
+public class AttackerShopCard : ShopCard
 {
     [Header("Attacker card's specifics")]
 
@@ -21,10 +21,9 @@ public class AttackerCard : Card
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
-
-    protected override void Start()
+    public override void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
     {
-        base.Start();
+        base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
 
         Attacker a = cardSO.prefab.GetComponent<Attacker>();
         positionText.text += cardSO.position;

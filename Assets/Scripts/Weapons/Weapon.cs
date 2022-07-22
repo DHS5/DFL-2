@@ -22,19 +22,19 @@ public class Weapon : MonoBehaviour
     
     
     [Tooltip("Distance max at which the player can shoot a zombie")]
-    [SerializeField] private float range;
+    [SerializeField] private float range; public float Range { get { return range; } }
 
     [Tooltip("Angle max at which the player can shoot a zombie (in degrees)")]
-    [SerializeField] private float angle;
+    [SerializeField] private float angle; public float Angle { get { return angle; } }
 
     [Tooltip("Number of time using the weapon")]
-    [SerializeField] private int ammunition;
+    [SerializeField] private int ammunition; public int Ammunition { get { return ammunition; } }
 
     [Tooltip("Time before shooting again")]
-    [SerializeField] private float reloadTime;
+    [SerializeField] private float reloadTime; public float ReloadTime { get { return reloadTime; } }
 
     [Tooltip("Max number of zombies possible to kill in one shot")]
-    [SerializeField] private int maxVictim;
+    [SerializeField] private int maxVictim; public int MaxVictim { get { return maxVictim; } }
 
     public bool fireArm;
     public bool bigWeapon;
@@ -161,6 +161,7 @@ public class Weapon : MonoBehaviour
             if (target != null)
             {
                 victims++;
+                weaponsManager.numberOfKill++;
                 target.Dead();
             }
         } while (victims < maxVictim && target != null);
@@ -175,7 +176,7 @@ public class Weapon : MonoBehaviour
 
         else
         {
-            DestroyWeapon();
+            Invoke(nameof(DestroyWeapon), 0.4f);
         }
     }
 

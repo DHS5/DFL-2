@@ -35,15 +35,15 @@ public class FlipPS : PlayerState
             // Sprint
             else if (acc > 0 && controller.CanAccelerate)
                 nextState = new SprintPS(player);
+            // Slowsiderun
+            else if (acc < 0 && side != 0)
+                nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
             // Slow
             else if (acc < 0)
                 nextState = new SlowrunPS(player);
             // Siderun
             else if (acc == 0 && side != 0)
                 nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
-            // Slowsiderun
-            else if (acc < 0 && side != 0)
-                nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
             // Run
             else
                 nextState = new RunPS(player);
