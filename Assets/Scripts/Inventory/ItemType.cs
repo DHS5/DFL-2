@@ -11,7 +11,6 @@ public enum AttackerEnum { NULL, FRONT1, BACK1, RSIDE1, LSIDE1, FRONT2 }
 [System.Serializable]
 public enum WeaponEnum { NULL, KNIFE, GUN, AK74, M16, M4, UZI }
 
-
 [System.Serializable]
 public class ItemType
 {
@@ -19,13 +18,17 @@ public class ItemType
     public StadiumEnum stadium;
     public AttackerEnum attacker;
     public WeaponEnum weapon;
+    public bool isParkour;
+    public bool isEnemy;
 
-    
+
     public object GetObject()
     {
         if (player != PlayerEnum.NULL) return player;
         else if (stadium != StadiumEnum.NULL) return stadium;
         else if (attacker != AttackerEnum.NULL) return attacker;
-        else return weapon;
+        else if (weapon != WeaponEnum.NULL) return weapon;
+        else if (isParkour || isEnemy) return isParkour;
+        else return null;
     }
 }

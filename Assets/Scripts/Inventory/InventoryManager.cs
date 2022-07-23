@@ -48,7 +48,11 @@ public class InventoryManager : MonoBehaviour
             return stadiums.Contains((StadiumEnum)obj);
         else if (obj.GetType() == typeof(AttackerEnum))
             return attackers.Contains((AttackerEnum)obj);
-        else return weapons.Contains((WeaponEnum)obj);
+        else if (obj.GetType() == typeof(WeaponEnum))
+            return weapons.Contains((WeaponEnum)obj);
+        else if (obj.GetType() == typeof(bool))
+            return true;
+        else return false;
     }
 
     public void AddToInventory(object obj)

@@ -186,13 +186,6 @@ public class MenuUIManager : MonoBehaviour
             }
         }
     }
-    //private void GetCard(out ParkourCard[] cards, GameObject cardObject, int index)
-    //{
-    //    cards = cardObject.GetComponentsInChildren<ParkourCard>();
-    //    for (int i = 0; i < cards.Length; i++)
-    //        cards[i].GetIndex(i);
-    //    cards[index].On();
-    //}
 
     public void GetCards()
     {

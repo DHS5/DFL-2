@@ -24,6 +24,7 @@ public class JumpPS : PlayerState
     {
         base.Update();
 
+        PlayerOrientation();
 
         if (controller.OnGround)
         {

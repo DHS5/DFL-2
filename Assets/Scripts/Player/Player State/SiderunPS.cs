@@ -41,19 +41,20 @@ public class SiderunPS : PlayerState
 
         controller.SideSpeed = att.NormalSideSpeed * side;
 
+        // Jump
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            nextState = new JumpPS(player);
+            stage = Event.EXIT;
+        }
 
         if (Time.time >= startTime + animTime)
         {
             if (nextState == null)
             {
-                // Jump
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    nextState = new JumpPS(player);
-                    stage = Event.EXIT;
-                }
+                
                 // Sprint
-                else if (acc > 0 && controller.CanAccelerate)
+                if (acc > 0 && controller.CanAccelerate)
                 {
                     nextState = new SprintPS(player);
                     stage = Event.EXIT;

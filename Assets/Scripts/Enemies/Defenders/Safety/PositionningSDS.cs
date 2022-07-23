@@ -19,6 +19,7 @@ public class PositionningSDS : EnemyState
         {
             animator.SetTrigger("Run");
             animator.ResetTrigger("Wait");
+            agent.updateRotation = true;
             enemy.destination = enemy.playerPosition + enemy.zDistance * enemy.playerLookDirection;
         }
         else
@@ -26,8 +27,9 @@ public class PositionningSDS : EnemyState
             animator.ResetTrigger("Run");
             animator.SetTrigger("Wait");
             enemy.destination = enemy.transform.position;
-            enemy.transform.localRotation =
-                Quaternion.Slerp(enemy.transform.localRotation, Quaternion.LookRotation(enemy.playerPosition - enemy.transform.position), 5 * Time.deltaTime);
+            agent.updateRotation = false;
+            enemy.transform.rotation =
+                Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.toPlayerDirection), 10 * Time.deltaTime);
         }
 
         if (enemy.zDistance < enemy.positionningDist)
