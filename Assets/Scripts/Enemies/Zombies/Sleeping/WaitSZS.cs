@@ -22,7 +22,7 @@ public class WaitSZS : EnemyState
         enemy.destination = enemy.transform.position;
 
 
-        if (enemy.zDistance < enemy.waitDist && enemy.rawDistance < enemy.attackDist)
+        if (enemy.rawDistance < enemy.attackDist)
         {
             nextState = new AttackSZS(enemy, agent, animator);
             stage = Event.EXIT;

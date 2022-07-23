@@ -38,6 +38,7 @@ public class Field : MonoBehaviour
     [Space, Space]
     [SerializeField] private Volume ambianceGlobalVolume;
     [SerializeField] private VolumeProfile ambianceProfile;
+    [SerializeField] private VolumeProfile zombieProfile;
 
 
     [Header("Zones of the field")]
@@ -59,7 +60,7 @@ public class Field : MonoBehaviour
     /// <summary>
     /// Sets all the materials of the new field
     /// </summary>
-    public void CreateField()
+    public void CreateField(GameData? data)
     {
         // ### Ground
         // ## Grass
@@ -85,7 +86,11 @@ public class Field : MonoBehaviour
         if (ambianceProfile != null)
             ambianceGlobalVolume.profile = ambianceProfile;
         else ambianceGlobalVolume.profile = null;
+
+        if (data.HasValue && data.GetValueOrDefault().gameMode == GameMode.ZOMBIE)
+            ambianceGlobalVolume.profile = zombieProfile;
     }
+    public void CreateField() { CreateField(null); }
 
 
     private void OnValidate()

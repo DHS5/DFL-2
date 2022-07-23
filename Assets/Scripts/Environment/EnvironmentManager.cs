@@ -31,6 +31,9 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private float normalFogIncrease;
     [SerializeField] private float hardFogIncrease;
 
+    [SerializeField] private Color baseFogColor;
+    [SerializeField] private Color zombieFogColor;
+
 
 
     readonly Quaternion dirLightRotation = Quaternion.Euler(50, -30, 0);
@@ -60,13 +63,6 @@ public class EnvironmentManager : MonoBehaviour
 
     public void StartEnvironment()
     {
-        // # Modes #
-        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) // ZOMBIE
-        {
-            envStyleNumber = EnvironmentStyle.ZOMBIE;
-            RenderSettings.ambientIntensity = zombieLightIntensity;
-        }
-
         // # Wheather #
         if (main.GameManager.gameData.gameWheather == GameWheather.RAIN) // RAIN
         {
@@ -77,17 +73,27 @@ public class EnvironmentManager : MonoBehaviour
 
             RenderSettings.fog = true;
             RenderSettings.fogDensity = rainFogDensity;
+            RenderSettings.fogColor = baseFogColor;
         }
         if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
         {
             envStyleNumber = EnvironmentStyle.FOG;
             RenderSettings.fog = true;
+            RenderSettings.fogColor = baseFogColor;
 
             // # Options #
             if (main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF)) // OBJECTIF
                 RenderSettings.fogDensity = objectifFogIntensity;
             else
                 RenderSettings.fogDensity = normalFogIntensity;
+        }
+
+        // # Modes #
+        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) // ZOMBIE
+        {
+            envStyleNumber = EnvironmentStyle.ZOMBIE;
+            RenderSettings.ambientIntensity = zombieLightIntensity;
+            RenderSettings.fogColor = zombieFogColor;
         }
 
         // Generates the environment

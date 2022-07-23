@@ -56,7 +56,7 @@ public class FieldManager : MonoBehaviour
         stadium = stadiumObject.GetComponentInChildren<Stadium>();
 
         // ## Gets random field's materials
-        field.CreateField();
+        field.CreateField(main.GameManager.gameData);
 
         // ## Actualization of the Nav Mesh
         surface.BuildNavMesh();

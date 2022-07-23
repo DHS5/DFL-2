@@ -76,10 +76,17 @@ public class AttackSZS : EnemyState
     {
         base.Update();
 
-        if (agent.remainingDistance < 0.0001f)
+        if (Time.time >  startTime + 0.2f && agent.remainingDistance < 1f)
         {
-            animator.SetTrigger("Idle");
-            animator.ResetTrigger("Attack");
+            nextState = new FallSZS(enemy, agent, animator);
+            stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        animator.ResetTrigger("Attack");
     }
 }

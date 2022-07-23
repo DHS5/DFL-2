@@ -40,7 +40,7 @@ public class EnemiesManager : MonoBehaviour
 
 
     // Zones of the field
-    private GameObject fieldZone;
+    private GameObject obstacleZone;
     private GameObject centerZone;
     private GameObject leftZone;
     private GameObject rightZone;
@@ -146,8 +146,8 @@ public class EnemiesManager : MonoBehaviour
     private void GetZones()
     {
         Field field = main.FieldManager.field;
-        
-        fieldZone = field.fieldZone;
+
+        obstacleZone = field.obstacleZone;
         centerZone = field.centerZone;
         leftZone = field.leftZone;
         rightZone = field.rightZone;
@@ -248,9 +248,9 @@ public class EnemiesManager : MonoBehaviour
         GameObject[] classicZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).classic;
         GameObject[] sleepingZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).sleeping;
 
-        Vector3 field = fieldZone.transform.position;
-        float xScale = fieldZone.transform.localScale.x / 2;
-        float zScale = fieldZone.transform.localScale.z / 2;
+        Vector3 field = obstacleZone.transform.position;
+        float xScale = obstacleZone.transform.localScale.x / 2;
+        float zScale = obstacleZone.transform.localScale.z / 2;
         int r;
         // Spawn on the whole field
         for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)

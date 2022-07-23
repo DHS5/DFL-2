@@ -126,7 +126,7 @@ public class ShopManager : MonoBehaviour
 
         if (data.gameMode != GameMode.DRILL)
         {
-            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWheather + 1) + 100 * (wave * (wave + 1)) / 2;
+            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWheather + 1) + 100 * (wave * (wave - 1)) / 2;
 
             if (data.gameOptions.Contains(GameOption.BONUS))
                 coins /= 3;
