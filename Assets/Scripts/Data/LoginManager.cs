@@ -6,11 +6,19 @@ using UnityEngine.UI;
 using TMPro;
 using LootLocker.Requests;
 
+
+public enum ConnectionState { NO_CONNECTION, NO_SESSION, GUEST, CONNECTED }
+
+public struct OnlinePlayerInfo
+{
+    public string email;
+    public int id;
+    public string pseudo;
+}
+
+
 public class LoginManager : MonoBehaviour
 {
-    private enum ConnectionState { NO_CONNECTION, NO_SESSION, GUEST, CONNECTED }
-
-
     [Header("UI components")]
     [Header("Base Screen")]
     [SerializeField] private TextMeshProUGUI stateText;
@@ -36,12 +44,19 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultText;
 
 
-    private string playerName;
+    [HideInInspector] public OnlinePlayerInfo playerInfo;
+
+
 
     private bool connected = false;
 
     private ConnectionState connectionState;
-    private ConnectionState State
+
+
+
+    // ### Properties ###
+
+    public ConnectionState State
     {
         get { return connectionState; }
         set
@@ -56,11 +71,19 @@ public class LoginManager : MonoBehaviour
 
     private void Awake()
     {
+        InitPlayerInfo();
         StartCoroutine(AutoLogin());
     }
 
 
     // ### Functions ###
+
+    private void InitPlayerInfo()
+    {
+        playerInfo.email = "";
+        playerInfo.id = 0;
+        playerInfo.pseudo = "";
+    }
 
     private void Result(string result)
     {
@@ -137,14 +160,15 @@ public class LoginManager : MonoBehaviour
                     }
                     else
                     {
-                        playerName = response.public_uid;
-                        Debug.Log("session started successfully");
+                        playerInfo.id = response.player_id;
+                        playerInfo.email = email;
+
                         Result("You are now connected !");
                         LootLockerSDKManager.GetPlayerName((response) =>
                         {
                             if (response.success)
                             {
-                                playerName = response.name;
+                                playerInfo.pseudo = response.name;
                                 ActuStateText();
                             }
                         });
@@ -180,13 +204,14 @@ public class LoginManager : MonoBehaviour
                     {
                         if (response.success)
                         {
-                            playerName = response.public_uid;
+                            playerInfo.id = response.player_id;
+
                             Debug.Log("Session started successfully");
                             LootLockerSDKManager.GetPlayerName((response) =>
                             {
                                 if (response.success)
                                 {
-                                    playerName = response.name;
+                                    playerInfo.pseudo = response.name;
                                     ActuStateText();
                                 }
                             });
@@ -271,9 +296,10 @@ public class LoginManager : MonoBehaviour
                         // Set nickname to be public UID if nothing was provided
                         if (newNickName == "")
                         {
-                            newNickName = response.public_uid;
+                            newNickName = response.player_id.ToString();
                         }
-                        playerName = newNickName;
+                        playerInfo.pseudo = newNickName;
+                        playerInfo.id = response.player_id;
                         // Set new nickname for player
                         LootLockerSDKManager.SetPlayerName(newNickName, (response) =>
                         {
@@ -284,7 +310,6 @@ public class LoginManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("Account Created");
                                 Result("Account created successfully !");
                             }
                         });
@@ -366,7 +391,7 @@ public class LoginManager : MonoBehaviour
                 stateText.text = "State :\n Guest";
                 break;
             case ConnectionState.CONNECTED:
-                stateText.text = "State :\n" + playerName + " Connected";
+                stateText.text = "State :\n" + (playerInfo.pseudo != "" ? playerInfo.pseudo : playerInfo.id) + " Connected";
                 break;
             default:
                 stateText.text = "State :\n Not found";
