@@ -8,9 +8,18 @@ using LootLocker.Requests;
 [System.Serializable]
 public struct LeaderBoard
 {
-    public List<string> names;
-    public List<int> scores;
-    public int personnalHighscore;
+    public List<LeaderboardItem> rows;
+    public LeaderboardItem personnalHigh;
+}
+
+public struct LeaderboardItem
+{
+    public int rank;
+    public string name;
+    public int score;
+    public string wave;
+    public string wheather;
+    public string options;
 }
 
 
@@ -18,6 +27,11 @@ public class LeaderboardManager : MonoBehaviour
 {
     private DataManager dataManager;
     private LoginManager loginManager;
+
+
+    [SerializeField] private GameObject[] leaderboardContainers;
+    [SerializeField] private GameObject leaderboardRowPrefab;
+
 
 
     [HideInInspector] public LeaderBoard[,] leaderboards = new LeaderBoard[3, 3];
@@ -52,6 +66,11 @@ public class LeaderboardManager : MonoBehaviour
 
     // ### Functions ###
 
+    private void InstantiateLeaderboardRows()
+    {
+
+    }
+
     public void PostScore(GameData gameData, int score, int wave)
     {
         Debug.Log("gt meta : " + GametypeToMeta(gameData));
@@ -74,8 +93,8 @@ public class LeaderboardManager : MonoBehaviour
         {
             for (int dif = 0; dif < 3; dif++)
             {
-                leaderboards[mode, dif].names = new List<string>();
-                leaderboards[mode, dif].scores = new List<int>();
+                leaderboards[mode, dif].rows = new List<LeaderboardItem>();
+                leaderboards[mode, dif].personnalHigh = emptyRow();
             }
         }
     }
@@ -103,10 +122,7 @@ public class LeaderboardManager : MonoBehaviour
 
                 for (int j = 0; j < scores.Length; j++)
                 {
-                    //string[] gt = scores[j].metadata.Split('.');
-                    //Vector3Int gtv = new Vector3Int(int.Parse(gt[0]), int.Parse(gt[1]), int.Parse(gt[2]));
-                    //leaderboards[gtv.x, gtv.y, gtv.z].names.Add(scores[j].member_id.Split('.')[0]);
-                    //leaderboards[gtv.x, gtv.y, gtv.z].scores.Add(scores[j].score);
+                    //leaderboards[0,0].rows.Add()
                 }
 
                 Debug.Log("Successfully loaded");
@@ -126,31 +142,43 @@ public class LeaderboardManager : MonoBehaviour
 
     private string GametypeToMeta(GameData gD)
     {
-        return (int)gD.gameWheather + "//"
-            + OptionsToInt(gD.gameOptions);
+        return gD.gameWheather.ToString() + "//"
+            + OptionsToMeta(gD.gameOptions);
     }
-
 
     /// <summary>
     /// Return an int being the index for the highscores 3rd arg given the game options
     /// </summary>
     /// <param name="GOs">Game Options list</param>
     /// <returns></returns>
-    public int OptionsToInt(List<GameOption> GOs)
+    public string OptionsToMeta(List<GameOption> GOs)
     {
-        int Result = 0;
+        string result = " ";
 
-        if (GOs.Contains(GameOption.BONUS)) Result += 1000;
-        if (GOs.Contains(GameOption.OBSTACLE)) Result += 100;
-        if (GOs.Contains(GameOption.OBJECTIF)) Result += 10;
-        if (GOs.Contains(GameOption.WEAPONS)) Result += 1;
+        if (GOs.Contains(GameOption.BONUS)) result = "B-";
+        if (GOs.Contains(GameOption.WEAPONS)) result = "W-";
+        if (GOs.Contains(GameOption.OBSTACLE)) result += "obs-";
+        if (GOs.Contains(GameOption.OBJECTIF)) result += "obj";
 
-        return Result;
+        return result;
     }
-
 
     private string GameTypeToString(GameData gD)
     {
         return "";
+    }
+
+
+    private string[] MetaToStrings(string meta)
+    {
+        return meta.Split("//");
+    }
+
+
+
+
+    private LeaderboardItem emptyRow()
+    {
+        return new LeaderboardItem() { rank = 0, name = "Empty", score = 0, wave = "0", wheather = "", options = "" };
     }
 }
