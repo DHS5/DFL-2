@@ -16,9 +16,12 @@ public class GameUIManager : MonoBehaviour
 
     [Tooltip("Game UI screens\n" +
         "0 --> game screen\n" +
-        "1 --> restart screen")]
+        "1 --> restart screen\n" +
+        "2 --> tutorial screen\n" +
+        "3 --> win screen")]
     [SerializeField] private GameObject[] screens;
 
+    [Header("Count texts")]
     [Tooltip("Wave number UI texts")]
     [SerializeField] private TextMeshProUGUI[] waveNumberTexts;
 
@@ -31,9 +34,10 @@ public class GameUIManager : MonoBehaviour
     [Tooltip("Kills UI texts")]
     [SerializeField] private TextMeshProUGUI killsText;
 
+    [Space]
+    [Header("Game Screen")]
     [Tooltip("Resume game (3 2 1) text")]
     [SerializeField] private TextMeshProUGUI resumeGameText;
-
 
 
     [Header("Bonus & sprint")]
@@ -64,6 +68,12 @@ public class GameUIManager : MonoBehaviour
 
     [Tooltip("")]
     [SerializeField] private Image bulletIcon;
+
+
+    [Header("Restart Screen")]
+    [SerializeField] private Button homeButton;
+    [SerializeField] private Button restartButton;
+
 
 
     /// <summary>
@@ -145,6 +155,11 @@ public class GameUIManager : MonoBehaviour
     {
         SetScreen(GameScreen.GAME, false);
         SetScreen(GameScreen.RESTART, true);
+        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE)
+        {
+            homeButton.image.color = Color.white;
+            restartButton.image.color = Color.white;
+        }
     }
     
     /// <summary>

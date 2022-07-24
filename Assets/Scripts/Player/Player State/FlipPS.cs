@@ -26,6 +26,7 @@ public class FlipPS : PlayerState
     {
         base.Update();
 
+        PlayerOrientation();
 
         if (controller.OnGround)
         {
