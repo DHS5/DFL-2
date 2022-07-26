@@ -47,7 +47,7 @@ public class TutorialManager : MonoBehaviour
             dataManager.gameData.gameDrill = GameDrill.PRACTICE;
             dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
             dataManager.gameData.gameOptions.Clear();
-            dataManager.gameData.gameWheather = GameWheather.SUN;
+            dataManager.gameData.gameWeather = GameWeather.SUN;
             dataManager.gameData.player = tutorialPlayer;
             dataManager.gameData.stadiumIndex = 0;
         }

@@ -16,7 +16,7 @@ public class ProgressionManager : MonoBehaviour
 
     [Header("UI components")]
     [SerializeField] private TMP_Dropdown difficultyDropdown;
-    [SerializeField] private TMP_Dropdown wheatherDropdown;
+    [SerializeField] private TMP_Dropdown weatherDropdown;
     [Space]
     [Space]
     [SerializeField] private Lock teamLock;
@@ -24,7 +24,7 @@ public class ProgressionManager : MonoBehaviour
 
     private Lock[] difficultyLocks;
 
-    private Lock[] wheatherLocks;
+    private Lock[] weatherLocks;
     [Space]
     [SerializeField] private Lock bonusLock;
     [SerializeField] private Lock[] obstacleLocks;
@@ -36,8 +36,8 @@ public class ProgressionManager : MonoBehaviour
     readonly string normalDiffText = "Reach wave 10 in any mode (except Drill) to unlock normal difficulty";
     readonly string hardDiffText = "Reach wave 10 in normal difficulty in any mode (except Drill) to unlock hard difficulty";
     
-    readonly string rainWheatherText = "Reach wave 5 in objectif option to unlock rain wheather";
-    readonly string fogWheatherText = "Reach wave 5 in rain wheather to unlock fog wheather";
+    readonly string rainWeatherText = "Reach wave 5 in objectif option to unlock rain wheather";
+    readonly string fogWeatherText = "Reach wave 5 in rain wheather to unlock fog wheather";
 
 
     private void Start()
@@ -83,7 +83,7 @@ public class ProgressionManager : MonoBehaviour
     public void ApplyDropdownLocks()
     {
         GetLocksFromDropdown(ref difficultyLocks, difficultyDropdown);
-        GetLocksFromDropdown(ref wheatherLocks, wheatherDropdown);
+        GetLocksFromDropdown(ref weatherLocks, weatherDropdown);
 
         if (difficultyLocks.Length > 2)
         {
@@ -92,11 +92,11 @@ public class ProgressionManager : MonoBehaviour
             difficultyLocks[2].Locked = progressionData.hardDiff; difficultyLocks[2].text.text = hardDiffText;
         }
         
-        if (wheatherLocks.Length > 2)
+        if (weatherLocks.Length > 2)
         {
-            wheatherLocks[0].Locked = false;
-            wheatherLocks[1].Locked = progressionData.rainWheather; wheatherLocks[1].text.text = rainWheatherText;
-            wheatherLocks[2].Locked = progressionData.fogWheather; wheatherLocks[2].text.text = fogWheatherText;
+            weatherLocks[0].Locked = false;
+            weatherLocks[1].Locked = progressionData.rainWeather; weatherLocks[1].text.text = rainWeatherText;
+            weatherLocks[2].Locked = progressionData.fogWeather; weatherLocks[2].text.text = fogWeatherText;
         }
     }
 }

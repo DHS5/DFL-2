@@ -6,6 +6,8 @@ using TMPro;
 
 public class LeaderboardRow : MonoBehaviour
 {
+    private LeaderboardItem item;
+
     [SerializeField] private TextMeshProUGUI rankText;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -14,7 +16,17 @@ public class LeaderboardRow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI optionsText;
 
 
-    public void ApplyLeaderboardItem(LeaderboardItem item)
+    // ### Properties ###
+
+    public LeaderboardItem Item
+    {
+        get { return item; }
+        set { item = value; ApplyLeaderboardItem(); }
+    }
+
+
+
+    private void ApplyLeaderboardItem()
     {
         rankText.text = item.rank.ToString();
         nameText.text = item.name;

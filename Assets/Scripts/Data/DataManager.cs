@@ -69,8 +69,8 @@ public struct ProgressionData
     public bool normalDiff;
     public bool hardDiff;
 
-    public bool rainWheather;
-    public bool fogWheather;
+    public bool rainWeather;
+    public bool fogWeather;
 
     public bool bonusOpt;
     public bool obstacleOpt;
@@ -83,7 +83,7 @@ public struct GameData
 {
     public GameMode gameMode;
     public GameDifficulty gameDifficulty;
-    public GameWheather gameWheather;
+    public GameWeather gameWeather;
     public List<GameOption> gameOptions;
     public GameDrill gameDrill;
     public int gameEnemiesRange;
@@ -178,8 +178,8 @@ public class DataManager : MonoBehaviour
         progressionData.normalDiff = true;
         progressionData.hardDiff = true;
 
-        progressionData.rainWheather = true;
-        progressionData.fogWheather = true;
+        progressionData.rainWeather = true;
+        progressionData.fogWeather = true;
 
         progressionData.bonusOpt = true;
         progressionData.objectifOpt = true;
@@ -212,7 +212,7 @@ public class DataManager : MonoBehaviour
     {
         gameData.gameMode = GameMode.DEFENDERS;
         gameData.gameDifficulty = GameDifficulty.EASY;
-        gameData.gameWheather = GameWheather.SUN;
+        gameData.gameWeather = GameWeather.SUN;
         gameData.gameOptions = new List<GameOption>();
         gameData.gameDrill = GameDrill.PRACTICE;
     }

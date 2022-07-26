@@ -71,7 +71,7 @@ public class MenuUIManager : MonoBehaviour
     }
     public int GameWheather
     {
-        set { dataManager.gameData.gameWheather = (GameWheather) value; }
+        set { dataManager.gameData.gameWeather = (GameWeather) value; }
     }
     public int GameDrill
     {

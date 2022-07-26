@@ -126,7 +126,7 @@ public class ShopManager : MonoBehaviour
 
         if (data.gameMode != GameMode.DRILL)
         {
-            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWheather + 1) + 100 * (wave * (wave - 1)) / 2;
+            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) + 100 * (wave * (wave - 1)) / 2;
 
             if (data.gameOptions.Contains(GameOption.BONUS))
                 coins /= 3;
@@ -140,9 +140,9 @@ public class ShopManager : MonoBehaviour
                 coins += kills * 10;
             }
             else if (data.gameDrill == GameDrill.OBJECTIF)
-                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWheather);
+                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWeather);
             else if (data.gameDrill == GameDrill.ONEVONE)
-                coins = score / (10 - (int)data.gameWheather);
+                coins = score / (10 - (int)data.gameWeather);
         }
 
         dataManager.inventoryData.coins += coins;

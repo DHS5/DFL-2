@@ -22,7 +22,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Option
 /// </summary>
-[System.Serializable] public enum GameWheather { NULL = -1, SUN = 0, RAIN = 1, FOG = 2 }
+[System.Serializable] public enum GameWeather { NULL = -1, SUN = 0, RAIN = 1, FOG = 2 }
 
 /// <summary>
 /// Game Option
@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Inspector chosen game difficulty")]
     public GameDifficulty gameDifficulty;
 
-    [Tooltip("Inspector chosen game wheather")]
-    public GameWheather gameWheather;
+    [Tooltip("Inspector chosen game Weather")]
+    public GameWeather gameWeather;
 
     [Tooltip("Inspector chosen game options")]
     public List<GameOption> gameOptions = new List<GameOption>();
@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
         {
             gameData.gameMode = gameMode;
             gameData.gameDifficulty = gameDifficulty;
-            gameData.gameWheather = gameWheather;
+            gameData.gameWeather = gameWeather;
             gameData.gameOptions = gameOptions;
             gameData.gameDrill = gameDrill;
             gameData.gameEnemiesRange = enemiesRange;
@@ -443,8 +443,8 @@ public class GameManager : MonoBehaviour
             main.TeamManager.StopAttackers(); // Stop attackers
         }
 
-        // # Wheather #
-        if (gameData.gameWheather == GameWheather.RAIN)
+        // # Weather #
+        if (gameData.gameWeather == GameWeather.RAIN)
         {
             main.FieldManager.stadium.Rain();
         }

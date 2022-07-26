@@ -36,7 +36,7 @@ public abstract class PlayerState
 
     protected bool IsRaining
     {
-        get { return player.gameManager.gameData.gameWheather == GameWheather.RAIN; }
+        get { return player.gameManager.gameData.gameWeather == GameWeather.RAIN; }
     }
 
 

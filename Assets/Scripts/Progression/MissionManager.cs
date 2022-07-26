@@ -64,17 +64,17 @@ public class MissionManager : MonoBehaviour
 
         // Rain
         Debug.Log("rain");
-        if (pData.rainWheather)
+        if (pData.rainWeather)
         {
             if (rainMission.CompleteMission(data, wave))
-                main.DataManager.progressionData.rainWheather = false;
+                main.DataManager.progressionData.rainWeather = false;
         }
         // Fog
         Debug.Log("fog");
-        if (pData.fogWheather)
+        if (pData.fogWeather)
         {
             if (fogMission.CompleteMission(data, wave))
-                main.DataManager.progressionData.fogWheather = false;
+                main.DataManager.progressionData.fogWeather = false;
         }
 
         // Bonus

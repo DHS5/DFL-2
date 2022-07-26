@@ -9,7 +9,7 @@ public class Mission
 {
     [SerializeField] private List<GameMode> gameModes;
     [SerializeField] private List<GameDifficulty> gameDifficulties;
-    [SerializeField] private List<GameWheather> gameWheathers;
+    [SerializeField] private List<GameWeather> gameWeathers;
     [SerializeField] private List<GameOption> gameOptions;
     [SerializeField] private GameDrill gameDrill;
 
@@ -25,7 +25,7 @@ public class Mission
                 return false;
             if (gameDifficulties.Count > 0 && !gameDifficulties.Contains(data.gameDifficulty))
                 return false;
-            if (gameWheathers.Count > 0 && !gameWheathers.Contains(data.gameWheather))
+            if (gameWeathers.Count > 0 && !gameWeathers.Contains(data.gameWeather))
                 return false;
             if (gameOptions.Count > 0)
             {

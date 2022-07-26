@@ -6,12 +6,6 @@ using LootLocker.Requests;
 
 
 [System.Serializable]
-public struct LeaderBoard
-{
-    public List<LeaderboardItem> rows;
-    public LeaderboardItem personnalHigh;
-}
-
 public struct LeaderboardItem
 {
     public int rank;
@@ -29,12 +23,8 @@ public class LeaderboardManager : MonoBehaviour
     private LoginManager loginManager;
 
 
-    [SerializeField] private GameObject[] leaderboardContainers;
-    [SerializeField] private GameObject leaderboardRowPrefab;
+    [SerializeField] private Leaderboard[] leaderboards;
 
-
-
-    [HideInInspector] public LeaderBoard[,] leaderboards = new LeaderBoard[3, 3];
 
 
 
@@ -66,55 +56,37 @@ public class LeaderboardManager : MonoBehaviour
 
     // ### Functions ###
 
-    private void InstantiateLeaderboardRows()
-    {
-
-    }
 
     public void PostScore(GameData gameData, int score, int wave)
     {
         Debug.Log("gt meta : " + GametypeToMeta(gameData));
-        LootLockerSDKManager.SubmitScore(PlayerInfo.id.ToString(), score, leaderboard_IDs[(int)gameData.gameMode - 1], GametypeToMeta(gameData),
+        LootLockerSDKManager.SubmitScore(PlayerInfo.id.ToString(), score, leaderboard_IDs[(int)gameData.gameMode - 1], GetMeta(gameData, wave),
             (response) =>
             {
                 if (response.success)
                 {
                     Debug.Log("Successfully submitted");
-                    LoadLeaderboards();
+                    LoadLeaderboard(GameTypeToLeaderboardIndex(gameData), true);
                 }
                 else Debug.Log("Failed to submit");
             });
     }
 
 
-    private void ClearLeaderboards()
-    {
-        for (int mode = 0; mode < 3; mode++)
-        {
-            for (int dif = 0; dif < 3; dif++)
-            {
-                leaderboards[mode, dif].rows = new List<LeaderboardItem>();
-                leaderboards[mode, dif].personnalHigh = emptyRow();
-            }
-        }
-    }
-
 
 
     public void LoadLeaderboards()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < leaderboards.Length; i++)
         {
-            LoadLeaderboard(i);
+            LoadLeaderboard(i, false);
         }
     }
 
 
-    private void LoadLeaderboard(int mode)
+    private void LoadLeaderboard(int index, bool safe)
     {
-        ClearLeaderboards();
-
-        LootLockerSDKManager.GetScoreList(leaderboard_IDs[mode], leaderboardLimit, (response) =>
+        LootLockerSDKManager.GetScoreList(leaderboard_IDs[index], leaderboardLimit, (response) =>
         {
             if (response.success)
             {
@@ -122,7 +94,10 @@ public class LeaderboardManager : MonoBehaviour
 
                 for (int j = 0; j < scores.Length; j++)
                 {
-                    //leaderboards[0,0].rows.Add()
+                    string[] meta = MetaToStrings(scores[j].metadata);
+                    leaderboards[index].Add(
+                        new LeaderboardItem() { rank = scores[j].rank, name = scores[j].player.name, score = scores[j].score, wave = meta[2], wheather = meta[0], options = meta[1] },
+                        safe);
                 }
 
                 Debug.Log("Successfully loaded");
@@ -142,7 +117,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private string GametypeToMeta(GameData gD)
     {
-        return gD.gameWheather.ToString() + "//"
+        return gD.gameWeather.ToString() + "//"
             + OptionsToMeta(gD.gameOptions);
     }
 
@@ -163,9 +138,9 @@ public class LeaderboardManager : MonoBehaviour
         return result;
     }
 
-    private string GameTypeToString(GameData gD)
+    private int GameTypeToLeaderboardIndex(GameData gD)
     {
-        return "";
+        return (int)gD.gameMode * 3 + (int)gD.gameDifficulty;
     }
 
 

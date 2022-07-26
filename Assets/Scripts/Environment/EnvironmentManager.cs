@@ -63,8 +63,8 @@ public class EnvironmentManager : MonoBehaviour
 
     public void StartEnvironment()
     {
-        // # Wheather #
-        if (main.GameManager.gameData.gameWheather == GameWheather.RAIN) // RAIN
+        // # Weather #
+        if (main.GameManager.gameData.gameWeather == GameWeather.RAIN) // RAIN
         {
             envStyleNumber = EnvironmentStyle.RAIN;
 
@@ -75,7 +75,7 @@ public class EnvironmentManager : MonoBehaviour
             RenderSettings.fogDensity = rainFogDensity;
             RenderSettings.fogColor = baseFogColor;
         }
-        if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
+        if (main.GameManager.gameData.gameWeather == GameWeather.FOG) // FOG
         {
             envStyleNumber = EnvironmentStyle.FOG;
             RenderSettings.fog = true;
@@ -107,8 +107,8 @@ public class EnvironmentManager : MonoBehaviour
         if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.WaveNumber == 10) // !ZOMBIE
             BedTime(); // Night time when player reaching wave 10
 
-        // # Wheather #
-        if (main.GameManager.gameData.gameWheather == GameWheather.RAIN) // RAIN
+        // # Weather #
+        if (main.GameManager.gameData.gameWeather == GameWeather.RAIN) // RAIN
         {
             // Increases the rain according to the difficulty
             if (main.GameManager.gameData.gameDifficulty == GameDifficulty.HARD) // HARD
@@ -116,7 +116,7 @@ public class EnvironmentManager : MonoBehaviour
             else if (main.GameManager.gameData.gameDifficulty == GameDifficulty.NORMAL) // NORMAL
                 IncreaseRain(normalRainAddition);
         }
-        if (main.GameManager.gameData.gameWheather == GameWheather.FOG) // FOG
+        if (main.GameManager.gameData.gameWeather == GameWeather.FOG) // FOG
         {
             // # Difficulties #
             // Increases the fog according to the difficulty
