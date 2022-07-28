@@ -410,8 +410,11 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
+        // # Online #
+        main.SettingsManager.LeaderboardManager.PostScore(gameData, Score, WaveNumber);
+
         // # Coins #
-        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, waveNumber, main.WeaponsManager.numberOfKill);
+        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
         main.GameUIManager.ActuCoins(coins);
 
         // # Missions #

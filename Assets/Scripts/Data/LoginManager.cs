@@ -19,6 +19,9 @@ public struct OnlinePlayerInfo
 
 public class LoginManager : MonoBehaviour
 {
+    private SettingsManager settingsManager;
+
+
     [Header("UI components")]
     [Header("Base Screen")]
     [SerializeField] private TextMeshProUGUI stateText;
@@ -63,6 +66,8 @@ public class LoginManager : MonoBehaviour
         {
             connectionState = value;
             ActuStateText();
+            if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
+                settingsManager.LeaderboardManager.LoadLeaderboards();
         }
     }
 
@@ -70,6 +75,11 @@ public class LoginManager : MonoBehaviour
     // ### Built-in ###
 
     private void Awake()
+    {
+        settingsManager = GetComponent<SettingsManager>();
+    }
+
+    private void Start()
     {
         InitPlayerInfo();
         StartCoroutine(AutoLogin());
@@ -346,6 +356,8 @@ public class LoginManager : MonoBehaviour
             if (response.success)
             {
                 Result("You are now connected as guest !");
+                playerInfo.id = response.player_id;
+                playerInfo.pseudo = response.player_id.ToString();
                 State = ConnectionState.GUEST;
             }
             else
@@ -388,7 +400,7 @@ public class LoginManager : MonoBehaviour
                 stateText.text = "State :\n No session";
                 break;
             case ConnectionState.GUEST:
-                stateText.text = "State :\n Guest";
+                stateText.text = "State :\n" + playerInfo.id + " as Guest";
                 break;
             case ConnectionState.CONNECTED:
                 stateText.text = "State :\n" + (playerInfo.pseudo != "" ? playerInfo.pseudo : playerInfo.id) + " Connected";

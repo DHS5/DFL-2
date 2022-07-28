@@ -24,23 +24,50 @@ public class LeaderboardManager : MonoBehaviour
 
 
     [SerializeField] private Leaderboard[] leaderboards;
+    [SerializeField] private LeaderboardRow personnalHighRow;
 
 
+    private Leaderboard currentLeaderboard;
 
-
-    readonly int[] leaderboard_IDs = { 2909, 2911, 2912, 2913 };
     readonly int leaderboardLimit = 100;
+    readonly int[] leaderboardIDs = { 4969, 4970, 4971, 4972, 4974, 4975, 4976, 4977, 4978 };
 
+
+    private int mode;
+    private int difficulty;
+
+
+    private bool loaded = false;
 
 
     // ### Properties ###
+
+    private Leaderboard CurrentLeaderboard
+    {
+        get { return currentLeaderboard; }
+        set
+        {
+            if (currentLeaderboard != null) currentLeaderboard.SetActive(false);
+            currentLeaderboard = value;
+            currentLeaderboard.SetActive(true);
+            LoadPersonnalHighscore();
+            //LoadLeaderboard();
+        }
+    }
 
     private OnlinePlayerInfo PlayerInfo
     {
         get { return loginManager.playerInfo; }
     }
+    private bool Connected
+    {
+        get { return loginManager.State == ConnectionState.CONNECTED || loginManager.State == ConnectionState.GUEST; }
+    }
 
+    public int Mode { set { mode = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
+    public int Difficulty { set { difficulty = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
 
+    public int LeaderboardIndex { get { return mode * 3 + difficulty; } }
 
     // ### Built-in ###
 
@@ -59,8 +86,9 @@ public class LeaderboardManager : MonoBehaviour
 
     public void PostScore(GameData gameData, int score, int wave)
     {
-        Debug.Log("gt meta : " + GametypeToMeta(gameData));
-        LootLockerSDKManager.SubmitScore(PlayerInfo.id.ToString(), score, leaderboard_IDs[(int)gameData.gameMode - 1], GetMeta(gameData, wave),
+        if (!Connected) return;
+        //Debug.Log("gt meta : " + GametypeToMeta(gameData));
+        LootLockerSDKManager.SubmitScore(PlayerInfo.id.ToString(), score, leaderboardIDs[GameTypeToLeaderboardIndex(gameData)], GetMeta(gameData, wave),
             (response) =>
             {
                 if (response.success)
@@ -73,20 +101,45 @@ public class LeaderboardManager : MonoBehaviour
     }
 
 
-
+    private void LoadPersonnalHighscore()
+    {
+        personnalHighRow.Item = CurrentLeaderboard.personnalHigh;
+    }
 
     public void LoadLeaderboards()
     {
-        for (int i = 0; i < leaderboards.Length; i++)
-        {
-            LoadLeaderboard(i, false);
+        if (loaded)
+        { 
+            for (int i = 0; i < leaderboards.Length; i++)
+            {
+                LoadLeaderboard(i, false);
+            }
+
+            CurrentLeaderboard = leaderboards[0];
+            loaded = true;
         }
+
+        else
+        {
+            for (int i = 0; i < leaderboards.Length; i++)
+            {
+                LoadLeaderboard(i, true);
+            }
+
+            CurrentLeaderboard = leaderboards[LeaderboardIndex];
+        }
+    }
+
+    public void ClearLeaderboards()
+    {
+        foreach (var leaderboard in leaderboards)
+            leaderboard.Clear();
     }
 
 
     private void LoadLeaderboard(int index, bool safe)
     {
-        LootLockerSDKManager.GetScoreList(leaderboard_IDs[index], leaderboardLimit, (response) =>
+        LootLockerSDKManager.GetScoreList(leaderboardIDs[index], leaderboardLimit, (response) =>
         {
             if (response.success)
             {
@@ -95,17 +148,25 @@ public class LeaderboardManager : MonoBehaviour
                 for (int j = 0; j < scores.Length; j++)
                 {
                     string[] meta = MetaToStrings(scores[j].metadata);
-                    leaderboards[index].Add(
-                        new LeaderboardItem() { rank = scores[j].rank, name = scores[j].player.name, score = scores[j].score, wave = meta[2], wheather = meta[0], options = meta[1] },
-                        safe);
+                    string pseudo = scores[j].player.name != "" ? scores[j].player.name : scores[j].member_id;
+                    LeaderboardItem item = new() { rank = scores[j].rank, name = pseudo, score = scores[j].score, wave = meta[2], wheather = meta[0], options = meta[1] };
+                    leaderboards[index].Add(item, safe);
+
+                    if (int.Parse(scores[j].member_id) == PlayerInfo.id)
+                        leaderboards[index].personnalHigh = item;
                 }
 
+                LoadPersonnalHighscore();
                 Debug.Log("Successfully loaded");
             }
             else Debug.Log("Failed to load");
         });
     }
 
+    private void LoadLeaderboard()
+    {
+        LoadLeaderboard(LeaderboardIndex, true);
+    }
 
 
     // ### Tools ###

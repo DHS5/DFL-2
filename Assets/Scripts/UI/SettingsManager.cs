@@ -22,7 +22,9 @@ public class SettingsManager : MonoBehaviour
     // ### Managers ###
     // Multi scene managers
     public DataManager DataManager { get; private set; }
-    public ShopManager  ShopManager { get; private set; }
+    public ShopManager ShopManager { get; private set; }
+    public LoginManager LoginManager { get; private set; }
+    public LeaderboardManager LeaderboardManager { get; private set; }
 
     // Menu scene managers
     private MenuUIManager menuUIManager;
@@ -130,6 +132,10 @@ public class SettingsManager : MonoBehaviour
         }
         InstanceSettingsManager = this;
         DontDestroyOnLoad(gameObject);
+
+        ShopManager = GetComponent<ShopManager>();
+        LoginManager = GetComponent<LoginManager>();
+        LeaderboardManager = GetComponent<LeaderboardManager>();
     }
 
     /// <summary>
@@ -138,7 +144,6 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         DataManager = DataManager.InstanceDataManager;
-        ShopManager = GetComponent<ShopManager>();
 
         GetManagers();
 
