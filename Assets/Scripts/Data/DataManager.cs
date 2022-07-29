@@ -79,6 +79,14 @@ public struct ProgressionData
 }
 
 [System.Serializable]
+public struct StatsData // One for each mode-diff
+{
+    public int gameNumber;
+    public int totalScore;
+    public int[] wavesReached;
+}
+
+[System.Serializable]
 public struct GameData
 {
     public GameMode gameMode;
@@ -118,6 +126,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public PlayerData playerData;
     [HideInInspector] public InventoryData inventoryData;
     [HideInInspector] public ProgressionData progressionData;
+    [HideInInspector] public StatsData[] statsDatas = new StatsData[9];
 
     // Current game data
     [HideInInspector] public GameData gameData;
@@ -208,6 +217,14 @@ public class DataManager : MonoBehaviour
         gameData.team = new GameObject[5];
     }
 
+    private void InitStatsDatas()
+    {
+        statsDatas = new StatsData[9];
+        for (int i = 0; i < statsDatas.Length; i++)
+            statsDatas[i].wavesReached = new int[1] {0};
+    }
+
+
     public void ClearGameData()
     {
         gameData.gameMode = GameMode.DEFENDERS;
@@ -236,6 +253,8 @@ public class DataManager : MonoBehaviour
         public InventoryData inventoryData;
 
         public ProgressionData progressionData;
+
+        public StatsData[] statsDatas;
     }
 
 
@@ -248,6 +267,7 @@ public class DataManager : MonoBehaviour
         data.playerPrefs = playerPrefs;
         data.inventoryData = inventoryData;
         data.progressionData = progressionData;
+        data.statsDatas = statsDatas;
 
         string json = JsonUtility.ToJson(data);
 
@@ -272,6 +292,7 @@ public class DataManager : MonoBehaviour
             playerPrefs = data.playerPrefs;
             inventoryData = data.inventoryData;
             progressionData = data.progressionData;
+            statsDatas = data.statsDatas;
         }
 
         InitPlayerPrefs();

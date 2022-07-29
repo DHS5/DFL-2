@@ -413,6 +413,9 @@ public class GameManager : MonoBehaviour
         // # Online #
         main.SettingsManager.LeaderboardManager.PostScore(gameData, Score, WaveNumber);
 
+        // # Stats #
+        main.SettingsManager.StatsManager.AddGameToStats(gameData, Score, WaveNumber);
+
         // # Coins #
         int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
         main.GameUIManager.ActuCoins(coins);

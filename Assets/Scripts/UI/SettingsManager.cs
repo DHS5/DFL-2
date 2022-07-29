@@ -25,6 +25,7 @@ public class SettingsManager : MonoBehaviour
     public ShopManager ShopManager { get; private set; }
     public LoginManager LoginManager { get; private set; }
     public LeaderboardManager LeaderboardManager { get; private set; }
+    public StatsManager StatsManager { get; private set; }
 
     // Menu scene managers
     private MenuUIManager menuUIManager;
@@ -136,6 +137,7 @@ public class SettingsManager : MonoBehaviour
         ShopManager = GetComponent<ShopManager>();
         LoginManager = GetComponent<LoginManager>();
         LeaderboardManager = GetComponent<LeaderboardManager>();
+        StatsManager = GetComponent<StatsManager>();
     }
 
     /// <summary>
@@ -251,8 +253,6 @@ public class SettingsManager : MonoBehaviour
             gameManager.UnpauseGame();
         }
     }
-
-    // ## Tuto Scene
 
 
     // ### Tools

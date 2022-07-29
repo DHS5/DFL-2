@@ -23,6 +23,9 @@ public class LoginManager : MonoBehaviour
 
 
     [Header("UI components")]
+    [Header("Home Screen")]
+    [SerializeField] private Button homeLoginButton;
+
     [Header("Base Screen")]
     [SerializeField] private TextMeshProUGUI stateText;
     [SerializeField] private Button loginButton;
@@ -67,7 +70,10 @@ public class LoginManager : MonoBehaviour
             connectionState = value;
             ActuStateText();
             if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
+            {
                 settingsManager.LeaderboardManager.LoadLeaderboards();
+            }
+            homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
         }
     }
 
