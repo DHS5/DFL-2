@@ -31,10 +31,7 @@ public class SettingsManager : MonoBehaviour
     private MenuUIManager menuUIManager;
 
     // Game scene managers
-    private MainManager mainManager;
-
-    private GameManager gameManager;
-    private PlayerManager playerManager;
+    private MainManager main;
 
 
     [Header("Settings screens")]
@@ -59,7 +56,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.headAngle = value;
-            if (playerManager != null) playerManager.HeadAngle = value;
+            if (main.PlayerManager != null) main.PlayerManager.HeadAngle = value;
         }
     }
     public float YMouseSensitivity
@@ -67,7 +64,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.yms = value;
-            if (playerManager != null) playerManager.YMouseSensitivity = value;
+            if (main.PlayerManager != null) main.PlayerManager.YMouseSensitivity = value;
         }
     }
     public float YSmoothRotation
@@ -75,7 +72,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.ysr = value;
-            if (playerManager != null) playerManager.YSmoothRotation = value;
+            if (main.PlayerManager != null) main.PlayerManager.YSmoothRotation = value;
         }
     }
 
@@ -84,7 +81,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.viewType = (ViewType) value;
-            if (playerManager != null) playerManager.ViewType = (ViewType) value;
+            if (main.PlayerManager != null) main.PlayerManager.ViewType = (ViewType) value;
 
 
             if (value == 0)
@@ -149,9 +146,7 @@ public class SettingsManager : MonoBehaviour
 
         GetManagers();
 
-        LoadGameplayData(DataManager.gameplayData);
-        LoadAudioData(DataManager.audioData);
-        LoadPlayerPrefs(DataManager.playerPrefs);
+        Load();
 
         SetEventSystem(true);
     }
@@ -159,6 +154,18 @@ public class SettingsManager : MonoBehaviour
 
 
     // ### Functions ###
+
+    /// <summary>
+    /// Load datas once DataManager has loaded all the datas
+    /// </summary>
+    public void Load()
+    {
+        LoadGameplayData(DataManager.gameplayData);
+        LoadAudioData(DataManager.audioData);
+        LoadPlayerPrefs(DataManager.playerPrefs);
+    }
+
+
 
     /// <summary>
     /// Gets the managers of the current scene
@@ -173,28 +180,9 @@ public class SettingsManager : MonoBehaviour
         }
         else if (scene == 1)
         {
-            mainManager = FindObjectOfType<MainManager>();
-            if (mainManager != null)
-            {
-                gameManager = mainManager.GameManager;
-                playerManager = mainManager.PlayerManager;
-            }
-            else Debug.Assert(false, "Didn't find the main manager");
-        }
-        else if (scene == 2)
-        { }
-
-        //ActuManagers(scene);
-    }
-    /// <summary>
-    /// Actualize the managers of the scene
-    /// </summary>
-    /// <param name="scene">Scene number</param>
-    private void ActuManagers(int scene)
-    {
-        if (scene == 0)
-        {
-            
+            main = FindObjectOfType<MainManager>();
+            if (main == null)
+                Debug.Assert(false, "Didn't find the main manager");
         }
     }
 
@@ -241,16 +229,16 @@ public class SettingsManager : MonoBehaviour
     // ## Game Scene
     public void PauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME && !gameManager.GameOver)
+        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME && !main.GameManager.GameOver)
         {
-            gameManager.PauseGame();
+            main.GameManager.PauseGame();
         }
     }
     public void UnpauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME && !gameManager.GameOver)
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME && !main.GameManager.GameOver)
         {
-            gameManager.UnpauseGame();
+            main.GameManager.UnpauseGame();
         }
     }
 

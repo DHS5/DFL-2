@@ -20,6 +20,7 @@ public struct OnlinePlayerInfo
 public class LoginManager : MonoBehaviour
 {
     private SettingsManager settingsManager;
+    private DataManager dataManager;
 
 
     [Header("UI components")]
@@ -72,6 +73,8 @@ public class LoginManager : MonoBehaviour
             if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
             {
                 settingsManager.LeaderboardManager.LoadLeaderboards();
+                dataManager.GetOnlineFileID();
+                dataManager.LoadPlayerData();
             }
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
         }
@@ -83,6 +86,7 @@ public class LoginManager : MonoBehaviour
     private void Awake()
     {
         settingsManager = GetComponent<SettingsManager>();
+        dataManager = FindObjectOfType<DataManager>();
     }
 
     private void Start()

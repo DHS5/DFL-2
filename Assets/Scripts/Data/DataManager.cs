@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LootLocker.Requests;
 using UnityEngine;
 using System.IO;
+using UnityEngine.Networking;
 
 
 
@@ -117,7 +118,9 @@ public class DataManager : MonoBehaviour
     public static DataManager InstanceDataManager { get; private set; }
 
     
+    private LoginManager loginManager;
 
+    private int onlineFileID = 50355;
 
     // Online Savable Data
     [HideInInspector] public AudioData audioData;
@@ -135,6 +138,26 @@ public class DataManager : MonoBehaviour
     public CardsContainerSO cardsContainer;
 
 
+    private bool datasLoaded;
+
+
+    // ### Properties ###
+
+    private bool Connected
+    {
+        get { return loginManager.State == ConnectionState.CONNECTED || loginManager.State == ConnectionState.GUEST; }
+    }
+
+    private int OnlineFileID
+    {
+        get { return onlineFileID; }
+        set
+        {
+            //onlineFileID = value;
+            LootLockerSDKManager.UpdateOrCreateKeyValue("OnlineFileID", value.ToString(), (response) => { });
+        }
+    }
+
 
     /// <summary>
     /// Gets the Singleton Instance
@@ -151,6 +174,8 @@ public class DataManager : MonoBehaviour
         InstanceDataManager = this;
         DontDestroyOnLoad(gameObject);
 
+        loginManager = FindObjectOfType<LoginManager>();
+
         // Load the personnal highscores and player preferences
         LoadPlayerData();
 
@@ -164,7 +189,24 @@ public class DataManager : MonoBehaviour
 
     // ### Functions ###
 
-    // ## Data Management ##
+    public IEnumerator LoadDatas()
+    {
+        datasLoaded = false;
+        LoadPlayerData();
+        yield return new WaitUntil(() => datasLoaded);
+    }
+
+    public void GetOnlineFileID()
+    {
+        LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
+        {
+            if (response.success)
+                if (response.payload != null)
+                    onlineFileID = int.Parse(response.payload.value);
+            else
+                Debug.Log("Couldn't get online file ID");
+        });
+    }
 
     private void InitPlayerPrefs()
     {
@@ -179,7 +221,7 @@ public class DataManager : MonoBehaviour
             if (playerPrefs.teamIndex[i] >= inventoryData.attackers.Length) playerPrefs.teamIndex[i] = 0;
     }
 
-    private void ResetProgression()
+    private void InitProgression()
     {
         progressionData.teamMode = true;
         progressionData.zombieMode = true;
@@ -196,7 +238,7 @@ public class DataManager : MonoBehaviour
         progressionData.weaponOpt = true;
     }
 
-    private void ResetInventory()
+    private void InitInventory()
     {
         // Coins
         inventoryData.coins = 0;
@@ -273,6 +315,28 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
 
+        //if (Connected)
+        //{
+        //    LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
+        //    {
+        //        if (response.success)
+        //            Debug.Log("Deleted file successfully");
+        //        else
+        //            Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
+        //    
+        //        LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
+        //        {
+        //            if (response.success)
+        //            {
+        //                Debug.Log("File uploaded successfully");
+        //                onlineFileID = response.id;
+        //                Debug.Log(onlineFileID + " / " + response.id);
+        //                OnlineFileID = response.id;
+        //            }
+        //        });
+        //    });
+        //}
+
         //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
 
@@ -281,23 +345,76 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void LoadPlayerData()
     {
+        Debug.Log("-----LOAD DATA-----");
+        InitInventory();
+        InitProgression();
+        InitStatsDatas();
+
+        string path = "";
+
+        if (Connected)
+        {
+            LootLockerSDKManager.GetPlayerFile(OnlineFileID, (response) =>
+            {
+                if (response.success)
+                {
+                    path = response.url;
+                    StartCoroutine(LoadJSONFromURL(path));
+                }
+            });
+        }
+        if (datasLoaded) return;
+
+        LoadDataFromDisk();        
+
+        InitPlayerPrefs();
+
+        datasLoaded = true;
+    }
+
+    private IEnumerator LoadJSONFromURL(string url)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        yield return request.SendWebRequest();
+
+        if (request.error != "")
+        {
+            Debug.Log("Loaded file successfully");
+
+            string json = request.downloadHandler.text;
+
+            LoadJSON(json);
+
+            datasLoaded = true;
+        }
+        else
+        {
+            Debug.Log(request.error);
+        }
+    }
+
+    private void LoadDataFromDisk()
+    {
         string path = Application.persistentDataPath + "/savefile.json";
+
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            audioData = data.audioData;
-            gameplayData = data.gameplayData;
-            playerPrefs = data.playerPrefs;
-            inventoryData = data.inventoryData;
-            progressionData = data.progressionData;
-            statsDatas = data.statsDatas;
+            LoadJSON(json);
         }
-
-        InitPlayerPrefs();
     }
 
+    private void LoadJSON(string json)
+    {
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        audioData = data.audioData;
+        gameplayData = data.gameplayData;
+        playerPrefs = data.playerPrefs;
+        inventoryData = data.inventoryData;
+        progressionData = data.progressionData;
+        statsDatas = data.statsDatas;
+    }
 
     // C:/Users/tomnd/AppData/LocalLow/DefaultCompany/DFL 2/
 }
