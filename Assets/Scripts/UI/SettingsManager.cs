@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public enum SceneNumber { MENU = 0, GAME = 1}
 
-public enum ScreenNumber { SETTINGS = 0, GAMEPLAY, INFO, PLAYER, LEADERBOARD, SHOP }
+public enum ScreenNumber { SETTINGS, GAMEPLAY, INFO }
 
 
 public class SettingsManager : MonoBehaviour
@@ -15,20 +15,16 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Settings Manager of the game
     /// </summary>
-    public static SettingsManager InstanceSettingsManager { get; private set; }
+    public static SettingsManager Instance { get; private set; }
 
     [SerializeField] private GameObject EventSystem;
 
     // ### Managers ###
     // Multi scene managers
     public DataManager DataManager { get; private set; }
-    public ShopManager ShopManager { get; private set; }
-    public LoginManager LoginManager { get; private set; }
-    public LeaderboardManager LeaderboardManager { get; private set; }
-    public StatsManager StatsManager { get; private set; }
 
     // Menu scene managers
-    private MenuUIManager menuUIManager;
+    private MenuMainManager menuMain;
 
     // Game scene managers
     private MainManager main;
@@ -56,7 +52,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.headAngle = value;
-            if (main.PlayerManager != null) main.PlayerManager.HeadAngle = value;
+            if (main != null) main.PlayerManager.HeadAngle = value;
         }
     }
     public float YMouseSensitivity
@@ -64,7 +60,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.yms = value;
-            if (main.PlayerManager != null) main.PlayerManager.YMouseSensitivity = value;
+            if (main != null) main.PlayerManager.YMouseSensitivity = value;
         }
     }
     public float YSmoothRotation
@@ -72,7 +68,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.ysr = value;
-            if (main.PlayerManager != null) main.PlayerManager.YSmoothRotation = value;
+            if (main != null) main.PlayerManager.YSmoothRotation = value;
         }
     }
 
@@ -81,7 +77,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.viewType = (ViewType) value;
-            if (main.PlayerManager != null) main.PlayerManager.ViewType = (ViewType) value;
+            if (main != null) main.PlayerManager.ViewType = (ViewType) value;
 
 
             if (value == 0)
@@ -110,7 +106,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.playerPrefs.infoButtonsOn = value;
-            if (menuUIManager != null) menuUIManager.InfoButtonsOn = value;
+            if (menuMain != null) menuMain.MenuUIManager.InfoButtonsOn = value;
         }
     }
 
@@ -123,18 +119,15 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (InstanceSettingsManager != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        InstanceSettingsManager = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        ShopManager = GetComponent<ShopManager>();
-        LoginManager = GetComponent<LoginManager>();
-        LeaderboardManager = GetComponent<LeaderboardManager>();
-        StatsManager = GetComponent<StatsManager>();
+        DataManager = FindObjectOfType<DataManager>();
     }
 
     /// <summary>
@@ -142,8 +135,6 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        DataManager = DataManager.InstanceDataManager;
-
         GetManagers();
 
         Load();
@@ -176,7 +167,7 @@ public class SettingsManager : MonoBehaviour
 
         if (scene == 0)
         {
-            menuUIManager = FindObjectOfType<MenuUIManager>();
+            menuMain = FindObjectOfType<MenuMainManager>();
         }
         else if (scene == 1)
         {

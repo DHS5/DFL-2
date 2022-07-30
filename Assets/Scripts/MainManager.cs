@@ -43,7 +43,7 @@ public class MainManager : MonoBehaviour
         
         // # Multi scene managers
         DataManager = DataManager.InstanceDataManager;
-        SettingsManager = SettingsManager.InstanceSettingsManager;
+        SettingsManager = SettingsManager.Instance;
 
         // # Game scene managers
         // Essentials

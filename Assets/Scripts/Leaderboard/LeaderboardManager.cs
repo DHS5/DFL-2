@@ -19,8 +19,7 @@ public struct LeaderboardItem
 
 public class LeaderboardManager : MonoBehaviour
 {
-    private DataManager dataManager;
-    private LoginManager loginManager;
+    private MenuMainManager main;
 
 
     [SerializeField] private Leaderboard[] leaderboards;
@@ -57,11 +56,11 @@ public class LeaderboardManager : MonoBehaviour
 
     private OnlinePlayerInfo PlayerInfo
     {
-        get { return loginManager.playerInfo; }
+        get { return ConnectionManager.playerInfo; }
     }
     private bool Connected
     {
-        get { return loginManager.State == ConnectionState.CONNECTED || loginManager.State == ConnectionState.GUEST; }
+        get { return main.LoginManager.State == ConnectionState.CONNECTED || main.LoginManager.State == ConnectionState.GUEST; }
     }
 
     public int Mode { set { mode = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
@@ -73,11 +72,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private void Awake()
     {
-        loginManager = GetComponent<LoginManager>();
-    }
-    private void Start()
-    {
-        dataManager = DataManager.InstanceDataManager;
+        main = GetComponent<MenuMainManager>();
     }
 
 

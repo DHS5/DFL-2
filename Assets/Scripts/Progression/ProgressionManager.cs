@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 public class ProgressionManager : MonoBehaviour
 {
-    private DataManager dataManager;
+    private MenuMainManager main;
     
     
     [HideInInspector] public ProgressionData progressionData;
@@ -40,22 +40,24 @@ public class ProgressionManager : MonoBehaviour
     readonly string fogWeatherText = "Reach wave 5 in rain wheather to unlock fog wheather";
 
 
-    private void Start()
+    private void Awake()
     {
-        dataManager = DataManager.InstanceDataManager;
-        GetProgressionData();
+        main = GetComponent<MenuMainManager>();
+    }
 
+    public void LoadProgression()
+    {
+        GetProgressionData();
         ApplyProgressionData();
     }
 
-
     private void GetProgressionData()
     {
-        progressionData = dataManager.progressionData;
+        progressionData = main.DataManager.progressionData;
     }
     private void SetProgressionData()
     {
-        dataManager.progressionData = progressionData;
+        main.DataManager.progressionData = progressionData;
     }
 
     public void ApplyProgressionData()

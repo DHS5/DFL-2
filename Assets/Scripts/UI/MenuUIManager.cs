@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class MenuUIManager : MonoBehaviour
 {
-    private SettingsManager settingsManager;
-    private DataManager dataManager;
-    private InventoryManager inventoryManager;
+    private MenuMainManager main;
+
+    private DataManager DataManager
+    {
+        get { return main.DataManager; }
+    }
 
     private List<GameOption> defenderOptions = new List<GameOption>();
     private List<GameOption> zombieOptions = new List<GameOption>();
@@ -63,44 +66,44 @@ public class MenuUIManager : MonoBehaviour
 
     public int GameMode
     {
-        set { dataManager.gameData.gameMode = (GameMode) value; }
+        set { DataManager.gameData.gameMode = (GameMode) value; }
     }
     public int GameDifficulty
     {
-        set { dataManager.gameData.gameDifficulty = (GameDifficulty) value; }
+        set { DataManager.gameData.gameDifficulty = (GameDifficulty) value; }
     }
     public int GameWheather
     {
-        set { dataManager.gameData.gameWeather = (GameWeather) value; }
+        set { DataManager.gameData.gameWeather = (GameWeather) value; }
     }
     public int GameDrill
     {
-        set { dataManager.gameData.gameDrill = (GameDrill) value; }
+        set { DataManager.gameData.gameDrill = (GameDrill) value; }
     }
 
     public int PlayerIndex
     {
-        get { return dataManager.playerPrefs.playerIndex; }
-        set { dataManager.playerPrefs.playerIndex = value; }
+        get { return DataManager.playerPrefs.playerIndex; }
+        set { DataManager.playerPrefs.playerIndex = value; }
     }
     public int StadiumIndex
     {
-        get { return dataManager.playerPrefs.stadiumIndex; }
-        set { dataManager.playerPrefs.stadiumIndex = value; }
+        get { return DataManager.playerPrefs.stadiumIndex; }
+        set { DataManager.playerPrefs.stadiumIndex = value; }
     }
     public int EnemyIndex
     {
-        get { return dataManager.playerPrefs.enemyIndex; }
-        set { dataManager.playerPrefs.enemyIndex = value; }
+        get { return DataManager.playerPrefs.enemyIndex; }
+        set { DataManager.playerPrefs.enemyIndex = value; }
     }
     public int[] AttackerIndex
     {
-        get { return dataManager.playerPrefs.teamIndex; }
-        set { dataManager.playerPrefs.teamIndex = value; }
+        get { return DataManager.playerPrefs.teamIndex; }
+        set { DataManager.playerPrefs.teamIndex = value; }
     }
     public int ParkourIndex
     {
-        get { return dataManager.playerPrefs.parkourIndex; }
+        get { return DataManager.playerPrefs.parkourIndex; }
     }
 
 
@@ -110,30 +113,23 @@ public class MenuUIManager : MonoBehaviour
 
     private void Awake()
     {
+        main = GetComponent<MenuMainManager>();
+
         InitAttackerCardList();
     }
 
     private void Start()
     {
-        GetManagers();
-
-        settingsManager.GetManagers();
+        main.SettingsManager.GetManagers();
 
         ActuData();
     }
 
 
-    public void GetManagers()
-    {
-        settingsManager = SettingsManager.InstanceSettingsManager;
-        dataManager = DataManager.InstanceDataManager;
-        inventoryManager = GetComponent<InventoryManager>();
-    }
-
 
     private void ActuData()
     {
-        InfoButtonsOn = settingsManager.InfoButtonsOn;
+        InfoButtonsOn = main.SettingsManager.InfoButtonsOn;
     }
     private void InitAttackerCardList()
     {
@@ -148,17 +144,17 @@ public class MenuUIManager : MonoBehaviour
     /// <param name="option">Game option to add/remove</param>
     public void ChooseOption(int option)
     {
-        List<GameOption> gameOptions = (dataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
+        List<GameOption> gameOptions = (DataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
 
         if (!gameOptions.Contains((GameOption)option)) { gameOptions.Add((GameOption)option); }
         else { gameOptions.Remove((GameOption)option); }
 
-        dataManager.gameData.gameOptions = new List<GameOption>(gameOptions);
+        DataManager.gameData.gameOptions = new List<GameOption>(gameOptions);
     }
 
     public void ActuOptions()
     {
-        dataManager.gameData.gameOptions = (dataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
+        DataManager.gameData.gameOptions = (DataManager.gameData.gameMode == global::GameMode.ZOMBIE) ? zombieOptions : defenderOptions;
     }
 
 
@@ -169,7 +165,7 @@ public class MenuUIManager : MonoBehaviour
         int i = 0;
         foreach (CardSO cardSO in cardSOs)
         {
-            if (inventoryManager.IsInInventory(cardSO.type.GetObject()))
+            if (main.InventoryManager.IsInInventory(cardSO.type.GetObject()))
             {
                 T card = Instantiate(prefab, container.transform).GetComponent<T>();
                 card.cardSO = cardSO;
@@ -190,23 +186,23 @@ public class MenuUIManager : MonoBehaviour
     public void GetCards()
     {
         // Player simple cards
-        GetCard(dataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex, ref dataManager.gameData.player);
+        GetCard(DataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex, ref DataManager.gameData.player);
 
         // Player complete cards
-        GetCard(dataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex, ref dataManager.gameData.player);
+        GetCard(DataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex, ref DataManager.gameData.player);
 
         // Enemy cards
-        GetCard(dataManager.cardsContainer.enemyCards, enemyCardPrefab, ref enemyCards, enemyCContainer, EnemyIndex, ref dataManager.gameData.enemy);
+        GetCard(DataManager.cardsContainer.enemyCards, enemyCardPrefab, ref enemyCards, enemyCContainer, EnemyIndex, ref DataManager.gameData.enemy);
 
         // Attacker cards
         for (int i = 0; i < attackerCContainers.Length; i++)
-            GetCard(dataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], ref dataManager.gameData.team[i]);
+            GetCard(DataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], ref DataManager.gameData.team[i]);
 
         // Stadium cards
-        GetCard(dataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex, ref dataManager.gameData.stadium);
+        GetCard(DataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex, ref DataManager.gameData.stadium);
 
         // Parkour cards
-        GetCard(dataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex, ref dataManager.gameData.parkour);
+        GetCard(DataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex, ref DataManager.gameData.parkour);
     }
 
     private int NextCard<T>(List<T> cards, int index, ref GameObject g) where T : Card
@@ -239,22 +235,22 @@ public class MenuUIManager : MonoBehaviour
 
     public void NextCardPlayer() 
     {
-        NextCard(playerCompCards, PlayerIndex, ref dataManager.gameData.player);
-        PlayerIndex = NextCard(playerSimpleCards, PlayerIndex, ref dataManager.gameData.player); 
+        NextCard(playerCompCards, PlayerIndex, ref DataManager.gameData.player);
+        PlayerIndex = NextCard(playerSimpleCards, PlayerIndex, ref DataManager.gameData.player); 
     }
     public void PrevCardPlayer() 
     {
-        PrevCard(playerCompCards, PlayerIndex, ref dataManager.gameData.player);
-        PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex, ref dataManager.gameData.player);
+        PrevCard(playerCompCards, PlayerIndex, ref DataManager.gameData.player);
+        PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex, ref DataManager.gameData.player);
     }
-    public void NextCardEnemy() { EnemyIndex = NextCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
-    public void PrevCardEnemy() { EnemyIndex = PrevCard(enemyCards, EnemyIndex, ref dataManager.gameData.enemy); }
+    public void NextCardEnemy() { EnemyIndex = NextCard(enemyCards, EnemyIndex, ref DataManager.gameData.enemy); }
+    public void PrevCardEnemy() { EnemyIndex = PrevCard(enemyCards, EnemyIndex, ref DataManager.gameData.enemy); }
 
-    public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
-    public void PrevCardAttacker(int i) { AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i], ref dataManager.gameData.team[i]); }
+    public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref DataManager.gameData.team[i]); }
+    public void PrevCardAttacker(int i) { AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i], ref DataManager.gameData.team[i]); }
 
-    public void NextCardStadium() { StadiumIndex = NextCard(stadiumCards, StadiumIndex, ref dataManager.gameData.stadium); }
-    public void PrevCardStadium() { StadiumIndex = PrevCard(stadiumCards, StadiumIndex, ref dataManager.gameData.stadium); }
+    public void NextCardStadium() { StadiumIndex = NextCard(stadiumCards, StadiumIndex, ref DataManager.gameData.stadium); }
+    public void PrevCardStadium() { StadiumIndex = PrevCard(stadiumCards, StadiumIndex, ref DataManager.gameData.stadium); }
 
 
     // ### Tools ###

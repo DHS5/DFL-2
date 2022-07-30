@@ -7,8 +7,6 @@ using TMPro;
 using LootLocker.Requests;
 
 
-public enum ConnectionState { NO_CONNECTION, NO_SESSION, GUEST, CONNECTED }
-
 public struct OnlinePlayerInfo
 {
     public string email;
@@ -19,13 +17,15 @@ public struct OnlinePlayerInfo
 
 public class LoginManager : MonoBehaviour
 {
-    private SettingsManager settingsManager;
-    private DataManager dataManager;
+    private MenuMainManager main;
 
 
     [Header("UI components")]
     [Header("Home Screen")]
     [SerializeField] private Button homeLoginButton;
+    [Space]
+    [SerializeField] private GameObject waitPopup;
+
 
     [Header("Base Screen")]
     [SerializeField] private TextMeshProUGUI stateText;
@@ -33,8 +33,7 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private Button newUserButton;
     [SerializeField] private Button loginAsGuestButton;
     [SerializeField] private Button disconnectButton;
-    [Space]
-    [SerializeField] private GameObject waitPopup;
+    
 
     [Header("Login Screen")]
     [SerializeField] private TMP_InputField loginEmailIF;
@@ -51,30 +50,19 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultText;
 
 
-    [HideInInspector] public OnlinePlayerInfo playerInfo;
-
-
-
-    private bool connected = false;
-
-    private ConnectionState connectionState;
-
-
 
     // ### Properties ###
 
     public ConnectionState State
     {
-        get { return connectionState; }
+        get { return ConnectionManager.ConnectionState; }
         set
         {
-            connectionState = value;
+            ConnectionManager.ConnectionState = value;
             ActuStateText();
             if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
             {
-                settingsManager.LeaderboardManager.LoadLeaderboards();
-                dataManager.GetOnlineFileID();
-                dataManager.LoadPlayerData();
+                StartCoroutine(main.DataManager.LoadDatas());
             }
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
         }
@@ -85,25 +73,24 @@ public class LoginManager : MonoBehaviour
 
     private void Awake()
     {
-        settingsManager = GetComponent<SettingsManager>();
-        dataManager = FindObjectOfType<DataManager>();
+        main = GetComponent<MenuMainManager>();
     }
 
     private void Start()
     {
-        InitPlayerInfo();
+        //InitConnectionManager.PlayerInfo();
         StartCoroutine(AutoLogin());
     }
 
 
     // ### Functions ###
 
-    private void InitPlayerInfo()
-    {
-        playerInfo.email = "";
-        playerInfo.id = 0;
-        playerInfo.pseudo = "";
-    }
+    //private void InitConnectionManager.PlayerInfo()
+    //{
+    //    ConnectionManager.PlayerInfo.email = "";
+    //    ConnectionManager.PlayerInfo.id = 0;
+    //    ConnectionManager.PlayerInfo.pseudo = "";
+    //}
 
     private void Result(string result)
     {
@@ -113,26 +100,17 @@ public class LoginManager : MonoBehaviour
 
     public void CheckInternetConnection()
     {
-        if (!connected)
-        {
-            waitPopup.SetActive(true);
-            StartCoroutine(CheckInternetConnectionCR());
-        }
-        ActuDisconnectButton();
+        StartCoroutine(CheckInternetConnectionCR());
     }
-
-    public void ActuDisconnectButton()
-    {
-        disconnectButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
-    }
-
     private IEnumerator CheckInternetConnectionCR()
     {
-        UnityWebRequest request = new UnityWebRequest("http://google.com");
-        yield return request.SendWebRequest();
+        waitPopup.SetActive(true);
+
+        yield return StartCoroutine(ConnectionManager.CheckInternetConnection());
+
         waitPopup.SetActive(false);
 
-        if (request.error != null)
+        if (!ConnectionManager.InternetConnected)
         {
             State = ConnectionState.NO_CONNECTION;
             loginButton.interactable = false;
@@ -142,18 +120,74 @@ public class LoginManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Connected to internet");
             loginButton.interactable = true;
             newUserButton.interactable = true;
             loginAsGuestButton.interactable = true;
         }
+
+        ActuDisconnectButton();
+    }
+
+    public void ActuDisconnectButton()
+    {
+        disconnectButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
     }
 
 
+    private IEnumerator AutoLogin()
+    {
+        yield return StartCoroutine(CheckInternetConnectionCR());
+
+        if (ConnectionManager.InternetConnected)
+        {
+            if (ConnectionManager.ConnectionState == ConnectionState.NO_SESSION)
+            {
+                LootLockerSDKManager.CheckWhiteLabelSession(response =>
+                {
+                    if (response == false)
+                    {
+                        Debug.Log("No white label active session");
+                        State = ConnectionState.NO_SESSION;
+                    }
+                    else
+                    {
+                    // Session is valid, start game session
+                        LootLockerSDKManager.StartWhiteLabelSession((response) =>
+                        {
+                            if (response.success)
+                            {
+                                ConnectionManager.playerInfo.id = response.player_id;
+
+                                Debug.Log("Session started successfully");
+                                LootLockerSDKManager.GetPlayerName((response) =>
+                                {
+                                    if (response.success)
+                                    {
+                                        ConnectionManager.playerInfo.pseudo = response.name;
+                                    }
+                                    State = ConnectionState.CONNECTED;
+                                });
+                            }
+                            else
+                            {
+                                Debug.Log("Starting session error");
+                                return;
+                            }
+
+                        });
+
+                    }
+                });
+            }
+        }
+        else
+        {
+            State = ConnectionState.NO_CONNECTION;
+        }
+    }
+
     public void Login()
     {
-        State = ConnectionState.NO_SESSION;
-
         DisconnectPreviousSession();
 
         string email = loginEmailIF.text;
@@ -180,77 +214,23 @@ public class LoginManager : MonoBehaviour
                     }
                     else
                     {
-                        playerInfo.id = response.player_id;
-                        playerInfo.email = email;
+                        ConnectionManager.playerInfo.id = response.player_id;
+                        ConnectionManager.playerInfo.email = email;
 
                         Result("You are now connected !");
                         LootLockerSDKManager.GetPlayerName((response) =>
                         {
                             if (response.success)
                             {
-                                playerInfo.pseudo = response.name;
-                                ActuStateText();
+                                ConnectionManager.playerInfo.pseudo = response.name;
                             }
+                            State = ConnectionState.CONNECTED;
                         });
-                        State = ConnectionState.CONNECTED;
                     }
                 });
             }
         });
     }
-
-    private IEnumerator AutoLogin()
-    {
-        State = ConnectionState.NO_SESSION;
-
-        UnityWebRequest request = new UnityWebRequest("http://google.com");
-        yield return request.SendWebRequest();
-
-        if (request.error == null)
-        {
-            connected = true;
-            Debug.Log("Connected to internet");
-
-            LootLockerSDKManager.CheckWhiteLabelSession(response =>
-            {
-                if (response == false)
-                {
-                    Debug.Log("No active session");
-                }
-                else
-                {
-                // Session is valid, start game session
-                    LootLockerSDKManager.StartWhiteLabelSession((response) =>
-                    {
-                        if (response.success)
-                        {
-                            playerInfo.id = response.player_id;
-
-                            Debug.Log("Session started successfully");
-                            LootLockerSDKManager.GetPlayerName((response) =>
-                            {
-                                if (response.success)
-                                {
-                                    playerInfo.pseudo = response.name;
-                                    ActuStateText();
-                                }
-                            });
-                            State = ConnectionState.CONNECTED;
-                        }
-                        else
-                        {
-                            Debug.Log("Starting session error");
-                            return;
-                        }
-
-                    });
-
-                }
-            });
-        }
-    }
-
-
 
     public void ResetPassword()
     {
@@ -270,8 +250,6 @@ public class LoginManager : MonoBehaviour
 
     public void NewUser()
     {
-        State = ConnectionState.NO_SESSION;
-
         DisconnectPreviousSession();
 
         string email = newUserEmailIF.text;
@@ -318,8 +296,8 @@ public class LoginManager : MonoBehaviour
                         {
                             newNickName = response.player_id.ToString();
                         }
-                        playerInfo.pseudo = newNickName;
-                        playerInfo.id = response.player_id;
+                        ConnectionManager.playerInfo.pseudo = newNickName;
+                        ConnectionManager.playerInfo.id = response.player_id;
                         // Set new nickname for player
                         LootLockerSDKManager.SetPlayerName(newNickName, (response) =>
                         {
@@ -339,6 +317,27 @@ public class LoginManager : MonoBehaviour
         });
     }
 
+
+    public void LoginAsGuest()
+    {
+        DisconnectPreviousSession();
+
+        LootLockerSDKManager.StartGuestSession((response) =>
+        {
+            if (response.success)
+            {
+                Result("You are now connected as guest !");
+                ConnectionManager.playerInfo.id = response.player_id;
+                ConnectionManager.playerInfo.pseudo = response.player_id.ToString();
+                State = ConnectionState.GUEST;
+            }
+            else
+            {
+                Result("Error while logging in as guest, try again");
+            }
+        });
+    }
+
     public void Disconnect()
     {
         LootLockerSDKManager.EndSession((response) =>
@@ -354,44 +353,11 @@ public class LoginManager : MonoBehaviour
             }
         });
     }
-
-    public void LoginAsGuest()
-    {
-        State = ConnectionState.NO_SESSION;
-
-        DisconnectPreviousSession();
-
-        LootLockerSDKManager.StartGuestSession((response) =>
-        {
-            if (response.success)
-            {
-                Result("You are now connected as guest !");
-                playerInfo.id = response.player_id;
-                playerInfo.pseudo = response.player_id.ToString();
-                State = ConnectionState.GUEST;
-            }
-            else
-            {
-                Result("Error while logging in as guest, try again");
-            }
-        });
-    }
-
     private void DisconnectPreviousSession()
     {
         if (State == ConnectionState.GUEST || State == ConnectionState.CONNECTED)
         {
-            LootLockerSDKManager.EndSession((response) =>
-            {
-                if (!response.success)
-                {
-                    Debug.Log("Error while disconnecting previous session");
-                }
-                else
-                {
-                    Debug.Log("Disconnected previous session");
-                }
-            });
+            Disconnect();
         }
     }
 
@@ -401,7 +367,7 @@ public class LoginManager : MonoBehaviour
 
     public void ActuStateText()
     {
-        switch (connectionState)
+        switch (State)
         {
             case ConnectionState.NO_CONNECTION:
                 stateText.text = "State :\n No internet connection";
@@ -410,10 +376,10 @@ public class LoginManager : MonoBehaviour
                 stateText.text = "State :\n No session";
                 break;
             case ConnectionState.GUEST:
-                stateText.text = "State :\n" + playerInfo.id + " as Guest";
+                stateText.text = "State :\n" + ConnectionManager.playerInfo.id + " as Guest";
                 break;
             case ConnectionState.CONNECTED:
-                stateText.text = "State :\n" + (playerInfo.pseudo != "" ? playerInfo.pseudo : playerInfo.id) + " Connected";
+                stateText.text = "State :\n" + (ConnectionManager.playerInfo.pseudo != "" ? ConnectionManager.playerInfo.pseudo : ConnectionManager.playerInfo.id) + " Connected";
                 break;
             default:
                 stateText.text = "State :\n Not found";

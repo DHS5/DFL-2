@@ -6,7 +6,8 @@ using TMPro;
 
 public class StatsManager : MonoBehaviour
 {
-    private SettingsManager settingsManager;
+    private MenuMainManager main;
+
     private DataManager dataManager;
 
     [SerializeField] private StatBoard[] statBoards;
@@ -41,14 +42,11 @@ public class StatsManager : MonoBehaviour
 
     private void Awake()
     {
-        settingsManager = GetComponent<SettingsManager>();
+        main = GetComponent<MenuMainManager>();
     }
     private void Start()
     {
-        dataManager = DataManager.InstanceDataManager;
-
-        LoadStatsBoards();
-        CurrentStatBoard = statBoards[0];
+        dataManager = main.DataManager;
     }
 
 
@@ -88,6 +86,7 @@ public class StatsManager : MonoBehaviour
         {
             LoadStatBoard(i);
         }
+        CurrentStatBoard = statBoards[BoardIndex];
     }
 
 

@@ -106,6 +106,14 @@ public struct GameData
     public List<GameObject> weapons;
 }
 
+public struct GameResult
+{
+    public GameData data;
+    public int score;
+    public int wave;
+    public int kills;
+}
+
 
 /// <summary>
 /// DataManager of the game
@@ -117,10 +125,9 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public static DataManager InstanceDataManager { get; private set; }
 
-    
-    private LoginManager loginManager;
+    private MenuMainManager menuMain;
 
-    private int onlineFileID = 50355;
+    [SerializeField] private GameObject loadPopup;
 
     // Online Savable Data
     [HideInInspector] public AudioData audioData;
@@ -133,19 +140,27 @@ public class DataManager : MonoBehaviour
 
     // Current game data
     [HideInInspector] public GameData gameData;
+    [HideInInspector] public List<GameResult> gameResults = new List<GameResult>();
 
 
     public CardsContainerSO cardsContainer;
 
+
+    private int onlineFileID;
 
     private bool datasLoaded;
 
 
     // ### Properties ###
 
-    private bool Connected
+    private MenuMainManager MenuMain
     {
-        get { return loginManager.State == ConnectionState.CONNECTED || loginManager.State == ConnectionState.GUEST; }
+        get
+        {
+            if (menuMain == null)
+                menuMain = FindObjectOfType<MenuMainManager>();
+            return menuMain;
+        }
     }
 
     private int OnlineFileID
@@ -174,10 +189,8 @@ public class DataManager : MonoBehaviour
         InstanceDataManager = this;
         DontDestroyOnLoad(gameObject);
 
-        loginManager = FindObjectOfType<LoginManager>();
-
         // Load the personnal highscores and player preferences
-        LoadPlayerData();
+        //LoadPlayerData();
 
         // Clear the game data (modes etc... for the first game)
         ClearGameData();
@@ -189,15 +202,43 @@ public class DataManager : MonoBehaviour
 
     // ### Functions ###
 
-    public IEnumerator LoadDatas()
+    // ## Game Results ##
+    public void ApplyResults()
     {
-        datasLoaded = false;
-        LoadPlayerData();
-        yield return new WaitUntil(() => datasLoaded);
+        foreach (var result in gameResults)
+        {
+            // # Online #
+            menuMain.LeaderboardManager.PostScore(result.data, result.score, result.wave);
+
+            // # Stats #
+            menuMain.StatsManager.AddGameToStats(result.data, result.score, result.wave);
+        }
+
+        gameResults.Clear();
     }
 
-    public void GetOnlineFileID()
+    // ## Datas ##
+    public IEnumerator LoadDatas()
     {
+        loadPopup.SetActive(true);
+
+        yield return StartCoroutine(GetOnlineFileID());
+
+        datasLoaded = false;
+        yield return StartCoroutine(LoadPlayerData());
+
+        MenuMain.InventoryManager.ActuInventory();
+        MenuMain.StatsManager.LoadStatsBoards();
+        MenuMain.LeaderboardManager.LoadLeaderboards();
+        menuMain.ProgressionManager.LoadProgression();
+
+        loadPopup.SetActive(false);
+    }
+
+    private IEnumerator GetOnlineFileID()
+    {
+        bool gotResponse = false;
+
         LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
         {
             if (response.success)
@@ -205,7 +246,10 @@ public class DataManager : MonoBehaviour
                     onlineFileID = int.Parse(response.payload.value);
             else
                 Debug.Log("Couldn't get online file ID");
+
+            gotResponse = true;
         });
+        yield return new WaitUntil(() => gotResponse);
     }
 
     private void InitPlayerPrefs()
@@ -343,33 +387,41 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Load the game record from the corresponding file
     /// </summary>
-    public void LoadPlayerData()
+    public IEnumerator LoadPlayerData()
     {
         Debug.Log("-----LOAD DATA-----");
         InitInventory();
         InitProgression();
         InitStatsDatas();
 
-        string path = "";
-
-        if (Connected)
+        if (ConnectionManager.SessionConnected)
         {
+            bool success = false;
+            string url = "";
+            bool gotResponse = false;
+
             LootLockerSDKManager.GetPlayerFile(OnlineFileID, (response) =>
             {
                 if (response.success)
                 {
-                    path = response.url;
-                    StartCoroutine(LoadJSONFromURL(path));
+                    success = true;
+                    url = response.url;
                 }
-            });
-        }
-        if (datasLoaded) return;
 
-        LoadDataFromDisk();        
+                gotResponse = true;
+            });
+
+            yield return new WaitUntil(() => gotResponse);
+
+            if (success)
+                yield return StartCoroutine(LoadJSONFromURL(url));
+        }
+        if (!datasLoaded)
+        {
+            LoadDataFromDisk();
+        }
 
         InitPlayerPrefs();
-
-        datasLoaded = true;
     }
 
     private IEnumerator LoadJSONFromURL(string url)
@@ -402,6 +454,8 @@ public class DataManager : MonoBehaviour
             string json = File.ReadAllText(path);
             LoadJSON(json);
         }
+
+        datasLoaded = true;
     }
 
     private void LoadJSON(string json)

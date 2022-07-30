@@ -5,8 +5,7 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    private DataManager dataManager;
-    private InventoryManager inventoryManager;
+    private MenuMainManager main;
 
     [Header("Cards scriptable object")]
     [SerializeField] private CardsContainerSO cardsContainer;
@@ -36,18 +35,9 @@ public class ShopManager : MonoBehaviour
 
     // ### Functions ###
 
-    private void Start()
+    private void Awake()
     {
-        GetManagers();
-
-        ActuCoinsTexts();
-    }
-
-
-    public void GetManagers()
-    {
-        dataManager = DataManager.InstanceDataManager;
-        inventoryManager = FindObjectOfType<InventoryManager>();
+        main = GetComponent<MenuMainManager>();
     }
 
 
@@ -56,6 +46,8 @@ public class ShopManager : MonoBehaviour
 
     public void GenerateShopButtons()
     {
+        ActuCoinsTexts();
+
         if (!cardsGenerated)
         {
             // Player shop buttons
@@ -75,12 +67,12 @@ public class ShopManager : MonoBehaviour
     {
         foreach (CardSO card in cards)
         {
-            if (!inventoryManager.IsInInventory(card.type.GetObject()))
+            if (!main.InventoryManager.IsInInventory(card.type.GetObject()))
             {
                 ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
                 sb.shopCardPrefab = shopCPrefab;
                 sb.cardSO = card;
-                sb.GetManagers(in inventoryManager, this);
+                sb.GetManagers(main.InventoryManager, this);
 
                 shopButtons.Add(sb);
             }
@@ -111,51 +103,21 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public void Buy(int price)
+    {
+        main.DataManager.inventoryData.coins -= price;
+        ActuCoinsTexts();
+    }
+
 
     // ### COINS ###
 
     private void ActuCoinsTexts()
     {
         foreach (TextMeshProUGUI t in coinsTexts)
-            t.text = dataManager.inventoryData.coins.ToString();
+            t.text = main.DataManager.inventoryData.coins.ToString();
     }
 
-    public int GameCoins(GameData data, int score, int wave, int kills)
-    {
-        int coins = 0;
-
-        if (data.gameMode != GameMode.DRILL)
-        {
-            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) + 100 * (wave * (wave - 1)) / 2;
-
-            if (data.gameOptions.Contains(GameOption.BONUS))
-                coins /= 3;
-            if (data.gameOptions.Contains(GameOption.OBSTACLE))
-                coins = (int)(coins * 1.5f);
-            if (data.gameOptions.Contains(GameOption.OBJECTIF))
-                coins = (int)(coins * 1.5f);
-            if (data.gameOptions.Contains(GameOption.WEAPONS))
-            {
-                coins /= 3; 
-                coins += kills * 10;
-            }
-            else if (data.gameDrill == GameDrill.OBJECTIF)
-                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWeather);
-            else if (data.gameDrill == GameDrill.ONEVONE)
-                coins = score / (10 - (int)data.gameWeather);
-        }
-
-        dataManager.inventoryData.coins += coins;
-        ActuCoinsTexts();
-
-        return coins;
-    }
-
-    public void Buy(int price)
-    {
-        dataManager.inventoryData.coins -= price;
-        ActuCoinsTexts();
-    }
 
     public int WinCoins(GameData data)
     {

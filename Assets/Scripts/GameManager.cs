@@ -410,14 +410,12 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
-        // # Online #
-        main.SettingsManager.LeaderboardManager.PostScore(gameData, Score, WaveNumber);
-
-        // # Stats #
-        main.SettingsManager.StatsManager.AddGameToStats(gameData, Score, WaveNumber);
+        // # Result #
+        main.DataManager.gameResults.Add(new GameResult() { data = gameData, score = Score, wave = WaveNumber, kills = main.WeaponsManager.numberOfKill });
 
         // # Coins #
-        int coins = main.SettingsManager.ShopManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
+        int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
+        main.DataManager.inventoryData.coins += coins;
         main.GameUIManager.ActuCoins(coins);
 
         // # Missions #
@@ -464,7 +462,7 @@ public class GameManager : MonoBehaviour
         gameOver = true;
 
         // # Coins #
-        main.SettingsManager.ShopManager.WinCoins(gameData);
+        //main.SettingsManager.ShopManager.WinCoins(gameData);
 
         // # Data #
         main.DataManager.SavePlayerData();

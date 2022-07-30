@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    private DataManager dataManager;
-    private MenuUIManager menuUIManager;
-    private ShopManager shopManager;
+    private MenuMainManager main;
 
 
     private List<PlayerEnum> players = new();
@@ -16,27 +14,17 @@ public class InventoryManager : MonoBehaviour
     private List<WeaponEnum> weapons = new();
 
 
-    private void Start()
+    private void Awake()
     {
-        dataManager = DataManager.InstanceDataManager;
-        menuUIManager = GetComponent<MenuUIManager>();
-        shopManager = FindObjectOfType<ShopManager>();
-
-        Prepare();
-        ActuInventory();
+        main = GetComponent<MenuMainManager>();
     }
 
-    private void Prepare()
-    {
-        menuUIManager.GetManagers();
-        shopManager.GetManagers();
-    }
 
-    private void ActuInventory()
+    public void ActuInventory()
     {
         GetInventory();
-        menuUIManager.GetCards();
-        shopManager.GenerateShopButtons();
+        main.MenuUIManager.GetCards();
+        main.ShopManager.GenerateShopButtons();
     }
 
 
@@ -78,44 +66,44 @@ public class InventoryManager : MonoBehaviour
         {
             inv[i] = (int)players[i];
         }
-        dataManager.inventoryData.players = inv;
+        main.DataManager.inventoryData.players = inv;
         // Stadiums
         inv = new int[stadiums.Count];
         for (int i = 0; i < inv.Length; i++)
         {
             inv[i] = (int)stadiums[i];
         }
-        dataManager.inventoryData.stadiums = inv;
+        main.DataManager.inventoryData.stadiums = inv;
         // Attackers
         inv = new int[attackers.Count];
         for (int i = 0; i < inv.Length; i++)
         {
             inv[i] = (int)attackers[i];
         }
-        dataManager.inventoryData.attackers = inv;
+        main.DataManager.inventoryData.attackers = inv;
         // Weapons
         inv = new int[weapons.Count];
         for (int i = 0; i < inv.Length; i++)
         {
             inv[i] = (int)weapons[i];
         }
-        dataManager.inventoryData.weapons = inv;
+        main.DataManager.inventoryData.weapons = inv;
     }
 
 
     private void GetInventory()
     {
         // Players
-        foreach (int i in dataManager.inventoryData.players)
+        foreach (int i in main.DataManager.inventoryData.players)
             players.Add((PlayerEnum) i);
         // Stadiums
-        foreach (int i in dataManager.inventoryData.stadiums)
+        foreach (int i in main.DataManager.inventoryData.stadiums)
             stadiums.Add((StadiumEnum) i);
         // Attackers
-        foreach (int i in dataManager.inventoryData.attackers)
+        foreach (int i in main.DataManager.inventoryData.attackers)
             attackers.Add((AttackerEnum) i);
         // Weapons
-        foreach (int i in dataManager.inventoryData.weapons)
+        foreach (int i in main.DataManager.inventoryData.weapons)
         {
             weapons.Add((WeaponEnum)i);
         }
@@ -124,12 +112,12 @@ public class InventoryManager : MonoBehaviour
 
     private void GetWeaponsFromInventory()
     {
-        dataManager.gameData.weapons = new List<GameObject>();
+        main.DataManager.gameData.weapons = new List<GameObject>();
 
-        foreach (CardSO wCard in dataManager.cardsContainer.weaponCards)
+        foreach (CardSO wCard in main.DataManager.cardsContainer.weaponCards)
         {
             if (IsInInventory(wCard.type.GetObject()))
-                dataManager.gameData.weapons.Add(wCard.prefab);
+                main.DataManager.gameData.weapons.Add(wCard.prefab);
         }
     }
 }
