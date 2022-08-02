@@ -26,9 +26,6 @@ public class MusicSource : MonoBehaviour
 
 
     private int musicNumber;
-    private float musicVolume;
-    private bool musicOn;
-    private bool loopOn;
 
 
     // ### Properties ###
@@ -49,13 +46,12 @@ public class MusicSource : MonoBehaviour
     /// </summary>
     public bool MusicOn
     {
-        get { return musicOn; }
+        get { return musicOnToggle.isOn; }
         set
         {
-            if (value == true && !musicOn) audioSource.UnPause();
-            else if (value == false && musicOn) audioSource.Pause();
+            if (value == true && !MusicOn) audioSource.UnPause();
+            else if (value == false && MusicOn) audioSource.Pause();
 
-            musicOn = value;
             dataManager.audioData.musicOn = value;
         }
     }
@@ -64,11 +60,10 @@ public class MusicSource : MonoBehaviour
     /// </summary>
     public float MusicVolume
     {
-        get { return musicVolume; }
+        get { return musicSlider.value; }
         set
         {
-            musicVolume = value;
-            audioSource.volume = musicVolume;
+            audioSource.volume = MusicVolume;
             dataManager.audioData.musicVolume = value;
         }
     }
@@ -77,10 +72,9 @@ public class MusicSource : MonoBehaviour
     /// </summary>
     public bool LoopOn
     {
-        get { return loopOn; }
+        get { return loopOnToggle.isOn; }
         set
         {
-            loopOn = value;
             audioSource.loop = value;
             dataManager.audioData.loopOn = value;
         }
@@ -100,21 +94,17 @@ public class MusicSource : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         audioSource = GetComponent<AudioSource>();
+        dataManager = FindObjectOfType<DataManager>();
     }
 
     private void Start()
     {
-        dataManager = DataManager.InstanceDataManager;
-
-
         LoadAudioData(dataManager.audioData);
-        if (musicOn)
-            PlayFromBeginning(musicNumber);
     }
 
     private void Update()
     {
-        if (musicOn && !audioSource.isPlaying) // Plays the next music when the previous has ended
+        if (MusicOn && !audioSource.isPlaying) // Plays the next music when the previous has ended
         {
             NextMusic();
         }
@@ -123,18 +113,21 @@ public class MusicSource : MonoBehaviour
 
     // ### Functions ###
 
-    private void LoadAudioData(AudioData data)
+    public void LoadAudioData(AudioData data)
     {
         MusicOn = data.musicOn;
-        musicOnToggle.isOn = musicOn;
+        musicOnToggle.isOn = data.musicOn;
 
         MusicVolume = data.musicVolume;
-        musicSlider.value = musicVolume;
+        musicSlider.value = data.musicVolume;
 
         MusicNumber = data.musicNumber;
 
         LoopOn = data.loopOn;
-        loopOnToggle.isOn = loopOn;
+        loopOnToggle.isOn = data.loopOn;
+
+        if (MusicOn)
+            PlayFromBeginning(musicNumber);
     }
 
 

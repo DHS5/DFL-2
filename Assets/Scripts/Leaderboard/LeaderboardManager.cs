@@ -26,10 +26,13 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private LeaderboardRow personnalHighRow;
 
 
+    [SerializeField] private GameObject[] leaderboardObjects;
+
+
     private Leaderboard currentLeaderboard;
 
     readonly int leaderboardLimit = 100;
-    readonly int[] leaderboardIDs = { 4969, 4970, 4971, 4972, 4974, 4975, 4976, 4977, 4978 };
+    readonly static int[] leaderboardIDs = { 4969, 4970, 4971, 4972, 4974, 4975, 4976, 4977, 4978 };
 
 
     private int mode;
@@ -58,10 +61,6 @@ public class LeaderboardManager : MonoBehaviour
     {
         get { return ConnectionManager.playerInfo; }
     }
-    private bool Connected
-    {
-        get { return main.LoginManager.State == ConnectionState.CONNECTED || main.LoginManager.State == ConnectionState.GUEST; }
-    }
 
     public int Mode { set { mode = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
     public int Difficulty { set { difficulty = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
@@ -79,17 +78,17 @@ public class LeaderboardManager : MonoBehaviour
     // ### Functions ###
 
 
-    public void PostScore(GameData gameData, int score, int wave)
+    public static void PostScore(GameData gameData, int score, int wave)
     {
-        if (!Connected) return;
+        if (!ConnectionManager.SessionConnected) return;
         //Debug.Log("gt meta : " + GametypeToMeta(gameData));
-        LootLockerSDKManager.SubmitScore(PlayerInfo.id.ToString(), score, leaderboardIDs[GameTypeToLeaderboardIndex(gameData)], GetMeta(gameData, wave),
+        LootLockerSDKManager.SubmitScore(ConnectionManager.playerInfo.id.ToString(), score, leaderboardIDs[GameTypeToLeaderboardIndex(gameData)], GetMeta(gameData, wave),
             (response) =>
             {
                 if (response.success)
                 {
                     Debug.Log("Successfully submitted");
-                    LoadLeaderboard(GameTypeToLeaderboardIndex(gameData), true);
+                    //LoadLeaderboard(GameTypeToLeaderboardIndex(gameData), false);
                 }
                 else Debug.Log("Failed to submit");
             });
@@ -103,25 +102,34 @@ public class LeaderboardManager : MonoBehaviour
 
     public void LoadLeaderboards()
     {
-        if (loaded)
-        { 
-            for (int i = 0; i < leaderboards.Length; i++)
+        if (ConnectionManager.SessionConnected)
+        {
+            ShowLeaderboards(true);
+
+            if (loaded)
             {
-                LoadLeaderboard(i, false);
+                for (int i = 0; i < leaderboards.Length; i++)
+                {
+                    LoadLeaderboard(i, false);
+                }
+
+                CurrentLeaderboard = leaderboards[0];
+                loaded = true;
             }
 
-            CurrentLeaderboard = leaderboards[0];
-            loaded = true;
-        }
+            else
+            {
+                for (int i = 0; i < leaderboards.Length; i++)
+                {
+                    LoadLeaderboard(i, true);
+                }
 
+                CurrentLeaderboard = leaderboards[LeaderboardIndex];
+            }
+        }
         else
         {
-            for (int i = 0; i < leaderboards.Length; i++)
-            {
-                LoadLeaderboard(i, true);
-            }
-
-            CurrentLeaderboard = leaderboards[LeaderboardIndex];
+            ShowLeaderboards(false);
         }
     }
 
@@ -158,20 +166,21 @@ public class LeaderboardManager : MonoBehaviour
         });
     }
 
-    private void LoadLeaderboard()
-    {
-        LoadLeaderboard(LeaderboardIndex, true);
-    }
 
+    private void ShowLeaderboards(bool state)
+    {
+        foreach (GameObject go in leaderboardObjects)
+            go.SetActive(state);
+    }
 
     // ### Tools ###
 
-    private string GetMeta(GameData data, int wave)
+    private static string GetMeta(GameData data, int wave)
     {
         return GametypeToMeta(data) + "//" + wave;
     }
 
-    private string GametypeToMeta(GameData gD)
+    private static string GametypeToMeta(GameData gD)
     {
         return gD.gameWeather.ToString() + "//"
             + OptionsToMeta(gD.gameOptions);
@@ -182,7 +191,7 @@ public class LeaderboardManager : MonoBehaviour
     /// </summary>
     /// <param name="GOs">Game Options list</param>
     /// <returns></returns>
-    public string OptionsToMeta(List<GameOption> GOs)
+    public static string OptionsToMeta(List<GameOption> GOs)
     {
         string result = " ";
 
@@ -194,7 +203,7 @@ public class LeaderboardManager : MonoBehaviour
         return result;
     }
 
-    private int GameTypeToLeaderboardIndex(GameData gD)
+    private static int GameTypeToLeaderboardIndex(GameData gD)
     {
         return (int)gD.gameMode * 3 + (int)gD.gameDifficulty;
     }

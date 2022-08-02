@@ -62,9 +62,10 @@ public class LoginManager : MonoBehaviour
             ActuStateText();
             if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
             {
-                StartCoroutine(main.DataManager.LoadDatas());
+                
             }
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
+            StartCoroutine(main.DataManager.LoadDatas());
         }
     }
 
@@ -112,7 +113,6 @@ public class LoginManager : MonoBehaviour
 
         if (!ConnectionManager.InternetConnected)
         {
-            State = ConnectionState.NO_CONNECTION;
             loginButton.interactable = false;
             newUserButton.interactable = false;
             loginAsGuestButton.interactable = false;

@@ -70,6 +70,7 @@ public class PlayerAttributesSO : ScriptableObject
     [SerializeField] private bool canFeint; public bool CanFeint { get { return canFeint; } }
     [SerializeField] private bool canSlide; public bool CanSlide { get { return canSlide; } }
     [SerializeField] private bool canFlip; public bool CanFlip { get { return canFlip; } }
+    [SerializeField] private bool canTruck; public bool CanTruck { get { return canTruck; } }
 
 
     [Header("Skill moves speed")]

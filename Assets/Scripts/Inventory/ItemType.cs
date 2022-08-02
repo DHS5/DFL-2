@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public enum PlayerEnum { NULL, OBJ, LAMAR }
+public enum PlayerEnum { NULL, OBJ, LAMAR, KITTLE }
 [System.Serializable]
 public enum StadiumEnum { NULL, KETTLE, ARROWHEAD }
 [System.Serializable]

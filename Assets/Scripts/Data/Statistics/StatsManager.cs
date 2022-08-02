@@ -50,32 +50,35 @@ public class StatsManager : MonoBehaviour
     }
 
 
-    public void AddGameToStats(GameData type, int score, int wave)
+    public static void AddGameToStats(GameData type, int score, int wave)
     {
+        DataManager dataManager = DataManager.InstanceDataManager;
+
         int index = (int)type.gameMode * 3 + (int)type.gameDifficulty;
 
-        stats[index].gameNumber++;
-        stats[index].totalScore += score;
+        StatsData stats = dataManager.statsDatas[index];
 
-        int baseSize = stats[index].wavesReached.Length;
+        stats.gameNumber++;
+        stats.totalScore += score;
+
+        int baseSize = stats.wavesReached.Length;
         if (baseSize > wave)
         {
-            stats[index].wavesReached[wave - 1]++;
+            stats.wavesReached[wave - 1]++;
         }
         else
         {
             int[] newWavesReached = new int[wave];
             for (int i = 0; i < baseSize; i++)
             {
-                newWavesReached[i] = stats[index].wavesReached[i];
+                newWavesReached[i] = stats.wavesReached[i];
             }
             newWavesReached[wave - 1] = 1;
 
-            stats[index].wavesReached = newWavesReached;
+            stats.wavesReached = newWavesReached;
         }
 
-        dataManager.statsDatas[index] = stats[index];
-        LoadStatBoard(index);
+        dataManager.statsDatas[index] = stats;
     }
 
 

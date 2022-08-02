@@ -137,8 +137,6 @@ public class SettingsManager : MonoBehaviour
     {
         GetManagers();
 
-        Load();
-
         SetEventSystem(true);
     }
 

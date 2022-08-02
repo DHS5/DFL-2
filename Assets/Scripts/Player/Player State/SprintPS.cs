@@ -12,7 +12,13 @@ public class SprintPS : PlayerState
 
     public override void Enter()
     {
-        SetTrigger("Sprint");
+        if (!att.CanTruck)
+            SetTrigger("Sprint");
+        else
+        {
+            player.gameplay.isTrucking = true;
+            SetTrigger("Truck");
+        }
 
         player.playerManager.SprintUIAnimation();
 
@@ -66,6 +72,8 @@ public class SprintPS : PlayerState
         ResetTrigger("Sprint");
 
         player.effects.SprintVolume(false, att.accelerationRestTime - (att.accelerationTime - (Time.time - controller.SprintStartTime)));
+
+        player.gameplay.isTrucking = false;
         
         base.Exit();
     }

@@ -9420,6 +9420,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &456793278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3925944617789442539, guid: 0863bec102919aa4d94e2ed2a42450fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 192469178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &457931884
 GameObject:
   m_ObjectHideFlags: 0
@@ -24276,8 +24282,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6056623954788691228, guid: 03229a0e9ea539d409b43748a2cd5169,
-        type: 3}
+      objectReference: {fileID: 845207700}
     - target: {fileID: 5044460654197669884, guid: 8bf6802969cb00441a30d09aad762142,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -24291,7 +24296,7 @@ PrefabInstance:
     - target: {fileID: 5044460654197669884, guid: 8bf6802969cb00441a30d09aad762142,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Tools, Assembly-CSharp
+      value: DataManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5044460654197669884, guid: 8bf6802969cb00441a30d09aad762142,
         type: 3}
@@ -35417,6 +35422,12 @@ MonoBehaviour:
   - {fileID: 1292199049}
   - {fileID: 1157663493}
   personnalHighRow: {fileID: 1811218387}
+  leaderboardObjects:
+  - {fileID: 565218758}
+  - {fileID: 2066415111}
+  - {fileID: 456793278}
+  - {fileID: 684085877}
+  - {fileID: 321537500}
 --- !u!114 &1569061925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46129,6 +46140,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058263386}
   m_CullTransparentMesh: 1
+--- !u!1 &2066415111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 914086322751991265, guid: 3d7ee25c50ce3db479d3e7531949d8c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1239863673}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2087798073
 GameObject:
   m_ObjectHideFlags: 0

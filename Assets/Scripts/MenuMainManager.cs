@@ -10,7 +10,7 @@ public class MenuMainManager : MonoBehaviour
     // Multi scene managers
     public DataManager DataManager { get; private set; }
     public SettingsManager SettingsManager { get; private set; }
-    public LoginManager LoginManager { get; private set; }
+    public MusicSource MusicSource { get; private set; }
 
     // Menu scene managers
     public MenuUIManager MenuUIManager { get; private set; }
@@ -19,6 +19,7 @@ public class MenuMainManager : MonoBehaviour
     public ShopManager ShopManager { get; private set; }
     public InventoryManager InventoryManager { get; private set; }
     public ProgressionManager ProgressionManager { get; private set; }
+    public LoginManager LoginManager { get; private set; }
 
 
     private void Awake()
@@ -28,7 +29,7 @@ public class MenuMainManager : MonoBehaviour
         // # Multi scene managers
         DataManager = FindObjectOfType<DataManager>();
         SettingsManager = FindObjectOfType<SettingsManager>();
-        LoginManager = FindObjectOfType<LoginManager>();
+        MusicSource = FindObjectOfType<MusicSource>();
 
         // # Game scene managers
         MenuUIManager = GetComponent<MenuUIManager>();
@@ -37,12 +38,8 @@ public class MenuMainManager : MonoBehaviour
         ShopManager = GetComponent<ShopManager>();
         InventoryManager = GetComponent<InventoryManager>();
         ProgressionManager = GetComponent<ProgressionManager>();
+        LoginManager = GetComponent<LoginManager>();
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
-    }
-
-    private void Start()
-    {
-        DataManager.ApplyResults();
     }
 }

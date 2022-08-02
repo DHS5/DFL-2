@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
 
 
         // # Data #
-        main.DataManager.SavePlayerData();
+        main.DataManager.SaveDatas();
 
         // # Audio #
         if (main.DataManager.audioData.soundOn) main.GameAudioManager.MuteSound(true);
@@ -375,7 +375,7 @@ public class GameManager : MonoBehaviour
 
 
         // # Data #
-        main.DataManager.SavePlayerData();
+        main.DataManager.SaveDatas();
     }
 
     /// <summary>
@@ -410,8 +410,11 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
-        // # Result #
-        main.DataManager.gameResults.Add(new GameResult() { data = gameData, score = Score, wave = WaveNumber, kills = main.WeaponsManager.numberOfKill });
+        // # Leaderboard #
+        LeaderboardManager.PostScore(gameData, Score, WaveNumber);
+
+        // # Stats #
+        StatsManager.AddGameToStats(gameData, Score, WaveNumber);
 
         // # Coins #
         int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
@@ -422,7 +425,7 @@ public class GameManager : MonoBehaviour
         main.MissionManager.CompleteMissions(gameData, waveNumber);
 
         // # Data #
-        main.DataManager.SavePlayerData();
+        main.DataManager.SaveDatas();
 
         // # UI #
         main.GameUIManager.GameOver();
@@ -465,7 +468,7 @@ public class GameManager : MonoBehaviour
         //main.SettingsManager.ShopManager.WinCoins(gameData);
 
         // # Data #
-        main.DataManager.SavePlayerData();
+        main.DataManager.SaveDatas();
 
         // # UI #
         main.GameUIManager.Win();

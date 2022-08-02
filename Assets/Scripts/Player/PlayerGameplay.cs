@@ -27,10 +27,23 @@ public class PlayerGameplay : MonoBehaviour
     [Tooltip("Whether the player is frozen")]
     [HideInInspector] public bool freeze = true;
 
+    [HideInInspector] public bool isTrucking = false;
+
 
 
     private float tunnelWidth = 5f;
     private float recupTime = 1.5f;
+
+
+    // ### Properties ###
+
+    private bool Catchable
+    {
+        get { return !isInvincible && !isTrucking; }
+    }
+
+
+    // ### Built-in ###
 
 
     private void Awake()
@@ -81,7 +94,7 @@ public class PlayerGameplay : MonoBehaviour
         if (!player.gameManager.GameOver)
         {
             // When the player collides with an enemy --> game over
-            if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+            if (collision.gameObject.CompareTag("Enemy") && Catchable)
             {
                 Hurt(collision.impulse.normalized);
                 Debug.Log("Hurt by enemy");

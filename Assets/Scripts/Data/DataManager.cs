@@ -4,6 +4,7 @@ using LootLocker.Requests;
 using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
+using UnityEditor;
 
 
 
@@ -106,13 +107,6 @@ public struct GameData
     public List<GameObject> weapons;
 }
 
-public struct GameResult
-{
-    public GameData data;
-    public int score;
-    public int wave;
-    public int kills;
-}
 
 
 /// <summary>
@@ -140,11 +134,11 @@ public class DataManager : MonoBehaviour
 
     // Current game data
     [HideInInspector] public GameData gameData;
-    [HideInInspector] public List<GameResult> gameResults = new List<GameResult>();
 
 
     public CardsContainerSO cardsContainer;
 
+    private bool firstLoad = true;
 
     private int onlineFileID;
 
@@ -202,37 +196,34 @@ public class DataManager : MonoBehaviour
 
     // ### Functions ###
 
-    // ## Game Results ##
-    public void ApplyResults()
-    {
-        foreach (var result in gameResults)
-        {
-            // # Online #
-            menuMain.LeaderboardManager.PostScore(result.data, result.score, result.wave);
-
-            // # Stats #
-            menuMain.StatsManager.AddGameToStats(result.data, result.score, result.wave);
-        }
-
-        gameResults.Clear();
-    }
-
     // ## Datas ##
     public IEnumerator LoadDatas()
     {
         loadPopup.SetActive(true);
 
-        yield return StartCoroutine(GetOnlineFileID());
+        if (ConnectionManager.InternetConnected)
+            yield return StartCoroutine(GetOnlineFileID());
 
         datasLoaded = false;
         yield return StartCoroutine(LoadPlayerData());
 
         MenuMain.InventoryManager.ActuInventory();
         MenuMain.StatsManager.LoadStatsBoards();
+        MenuMain.ProgressionManager.LoadProgression();
         MenuMain.LeaderboardManager.LoadLeaderboards();
-        menuMain.ProgressionManager.LoadProgression();
 
         loadPopup.SetActive(false);
+
+        if (firstLoad)
+            FirstLoad();
+    }
+
+    private void FirstLoad()
+    {
+        MenuMain.SettingsManager.Load();
+        MenuMain.MusicSource.LoadAudioData(audioData);
+
+        firstLoad = false;
     }
 
     private IEnumerator GetOnlineFileID()
@@ -254,7 +245,7 @@ public class DataManager : MonoBehaviour
 
     private void InitPlayerPrefs()
     {
-        if (playerPrefs.teamIndex == null)
+        if (playerPrefs.teamIndex.Length != 5)
             playerPrefs.teamIndex = new int[5];
 
         if (playerPrefs.playerIndex >= inventoryData.players.Length) playerPrefs.playerIndex = 0;
@@ -343,8 +334,12 @@ public class DataManager : MonoBehaviour
         public StatsData[] statsDatas;
     }
 
+    public void SaveDatas()
+    {
+        StartCoroutine(SavePlayerData());
+    }
 
-    public void SavePlayerData()
+    private IEnumerator SavePlayerData()
     {
         SaveData data = new();
 
@@ -359,30 +354,59 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
 
-        //if (Connected)
-        //{
-        //    LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
-        //    {
-        //        if (response.success)
-        //            Debug.Log("Deleted file successfully");
-        //        else
-        //            Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
-        //    
-        //        LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
-        //        {
-        //            if (response.success)
-        //            {
-        //                Debug.Log("File uploaded successfully");
-        //                onlineFileID = response.id;
-        //                Debug.Log(onlineFileID + " / " + response.id);
-        //                OnlineFileID = response.id;
-        //            }
-        //        });
-        //    });
-        //}
+        yield return StartCoroutine(SaveOnlineCR());
 
         //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
+
+    private IEnumerator SaveOnlineCR()
+    {
+        bool done = false;
+
+        if (ConnectionManager.SessionConnected)
+        {
+            LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
+            {
+                if (response.success)
+                    Debug.Log("Deleted file successfully");
+                else
+                    Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
+
+                LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
+                {
+                    if (response.success)
+                    {
+                        Debug.Log("File uploaded successfully");
+                        onlineFileID = response.id;
+                        Debug.Log(onlineFileID + " / " + response.id);
+                        OnlineFileID = response.id;
+                    }
+
+                    done = true;
+                });
+            });
+
+            yield return new WaitUntil(() => done);
+        }
+    }
+
+    public void QuitGame()
+    {
+        StartCoroutine(Quit());
+    }
+
+    private IEnumerator Quit()
+    {
+        yield return StartCoroutine(DataManager.InstanceDataManager.SavePlayerData());
+
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#elif UNITY_WEBGL
+#else
+        Application.Quit();
+#endif
+    }
+
 
     /// <summary>
     /// Load the game record from the corresponding file
@@ -396,6 +420,7 @@ public class DataManager : MonoBehaviour
 
         if (ConnectionManager.SessionConnected)
         {
+            Debug.Log("Load from online session");
             bool success = false;
             string url = "";
             bool gotResponse = false;
@@ -447,6 +472,7 @@ public class DataManager : MonoBehaviour
 
     private void LoadDataFromDisk()
     {
+        Debug.Log("Load from disk");
         string path = Application.persistentDataPath + "/savefile.json";
 
         if (File.Exists(path))

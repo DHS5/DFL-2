@@ -14,7 +14,7 @@ public class Tools : MonoBehaviour
     /// <param name="scene">Scene number</param>
     public void LoadScene(int scene)
     {
-        SavePlayerData();
+        SaveData();
 
         if (SceneManager.GetActiveScene().buildIndex != scene)
         {
@@ -28,7 +28,7 @@ public class Tools : MonoBehaviour
 
     public void ReloadScene()
     {
-        SavePlayerData();
+        SaveData();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -36,9 +36,9 @@ public class Tools : MonoBehaviour
     /// <summary>
     /// Quits the game
     /// </summary>
-    public void QuitGame()
+    public void QuitInstant()
     {
-        SavePlayerData();
+        SaveData();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #elif UNITY_WEBGL
@@ -48,11 +48,11 @@ public class Tools : MonoBehaviour
     }
 
 
-    private void SavePlayerData()
+    private void SaveData()
     {
         DataManager dataManager = DataManager.InstanceDataManager;
         if (dataManager != null)
-            dataManager.SavePlayerData();
+            dataManager.SaveDatas();
     }
 
 
