@@ -2515,7 +2515,7 @@ MonoBehaviour:
   gameData:
     gameMode: 0
     gameDifficulty: 0
-    gameWheather: 0
+    gameWeather: 0
     gameOptions: 
     gameDrill: 0
     gameEnemiesRange: 0
@@ -2528,7 +2528,7 @@ MonoBehaviour:
     weapons: []
   gameMode: 3
   gameDifficulty: 0
-  gameWheather: 0
+  gameWeather: 0
   gameOptions: 
   gameDrill: 0
   enemiesRange: 5
@@ -2697,13 +2697,15 @@ MonoBehaviour:
       wingmen:
       - {fileID: 2035816876248888783, guid: 479db857fb49b2349be11fa3929bdadc, type: 3}
       - {fileID: 2035816876248888783, guid: e4b9173b98815d34a8a23d0bead8e270, type: 3}
+      - {fileID: 2197924239140163065, guid: 35e20b18b484f6148b584eea82b90454, type: 3}
       linemen:
       - {fileID: 2035816876248888783, guid: 06d8465b5d960ed478fc12b87422c1fc, type: 3}
       - {fileID: 2035816876248888783, guid: 54f3d2783a16f42479662dfa25a3e9de, type: 3}
       - {fileID: 2035816876248888783, guid: 7eed94da84fbb2d4383752b6441ba388, type: 3}
     hardD:
       wingmen:
-      - {fileID: 2035816876248888783, guid: 08e4bafa6fc568d498010ff36548cd23, type: 3}
+      - {fileID: 2197924239140163065, guid: 35e20b18b484f6148b584eea82b90454, type: 3}
+      - {fileID: 2197924239140163065, guid: 9aa4f62e58b87414285c4af6e3db38cf, type: 3}
       linemen:
       - {fileID: 2035816876248888783, guid: 7eed94da84fbb2d4383752b6441ba388, type: 3}
     easyZ:
@@ -2903,70 +2905,70 @@ MonoBehaviour:
   teamMission:
     gameModes: 00000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 6
   zombieMission:
     gameModes: 01000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 6
   normalMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 00000000
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 10
   hardMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 01000000
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 10
   rainMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 02000000
     gameDrill: 0
     waveToReach: 4
   fogMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 
-    gameWheathers: 01000000
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 5
   bonusMission:
     gameModes: 00000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 3
   obstacleMission:
     gameModes: 02000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 0
     waveToReach: 5
   objectifMission:
     gameModes: 03000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 
     gameDrill: 2
     waveToReach: 5
   weaponMission:
     gameModes: 02000000
     gameDifficulties: 
-    gameWheathers: 
+    gameWeathers: 
     gameOptions: 01000000
     gameDrill: 0
     waveToReach: 4

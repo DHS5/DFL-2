@@ -52,6 +52,8 @@ public class StatsManager : MonoBehaviour
 
     public static void AddGameToStats(GameData type, int score, int wave)
     {
+        if (type.gameMode == GameMode.DRILL) return;
+
         DataManager dataManager = DataManager.InstanceDataManager;
 
         int index = (int)type.gameMode * 3 + (int)type.gameDifficulty;

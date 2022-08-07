@@ -14,6 +14,8 @@ public class Stadium : MonoBehaviour
     public GameObject SpawnPosition;
     public Camera stadiumCamera;
 
+    public Material enemyMaterial;
+
     [SerializeField] private ParticleSystem rain;
 
 

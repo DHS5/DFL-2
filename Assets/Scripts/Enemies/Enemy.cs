@@ -125,6 +125,8 @@ public abstract class Enemy : MonoBehaviour
         player = FindObjectOfType<Player>();
         playerG = player.gameplay;
         playerC = player.controller;
+
+        FindObjectOfType<Renderer>().material = MainManager.InstanceMainManager.FieldManager.stadium.enemyMaterial;
     }
 
 
