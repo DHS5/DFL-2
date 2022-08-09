@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Zombie : Enemy
 {
+    public ZombieAttributesSO Attribute { get; private set; }
+
     public bool dead;
 
     private void Start()
@@ -37,6 +39,11 @@ public class Zombie : Enemy
     //    }
     //}
 
+    public override void GetAttribute(EnemyAttributeSO att)
+    {
+        if (att != null)
+            Attribute = att as ZombieAttributesSO;
+    }
 
     public virtual void Dead()
     {

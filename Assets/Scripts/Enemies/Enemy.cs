@@ -133,6 +133,8 @@ public abstract class Enemy : MonoBehaviour
 
     // ### Functions ###
 
+    public abstract void GetAttribute(EnemyAttributeSO att);
+
     /// <summary>
     /// Stops the enemy
     /// </summary>

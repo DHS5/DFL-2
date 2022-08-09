@@ -50,41 +50,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Game parameters")]
 
-    [Tooltip("Inspector chosen game mode")]
-    public GameMode gameMode;
-
-    [Tooltip("Inspector chosen game difficulty")]
-    public GameDifficulty gameDifficulty;
-
-    [Tooltip("Inspector chosen game Weather")]
-    public GameWeather gameWeather;
-
-    [Tooltip("Inspector chosen game options")]
-    public List<GameOption> gameOptions = new List<GameOption>();
-
-    [Tooltip("Inspector chosen game drill")]
-    public GameDrill gameDrill;
-
     [Tooltip("Range of different enemies that can spawn in one wave")]
     [Range(0, 5)] public int enemiesRange;
 
-    [Tooltip("Player's prefab")]
-    public GameObject playerPrefab;
-
-    [Tooltip("Index of the stadium's prefab")]
-    [Range(0, 10)] public int stadiumIndex;
-
-    [Tooltip("One v One enemy's prefab")]
-    public GameObject enemyPrefab;
-
-    [Tooltip("Team prefabs")]
-    public GameObject[] team;
-
-    [Tooltip("Stadium's prefab")]
-    public GameObject stadium;
-    
-    [Tooltip("Parkour's prefab")]
-    public GameObject parkour;
 
 
 
@@ -207,22 +175,6 @@ public class GameManager : MonoBehaviour
         if (main.DataManager != null)
         {
             gameData = main.DataManager.gameData;
-        }
-        else
-        {
-            gameData.gameMode = gameMode;
-            gameData.gameDifficulty = gameDifficulty;
-            gameData.gameWeather = gameWeather;
-            gameData.gameOptions = gameOptions;
-            gameData.gameDrill = gameDrill;
-            gameData.gameEnemiesRange = enemiesRange;
-
-            gameData.player = playerPrefab;
-            gameData.stadiumIndex = stadiumIndex;
-            gameData.enemy = enemyPrefab;
-            gameData.team = team;
-            gameData.stadium = stadium;
-            gameData.parkour = parkour;
         }
 
         gameData.gameEnemiesRange = enemiesRange;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WaitWDS : EnemyState
+public class WaitWDS : WingManState
 {
-    public WaitWDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public WaitWDS(WingMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.WAIT;
     }
@@ -25,10 +25,10 @@ public class WaitWDS : EnemyState
 
         if (enemy.playerOnField)
         {
-            if (!enemy.patient && enemy.zDistance < enemy.waitDist)
+            if (!att.patient && enemy.zDistance < att.waitDist)
             {
                 // Intercept
-                if (enemy.rawDistance > enemy.chaseDist)
+                if (enemy.rawDistance > att.chaseDist)
                     nextState = new InterceptWDS(enemy, agent, animator);
                 // Chase
                 else
@@ -37,13 +37,13 @@ public class WaitWDS : EnemyState
                 stage = Event.EXIT;
             }
 
-            if (enemy.patient && enemy.zDistance < enemy.waitDist)
+            if (att.patient && enemy.zDistance < att.waitDist)
             {
                 // If out the precision cone
-                if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
+                if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > att.chaseAngle)
                 {
                     // Intercept
-                    if (enemy.rawDistance > enemy.chaseDist)
+                    if (enemy.rawDistance > att.chaseDist)
                         nextState = new InterceptWDS(enemy, agent, animator);
                     // Chase
                     else
@@ -52,7 +52,7 @@ public class WaitWDS : EnemyState
                     stage = Event.EXIT;
                 }
                 // If in the precision cone and distance < patience --> attack
-                else if (enemy.rawDistance < enemy.patience)
+                else if (enemy.rawDistance < att.patience)
                 {
                     nextState = new AttackWDS(enemy, agent, animator);
                     stage = Event.EXIT;

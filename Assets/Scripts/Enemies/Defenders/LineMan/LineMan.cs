@@ -4,41 +4,16 @@ using UnityEngine;
 
 public class LineMan : Defender
 {
+    public LineManAttribute Att { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
 
-        currentState = new WaitLDS(this, navMeshAgent, animator);
-
         precision = Random.Range(0, precision * intelligence);
-    }
 
-    /// <summary>
-    /// Gives the NavMeshAgent his destination
-    /// </summary>
-    public override void ChasePlayer()
-    {
-        base.ChasePlayer();
+        Att = Attribute.linemanAtt;
 
-        currentState = currentState.Process();
-
-        if (playerG.onField)
-        {
-            navMeshAgent.SetDestination(destination);
-        }
-
-        if (reactivity != 0 && !gameOver)
-        {
-            Invoke(nameof(ChasePlayer), reactivity);
-        }
-    }
-
-    private void Update()
-    {
-        if (reactivity == 0 && playerG.onField && !gameOver)
-        {
-            ChasePlayer();
-        }
-
+        currentState = new WaitLDS(this, navMeshAgent, animator);
     }
 }

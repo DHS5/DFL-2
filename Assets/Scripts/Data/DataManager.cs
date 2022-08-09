@@ -100,7 +100,7 @@ public struct GameData
 
     public GameObject player;
     public int stadiumIndex;
-    public GameObject enemy;
+    public DefenderAttributesSO enemy;
     public GameObject[] team;
     public GameObject stadium;
     public GameObject parkour;

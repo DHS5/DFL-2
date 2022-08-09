@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackWDS : EnemyState
+public class AttackWDS : WingManState
 {
     private float baseSpeed;
     
-    public AttackWDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public AttackWDS(WingMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
 
-        baseSpeed = agent.speed;
+        baseSpeed = enemy.Attribute.speed;
 
-        agent.speed = enemy.attackSpeed;
+        agent.speed = enemy.Attribute.attackSpeed;
     }
 
     public override void Enter()
@@ -30,7 +30,7 @@ public class AttackWDS : EnemyState
 
         enemy.destination = enemy.playerPosition;
 
-        if (enemy.rawDistance > enemy.attackDist)
+        if (enemy.rawDistance > att.attackDist)
         {
             nextState = new ChaseWDS(enemy, agent, animator);
             stage = Event.EXIT;

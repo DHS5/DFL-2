@@ -182,6 +182,19 @@ public class MenuUIManager : MonoBehaviour
             }
         }
     }
+    private void GetCard(List<CardSO> cardSOs, GameObject prefab, ref List<EnemyCard> cards, GameObject container, int index, ref DefenderAttributesSO att)
+    {
+        int i = 0;
+        foreach (CardSO cardSO in cardSOs)
+        {
+            EnemyCard card = Instantiate(prefab, container.transform).GetComponent<EnemyCard>();
+            card.cardSO = cardSO;
+            if (i != index) card.gameObject.SetActive(false);
+            else att = card.cardSO.attribute;
+            cards.Add(card);
+            i++;
+        }
+    }
 
     public void GetCards()
     {
@@ -243,8 +256,28 @@ public class MenuUIManager : MonoBehaviour
         PrevCard(playerCompCards, PlayerIndex, ref DataManager.gameData.player);
         PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex, ref DataManager.gameData.player);
     }
-    public void NextCardEnemy() { EnemyIndex = NextCard(enemyCards, EnemyIndex, ref DataManager.gameData.enemy); }
-    public void PrevCardEnemy() { EnemyIndex = PrevCard(enemyCards, EnemyIndex, ref DataManager.gameData.enemy); }
+    public void NextCardEnemy()
+    {
+        enemyCards[EnemyIndex].gameObject.SetActive(false);
+
+        int index = EnemyIndex;
+        Next(ref index, enemyCards.Count - 1);
+        EnemyIndex = index;
+
+        enemyCards[EnemyIndex].gameObject.SetActive(true);
+        DataManager.gameData.enemy = enemyCards[EnemyIndex].cardSO.attribute;
+    }
+    public void PrevCardEnemy()
+    {
+        enemyCards[EnemyIndex].gameObject.SetActive(false);
+
+        int index = EnemyIndex;
+        Prev(ref index, enemyCards.Count - 1);
+        EnemyIndex = index;
+
+        enemyCards[EnemyIndex].gameObject.SetActive(true);
+        DataManager.gameData.enemy = enemyCards[EnemyIndex].cardSO.attribute;
+    }
 
     public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref DataManager.gameData.team[i]); }
     public void PrevCardAttacker(int i) { AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i], ref DataManager.gameData.team[i]); }

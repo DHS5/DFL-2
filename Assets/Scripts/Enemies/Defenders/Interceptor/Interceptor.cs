@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Interceptor : Defender
 {
+    public InterceptorAttribute Att { get; private set; }
+
     [Tooltip("Mode of the interceptor :\n" +
         "TRUE = time --> base his attack on Attack time\n" +
         "FALSE = distance --> base his attack on Attack dist")]
@@ -16,34 +18,8 @@ public class Interceptor : Defender
     {
         base.Awake();
 
+        Att = Attribute.interceptorAtt;
+
         currentState = new WaitIDS(this, navMeshAgent, animator);
-    }
-
-    /// <summary>
-    /// Gives the NavMeshAgent his destination
-    /// </summary>
-    public override void ChasePlayer()
-    {
-        base.ChasePlayer();
-
-        currentState = currentState.Process();
-
-        if (playerG.onField)
-        {
-            navMeshAgent.SetDestination(destination);
-        }
-
-        if (reactivity != 0 && !gameOver)
-        {
-            Invoke(nameof(ChasePlayer), reactivity);
-        }
-    }
-
-    private void Update()
-    {
-        if (reactivity == 0 && playerG.onField && !gameOver)
-        {
-            ChasePlayer();
-        }
     }
 }

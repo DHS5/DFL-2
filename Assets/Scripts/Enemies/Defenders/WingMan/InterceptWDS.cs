@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class InterceptWDS : EnemyState
+public class InterceptWDS : WingManState
 {
-    public InterceptWDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public InterceptWDS(WingMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.INTERCEPT;
     }
@@ -23,10 +23,10 @@ public class InterceptWDS : EnemyState
 
         if (Mathf.Abs(enemy.toPlayerAngle) < 90 || enemy.zDistance < 0)
         {
-            enemy.destination = enemy.playerPosition + enemy.playerVelocity * (enemy.anticipation +
-                 ((enemy.rawDistance / agent.speed) // Minimum time to reach the destination
+            enemy.destination = enemy.playerPosition + enemy.playerVelocity * (att.anticipation +
+                 ((enemy.rawDistance / enemy.Attribute.speed) // Minimum time to reach the destination
                  * enemy.playerSpeed) // * playerSpeed to have the distance the player will have run
-                 * enemy.intelligence); // * intelligence (0 ... 1)
+                 * att.intelligence); // * intelligence (0 ... 1)
         }
         else
         {
@@ -34,15 +34,15 @@ public class InterceptWDS : EnemyState
             enemy.destination = enemy.playerPosition + enemy.playerVelocity * dist;
         }
 
-        if (enemy.rawDistance < enemy.chaseDist)
+        if (enemy.rawDistance < att.chaseDist)
         {
             nextState = new ChaseWDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
-        if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) < enemy.precision)
+        if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) < att.chaseAngle)
         {
             // Wait
-            if (enemy.patient)
+            if (att.patient)
             {
                 nextState = new WaitWDS(enemy, agent, animator);
             }

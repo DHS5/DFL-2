@@ -133,7 +133,7 @@ public class EnvironmentManager : MonoBehaviour
     /// <param name="densityAddition">FogDensity += densityAddition</param>
     private void IncreaseFog(float densityAddition)
     {
-        if (main.GameManager.gameOptions.Contains(GameOption.OBJECTIF))
+        if (main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF))
             densityAddition /= 2;
         RenderSettings.fogDensity += densityAddition;
     }

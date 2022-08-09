@@ -10,7 +10,10 @@ public class CardSO : ScriptableObject
     public string Title;
     public Sprite mainSprite;
     public Sprite shopSprite;
+    [Space]
     public GameObject prefab;
+    public DefenderAttributesSO attribute;
+    [Space]
     public int price;
     [Space]
     [Range(0, 10)] public int physical;

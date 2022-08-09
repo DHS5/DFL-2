@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaseWDS : EnemyState
+public class ChaseWDS : WingManState
 {
-    public ChaseWDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public ChaseWDS(WingMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.CHASE;
     }
@@ -23,16 +23,16 @@ public class ChaseWDS : EnemyState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * enemy.anticipation;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
 
         // Attack
-        if (enemy.rawDistance < enemy.attackDist)
+        if (enemy.rawDistance < att.attackDist)
         {
             nextState = new AttackWDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
         // Intercept
-        if (enemy.rawDistance > enemy.chaseDist && Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > enemy.precision)
+        if (enemy.rawDistance > att.chaseDist && Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > att.chaseAngle)
         {
             nextState = new InterceptWDS(enemy, agent, animator);
             stage = Event.EXIT;
