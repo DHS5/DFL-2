@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum DefenderType { WINGMAN, LINEMAN, CORNERBACK, LINEBACKER };
 
 public abstract class DefenderAttributesSO : EnemyAttributesSO
 {
+    public enum DefenderType { WINGMAN, LINEMAN, CORNERBACK, LINEBACKER };
+
     [Header("Defenders attributes")]
     public string enemyName;
     [Space]

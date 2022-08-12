@@ -6,9 +6,10 @@ public class ClassicZombie : Zombie
 {
     public ClassicZAttributesSO Att { get; private set; }
 
-    protected override void Awake()
+
+    public override void GetAttribute(EnemyAttributesSO att)
     {
-        base.Awake();
+        base.GetAttribute(att);
 
         Att = Attribute as ClassicZAttributesSO;
 
