@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class LineMan : Defender
 {
-    public LineManAttribute Att { get; private set; }
+    public LinemanAttributesSO Att { get; private set; }
 
-    protected override void Awake()
+    [HideInInspector] public float precision;
+
+    public override void GetAttribute(EnemyAttributesSO att)
     {
-        base.Awake();
+        base.GetAttribute(att);
 
-        precision = Random.Range(0, precision * intelligence);
+        Att = att as LinemanAttributesSO;
 
-        Att = Attribute.linemanAtt;
+        precision = Random.Range(0, Att.precision * Att.intelligence);
 
         currentState = new WaitLDS(this, navMeshAgent, animator);
     }

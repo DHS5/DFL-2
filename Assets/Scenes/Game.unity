@@ -2526,18 +2526,7 @@ MonoBehaviour:
     stadium: {fileID: 0}
     parkour: {fileID: 0}
     weapons: []
-  gameMode: 3
-  gameDifficulty: 0
-  gameWeather: 0
-  gameOptions: 
-  gameDrill: 0
   enemiesRange: 5
-  playerPrefab: {fileID: 0}
-  stadiumIndex: 0
-  enemyPrefab: {fileID: 0}
-  team: []
-  stadium: {fileID: 0}
-  parkour: {fileID: 0}
 --- !u!114 &675627205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2683,47 +2672,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe0740fe7922a64cada77dee2f30f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
-    easyD:
-      wingmen:
-      - {fileID: 6646377354008917889, guid: c638ae24c4ab8c34895dc27e0b0028ff, type: 3}
-      - {fileID: 6646377354008917889, guid: 86ba0043bbf90e6469b8074a6ed2f436, type: 3}
-      - {fileID: 6646377354008917889, guid: 75482b11f46b01d40ae4592dba274c40, type: 3}
-      linemen:
-      - {fileID: 1109570183034064746, guid: 8e7bbecc41146a94bae0d48a2747d89d, type: 3}
-      - {fileID: 1109570183034064746, guid: ef56b66fcb23f1b4aa54bcecae8fe33f, type: 3}
-      - {fileID: 1109570183034064746, guid: 936bc1291750c3d43b12ad8c6fcbd074, type: 3}
-    normalD:
-      wingmen:
-      - {fileID: 6646377354008917889, guid: 75482b11f46b01d40ae4592dba274c40, type: 3}
-      - {fileID: 6646377354008917889, guid: 445afdfd141ecf048811d8954bee9239, type: 3}
-      - {fileID: 2197924239140163065, guid: 35e20b18b484f6148b584eea82b90454, type: 3}
-      linemen:
-      - {fileID: 1109570183034064746, guid: ef56b66fcb23f1b4aa54bcecae8fe33f, type: 3}
-      - {fileID: 1109570183034064746, guid: 936bc1291750c3d43b12ad8c6fcbd074, type: 3}
-      - {fileID: 2972716927581021173, guid: 22d18e1fcc6eda941bc9915dbc3a5a59, type: 3}
-      - {fileID: 2972716927581021173, guid: 7c492ff6c60b2044ea3a38ee8538d3b5, type: 3}
-    hardD:
-      wingmen:
-      - {fileID: 2197924239140163065, guid: 35e20b18b484f6148b584eea82b90454, type: 3}
-      - {fileID: 2197924239140163065, guid: 9aa4f62e58b87414285c4af6e3db38cf, type: 3}
-      linemen:
-      - {fileID: 2972716927581021173, guid: 7c492ff6c60b2044ea3a38ee8538d3b5, type: 3}
-    easyZ:
-      classic:
-      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
-      sleeping:
-      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
-    normalZ:
-      classic:
-      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
-      sleeping:
-      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
-    hardZ:
-      classic:
-      - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
-      sleeping:
-      - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
+  enemyContainer: {fileID: 11400000, guid: 68ede8dc7af2041458f96b05bec1e7eb, type: 2}
+  basePrefabs:
+  - {fileID: 6646377354008917889, guid: 7912d6e575304304a8a120da8f213e33, type: 3}
+  - {fileID: 1109570183034064746, guid: af042c08548944a40ac169d7f3e8b9ad, type: 3}
+  - {fileID: 3953013292891437081, guid: 2eba13496bf3c684687aba3c6660e55d, type: 3}
+  - {fileID: 2972716927581021173, guid: c1e97d961806f5c4a8b894b60ca0a5ec, type: 3}
+  - {fileID: 2035816876248888783, guid: b14f6968ff3d6b149809b1464e6c8004, type: 3}
+  - {fileID: 2035816876248888783, guid: a9412cca2b27f5349b4be8e94f7a3b08, type: 3}
   wingmenPrefabs:
   - {fileID: 2035816876248888783, guid: 85287a0918568ab4496d38f922b6a706, type: 3}
   - {fileID: 2035816876248888783, guid: 548cf6350c0e3034fb6accccecfc3219, type: 3}

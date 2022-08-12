@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class ClassicZombie : Zombie
 {
+    public ClassicZAttributesSO Att { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
+
+        Att = Attribute as ClassicZAttributesSO;
 
         currentState = new WaitCZS(this, navMeshAgent, animator);
     }
@@ -22,15 +26,15 @@ public class ClassicZombie : Zombie
             navMeshAgent.SetDestination(destination);
         }
 
-        if (reactivity != 0 && !gameOver && !dead)
+        if (Attribute.reactivity != 0 && !gameOver && !dead)
         {
-            Invoke(nameof(ChasePlayer), reactivity);
+            Invoke(nameof(ChasePlayer), Attribute.reactivity);
         }
     }
 
     private void Update()
     {
-        if (reactivity == 0 && playerG.onField && !gameOver && !dead)
+        if (Attribute.reactivity == 0 && playerG.onField && !gameOver && !dead)
         {
             ChasePlayer();
         }

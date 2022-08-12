@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackCZS : EnemyState
+public class AttackCZS : ClassicZState
 {
-    new ClassicZombie enemy;
-    
     private float baseSpeed;
 
     public AttackCZS(ClassicZombie _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
@@ -22,7 +20,7 @@ public class AttackCZS : EnemyState
 
         baseSpeed = agent.speed;
 
-        agent.speed = enemy.attackSpeed;
+        agent.speed = att.attackSpeed;
 
         animator.SetTrigger("Attack");
     }
@@ -34,7 +32,7 @@ public class AttackCZS : EnemyState
         enemy.destination = enemy.playerPosition;
 
 
-        if (enemy.rawDistance > enemy.attackDist)
+        if (enemy.rawDistance > att.attackDist)
         {
             nextState = new ChaseCZS(enemy, agent, animator);
             stage = Event.EXIT;

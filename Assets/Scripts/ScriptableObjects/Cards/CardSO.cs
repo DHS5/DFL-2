@@ -12,7 +12,6 @@ public class CardSO : ScriptableObject
     public Sprite shopSprite;
     [Space]
     public GameObject prefab;
-    public DefenderAttributesSO attribute;
     [Space]
     public int price;
     [Space]

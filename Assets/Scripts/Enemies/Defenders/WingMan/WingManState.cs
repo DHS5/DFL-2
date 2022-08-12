@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class WingManState : EnemyState
 {
-    protected WingManAttribute att;
+    protected WingmanAttributesSO att;
 
     new protected WingMan enemy;
 

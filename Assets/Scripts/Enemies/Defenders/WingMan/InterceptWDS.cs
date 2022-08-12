@@ -24,7 +24,7 @@ public class InterceptWDS : WingManState
         if (Mathf.Abs(enemy.toPlayerAngle) < 90 || enemy.zDistance < 0)
         {
             enemy.destination = enemy.playerPosition + enemy.playerVelocity * (att.anticipation +
-                 ((enemy.rawDistance / enemy.Attribute.speed) // Minimum time to reach the destination
+                 ((enemy.rawDistance / att.speed) // Minimum time to reach the destination
                  * enemy.playerSpeed) // * playerSpeed to have the distance the player will have run
                  * att.intelligence); // * intelligence (0 ... 1)
         }

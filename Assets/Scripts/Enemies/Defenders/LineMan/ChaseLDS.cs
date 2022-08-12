@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaseLDS : EnemyState
+public class ChaseLDS : LineManState
 {
-    public ChaseLDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public ChaseLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.CHASE;
     }
@@ -22,10 +22,10 @@ public class ChaseLDS : EnemyState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * enemy.anticipation;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
 
         // Attack
-        if (enemy.rawDistance < enemy.attackDist)
+        if (enemy.rawDistance < att.attackDist)
         {
             nextState = new AttackLDS(enemy, agent, animator);
             stage = Event.EXIT;

@@ -39,8 +39,10 @@ public class Zombie : Enemy
     //    }
     //}
 
-    public override void GetAttribute(EnemyAttributeSO att)
+    public override void GetAttribute(EnemyAttributesSO att)
     {
+        base.GetAttribute(att);
+
         if (att != null)
             Attribute = att as ZombieAttributesSO;
     }

@@ -8,7 +8,7 @@ public class Defender : Enemy
 
     private void Update()
     {
-        if (reactivity == 0 && playerG.onField && !gameOver)
+        if (Attribute.reactivity == 0 && playerG.onField && !gameOver)
         {
             ChasePlayer();
         }
@@ -17,8 +17,10 @@ public class Defender : Enemy
 
     // ### Functions ###
 
-    public override void GetAttribute(EnemyAttributeSO att)
+    public override void GetAttribute(EnemyAttributesSO att)
     {
+        base.GetAttribute(att);
+
         if (att != null)
             Attribute = att as DefenderAttributesSO;
     }
@@ -38,9 +40,9 @@ public class Defender : Enemy
             navMeshAgent.SetDestination(destination);
         }
 
-        if (reactivity != 0 && !gameOver)
+        if (Attribute.reactivity != 0 && !gameOver)
         {
-            Invoke(nameof(ChasePlayer), reactivity);
+            Invoke(nameof(ChasePlayer), Attribute.reactivity);
         }
     }
 }

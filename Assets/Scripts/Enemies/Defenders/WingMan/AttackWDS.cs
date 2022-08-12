@@ -11,9 +11,9 @@ public class AttackWDS : WingManState
     {
         name = EState.ATTACK;
 
-        baseSpeed = enemy.Attribute.speed;
+        baseSpeed = att.speed;
 
-        agent.speed = enemy.Attribute.attackSpeed;
+        agent.speed = att.attackSpeed;
     }
 
     public override void Enter()

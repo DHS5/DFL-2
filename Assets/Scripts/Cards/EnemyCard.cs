@@ -16,14 +16,17 @@ public class EnemyCard : Card
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
+    public EnemyCardSO enemyCardSO;
 
     protected override void Start()
     {
         base.Start();
 
-        speedSlider.value = cardSO.prefab.GetComponent<NavMeshAgent>().speed;
+        enemyCardSO = cardSO as EnemyCardSO;
 
-        Enemy e = cardSO.prefab.GetComponent<Enemy>();
+        speedSlider.value = enemyCardSO.attribute.speed;
+
+        DefenderAttributesSO e = enemyCardSO.attribute;
         intelligenceSlider.value = e.intelligence;
         reactivitySlider.value = 1 - e.reactivity;
     }

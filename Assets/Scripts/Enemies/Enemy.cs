@@ -32,62 +32,13 @@ public abstract class Enemy : MonoBehaviour
 
 
 
-    [Header("Behaviour parameters")]
-    [Tooltip("Level of intelligence of the enemy (anticipation of the future position)")]
-    [Range(0,1)] public float intelligence;
-    [Tooltip("Level of reactivity of the enemy (time between new destination's settings)")]
-    [Range(0, 1)] public float reactivity;
-    [Tooltip("")]
-    public float anticipation;
-    [Tooltip("Level of precision of the enemy (precision in the positionning in degrees)")]
-    public float precision;
-
-
-    [Header("Z distances")]
-    [Tooltip("")]
-    public float waitDist;
-
-    [Header("Raw distances")]
-    [Tooltip("")]
-    public float attackDist;
-
-
-    [Header("Physical parameters")]
-    [Tooltip("Attack speed of the enemy")]
-    public float attackSpeed;
-
-    [Tooltip("Size of the enemy")]
-    [SerializeField] protected float size;
-
-
-    [Header("Wing Man caracteristics")]
-    public bool patient;
-
-    public float patience;
-    [Tooltip("Distance before chasing (Raw distance)")]
-    public float chaseDist;
-
-
-
-    [Header("Line Man caracteristics")]
-    [Tooltip("Distance before quitting the positionning state (Z - distance)")]
-    public float positionningDist;
-
-
-    public float Size
-    {
-        get { return size; }
-        set
-        {
-            size = value;
-            enemy.transform.localScale *= size;
-        }
-    }
 
     [Tooltip("Position of the player")]
     [HideInInspector] public Vector3 playerPosition;
     [Tooltip("Look direction of the player")]
     [HideInInspector] public Vector3 playerLookDirection;
+    [Tooltip("Velocity of the player")]
+    [HideInInspector] public Vector3 playerForward;
     [Tooltip("Velocity of the player")]
     [HideInInspector] public Vector3 playerVelocity;
     [Tooltip("Speed of the player")]
@@ -133,7 +84,21 @@ public abstract class Enemy : MonoBehaviour
 
     // ### Functions ###
 
-    public abstract void GetAttribute(EnemyAttributeSO att);
+    public virtual void GetAttribute(EnemyAttributesSO att)
+    {
+        navMeshAgent.speed = att.speed;
+        navMeshAgent.acceleration = att.acceleration;
+        navMeshAgent.angularSpeed = att.rotationSpeed;
+        navMeshAgent.autoBraking = att.autoBraking;
+
+        Rescale(att);
+    }
+
+    private void Rescale(EnemyAttributesSO att)
+    {
+        var scale = gameObject.transform.localScale;
+        gameObject.transform.localScale = new Vector3(scale.x * att.size.x, scale.y * att.size.y, scale.z * att.size.z);
+    }
 
     /// <summary>
     /// Stops the enemy
@@ -167,6 +132,8 @@ public abstract class Enemy : MonoBehaviour
             playerPosition = player.transform.position;
             // Gets the player's look direction
             playerLookDirection = player.activeBody.transform.forward.normalized;
+            // Gets the player's forward direction
+            playerForward = player.transform.forward;
             // Gets the player's velocity
             playerVelocity = playerC.Velocity.normalized;
             // Gets the player's speed

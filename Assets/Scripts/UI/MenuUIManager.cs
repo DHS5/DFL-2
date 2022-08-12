@@ -182,15 +182,16 @@ public class MenuUIManager : MonoBehaviour
             }
         }
     }
-    private void GetCard(List<CardSO> cardSOs, GameObject prefab, ref List<EnemyCard> cards, GameObject container, int index, ref DefenderAttributesSO att)
+    private void GetCard(List<EnemyCardSO> cardSOs, GameObject prefab, ref List<EnemyCard> cards, GameObject container, int index, ref DefenderAttributesSO att)
     {
         int i = 0;
-        foreach (CardSO cardSO in cardSOs)
+        foreach (EnemyCardSO cardSO in cardSOs)
         {
             EnemyCard card = Instantiate(prefab, container.transform).GetComponent<EnemyCard>();
             card.cardSO = cardSO;
+            card.enemyCardSO = cardSO;
             if (i != index) card.gameObject.SetActive(false);
-            else att = card.cardSO.attribute;
+            else att = card.enemyCardSO.attribute;
             cards.Add(card);
             i++;
         }
@@ -258,6 +259,7 @@ public class MenuUIManager : MonoBehaviour
     }
     public void NextCardEnemy()
     {
+        bool infoActive = enemyCards[EnemyIndex].InfoActive;
         enemyCards[EnemyIndex].gameObject.SetActive(false);
 
         int index = EnemyIndex;
@@ -265,10 +267,12 @@ public class MenuUIManager : MonoBehaviour
         EnemyIndex = index;
 
         enemyCards[EnemyIndex].gameObject.SetActive(true);
-        DataManager.gameData.enemy = enemyCards[EnemyIndex].cardSO.attribute;
+        DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
+        enemyCards[EnemyIndex].InfoActive = infoActive;
     }
     public void PrevCardEnemy()
     {
+        bool infoActive = enemyCards[EnemyIndex].InfoActive;
         enemyCards[EnemyIndex].gameObject.SetActive(false);
 
         int index = EnemyIndex;
@@ -276,7 +280,8 @@ public class MenuUIManager : MonoBehaviour
         EnemyIndex = index;
 
         enemyCards[EnemyIndex].gameObject.SetActive(true);
-        DataManager.gameData.enemy = enemyCards[EnemyIndex].cardSO.attribute;
+        DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
+        enemyCards[EnemyIndex].InfoActive = infoActive;
     }
 
     public void NextCardAttacker(int i) { AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i], ref DataManager.gameData.team[i]); }

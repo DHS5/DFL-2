@@ -8,7 +8,7 @@ public class CardsContainerSO : ScriptableObject
     public List<CardSO> playerCards;
     public List<CardSO> stadiumCards;
     public List<CardSO> teamCards;
-    public List<CardSO> enemyCards;
+    public List<EnemyCardSO> enemyCards;
     public List<CardSO> parkourCards;
     public List<CardSO> weaponCards;
 }

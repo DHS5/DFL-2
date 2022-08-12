@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackSZS : EnemyState
+public class AttackSZS : SleepingZState
 {
-    new SleepingZombie enemy;
-
     public AttackSZS(SleepingZombie _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
@@ -36,7 +34,7 @@ public class AttackSZS : EnemyState
         {
             distP = C / -B;
             if (distP < 0)
-                distP = enemy.anticipation;
+                distP = att.anticipation;
         }
 
         else if (delta > 0)
@@ -67,7 +65,7 @@ public class AttackSZS : EnemyState
 
         enemy.destination = enemy.playerPosition + enemy.playerVelocity * distP;
         Vector3 destinationDir = (enemy.destination - enemy.transform.position).normalized;
-        enemy.destination += destinationDir * enemy.anticipation;
+        enemy.destination += destinationDir * att.anticipation;
 
         agent.velocity = destinationDir * agent.speed;
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackLDS : EnemyState
+public class AttackLDS : LineManState
 {
     readonly float animTime = 1.6f;
 
@@ -12,7 +12,7 @@ public class AttackLDS : EnemyState
     
     private float baseSpeed;
     
-    public AttackLDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public AttackLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
 
@@ -25,13 +25,15 @@ public class AttackLDS : EnemyState
 
         animator.SetTrigger("Attack");
 
-        agent.speed = enemy.attackSpeed;
+        agent.speed = att.attackSpeed;
 
         Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
         
-        enemy.destination = enemy.playerPosition + playerDir * attackOffset * enemy.attackSpeed;
+        enemy.destination = enemy.playerPosition + playerDir * attackOffset * att.attackSpeed;
         
-        agent.velocity = playerDir * enemy.attackSpeed;
+        agent.velocity = playerDir * att.attackSpeed;
+
+        enemy.transform.LookAt(enemy.player.activeBody.transform);
     }
 
     public override void Update()

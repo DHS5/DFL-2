@@ -11,8 +11,8 @@ public class EnemiesManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
-    [SerializeField] private DifficultyArrays prefabs;
-
+    [Header("Enemies")]
+    [SerializeField] private EnemyContainerSO enemyContainer;
     [SerializeField] private GameObject[] basePrefabs;
 
     [Header("Defenders")]
@@ -163,7 +163,7 @@ public class EnemiesManager : MonoBehaviour
     /// <param name="xScale">X scale of the zone</param>
     /// <param name="zScale">Z scale of the zone</param>
     /// <param name="sizeMultiplier">Size multiplier with which create the enemy</param>
-    private void CreateEnemy<T>(T defAtt, Vector3 pos, float sizeMultiplier, AudioClip[] audios) where T : EnemyAttributeSO
+    private void CreateEnemy<T>(T defAtt, Vector3 pos, AudioClip[] audios) where T : EnemyAttributesSO
     {        
         // Game Object of the enemy
         Enemy enemy;
@@ -174,7 +174,6 @@ public class EnemiesManager : MonoBehaviour
 
         // Gives the enemy his body and a semi-random size
         enemy.enemy = enemy.gameObject;
-        enemy.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
         if (audios != null && audios.Length > 0)
         {
             enemy.audioSource.clip = audios[Random.Range(0, audios.Length)];
@@ -185,7 +184,7 @@ public class EnemiesManager : MonoBehaviour
         enemies.Add(enemy);
     }
 
-    private T GetRandomEnemy<T>(T[] enemies)
+    private T GetRandomEnemy<T>(T[] enemies) where T : EnemyAttributesSO
     {
         GameData gd = main.GameManager.gameData;
 
@@ -208,8 +207,8 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void DefendersWave()
     {
-        DefenderAttributesSO[] wingmanPrefabs = prefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).wingmen;
-        DefenderAttributesSO[] linemanPrefabs = prefabs.GetArrays((int)main.GameManager.gameData.gameDifficulty).linemen;
+        DefenderAttributesSO[] wingmanPrefabs = enemyContainer.GetArrays((int)main.GameManager.gameData.gameDifficulty).wingmen;
+        DefenderAttributesSO[] linemanPrefabs = enemyContainer.GetArrays((int)main.GameManager.gameData.gameDifficulty).linemen;
 
         // Spawn in the center zone
         Vector3 center = centerZone.transform.position;
@@ -218,7 +217,7 @@ public class EnemiesManager : MonoBehaviour
         // 5 Linemen in the center
         for (int i = 0; i < 5; i++)
         {
-            CreateEnemy(GetRandomEnemy(linemanPrefabs), GetRandomPos(center, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(linemanPrefabs), GetRandomPos(center, xScale, zScale), defenderAudios);
         }
 
         // Spawn in the left zone
@@ -228,7 +227,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the left
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(left, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(left, xScale, zScale), defenderAudios);
         }
 
         // Spawn in the right zone
@@ -238,7 +237,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the right
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(right, xScale, zScale), 0.1f, defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(right, xScale, zScale),  defenderAudios);
         }
 
     }
@@ -248,8 +247,8 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void ZombiesWave()
     {
-        ZombieAttributesSO[] classicZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).classic;
-        ZombieAttributesSO[] sleepingZPrefabs = prefabs.GetZArrays((int)main.GameManager.gameData.gameDifficulty).sleeping;
+        ZombieAttributesSO[] classicZPrefabs = enemyContainer.GetZArrays((int)main.GameManager.gameData.gameDifficulty).classic;
+        ZombieAttributesSO[] sleepingZPrefabs = enemyContainer.GetZArrays((int)main.GameManager.gameData.gameDifficulty).sleeping;
 
         Vector3 field = obstacleZone.transform.position;
         float xScale = obstacleZone.transform.localScale.x / 2;
@@ -263,7 +262,7 @@ public class EnemiesManager : MonoBehaviour
             if (r != 1) enemy = GetRandomEnemy(classicZPrefabs);
             else enemy = GetRandomEnemy(sleepingZPrefabs);
 
-            CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), 0.1f, zombieAudios);
+            CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), zombieAudios);
         }
     }
 
@@ -275,61 +274,8 @@ public class EnemiesManager : MonoBehaviour
     {
         if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE)
         {
-            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.OneVOneEnemyPos, 0.1f, defenderAudios);
+            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.OneVOneEnemyPos, defenderAudios);
         }
     }
 }
 
-[System.Serializable]
-public class DifficultyArrays
-{
-    [Header("Defenders")]
-    public DefenderTypeArrays easyD;
-    public DefenderTypeArrays normalD;
-    public DefenderTypeArrays hardD;
-
-    public DefenderTypeArrays GetArrays(int difficulty)
-    {
-        switch (difficulty)
-        {
-            case 0:
-                return easyD;
-            case 1:
-                return normalD;
-            default:
-                return hardD;
-        }
-    }
-
-    [Header("Zombies")]
-    public ZombieTypeArrays easyZ;
-    public ZombieTypeArrays normalZ;
-    public ZombieTypeArrays hardZ;
-
-    public ZombieTypeArrays GetZArrays(int difficulty)
-    {
-        switch (difficulty)
-        {
-            case 0:
-                return easyZ;
-            case 1:
-                return normalZ;
-            default:
-                return hardZ;
-        }
-    }
-}
-
-[System.Serializable]
-public class DefenderTypeArrays
-{
-    public DefenderAttributesSO[] wingmen;
-    public DefenderAttributesSO[] linemen;
-}
-
-[System.Serializable]
-public class ZombieTypeArrays
-{
-    public ZombieAttributesSO[] classic;
-    public ZombieAttributesSO[] sleeping;
-}

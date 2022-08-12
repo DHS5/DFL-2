@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PositionningLDS : EnemyState
+public class PositionningLDS : LineManState
 {
-    public PositionningLDS(Enemy _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
+    public PositionningLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.POSITIONNING;
     }
@@ -21,7 +21,7 @@ public class PositionningLDS : EnemyState
             animator.SetTrigger("Run");
             animator.ResetTrigger("Wait");
             agent.updateRotation = true;
-            enemy.destination = enemy.playerPosition + enemy.intelligence * enemy.zDistance * enemy.playerLookDirection;
+            enemy.destination = enemy.playerPosition + att.intelligence * enemy.zDistance * enemy.playerLookDirection;
         }
         else
         {
@@ -30,13 +30,13 @@ public class PositionningLDS : EnemyState
             enemy.destination = enemy.transform.position;
             agent.updateRotation = false;
             enemy.transform.rotation =
-                Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.toPlayerDirection), 10 * Time.deltaTime);
+                Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.toPlayerDirection), att.rotationSpeed * Time.deltaTime);
         }
 
-        if (enemy.zDistance < enemy.positionningDist)
+        if (enemy.zDistance < att.positionningDist)
         {
             // Attack
-            if (enemy.rawDistance < enemy.attackDist)
+            if (enemy.rawDistance < att.attackDist)
                 nextState = new AttackLDS(enemy, agent, animator);
             // Chase
             else
