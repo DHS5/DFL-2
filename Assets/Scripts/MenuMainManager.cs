@@ -20,6 +20,7 @@ public class MenuMainManager : MonoBehaviour
     public InventoryManager InventoryManager { get; private set; }
     public ProgressionManager ProgressionManager { get; private set; }
     public LoginManager LoginManager { get; private set; }
+    public CardManager CardManager { get; private set; }
 
 
     private void Awake()
@@ -39,6 +40,7 @@ public class MenuMainManager : MonoBehaviour
         InventoryManager = GetComponent<InventoryManager>();
         ProgressionManager = GetComponent<ProgressionManager>();
         LoginManager = GetComponent<LoginManager>();
+        CardManager = GetComponent<CardManager>();
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
     }

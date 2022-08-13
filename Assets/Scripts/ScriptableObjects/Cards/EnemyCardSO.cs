@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyCard", menuName = "ScriptableObjects/EnemyCard", order = 1)]
+[CreateAssetMenu(fileName = "EnemyCard", menuName = "ScriptableObjects/Card/EnemyCard", order = 1)]
 public class EnemyCardSO : CardSO
 {
     [Header("Enemy card specifics")]
@@ -14,5 +14,10 @@ public class EnemyCardSO : CardSO
     {
         if (attribute != null)
             Title = attribute.enemyName;
+    }
+
+    public override void SetActive()
+    {
+        DataManager.InstanceDataManager.gameData.enemy = attribute;
     }
 }

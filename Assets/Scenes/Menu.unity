@@ -35234,6 +35234,7 @@ GameObject:
   - component: {fileID: 1569061919}
   - component: {fileID: 1569061926}
   - component: {fileID: 1569061918}
+  - component: {fileID: 1569061927}
   - component: {fileID: 1569061920}
   - component: {fileID: 1569061922}
   - component: {fileID: 1569061925}
@@ -35466,6 +35467,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1ca8ba3edc0cc44ac6aecea0f1be8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1569061927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569061917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0018d17b8d4bb8247a2c7678ca6a4056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSimpleCContainer: {fileID: 1809841028}
+  playerSimpleCardPrefab: {fileID: 4873859077804606181, guid: 17f109690ea8e4e4fa7c5bb08c0f739b,
+    type: 3}
+  stadiumCContainer: {fileID: 189064325}
+  stadiumCardPrefab: {fileID: 2662492478610654599, guid: cbeafde0b65d0a74eaf7e6eb60e2adbe,
+    type: 3}
+  playerCompCContainer: {fileID: 115578147}
+  playerCompCardPrefab: {fileID: 4873859077804606181, guid: 52e8abe13087b4f48aaea1399613e3ad,
+    type: 3}
+  enemyCContainer: {fileID: 1618746648}
+  enemyCardPrefab: {fileID: 4873859077804606181, guid: 861372ddf626ce74da81665da394bdf2,
+    type: 3}
+  attackerCContainers:
+  - {fileID: 776487340}
+  - {fileID: 620457989}
+  - {fileID: 1069281917}
+  - {fileID: 1804395813}
+  - {fileID: 1213746218}
+  attackerCardPrefab: {fileID: 4873859077804606181, guid: b8978535ff0f063499de02dcdd89dbf0,
+    type: 3}
+  parkourCContainer: {fileID: 1925831716}
+  parkourCardPrefab: {fileID: 1763806853394757858, guid: 0c9755bc65f430649979d8ead8cf3869,
+    type: 3}
 --- !u!1001 &1569573574
 PrefabInstance:
   m_ObjectHideFlags: 0

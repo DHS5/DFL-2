@@ -46,11 +46,15 @@ public class PlayerShopCard : ShopCard
     [SerializeField] private Toggle extraLifeToggle;
 
 
-    public override void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+    [HideInInspector] public PlayerCardSO playerCardSO;
+
+    public override void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
     {
         base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
 
-        PlayerController p = cardSO.prefab.GetComponentInChildren<PlayerController>();
+        playerCardSO = cardSO as PlayerCardSO;
+
+        PlayerController p = playerCardSO.prefab.GetComponentInChildren<PlayerController>();
         
         speedSlider.value = p.playerAtt.NormalSpeed;
         sideSpeedSlider.value = p.playerAtt.NormalSideSpeed;
@@ -69,6 +73,6 @@ public class PlayerShopCard : ShopCard
         slideToggle.isOn = p.playerAtt.CanSlide;
         flipToggle.isOn = p.playerAtt.CanFlip;
         
-        skillMovesSlider.value = cardSO.skills;
+        skillMovesSlider.value = playerCardSO.skills;
     }
 }

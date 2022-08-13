@@ -16,11 +16,11 @@ public abstract class ShopCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI popupText;
 
-    protected CardSO cardSO;
+    protected ShopCardSO cardSO;
     protected int price;
 
 
-    public virtual void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+    public virtual void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
     {
         cardSO = _cardSO;
         inventoryManager = _inventoryManager;
@@ -41,7 +41,7 @@ public abstract class ShopCard : MonoBehaviour
             if (dataManager.inventoryData.coins >= price)
             {
                 Debug.Log("Buy");
-                inventoryManager.AddToInventory(cardSO.type.GetObject());
+                inventoryManager.AddToInventory(cardSO.cardObject);
                 shopManager.Buy(cardSO.price);
                 shopManager.DestroyShopButton(cardSO);
                 shopManager.DeactivateShopCards();

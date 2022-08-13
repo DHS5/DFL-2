@@ -16,12 +16,17 @@ public class PlayerSimpleCard : Card
     [Tooltip("")]
     [SerializeField] private Slider skillsSlider;
 
+
+    [HideInInspector] public PlayerCardSO playerCardSO;
+
     protected override void Start()
     {
         base.Start();
 
-        physicalSlider.value = cardSO.physical;
-        handlingSlider.value = cardSO.handling;
-        skillsSlider.value = cardSO.skills;
+        playerCardSO = cardSO as PlayerCardSO;
+
+        physicalSlider.value = playerCardSO.physical;
+        handlingSlider.value = playerCardSO.handling;
+        skillsSlider.value = playerCardSO.skills;
     }
 }

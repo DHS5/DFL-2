@@ -21,12 +21,17 @@ public class AttackerShopCard : ShopCard
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
-    public override void GenerateCard(CardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+
+    [HideInInspector] public AttackerCardSO attackerCardSO;
+
+    public override void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
     {
         base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
 
-        Attacker a = cardSO.prefab.GetComponent<Attacker>();
-        positionText.text += cardSO.position;
+        attackerCardSO = cardSO as AttackerCardSO;
+
+        Attacker a = attackerCardSO.prefab.GetComponent<Attacker>();
+        positionText.text += attackerCardSO.position;
         speedSlider.value = (a.back2PlayerSpeed + a.defenseSpeed) / 2;
         proximitySlider.value = a.positionRadius;
         reactivitySlider.value = 1 - a.reactivity;

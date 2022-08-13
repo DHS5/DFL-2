@@ -63,11 +63,11 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    private void GenerateShopButton(List<CardSO> cards, GameObject container, GameObject shopCPrefab)
+    private void GenerateShopButton<T>(List<T> cards, GameObject container, GameObject shopCPrefab) where T : ShopCardSO
     {
-        foreach (CardSO card in cards)
+        foreach (T card in cards)
         {
-            if (!main.InventoryManager.IsInInventory(card.type.GetObject()))
+            if (!main.InventoryManager.IsInInventory(card.cardObject))
             {
                 ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
                 sb.shopCardPrefab = shopCPrefab;

@@ -14,11 +14,14 @@ public class ParkourCard : TerrainCard
     private int index;
 
 
+    [HideInInspector] public ParkourCardSO parkourCardSO;
+
+
     protected void Awake()
     {
         difficultyGauge = GetComponentInChildren<Slider>();
 
-        difficultyGauge.value = cardSO.physical;
+        difficultyGauge.value = parkourCardSO.difficulty;
     }
 
     protected override void Start() 
@@ -33,7 +36,7 @@ public class ParkourCard : TerrainCard
     public void SetData()
     {
         DataManager.InstanceDataManager.playerPrefs.parkourIndex = index;
-        DataManager.InstanceDataManager.gameData.parkour = cardSO.prefab;
+        DataManager.InstanceDataManager.gameData.parkour = parkourCardSO.prefab;
     }
     public void GetIndex(int _index)
     {

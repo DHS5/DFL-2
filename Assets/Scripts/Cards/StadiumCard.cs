@@ -6,8 +6,12 @@ using TMPro;
 
 public class StadiumCard : TerrainCard
 {
+    [HideInInspector] public StadiumCardSO stadiumCardSO;
+
     protected override void Start()
     {
         base.Start();
+
+        stadiumCardSO = cardSO as StadiumCardSO;
     }
 }

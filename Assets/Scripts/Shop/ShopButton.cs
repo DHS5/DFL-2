@@ -29,7 +29,7 @@ public class ShopButton : MonoBehaviour
     [SerializeField] private int price;
 
 
-    [HideInInspector] public CardSO cardSO;
+    [HideInInspector] public ShopCardSO cardSO;
 
 
     private ShopCard shopCard;

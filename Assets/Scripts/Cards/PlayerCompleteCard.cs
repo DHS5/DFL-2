@@ -47,11 +47,13 @@ public class PlayerCompleteCard : Card
     [SerializeField] private Toggle extraLifeToggle;
 
 
+    [HideInInspector] public PlayerCardSO playerCardSO;
+
     protected override void Start()
     {
         base.Start();
 
-        PlayerController p = cardSO.prefab.GetComponentInChildren<PlayerController>();
+        PlayerController p = playerCardSO.prefab.GetComponentInChildren<PlayerController>();
 
         speedSlider.value = p.playerAtt.NormalSpeed;
         sideSpeedSlider.value = p.playerAtt.NormalSideSpeed;
@@ -70,6 +72,6 @@ public class PlayerCompleteCard : Card
         slideToggle.isOn = p.playerAtt.CanSlide;
         flipToggle.isOn = p.playerAtt.CanFlip;
 
-        skillMovesSlider.value = cardSO.skills;
+        skillMovesSlider.value = playerCardSO.skills;
     }
 }

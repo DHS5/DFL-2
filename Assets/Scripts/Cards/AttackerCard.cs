@@ -21,13 +21,14 @@ public class AttackerCard : Card
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
+    [HideInInspector] public AttackerCardSO attackerCardSO;
 
     protected override void Start()
     {
         base.Start();
 
-        Attacker a = cardSO.prefab.GetComponent<Attacker>();
-        positionText.text += cardSO.position;
+        Attacker a = attackerCardSO.prefab.GetComponent<Attacker>();
+        positionText.text += attackerCardSO.position;
         speedSlider.value = (a.back2PlayerSpeed + a.defenseSpeed) / 2;
         proximitySlider.value = a.positionRadius;
         reactivitySlider.value = 1 - a.reactivity;

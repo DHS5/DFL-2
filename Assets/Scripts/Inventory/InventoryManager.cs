@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     private List<StadiumEnum> stadiums = new();
     private List<AttackerEnum> attackers = new();
     private List<WeaponEnum> weapons = new();
+    private List<ParkourEnum> parkours = new();
 
 
     private void Awake()
@@ -23,7 +24,7 @@ public class InventoryManager : MonoBehaviour
     public void ActuInventory()
     {
         GetInventory();
-        main.MenuUIManager.GetCards();
+        main.CardManager.GetCards();
         main.ShopManager.GenerateShopButtons();
     }
 
@@ -38,7 +39,9 @@ public class InventoryManager : MonoBehaviour
             return attackers.Contains((AttackerEnum)obj);
         else if (obj.GetType() == typeof(WeaponEnum))
             return weapons.Contains((WeaponEnum)obj);
-        else if (obj.GetType() == typeof(bool))
+        else if (obj.GetType() == typeof(ParkourEnum))
+            return parkours.Contains((ParkourEnum)obj);
+        else if (obj == null)
             return true;
         else return false;
     }
@@ -49,9 +52,12 @@ public class InventoryManager : MonoBehaviour
             players.Add((PlayerEnum)obj);
         else if (obj.GetType() == typeof(StadiumEnum))
             stadiums.Add((StadiumEnum)obj);
-        else if (obj.GetType() == typeof(StadiumEnum))
+        else if (obj.GetType() == typeof(AttackerEnum))
             attackers.Add((AttackerEnum)obj);
-        else weapons.Add((WeaponEnum)obj);
+        else if (obj.GetType() == typeof(WeaponEnum))
+            weapons.Add((WeaponEnum)obj);
+        else if (obj.GetType() == typeof(ParkourEnum))
+            parkours.Add((ParkourEnum)obj);
 
         SaveInventory();
         ActuInventory();
@@ -104,9 +110,7 @@ public class InventoryManager : MonoBehaviour
             attackers.Add((AttackerEnum) i);
         // Weapons
         foreach (int i in main.DataManager.inventoryData.weapons)
-        {
-            weapons.Add((WeaponEnum)i);
-        }
+            weapons.Add((WeaponEnum) i);
         GetWeaponsFromInventory();
     }
 
@@ -114,9 +118,9 @@ public class InventoryManager : MonoBehaviour
     {
         main.DataManager.gameData.weapons = new List<GameObject>();
 
-        foreach (CardSO wCard in main.DataManager.cardsContainer.weaponCards)
+        foreach (WeaponCardSO wCard in main.DataManager.cardsContainer.weaponCards)
         {
-            if (IsInInventory(wCard.type.GetObject()))
+            if (IsInInventory(wCard.cardObject))
                 main.DataManager.gameData.weapons.Add(wCard.prefab);
         }
     }
