@@ -16,13 +16,11 @@ public class EnemyCard : Card
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
-    public EnemyCardSO enemyCardSO;
+    public EnemyCardSO enemyCardSO { get { return cardSO as EnemyCardSO; } }
 
     protected override void Start()
     {
         base.Start();
-
-        enemyCardSO = cardSO as EnemyCardSO;
 
         speedSlider.value = enemyCardSO.attribute.speed;
 

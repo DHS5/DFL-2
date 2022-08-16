@@ -21,7 +21,7 @@ public class AttackerCard : Card
     [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
-    [HideInInspector] public AttackerCardSO attackerCardSO;
+    public AttackerCardSO attackerCardSO { get { return cardSO as AttackerCardSO; } }
 
     protected override void Start()
     {

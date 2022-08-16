@@ -17,13 +17,11 @@ public class PlayerSimpleCard : Card
     [SerializeField] private Slider skillsSlider;
 
 
-    [HideInInspector] public PlayerCardSO playerCardSO;
+    public PlayerCardSO playerCardSO { get { return cardSO as PlayerCardSO; } }
 
     protected override void Start()
     {
         base.Start();
-
-        playerCardSO = cardSO as PlayerCardSO;
 
         physicalSlider.value = playerCardSO.physical;
         handlingSlider.value = playerCardSO.handling;

@@ -6,12 +6,10 @@ using TMPro;
 
 public class StadiumCard : TerrainCard
 {
-    [HideInInspector] public StadiumCardSO stadiumCardSO;
+    public StadiumCardSO stadiumCardSO { get { return cardSO as StadiumCardSO; } }
 
     protected override void Start()
     {
         base.Start();
-
-        stadiumCardSO = cardSO as StadiumCardSO;
     }
 }

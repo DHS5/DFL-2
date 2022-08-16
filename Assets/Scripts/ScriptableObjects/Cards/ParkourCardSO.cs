@@ -11,10 +11,22 @@ public class ParkourCardSO : InventoryCardSO
 {
     [Header("Parkour card specifics")]
     public ParkourEnum parkour;
-    public GameObject prefab;
+    public Parkour prefab;
     public override object cardObject { get { return parkour; } }
     [Space]
-    public int difficulty;
+    [Range(0, 10)] public int difficulty;
+    public int reward;
+
+
+    private void OnValidate()
+    {
+        if (prefab != null)
+        {
+            parkour = prefab.ParkourNum;
+            difficulty = prefab.Difficulty;
+            reward = prefab.Reward;
+        }
+    }
 
 
     public override void SetActive()

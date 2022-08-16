@@ -189,6 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2441839252229852099}
+  - component: {fileID: -912223316814457969}
   m_Layer: 0
   m_Name: HardParkour 1
   m_TagString: Untagged
@@ -219,6 +220,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-912223316814457969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7032245056924216671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62fc2dc622572bf4d913b16cf8dcb389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parkour: 1
+  reward: 10000
+  difficulty: 6
 --- !u!1 &9113377841943778416
 GameObject:
   m_ObjectHideFlags: 0

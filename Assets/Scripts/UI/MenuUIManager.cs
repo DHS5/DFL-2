@@ -16,16 +16,8 @@ public class MenuUIManager : MonoBehaviour
     private List<GameOption> zombieOptions = new List<GameOption>();
 
 
-    [SerializeField] private GameObject infoButtons;
-
-
 
     // ### Properties ###
-
-    public bool InfoButtonsOn
-    {
-        set { infoButtons.SetActive(value); }
-    }
 
     public int GameMode
     {
@@ -57,16 +49,9 @@ public class MenuUIManager : MonoBehaviour
     private void Start()
     {
         main.SettingsManager.GetManagers();
-
-        ActuData();
     }
 
 
-
-    private void ActuData()
-    {
-        InfoButtonsOn = main.SettingsManager.InfoButtonsOn;
-    }
 
     /// <summary>
     /// Removes or adds a game option

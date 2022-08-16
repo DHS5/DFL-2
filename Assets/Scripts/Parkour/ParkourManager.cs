@@ -8,7 +8,7 @@ public class ParkourManager : MonoBehaviour
     private MainManager main;
 
 
-    private GameObject parkour;
+    public Parkour Parkour { get; private set; }
 
 
     private void Awake()
@@ -24,6 +24,6 @@ public class ParkourManager : MonoBehaviour
     {
         Vector3 position = main.FieldManager.field.enterZone.transform.position;
 
-        parkour = Instantiate(main.GameManager.gameData.parkour, position, Quaternion.identity);
+        Parkour = Instantiate(main.GameManager.gameData.parkour.gameObject, position, Quaternion.identity).GetComponent<Parkour>();
     }
 }

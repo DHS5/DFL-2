@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ParkourCard : TerrainCard
 {
     [Header("Parkour card's specifics")]
 
     [SerializeField] private Toggle toggle;
+    [SerializeField] private TextMeshProUGUI rewardText;
 
     private Slider difficultyGauge;
 
     private int index;
 
 
-    [HideInInspector] public ParkourCardSO parkourCardSO;
+    public ParkourCardSO parkourCardSO { get { return cardSO as ParkourCardSO; } }
 
 
     protected void Awake()
@@ -26,7 +28,8 @@ public class ParkourCard : TerrainCard
 
     protected override void Start() 
     {
-        image.sprite = cardSO.mainSprite; 
+        image.sprite = cardSO.mainSprite;
+        rewardText.text = parkourCardSO.reward.ToString();
     }
 
     public void On()

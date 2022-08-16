@@ -60,6 +60,7 @@ public struct InventoryData
     public int[] stadiums;
     public int[] attackers;
     public int[] weapons;
+    public int[] parkours;
 }
 
 [System.Serializable]
@@ -103,7 +104,7 @@ public struct GameData
     public DefenderAttributesSO enemy;
     public GameObject[] team;
     public GameObject stadium;
-    public GameObject parkour;
+    public Parkour parkour;
     public List<GameObject> weapons;
 }
 
@@ -285,6 +286,8 @@ public class DataManager : MonoBehaviour
         inventoryData.attackers = new int[4] { 1, 2, 3, 4 };
         // Weapons
         inventoryData.weapons = new int[2] { 1, 2 };
+        // Parkours
+        inventoryData.parkours = new int[1] { 1 };
     }
 
     private void InitGameData()

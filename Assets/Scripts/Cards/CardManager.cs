@@ -99,7 +99,8 @@ public class CardManager : MonoBehaviour
         int i = 0;
         foreach (CardSO cardSO in cardSOs)
         {
-            if (main.InventoryManager.IsInInventory((cardSO as InventoryCardSO).cardObject))
+            object obj = cardSO as InventoryCardSO != null ? (cardSO as InventoryCardSO).cardObject : null;
+            if (main.InventoryManager.IsInInventory(obj))
             {
                 T card = Instantiate(prefab, container.transform).GetComponent<T>();
                 card.cardSO = cardSO;
@@ -185,12 +186,12 @@ public class CardManager : MonoBehaviour
     }
     public void NextCardEnemy()
     {
-        NextCard(enemyCards, EnemyIndex);
+        EnemyIndex = NextCard(enemyCards, EnemyIndex);
         DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
     }
     public void PrevCardEnemy()
     {
-        PrevCard(enemyCards, EnemyIndex);
+        EnemyIndex = PrevCard(enemyCards, EnemyIndex);
         DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
     }
 

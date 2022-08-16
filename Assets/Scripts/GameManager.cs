@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Pause the game on press P
-        if (Input.GetKeyDown(KeyCode.P) && GameOn) GameOn = false;
+        if (Input.GetKeyDown(KeyCode.Tab)) GameOn = !GameOn;
 
         if (main.PlayerManager.player.gameplay.onField)
         {
@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
     {
         main.CursorManager.LockCursor();
         
-        main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, false);
+        main.SettingsManager.SetScreen(ScreenNumber.ALL, false);
 
         StartCoroutine(UnpauseCR(0.5f));
 
@@ -417,7 +417,7 @@ public class GameManager : MonoBehaviour
         gameOver = true;
 
         // # Coins #
-        //main.SettingsManager.ShopManager.WinCoins(gameData);
+        main.DataManager.inventoryData.coins += main.ParkourManager.Parkour.Reward;
 
         // # Data #
         main.DataManager.SaveDatas();

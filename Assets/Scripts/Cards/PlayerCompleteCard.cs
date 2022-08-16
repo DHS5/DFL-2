@@ -47,7 +47,7 @@ public class PlayerCompleteCard : Card
     [SerializeField] private Toggle extraLifeToggle;
 
 
-    [HideInInspector] public PlayerCardSO playerCardSO;
+    public PlayerCardSO playerCardSO { get { return cardSO as PlayerCardSO; } }
 
     protected override void Start()
     {

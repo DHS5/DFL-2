@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public enum SceneNumber { MENU = 0, GAME = 1}
 
-public enum ScreenNumber { SETTINGS, GAMEPLAY, INFO }
+public enum ScreenNumber { SETTINGS, GAMEPLAY, INFO, ALL }
 
 
 public class SettingsManager : MonoBehaviour
@@ -106,7 +106,8 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.playerPrefs.infoButtonsOn = value;
-            if (menuMain != null) menuMain.MenuUIManager.InfoButtonsOn = value;
+            foreach (InfoButton ib in FindObjectsOfType<InfoButton>())
+                ib.SetActive(value);
         }
     }
 
@@ -236,5 +237,15 @@ public class SettingsManager : MonoBehaviour
 
     public void SetEventSystem(bool state) { EventSystem.SetActive(state); }
 
-    public void SetScreen(ScreenNumber screen, bool state) { screens[(int)screen].SetActive(state); }
+    public void SetScreen(ScreenNumber screen, bool state) 
+    {
+        if (screen != ScreenNumber.ALL)
+            screens[(int)screen].SetActive(state);
+        else
+        {
+            screens[(int)ScreenNumber.SETTINGS].SetActive(state);
+            screens[(int)ScreenNumber.GAMEPLAY].SetActive(state);
+            screens[(int)ScreenNumber.INFO].SetActive(state);
+        }
+    }
 }

@@ -31,7 +31,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool IsInInventory(object obj)
     {
-        if (obj.GetType() == typeof(PlayerEnum))
+        if (obj == null) return true;
+        else if (obj.GetType() == typeof(PlayerEnum))
             return players.Contains((PlayerEnum)obj);
         else if (obj.GetType() == typeof(StadiumEnum))
             return stadiums.Contains((StadiumEnum)obj);
@@ -41,8 +42,6 @@ public class InventoryManager : MonoBehaviour
             return weapons.Contains((WeaponEnum)obj);
         else if (obj.GetType() == typeof(ParkourEnum))
             return parkours.Contains((ParkourEnum)obj);
-        else if (obj == null)
-            return true;
         else return false;
     }
 
@@ -94,6 +93,13 @@ public class InventoryManager : MonoBehaviour
             inv[i] = (int)weapons[i];
         }
         main.DataManager.inventoryData.weapons = inv;
+        // Parkours
+        inv = new int[parkours.Count];
+        for (int i = 0; i < inv.Length; i++)
+        {
+            inv[i] = (int)parkours[i];
+        }
+        main.DataManager.inventoryData.parkours = inv;
     }
 
 
@@ -112,6 +118,9 @@ public class InventoryManager : MonoBehaviour
         foreach (int i in main.DataManager.inventoryData.weapons)
             weapons.Add((WeaponEnum) i);
         GetWeaponsFromInventory();
+        // Parkours
+        foreach (int i in main.DataManager.inventoryData.parkours)
+            parkours.Add((ParkourEnum) i);
     }
 
     private void GetWeaponsFromInventory()
