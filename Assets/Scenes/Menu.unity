@@ -7598,6 +7598,8 @@ RectTransform:
   m_Children:
   - {fileID: 1238030421}
   - {fileID: 1618746649}
+  - {fileID: 566887006}
+  - {fileID: 680981314}
   - {fileID: 1362272860}
   - {fileID: 462730820}
   m_Father: {fileID: 1743579969}
@@ -9964,6 +9966,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1569061927}
+        m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
+        m_MethodName: OpenCardContainerEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &453173426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10401,7 +10415,7 @@ PrefabInstance:
     - target: {fileID: 4863337381450549842, guid: 3cb87c74308579b4daaaaa6ab0b4d979,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4863337381450549842, guid: 3cb87c74308579b4daaaaa6ab0b4d979,
         type: 3}
@@ -12268,6 +12282,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565218758}
   m_CullTransparentMesh: 1
+--- !u!1 &566887005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 566887006}
+  m_Layer: 5
+  m_Name: NormalEnemyCardsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &566887006
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566887005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 325687736}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 175}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &579099457
 GameObject:
   m_ObjectHideFlags: 0
@@ -14275,6 +14325,42 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 671269381}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680981313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680981314}
+  m_Layer: 5
+  m_Name: HardEnemyCardsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &680981314
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680981313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 325687736}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 175}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &682520921
 GameObject:
   m_ObjectHideFlags: 0
@@ -17612,7 +17698,7 @@ MonoBehaviour:
     infoButtonsOn: 0
     playerIndex: 0
     stadiumIndex: 0
-    enemyIndex: 0
+    enemyIndex: 
     teamIndex: 
     parkourIndex: 0
   gameplayData:
@@ -29563,7 +29649,7 @@ PrefabInstance:
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
@@ -29618,17 +29704,17 @@ PrefabInstance:
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400016, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
@@ -35474,7 +35560,10 @@ MonoBehaviour:
   playerCompCContainer: {fileID: 115578147}
   playerCompCardPrefab: {fileID: 4873859077804606181, guid: 52e8abe13087b4f48aaea1399613e3ad,
     type: 3}
-  enemyCContainer: {fileID: 1618746648}
+  enemyCContainers:
+  - {fileID: 1618746648}
+  - {fileID: 566887005}
+  - {fileID: 680981313}
   enemyCardPrefab: {fileID: 4873859077804606181, guid: 861372ddf626ce74da81665da394bdf2,
     type: 3}
   attackerCContainers:
@@ -36515,7 +36604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1618746649}
   m_Layer: 5
-  m_Name: EnemyCardsContainer
+  m_Name: EasyEnemyCardsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36539,7 +36628,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1620062512
 GameObject:

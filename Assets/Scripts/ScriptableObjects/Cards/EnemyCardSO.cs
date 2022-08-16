@@ -9,6 +9,7 @@ public class EnemyCardSO : CardSO
     public DefenderAttributesSO attribute;
 
     public GameDifficulty difficulty;
+    public string position;
 
     private void OnValidate()
     {

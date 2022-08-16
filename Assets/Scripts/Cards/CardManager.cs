@@ -29,9 +29,9 @@ public class CardManager : MonoBehaviour
 
 
     [Header("Enemy Choice Screen")]
-    [SerializeField] private GameObject enemyCContainer;
+    [SerializeField] private GameObject[] enemyCContainers;
     [SerializeField] private GameObject enemyCardPrefab;
-    private List<EnemyCard> enemyCards = new List<EnemyCard>();
+    private List<EnemyCard>[] enemyCards = new List<EnemyCard>[3];
 
 
     [Header("Team Choice Screen")]
@@ -59,7 +59,7 @@ public class CardManager : MonoBehaviour
         get { return DataManager.playerPrefs.stadiumIndex; }
         set { DataManager.playerPrefs.stadiumIndex = value; }
     }
-    public int EnemyIndex
+    public int[] EnemyIndex
     {
         get { return DataManager.playerPrefs.enemyIndex; }
         set { DataManager.playerPrefs.enemyIndex = value; }
@@ -82,13 +82,15 @@ public class CardManager : MonoBehaviour
     {
         main = GetComponent<MenuMainManager>();
 
-        InitAttackerCardList();
+        InitCardLists();
     }
 
 
     // ### Functions ###
-    private void InitAttackerCardList()
+    private void InitCardLists()
     {
+        for (int i = 0; i < enemyCards.Length; i++)
+            enemyCards[i] = new List<EnemyCard>();
         for (int i = 0; i < attackerCards.Length; i++)
             attackerCards[i] = new List<AttackerCard>();
     }
@@ -132,7 +134,8 @@ public class CardManager : MonoBehaviour
         GetCard(DataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex);
 
         // Enemy cards
-        GetCard(DataManager.cardsContainer.enemyCards, enemyCardPrefab, ref enemyCards, enemyCContainer, EnemyIndex);
+        for (int i = 0; i < enemyCContainers.Length; i++)
+            GetCard(DataManager.cardsContainer.enemyCards.GetCardsByIndex(i), enemyCardPrefab, ref enemyCards[i], enemyCContainers[i], EnemyIndex[i]);
 
         // Attacker cards
         for (int i = 0; i < attackerCContainers.Length; i++)
@@ -184,15 +187,24 @@ public class CardManager : MonoBehaviour
         PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex);
         DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.prefab;
     }
+    public void OpenCardContainerEnemy()
+    {
+        for (int i = 0; i < enemyCContainers.Length; i++)
+        {
+            enemyCContainers[i].SetActive(i == (int)DataManager.gameData.gameDifficulty);
+        }
+    }
     public void NextCardEnemy()
     {
-        EnemyIndex = NextCard(enemyCards, EnemyIndex);
-        DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
+        int i = (int)DataManager.gameData.gameDifficulty;
+        EnemyIndex[i] = NextCard(enemyCards[i], EnemyIndex[i]);
+        DataManager.gameData.enemy = enemyCards[i][EnemyIndex[i]].enemyCardSO.attribute;
     }
     public void PrevCardEnemy()
     {
-        EnemyIndex = PrevCard(enemyCards, EnemyIndex);
-        DataManager.gameData.enemy = enemyCards[EnemyIndex].enemyCardSO.attribute;
+        int i = (int)DataManager.gameData.gameDifficulty;
+        EnemyIndex[i] = PrevCard(enemyCards[i], EnemyIndex[i]);
+        DataManager.gameData.enemy = enemyCards[i][EnemyIndex[i]].enemyCardSO.attribute;
     }
 
     public void NextCardAttacker(int i) 

@@ -28,7 +28,7 @@ public struct PlayerPrefs
     public bool infoButtonsOn;
     public int playerIndex;
     public int stadiumIndex;
-    public int enemyIndex;
+    public int[] enemyIndex;
     public int[] teamIndex;
     public int parkourIndex;
 }
@@ -248,9 +248,12 @@ public class DataManager : MonoBehaviour
     {
         if (playerPrefs.teamIndex.Length != 5)
             playerPrefs.teamIndex = new int[5];
+        if (playerPrefs.enemyIndex.Length != 3)
+            playerPrefs.enemyIndex = new int[3];
 
         if (playerPrefs.playerIndex >= inventoryData.players.Length) playerPrefs.playerIndex = 0;
-        if (playerPrefs.enemyIndex >= cardsContainer.enemyCards.Count) playerPrefs.enemyIndex = 0;
+        for (int i = 0; i < playerPrefs.enemyIndex.Length; i++)
+            if (playerPrefs.enemyIndex[i] >= cardsContainer.enemyCards.GetCardsByIndex(i).Count) playerPrefs.enemyIndex[i] = 0;
         if (playerPrefs.stadiumIndex >= inventoryData.stadiums.Length) playerPrefs.stadiumIndex = 0;
         if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
         for (int i = 0; i < playerPrefs.teamIndex.Length; i++)

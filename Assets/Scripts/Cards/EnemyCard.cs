@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using TMPro;
 
 public class EnemyCard : Card
 {
     [Header("Enemy card's specifics")]
-    [Tooltip("")]
+    [SerializeField] private TextMeshProUGUI positionText;
+
     [SerializeField] private Slider speedSlider;
 
-    [Tooltip("")]
     [SerializeField] private Slider intelligenceSlider;
 
-    [Tooltip("")]
     [SerializeField] private Slider reactivitySlider;
 
     public EnemyCardSO enemyCardSO { get { return cardSO as EnemyCardSO; } }
@@ -22,9 +22,11 @@ public class EnemyCard : Card
     {
         base.Start();
 
-        speedSlider.value = enemyCardSO.attribute.speed;
+        positionText.text = "position :\n" + enemyCardSO.position;
 
         DefenderAttributesSO e = enemyCardSO.attribute;
+
+        speedSlider.value = e.speed;
         intelligenceSlider.value = e.intelligence;
         reactivitySlider.value = 1 - e.reactivity;
     }

@@ -15,7 +15,4 @@ public class WingmanAttributesSO : DefenderAttributesSO
     [Space]
     [Tooltip("If RawDist < chaseDist --> Chase / else --> Intercept")]
     public float chaseDist;
-    [Space]
-    public float patience;
-    public bool patient;
 }

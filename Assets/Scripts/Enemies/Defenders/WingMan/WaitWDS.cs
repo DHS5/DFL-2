@@ -25,7 +25,7 @@ public class WaitWDS : WingManState
 
         if (enemy.playerOnField)
         {
-            if (!att.patient && enemy.zDistance < att.waitDist)
+            if (enemy.zDistance < att.waitDist)
             {
                 // Intercept
                 if (enemy.rawDistance > att.chaseDist)
@@ -35,28 +35,6 @@ public class WaitWDS : WingManState
                     nextState = new ChaseWDS(enemy, agent, animator);
 
                 stage = Event.EXIT;
-            }
-
-            if (att.patient && enemy.zDistance < att.waitDist)
-            {
-                // If out the precision cone
-                if (Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > att.chaseAngle)
-                {
-                    // Intercept
-                    if (enemy.rawDistance > att.chaseDist)
-                        nextState = new InterceptWDS(enemy, agent, animator);
-                    // Chase
-                    else
-                        nextState = new ChaseWDS(enemy, agent, animator);
-
-                    stage = Event.EXIT;
-                }
-                // If in the precision cone and distance < patience --> attack
-                else if (enemy.rawDistance < att.patience)
-                {
-                    nextState = new AttackWDS(enemy, agent, animator);
-                    stage = Event.EXIT;
-                }
             }
         }
     }
