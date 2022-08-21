@@ -11,7 +11,15 @@ public class Stadium : MonoBehaviour
     public AudioSource[] ouuhAS;
     public AudioSource[] boohAS;
 
-    public GameObject SpawnPosition;
+    public GameObject SpawnPosition
+    {
+        get
+        {
+            if (spawnPositions.Length == 1) return spawnPositions[0];
+            else return spawnPositions[FindObjectOfType<Player>().transform.position.x <= 0 ? 0 : 1];
+        }
+    }
+    public GameObject[] spawnPositions;
     public Camera stadiumCamera;
 
     public Material enemyMaterial;

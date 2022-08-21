@@ -69,7 +69,8 @@ public class PlayerGameplay : MonoBehaviour
             player.gameManager.NextWave();
 
             // Goes to the next field
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -tunnelWidth, tunnelWidth), 0, player.fieldManager.stadium.SpawnPosition.transform.position.z);
+            Vector3 spawnPos = player.fieldManager.stadium.SpawnPosition.transform.position;
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), 0, player.fieldManager.stadium.SpawnPosition.transform.position.z);
         }
 
         // When the player accounter a field limit
