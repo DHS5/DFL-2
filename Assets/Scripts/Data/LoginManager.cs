@@ -370,10 +370,10 @@ public class LoginManager : MonoBehaviour
         switch (State)
         {
             case ConnectionState.NO_CONNECTION:
-                stateText.text = "State :\n No internet connection";
+                stateText.text = "State :\nNo internet connection";
                 break;
             case ConnectionState.NO_SESSION:
-                stateText.text = "State :\n No session";
+                stateText.text = "State :\nNo session";
                 break;
             case ConnectionState.GUEST:
                 stateText.text = "State :\n" + ConnectionManager.playerInfo.id + " as Guest";
@@ -382,7 +382,7 @@ public class LoginManager : MonoBehaviour
                 stateText.text = "State :\n" + (ConnectionManager.playerInfo.pseudo != "" ? ConnectionManager.playerInfo.pseudo : ConnectionManager.playerInfo.id) + " Connected";
                 break;
             default:
-                stateText.text = "State :\n Not found";
+                stateText.text = "State :\nNot found";
                 break;
         }
     }
