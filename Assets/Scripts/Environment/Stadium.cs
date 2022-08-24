@@ -15,7 +15,7 @@ public class Stadium : MonoBehaviour
     {
         get
         {
-            if (spawnPositions.Length == 1) return spawnPositions[0];
+            if (spawnPositions.Length == 1 || FindObjectOfType<Player>() == null) return spawnPositions[0];
             else return spawnPositions[FindObjectOfType<Player>().transform.position.x <= 0 ? 0 : 1];
         }
     }

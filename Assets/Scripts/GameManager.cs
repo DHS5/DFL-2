@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour
         else main.EnvironmentManager.GenerateEnvironment();
         main.FieldManager.GenerateField(); // Field
         main.EnemiesManager.EnemyWave(); // Enemies
+        if (start) main.PlayerManager.PositionPlayer();
 
 
         // # Modes #

@@ -28,7 +28,7 @@ public class ChaseLBDS : LinebackerState
         enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
 
         // Attack
-        if (enemy.rawDistance < att.attackDist)
+        if (CanAttack())
         {
             nextState = new AttackLBDS(enemy, agent, animator);
             stage = Event.EXIT;

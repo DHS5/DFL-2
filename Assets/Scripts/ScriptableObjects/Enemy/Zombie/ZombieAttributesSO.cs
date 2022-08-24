@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ZombieType { CLASSIC = 4, SLEEPING = 5 };
+public enum ZombieType { CLASSIC = 5, SLEEPING = 6, BIG = 7 };
 
 public abstract class ZombieAttributesSO : EnemyAttributesSO
 {

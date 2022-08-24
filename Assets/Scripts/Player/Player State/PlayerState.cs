@@ -86,18 +86,25 @@ public abstract class PlayerState
         return this;
     }
 
-    protected void PlayerOrientation()
+    protected void PlayerOrientation(bool front)
     {
+        Vector3 direction = front ? Vector3.forward : controller.Velocity;
+
         if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
         {
             player.tPPlayer.transform.localRotation =
             Quaternion.Slerp(player.tPPlayer.transform.localRotation,
-                Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
+                Quaternion.LookRotation(direction, Vector3.up), 0.02f);
 
             player.fPPlayer.transform.localRotation =
                 Quaternion.Slerp(player.fPPlayer.transform.localRotation,
-                    Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
+                    Quaternion.LookRotation(direction, Vector3.up), 0.02f);
         }
+    }
+
+    protected void PlayerOrientation()
+    {
+        PlayerOrientation(false);
     }
 
     // Animators functions

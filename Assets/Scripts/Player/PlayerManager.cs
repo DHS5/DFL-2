@@ -100,6 +100,11 @@ public class PlayerManager : MonoBehaviour
         ViewType = main.DataManager.gameplayData.viewType;
     }
 
+    public void PositionPlayer()
+    {
+        playerObject.transform.position = main.FieldManager.stadium.SpawnPosition.transform.position;
+    }
+
     public void StartPlayer()
     {
         player.gameplay.freeze = false; // Unfreezes the player

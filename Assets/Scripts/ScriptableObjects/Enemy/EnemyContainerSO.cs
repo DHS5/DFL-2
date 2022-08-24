@@ -55,4 +55,5 @@ public class ZombieTypeArrays
 {
     public ClassicZAttributesSO[] classic;
     public SleepingZAttributesSO[] sleeping;
+    public BigZAttributesSO[] big;
 }

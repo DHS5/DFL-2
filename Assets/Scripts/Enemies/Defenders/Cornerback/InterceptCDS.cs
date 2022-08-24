@@ -27,12 +27,7 @@ public class InterceptCDS : CornerbackState
 
         Intercept();
 
-        if (!att.modeTime && enemy.rawDistance < att.attackDist)
-        {
-            nextState = new AttackCDS(enemy, agent, animator);
-            stage = Event.EXIT;
-        }
-        else if (att.modeTime && interceptTime < att.attackTime)
+        if (CanAttack(interceptTime))
         {
             nextState = new AttackCDS(enemy, agent, animator);
             stage = Event.EXIT;
@@ -80,15 +75,11 @@ public class InterceptCDS : CornerbackState
 
         else if (delta == 0)
         {
-            Debug.Log("delta = 0");
-
             distP = -B / (2 * A);
         }
 
         else
         {
-            Debug.Log("delta < 0");
-
             distP = att.anticipation;
         }
 

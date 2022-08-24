@@ -36,7 +36,7 @@ public class PositionningLDS : LineManState
         if (enemy.zDistance < att.positionningDist)
         {
             // Attack
-            if (enemy.rawDistance < att.attackDist)
+            if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)
                 nextState = new AttackLDS(enemy, agent, animator);
             // Chase
             else
@@ -52,5 +52,7 @@ public class PositionningLDS : LineManState
 
         animator.ResetTrigger("Run");
         animator.ResetTrigger("Wait");
+
+        agent.updateRotation = true;
     }
 }

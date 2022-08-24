@@ -44,11 +44,7 @@ public class AttackCDS : CornerbackState
 
         if (Time.time - startTime > animTime)
         {
-            if (enemy.rawDistance > att.attackDist)
-                nextState = new InterceptCDS(enemy, agent, animator);
-            else 
-                nextState = new AttackCDS(enemy, agent, animator);
-
+            nextState = new InterceptCDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
     }

@@ -21,4 +21,7 @@ public abstract class DefenderAttributesSO : EnemyAttributesSO
     public float waitDist;
     [Tooltip("If RawDist < attackDist --> Attack")]
     public float attackDist;
+    [Space]
+    [Tooltip("If ToPlayerAngle < attackAngle --> Attack")]
+    public float attackAngle;
 }

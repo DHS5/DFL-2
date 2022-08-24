@@ -26,7 +26,7 @@ public class ChaseSDS : SafetyState
         enemy.destination = enemy.playerPosition + PlayerDir * att.anticipation;
 
         // Attack
-        if (enemy.rawDistance < att.attackDist)
+        if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)
         {
             nextState = new AttackSDS(enemy, agent, animator);
             stage = Event.EXIT;

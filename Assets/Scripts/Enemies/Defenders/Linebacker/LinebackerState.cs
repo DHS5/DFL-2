@@ -15,4 +15,23 @@ public class LinebackerState : EnemyState
 
         att = enemy.Att;
     }
+
+    protected bool CanAttack()
+    {
+        if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle) return false;
+
+        float speedC = enemy.playerSpeed / agent.speed;
+
+        float A = 1 - (1 / (speedC * speedC));
+
+        float B = -Mathf.Cos(Vector3.Angle(-enemy.toPlayerDirection, enemy.playerVelocity) * Mathf.Deg2Rad) * 2 * enemy.rawDistance;
+
+        float C = enemy.rawDistance * enemy.rawDistance;
+
+        float delta = (B * B) - (4 * A * C);
+
+        if (A == 0 || delta < 0) return false;
+
+        return true;
+    }
 }

@@ -10,6 +10,7 @@ public class StatBoard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalGamesText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TextMeshProUGUI averageScoreText;
+    [SerializeField] private TextMeshProUGUI bestScoreText;
     [Space]
     [SerializeField] private RectTransform gaugeContainer;
 
@@ -56,6 +57,7 @@ public class StatBoard : MonoBehaviour
     {
         totalGamesText.text = "Total games played : " + data.gameNumber;
         totalScoreText.text = "Total score : " + data.totalScore;
+        bestScoreText.text = "Best score : " + data.bestScore;
         if (data.gameNumber != 0) averageScoreText.text = "Average score : " + (data.totalScore / data.gameNumber);
         else averageScoreText.text = "Average score : 0";
 

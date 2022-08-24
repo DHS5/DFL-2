@@ -38,6 +38,7 @@ public class AttackLBDS : LinebackerState
         if (Time.time - startTime > 3 * animTime / 4)
         {
             enemy.destination = enemy.playerPosition;
+            agent.speed = baseSpeed;
         }
 
         if (Time.time - startTime > animTime)

@@ -62,6 +62,7 @@ public class StatsManager : MonoBehaviour
 
         stats.gameNumber++;
         stats.totalScore += score;
+        if (score > stats.bestScore) stats.bestScore = score;
 
         int baseSize = stats.wavesReached.Length;
         if (baseSize > wave)

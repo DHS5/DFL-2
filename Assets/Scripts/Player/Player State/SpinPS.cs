@@ -28,6 +28,8 @@ public class SpinPS : PlayerState
     {
         base.Update();
 
+        PlayerOrientation(true);
+
 
         if (Time.time >= startTime + animTime)
         {

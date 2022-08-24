@@ -247,8 +247,10 @@ public class EnemiesManager : MonoBehaviour
     /// </summary>
     private void ZombiesWave()
     {
-        ZombieAttributesSO[] classicZPrefabs = enemyContainer.GetZArrays((int)main.GameManager.gameData.gameDifficulty).classic;
-        ZombieAttributesSO[] sleepingZPrefabs = enemyContainer.GetZArrays((int)main.GameManager.gameData.gameDifficulty).sleeping;
+        ZombieTypeArrays array = enemyContainer.GetZArrays((int)main.GameManager.gameData.gameDifficulty);
+        ZombieAttributesSO[] classicZPrefabs = array.classic;
+        ZombieAttributesSO[] sleepingZPrefabs = array.sleeping;
+        ZombieAttributesSO[] bigZPrefabs = array.big;
 
         Vector3 field = obstacleZone.transform.position;
         float xScale = obstacleZone.transform.localScale.x / 2;
@@ -259,8 +261,9 @@ public class EnemiesManager : MonoBehaviour
         {
             r = Random.Range(1, sleepingZProportion + 1);
             ZombieAttributesSO enemy;
-            if (r != 1) enemy = GetRandomEnemy(classicZPrefabs);
-            else enemy = GetRandomEnemy(sleepingZPrefabs);
+            if (r == 1) enemy = GetRandomEnemy(sleepingZPrefabs);
+            else if (r == 2) enemy = GetRandomEnemy(bigZPrefabs);
+            else enemy = GetRandomEnemy(classicZPrefabs);
 
             CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), zombieAudios);
         }

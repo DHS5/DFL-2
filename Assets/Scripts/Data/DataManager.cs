@@ -86,6 +86,7 @@ public struct StatsData // One for each mode-diff
 {
     public int gameNumber;
     public int totalScore;
+    public int bestScore;
     public int[] wavesReached;
 }
 

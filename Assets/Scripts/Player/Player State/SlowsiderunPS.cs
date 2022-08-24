@@ -30,8 +30,14 @@ public class SlowsiderunPS : PlayerState
         controller.SideSpeed = att.SlowSideSpeed * side;
 
 
+        // Spin
+        if (att.CanSpin && Input.GetAxisRaw("Horizontal") * startSide < 0)
+        {
+            nextState = new SpinPS(player, -startSide);
+            stage = Event.EXIT;
+        }
         // Jump
-        if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             nextState = new JumpPS(player);
             stage = Event.EXIT;

@@ -35,7 +35,7 @@ public class PositionningLBDS : LinebackerState
         if (enemy.zDistance < att.positionningDist)
         {
             // Attack
-            if (enemy.rawDistance < att.attackDist)
+            if (CanAttack())
                 nextState = new AttackLBDS(enemy, agent, animator);
             // Chase
             else
@@ -51,5 +51,7 @@ public class PositionningLBDS : LinebackerState
 
         animator.ResetTrigger("Run");
         animator.ResetTrigger("Wait");
+
+        agent.updateRotation = true;
     }
 }

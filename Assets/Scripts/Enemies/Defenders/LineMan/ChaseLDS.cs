@@ -25,7 +25,7 @@ public class ChaseLDS : LineManState
         enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
 
         // Attack
-        if (enemy.rawDistance < att.attackDist)
+        if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)
         {
             nextState = new AttackLDS(enemy, agent, animator);
             stage = Event.EXIT;
