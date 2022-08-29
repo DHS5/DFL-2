@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 
 
@@ -140,11 +141,9 @@ public class DataManager : MonoBehaviour
 
     public CardsContainerSO cardsContainer;
 
-    private bool firstLoad = true;
-
     private int onlineFileID;
 
-    private bool datasLoaded;
+    private bool reloadAll = false;
 
 
     // ### Properties ###
@@ -164,7 +163,7 @@ public class DataManager : MonoBehaviour
         get { return onlineFileID; }
         set
         {
-            //onlineFileID = value;
+            onlineFileID = value;
             LootLockerSDKManager.UpdateOrCreateKeyValue("OnlineFileID", value.ToString(), (response) => { });
         }
     }
@@ -179,6 +178,9 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
             // Clears the options when starting the menu
+            if (InstanceDataManager.reloadAll) InstanceDataManager.LoadData();
+            else InstanceDataManager.StartCoroutine(InstanceDataManager.LoadMenuManagers());
+
             InstanceDataManager.ClearGameData();
             return;
         }
@@ -186,7 +188,7 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Load the personnal highscores and player preferences
-        //LoadPlayerData();
+        LoadData();
 
         // Clear the game data (modes etc... for the first game)
         ClearGameData();
@@ -199,51 +201,6 @@ public class DataManager : MonoBehaviour
     // ### Functions ###
 
     // ## Datas ##
-    public IEnumerator LoadDatas()
-    {
-        loadPopup.SetActive(true);
-
-        if (ConnectionManager.InternetConnected)
-            yield return StartCoroutine(GetOnlineFileID());
-
-        datasLoaded = false;
-        yield return StartCoroutine(LoadPlayerData());
-
-        MenuMain.InventoryManager.ActuInventory();
-        MenuMain.StatsManager.LoadStatsBoards();
-        MenuMain.ProgressionManager.LoadProgression();
-        MenuMain.LeaderboardManager.LoadLeaderboards();
-
-        loadPopup.SetActive(false);
-
-        if (firstLoad)
-            FirstLoad();
-    }
-
-    private void FirstLoad()
-    {
-        MenuMain.SettingsManager.Load();
-        MenuMain.MusicSource.LoadAudioData(audioData);
-
-        firstLoad = false;
-    }
-
-    private IEnumerator GetOnlineFileID()
-    {
-        bool gotResponse = false;
-
-        LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
-        {
-            if (response.success)
-                if (response.payload != null)
-                    onlineFileID = int.Parse(response.payload.value);
-            else
-                Debug.Log("Couldn't get online file ID");
-
-            gotResponse = true;
-        });
-        yield return new WaitUntil(() => gotResponse);
-    }
 
     private void InitPlayerPrefs()
     {
@@ -308,6 +265,31 @@ public class DataManager : MonoBehaviour
             statsDatas[i].wavesReached = new int[1] {0};
     }
 
+    private void InitAudio()
+    {
+        audioData.musicOn = true;
+        audioData.musicVolume = 0.5f;
+        audioData.musicNumber = 0;
+
+        audioData.soundOn = true;
+        audioData.soundVolume = 0.5f;
+
+        audioData.loopOn = true;
+    }
+
+    private void InitGameplay()
+    {
+        gameplayData.viewType = ViewType.TPS;
+        gameplayData.tpCameraPos = 0;
+        gameplayData.fpCameraPos = 0;
+
+        gameplayData.yms = 3f;
+        gameplayData.ysr = 20f;
+        gameplayData.headAngle = 10f;
+
+        gameplayData.goalpost = true;
+    }
+
 
     public void ClearGameData()
     {
@@ -318,7 +300,14 @@ public class DataManager : MonoBehaviour
         gameData.gameDrill = GameDrill.PRACTICE;
     }
 
-
+    public void ResetDatas()
+    {
+        InitAudio();
+        InitGameplay();
+        InitProgression();
+        InitInventory();
+        InitStatsDatas();
+    }
 
 
 
@@ -341,12 +330,24 @@ public class DataManager : MonoBehaviour
         public StatsData[] statsDatas;
     }
 
+
+    // # SAVE #
+
     public void SaveDatas()
     {
         StartCoroutine(SavePlayerData());
     }
 
     private IEnumerator SavePlayerData()
+    {
+        SaveOnDisk();
+
+        yield return StartCoroutine(SaveOnlineCR());
+
+        //Debug.Log(Application.persistentDataPath + "/savefile.json");
+    }
+
+    private void SaveOnDisk()
     {
         SaveData data = new();
 
@@ -360,10 +361,6 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-
-        yield return StartCoroutine(SaveOnlineCR());
-
-        //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
 
     private IEnumerator SaveOnlineCR()
@@ -384,8 +381,6 @@ public class DataManager : MonoBehaviour
                     if (response.success)
                     {
                         Debug.Log("File uploaded successfully");
-                        onlineFileID = response.id;
-                        Debug.Log(onlineFileID + " / " + response.id);
                         OnlineFileID = response.id;
                     }
 
@@ -404,7 +399,7 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator Quit()
     {
-        yield return StartCoroutine(DataManager.InstanceDataManager.SavePlayerData());
+        yield return StartCoroutine(SavePlayerData());
 
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
@@ -414,46 +409,103 @@ public class DataManager : MonoBehaviour
 #endif
     }
 
+    // # LOAD #
 
-    /// <summary>
-    /// Load the game record from the corresponding file
-    /// </summary>
-    public IEnumerator LoadPlayerData()
+    public void LoadData()
     {
         Debug.Log("-----LOAD DATA-----");
-        InitInventory();
-        InitProgression();
-        InitStatsDatas();
 
-        if (ConnectionManager.SessionConnected)
+        LoadDataFromDisk();
+
+        StartCoroutine(FirstLoad());
+        StartCoroutine(LoadMenuManagers());
+
+        reloadAll = false;
+    }
+
+    private IEnumerator FirstLoad()
+    {
+        yield return new WaitUntil(() => MenuMain.awake);
+
+        MenuMain.SettingsManager.Load();
+        MenuMain.MusicSource.LoadAudioData(audioData);
+    }
+
+    private IEnumerator LoadMenuManagers()
+    {
+        yield return new WaitUntil(() => MenuMain.awake);
+
+        MenuMain.InventoryManager.ActuInventory();
+        MenuMain.StatsManager.LoadStatsBoards();
+        MenuMain.ProgressionManager.LoadProgression();
+        //MenuMain.LeaderboardManager.LoadLeaderboards();
+    }
+
+    public IEnumerator GetOnlineFileID()
+    {
+        bool gotResponse = false;
+
+        LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
         {
-            Debug.Log("Load from online session");
-            bool success = false;
-            string url = "";
-            bool gotResponse = false;
+            if (response.success)
+                if (response.payload != null)
+                    onlineFileID = int.Parse(response.payload.value);
+                else
+                    Debug.Log("Couldn't get online file ID");
 
-            LootLockerSDKManager.GetPlayerFile(OnlineFileID, (response) =>
+            gotResponse = true;
+        });
+        yield return new WaitUntil(() => gotResponse);
+    }
+
+    public void RestoreOnlineData()
+    {
+        reloadAll = true;
+
+        StartCoroutine(LoadOnlineData());
+    }
+
+    /// <summary>
+    /// Load the JSON file saved online
+    /// </summary>
+    private IEnumerator LoadOnlineData()
+    {
+        Load(true);
+
+        if (ConnectionManager.InternetConnected)
+        {
+            Debug.Log("Load online data");
+
+            if (ConnectionManager.SessionConnected)
             {
-                if (response.success)
+                Debug.Log("Load from online session");
+                bool success = false;
+                string url = "";
+                bool gotResponse = false;
+
+                LootLockerSDKManager.GetPlayerFile(OnlineFileID, (response) =>
                 {
-                    success = true;
-                    url = response.url;
-                }
+                    if (response.success)
+                    {
+                        success = true;
+                        url = response.url;
+                    }
 
-                gotResponse = true;
-            });
+                    gotResponse = true;
+                });
 
-            yield return new WaitUntil(() => gotResponse);
+                yield return new WaitUntil(() => gotResponse);
 
-            if (success)
-                yield return StartCoroutine(LoadJSONFromURL(url));
+                if (success)
+                    yield return StartCoroutine(LoadJSONFromURL(url));
+            }
         }
-        if (!datasLoaded)
-        {
-            LoadDataFromDisk();
-        }
 
-        InitPlayerPrefs();
+        Load(false);
+
+        SaveOnDisk();
+
+        SceneManager.LoadScene((int)SceneNumber.MENU);
     }
 
     private IEnumerator LoadJSONFromURL(string url)
@@ -468,8 +520,6 @@ public class DataManager : MonoBehaviour
             string json = request.downloadHandler.text;
 
             LoadJSON(json);
-
-            datasLoaded = true;
         }
         else
         {
@@ -487,12 +537,17 @@ public class DataManager : MonoBehaviour
             string json = File.ReadAllText(path);
             LoadJSON(json);
         }
-
-        datasLoaded = true;
+        else
+        {
+            ResetDatas();
+            SaveOnDisk();
+        }
     }
 
     private void LoadJSON(string json)
     {
+        ResetDatas();
+
         SaveData data = JsonUtility.FromJson<SaveData>(json);
 
         audioData = data.audioData;
@@ -501,6 +556,13 @@ public class DataManager : MonoBehaviour
         inventoryData = data.inventoryData;
         progressionData = data.progressionData;
         statsDatas = data.statsDatas;
+
+        InitPlayerPrefs();
+    }
+
+    private void Load(bool state)
+    {
+        loadPopup.SetActive(state);
     }
 
     // C:/Users/tomnd/AppData/LocalLow/DefaultCompany/DFL 2/

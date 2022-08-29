@@ -15,7 +15,9 @@ public class JumpPS : PlayerState
         SetTrigger("Jump");
         SetFloat("HangTime", 1 / att.HangTime);
 
-        controller.Jump();
+        controller.Jump(att.JumpCost);
+
+        player.playerManager.JumpUIAnimation();
         
         base.Enter();
     }

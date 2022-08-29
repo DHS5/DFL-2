@@ -12,11 +12,12 @@ public class SafetyAttributesSO : DefenderAttributesSO
     [Header("Safety attributes")]
     [Tooltip("Pourcentage of interpolation between player velocity and player forward")]
     [Range(0, 1)] public float precision;
-    [Tooltip("If in the angle --> Chase")]
-    public float chaseAngle;
+    [Tooltip("If in the angle --> Wait")]
+    public float waitAngle;
     [Space]
     [Tooltip("If RawDist < chaseDist --> Chase / else --> Intercept")]
     public float chaseDist;
     [Space]
+    [Tooltip("If in the precision cone and distance < patience --> attack")]
     public float patience;
 }

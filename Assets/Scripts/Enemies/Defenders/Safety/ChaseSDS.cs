@@ -32,7 +32,7 @@ public class ChaseSDS : SafetyState
             stage = Event.EXIT;
         }
         // Intercept
-        if (enemy.rawDistance > att.chaseDist && Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.chaseAngle)
+        if (enemy.rawDistance > att.chaseDist && Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.waitAngle)
         {
             nextState = new InterceptSDS(enemy, agent, animator);
             stage = Event.EXIT;

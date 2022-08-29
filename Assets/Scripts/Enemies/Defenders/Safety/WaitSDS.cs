@@ -28,7 +28,7 @@ public class WaitSDS : SafetyState
             if (enemy.zDistance < att.waitDist)
             {
                 // If out the precision cone
-                if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.chaseAngle)
+                if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.waitAngle)
                 {
                     // Intercept
                     if (enemy.rawDistance > att.chaseDist)

@@ -28,7 +28,7 @@ public class RunPS : PlayerState
 
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
         {
             nextState = new JumpPS(player);
             stage = Event.EXIT;

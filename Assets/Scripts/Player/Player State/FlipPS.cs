@@ -16,8 +16,9 @@ public class FlipPS : PlayerState
         SetFloat("HangTime", 1 / att.HangTime);
 
         controller.Speed = att.FlipSpeed;
-        controller.bonusJump = att.FlipHeight;
-        controller.Jump();
+        controller.Flip(att.FlipCost);
+
+        player.playerManager.FlipUIAnimation();
         
         base.Enter();
     }

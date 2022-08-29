@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private float snap;
 
 
-
     private float realDir;
     private float realAcc;
 
@@ -61,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Bonus jump attribute of the player (changed by the bonus)")]
     [HideInInspector] public Vector3 bonusJump = Vector3.zero;
 
+
+    [Tooltip("Current charge of the jump (between 0 and playerAtt.jumpStamina")]
+    private float jumpCharge;
 
 
     // Player state variables
@@ -109,6 +111,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    // ### Base functions ###
+
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -127,6 +131,8 @@ public class PlayerController : MonoBehaviour
 
         CanAccelerate = true;
         AlreadySlide = false;
+
+        jumpCharge = playerAtt.JumpStamina;
     }
 
     private void Update()
@@ -138,6 +144,8 @@ public class PlayerController : MonoBehaviour
             CurrentState = CurrentState.Process();
 
         Velocity = ( Vector3.forward * FSpeed + Vector3.right * sideSpeed ) * Time.deltaTime;
+
+        RechargeJump();
     }
 
     private void FixedUpdate()
@@ -164,6 +172,8 @@ public class PlayerController : MonoBehaviour
         player.tPPlayer.gameObject.transform.localScale = new Vector3(tpScale.x * playerAtt.size.x, tpScale.y * playerAtt.size.y, tpScale.z * playerAtt.size.z);
     }
 
+
+    // # Handling #
     private void GetControlParams()
     {
         dirSensitivity = playerAtt.DirSensitivity;
@@ -172,7 +182,6 @@ public class PlayerController : MonoBehaviour
         accGravity = playerAtt.AccGravity;
         snap = playerAtt.snap;
     }
-
 
     private void FilterDir()
     {
@@ -228,6 +237,9 @@ public class PlayerController : MonoBehaviour
 
     public void FullDir(float side) { realDir = side / Mathf.Abs(side); }
 
+
+    // # Jump #
+
     /// <summary>
     /// Detects a collision with the ground to know if the player is on the ground
     /// </summary>
@@ -238,19 +250,39 @@ public class PlayerController : MonoBehaviour
             OnGround = true;
     }
 
-    public void Jump()
+    public bool CanJump(float cost)
+    {
+        return OnGround && cost <= jumpCharge;
+    }
+
+    private void RechargeJump()
+    {
+        jumpCharge = Mathf.Clamp(jumpCharge + Time.deltaTime * (playerAtt.JumpStamina / playerAtt.JumpRechargeTime), 0, playerAtt.JumpStamina);
+    }
+
+    public void Jump(float cost)
     {
         PlayerRigidbody.AddForce(JumpPower + bonusJump, ForceMode.Impulse);
         OnGround = false;
+        jumpCharge -= cost;
+    }
+    public void Flip(float cost)
+    {
+        PlayerRigidbody.AddForce(JumpPower + playerAtt.FlipHeight + bonusJump, ForceMode.Impulse);
+        OnGround = false;
+        jumpCharge -= cost;
     }
 
 
+
+    // # Skills #
     public void Sprint() { if (!Sprinting) { Sprinting = true; SprintStartTime = Time.time; Invoke(nameof(Rest), playerAtt.accelerationTime); } }
     private void Rest() { Sprinting = false; CanAccelerate = false; Invoke(nameof(Rested) , playerAtt.accelerationRestTime) ; }
     private void Rested() { CanAccelerate = true; AlreadySlide = false; }
     public void Slide() { AlreadySlide = true; }
 
 
+    // # Weather #
     public void Rain()
     {
         dirGravity /= 2;

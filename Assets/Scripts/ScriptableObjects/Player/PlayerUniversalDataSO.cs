@@ -15,4 +15,5 @@ public class PlayerUniversalDataSO : ScriptableObject
     public float slideTime;
     public float slipTime;
     public float slipSpeed;
+    public float flipDelay;
 }

@@ -28,7 +28,7 @@ public class JukePS : PlayerState
         base.Update();
 
 
-        if (att.CanSpin && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        if (att.CanJukeSpin && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
             nextState = new SpinPS(player, Input.GetAxisRaw("Horizontal"));
 
         if (Time.time >= startTime + animTime)
@@ -39,7 +39,7 @@ public class JukePS : PlayerState
                 if (IsRaining)
                     nextState = new SlipPS(player);
                 // Jump
-                else if (Input.GetKeyDown(KeyCode.Space))
+                else if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
                 {
                     nextState = new JumpPS(player);
                 }

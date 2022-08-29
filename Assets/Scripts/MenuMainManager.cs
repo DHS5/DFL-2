@@ -23,6 +23,9 @@ public class MenuMainManager : MonoBehaviour
     public CardManager CardManager { get; private set; }
 
 
+    [HideInInspector] public bool awake = false;
+
+
     private void Awake()
     {
         Instance = this;
@@ -43,5 +46,7 @@ public class MenuMainManager : MonoBehaviour
         CardManager = GetComponent<CardManager>();
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
+
+        awake = true;
     }
 }

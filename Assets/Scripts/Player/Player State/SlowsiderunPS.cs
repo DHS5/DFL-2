@@ -37,7 +37,7 @@ public class SlowsiderunPS : PlayerState
             stage = Event.EXIT;
         }
         // Jump
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
         {
             nextState = new JumpPS(player);
             stage = Event.EXIT;

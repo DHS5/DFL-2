@@ -40,7 +40,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resumeGameText;
 
 
-    [Header("Bonus & sprint")]
+    [Header("Bonus & sprint & jump")]
     [Tooltip("UI components of the acceleration bar")]
     [SerializeField] private GameObject[] accelerationBars;
     [Tooltip("UI components of the bonus bar")]
@@ -49,6 +49,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private GameObject[] lifeBonuses;
 
     [SerializeField] private Animation bonusBarAnim;
+
+    [Space]
+    public JumpBar jumpBar;
 
     private float bonusBarSize;
 

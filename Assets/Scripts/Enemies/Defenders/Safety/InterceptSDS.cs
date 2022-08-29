@@ -39,7 +39,7 @@ public class InterceptSDS : SafetyState
             nextState = new ChaseSDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
-        if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) < att.chaseAngle)
+        if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) < att.waitAngle)
         {
             nextState = new WaitSDS(enemy, agent, animator);
             stage = Event.EXIT;

@@ -39,6 +39,7 @@ public abstract class PlayerState
         get { return player.gameManager.gameData.gameWeather == GameWeather.RAIN; }
     }
 
+    readonly float rotationSpeed = 10f;
 
     public PlayerState(Player _player)
     {
@@ -90,16 +91,27 @@ public abstract class PlayerState
     {
         Vector3 direction = front ? Vector3.forward : controller.Velocity;
 
+        //if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
+        //{
+        //    player.tPPlayer.transform.localRotation =
+        //    Quaternion.Slerp(player.tPPlayer.transform.localRotation,
+        //        Quaternion.LookRotation(direction, Vector3.up), 0.02f);
+        //
+        //    player.fPPlayer.transform.localRotation =
+        //        Quaternion.Slerp(player.fPPlayer.transform.localRotation,
+        //            Quaternion.LookRotation(direction, Vector3.up), 0.02f);
+        //}
         if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
         {
             player.tPPlayer.transform.localRotation =
             Quaternion.Slerp(player.tPPlayer.transform.localRotation,
-                Quaternion.LookRotation(direction, Vector3.up), 0.02f);
+                Quaternion.LookRotation(direction, Vector3.up), Time.deltaTime * rotationSpeed);
 
             player.fPPlayer.transform.localRotation =
                 Quaternion.Slerp(player.fPPlayer.transform.localRotation,
-                    Quaternion.LookRotation(direction, Vector3.up), 0.02f);
+                    Quaternion.LookRotation(direction, Vector3.up), Time.deltaTime * rotationSpeed);
         }
+
     }
 
     protected void PlayerOrientation()

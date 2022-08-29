@@ -36,7 +36,7 @@ public class SlowrunPS : PlayerState
             stage = Event.EXIT;
         }
         // Flip
-        else if (att.CanFlip && Input.GetKeyDown(KeyCode.Space))
+        else if (att.CanFlip && Time.time - startTime > UD.flipDelay && Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.FlipCost))
         {
             nextState = new FlipPS(player);
             stage = Event.EXIT;

@@ -63,10 +63,26 @@ public class PlayerAttributesSO : ScriptableObject
     [Tooltip("Hang time when the player's jumping")]
     public float HangTime { get { return 0.5f + 0.09f * (jumpHeight - 2); } }
 
+    [Space]
+    [Tooltip("Jump cost")]
+    [SerializeField] private float jumpCost; public float JumpCost { get { return jumpCost; } }
+    
+    [Tooltip("Flip cost")]
+    [SerializeField] private float flipCost; public float FlipCost { get { return flipCost; } }
+
+    [Tooltip("Total jump and flip stamina")]
+    [SerializeField] private float jumpStamina; public float JumpStamina { get { return jumpStamina; } }
+
+    [Space]
+    [Tooltip("Total recharge time of jump and flip")]
+    [SerializeField] private float jumpRechargeTime; public float JumpRechargeTime { get { return jumpRechargeTime; } }
+
+
 
     [Header("Skill moves")]
     [SerializeField] private bool canJuke; public bool CanJuke { get { return canJuke; } }
     [SerializeField] private bool canSpin; public bool CanSpin { get { return canSpin; } }
+    [SerializeField] private bool canJukeSpin; public bool CanJukeSpin { get { return canJukeSpin; } }
     [SerializeField] private bool canFeint; public bool CanFeint { get { return canFeint; } }
     [SerializeField] private bool canSlide; public bool CanSlide { get { return canSlide; } }
     [SerializeField] private bool canFlip; public bool CanFlip { get { return canFlip; } }

@@ -32,7 +32,7 @@ public class FeintPS : PlayerState
             if (IsRaining)
                 nextState = new SlipPS(player);
             // Jump
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
             {
                 nextState = new JumpPS(player);
             }

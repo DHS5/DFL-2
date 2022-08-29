@@ -147,6 +147,15 @@ public class PlayerManager : MonoBehaviour
             StartCoroutine(main.GameUIManager.AccBarAnim(player.controller.playerAtt.accelerationTime, player.controller.playerAtt.accelerationRestTime));
     }
 
+    public void JumpUIAnimation()
+    {
+        main.GameUIManager.jumpBar.Jump(player.controller.playerAtt.JumpCost);
+    }
+    public void FlipUIAnimation()
+    {
+        main.GameUIManager.jumpBar.Jump(player.controller.playerAtt.FlipCost);
+    }
+
     public void UIModifyLife(bool state, int lifeNumber)
     {
         main.GameUIManager.ModifyLife(state, lifeNumber);

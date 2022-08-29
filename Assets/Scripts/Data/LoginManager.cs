@@ -33,6 +33,8 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private Button newUserButton;
     [SerializeField] private Button loginAsGuestButton;
     [SerializeField] private Button disconnectButton;
+    [SerializeField] private Button restoreOnlineSaveButton;
+    [SerializeField] private GameObject restoreOnlineSaveVerifBackground;
     
 
     [Header("Login Screen")]
@@ -60,12 +62,15 @@ public class LoginManager : MonoBehaviour
         {
             ConnectionManager.ConnectionState = value;
             ActuStateText();
-            if (value == ConnectionState.GUEST || value == ConnectionState.CONNECTED)
-            {
-                
-            }
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
-            StartCoroutine(main.DataManager.LoadDatas());
+
+            if (ConnectionManager.SessionConnected)
+            {
+                main.DataManager.StartCoroutine(main.DataManager.GetOnlineFileID());
+                main.LeaderboardManager.LoadLeaderboards();
+            }
+
+            Wait(false);
         }
     }
 
@@ -79,25 +84,16 @@ public class LoginManager : MonoBehaviour
 
     private void Start()
     {
-        //InitConnectionManager.PlayerInfo();
-        StartCoroutine(AutoLogin());
+        if (!ConnectionManager.SessionConnected) StartCoroutine(AutoLogin());
+        else
+        {
+            main.LeaderboardManager.LoadLeaderboards();
+            ActuStateText();
+        }
     }
 
 
     // ### Functions ###
-
-    //private void InitConnectionManager.PlayerInfo()
-    //{
-    //    ConnectionManager.PlayerInfo.email = "";
-    //    ConnectionManager.PlayerInfo.id = 0;
-    //    ConnectionManager.PlayerInfo.pseudo = "";
-    //}
-
-    private void Result(string result)
-    {
-        resultScreen.SetActive(true);
-        resultText.text = result;
-    }
 
     public void CheckInternetConnection()
     {
@@ -105,11 +101,9 @@ public class LoginManager : MonoBehaviour
     }
     private IEnumerator CheckInternetConnectionCR()
     {
-        waitPopup.SetActive(true);
+        Wait(true);
 
         yield return StartCoroutine(ConnectionManager.CheckInternetConnection());
-
-        waitPopup.SetActive(false);
 
         if (!ConnectionManager.InternetConnected)
         {
@@ -117,6 +111,7 @@ public class LoginManager : MonoBehaviour
             newUserButton.interactable = false;
             loginAsGuestButton.interactable = false;
             disconnectButton.interactable = false;
+            restoreOnlineSaveButton.interactable = false;
         }
         else
         {
@@ -126,17 +121,22 @@ public class LoginManager : MonoBehaviour
         }
 
         ActuDisconnectButton();
+
+        Wait(false);
     }
 
     public void ActuDisconnectButton()
     {
         disconnectButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
+        restoreOnlineSaveButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
     }
 
 
     private IEnumerator AutoLogin()
     {
         yield return StartCoroutine(CheckInternetConnectionCR());
+
+        Wait(true);
 
         if (ConnectionManager.InternetConnected)
         {
@@ -171,6 +171,7 @@ public class LoginManager : MonoBehaviour
                             else
                             {
                                 Debug.Log("Starting session error");
+                                Wait(false);
                                 return;
                             }
 
@@ -186,9 +187,11 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public void Login()
+    public void Login(bool restore)
     {
         DisconnectPreviousSession();
+
+        Wait(true);
 
         string email = loginEmailIF.text;
         string password = loginPasswordIF.text;
@@ -198,6 +201,7 @@ public class LoginManager : MonoBehaviour
             {
                 Debug.Log("error while logging in");
                 Result("Error while logging in, try again");
+                Wait(false);
                 return;
             }
             else
@@ -210,6 +214,7 @@ public class LoginManager : MonoBehaviour
                     {
                         Debug.Log("error starting LootLocker session");
                         Result("Error starting the session, try again");
+                        Wait(false);
                         return;
                     }
                     else
@@ -225,6 +230,8 @@ public class LoginManager : MonoBehaviour
                                 ConnectionManager.playerInfo.pseudo = response.name;
                             }
                             State = ConnectionState.CONNECTED;
+
+                            if (restore) main.DataManager.RestoreOnlineData();
                         });
                     }
                 });
@@ -248,9 +255,11 @@ public class LoginManager : MonoBehaviour
         });
     }
 
-    public void NewUser()
+    public void NewUser(bool reset)
     {
         DisconnectPreviousSession();
+
+        Wait(true);
 
         string email = newUserEmailIF.text;
         string password = newUserPasswordIF.text;
@@ -262,6 +271,7 @@ public class LoginManager : MonoBehaviour
             {
                 Debug.Log("Sign up error");
                 Result("Sign up error, try again");
+                Wait(false);
                 return;
             }
             else
@@ -275,6 +285,7 @@ public class LoginManager : MonoBehaviour
                     {
                         Debug.Log("Login error");
                         Result("Error while logging in, try again");
+                        Wait(false);
                         return;
                     }
                     // Start session
@@ -284,11 +295,15 @@ public class LoginManager : MonoBehaviour
                         {
                             Debug.Log("Start session error");
                             Result("Start session error, try again");
+                            Wait(false);
                             return;
                         }
                         else
                         {
                             State = ConnectionState.CONNECTED;
+
+                            if (reset) main.DataManager.ResetDatas();
+                            main.DataManager.SaveDatas();
                         }
 
                         // Set nickname to be public UID if nothing was provided
@@ -322,6 +337,8 @@ public class LoginManager : MonoBehaviour
     {
         DisconnectPreviousSession();
 
+        Wait(true);
+
         LootLockerSDKManager.StartGuestSession((response) =>
         {
             if (response.success)
@@ -334,17 +351,20 @@ public class LoginManager : MonoBehaviour
             else
             {
                 Result("Error while logging in as guest, try again");
+                Wait(false);
             }
         });
     }
 
     public void Disconnect()
     {
+        Wait(true);
         LootLockerSDKManager.EndSession((response) =>
         {
             if (!response.success)
             {
                 Result("Error while disconnecting, try again");
+                Wait(false);
             }
             else
             {
@@ -359,6 +379,13 @@ public class LoginManager : MonoBehaviour
         {
             Disconnect();
         }
+    }
+
+    public void RestoreLastOnlineSave()
+    {
+        restoreOnlineSaveVerifBackground.SetActive(false);
+
+        main.DataManager.RestoreOnlineData();
     }
 
 
@@ -385,5 +412,16 @@ public class LoginManager : MonoBehaviour
                 stateText.text = "State :\nNot found";
                 break;
         }
+    }
+
+    private void Result(string result)
+    {
+        resultScreen.SetActive(true);
+        resultText.text = result;
+    }
+
+    private void Wait(bool state)
+    {
+        waitPopup.SetActive(state);
     }
 }
