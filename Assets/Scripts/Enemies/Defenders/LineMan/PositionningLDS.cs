@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class PositionningLDS : LineManState
 {
+    private float preciseXDistance;
+
     public PositionningLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.POSITIONNING;
@@ -15,8 +17,10 @@ public class PositionningLDS : LineManState
     {
         base.Update();
 
+        
+        preciseXDistance = Mathf.Abs(enemy.transform.position.x - (enemy.playerPosition + att.intelligence * enemy.zDistance * enemy.playerLookDirection).x);
 
-        if (enemy.xDistance > enemy.precision)
+        if (preciseXDistance > enemy.precision)
         {
             animator.SetTrigger("Run");
             animator.ResetTrigger("Wait");

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class DefenderAttributesSO : EnemyAttributesSO
 {
-    public enum DefenderType { WINGMAN, LINEMAN, CORNERBACK, LINEBACKER, SAFETY };
+    public enum DefenderType { WINGMAN, LINEMAN, CORNERBACK, LINEBACKER, SAFETY, TACKLE };
 
     [Header("Defenders attributes")]
     public string enemyName;

@@ -53,6 +53,8 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public float xDistance;
     [Tooltip("Distance between the enemy and the player on the Z-Axis only")]
     [HideInInspector] public float zDistance;
+    [Tooltip("Whether the player is on the ground or in the air")]
+    [HideInInspector] public bool playerOnGround;
     [Tooltip("Whether the player is on the field")]
     [HideInInspector] public bool playerOnField;
 
@@ -148,6 +150,8 @@ public abstract class Enemy : MonoBehaviour
             xDistance = Mathf.Abs(transform.position.x - playerPosition.x);
             // Gets the distance between the player and the enemy on the Z-Axis
             zDistance = transform.position.z - playerPosition.z;
+            // Find if the player is jumping
+            playerOnGround = player.controller.OnGround;
 
             playerOnField = playerG.onField;
         }

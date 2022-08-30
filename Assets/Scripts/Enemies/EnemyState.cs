@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL }
+public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL, TIRED, READY }
 
 
 public abstract class EnemyState
