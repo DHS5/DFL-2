@@ -117,10 +117,4 @@ public class ShopManager : MonoBehaviour
         foreach (TextMeshProUGUI t in coinsTexts)
             t.text = main.DataManager.inventoryData.coins.ToString();
     }
-
-
-    public int WinCoins(GameData data)
-    {
-        return 1000;
-    }
 }

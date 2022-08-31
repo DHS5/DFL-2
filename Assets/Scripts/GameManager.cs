@@ -180,6 +180,8 @@ public class GameManager : MonoBehaviour
         gameData.gameEnemiesRange = enemiesRange;
 
         waveNumber = 1;
+
+        Debug.Log(gameData.gameMode);
     }
 
 
@@ -307,9 +309,6 @@ public class GameManager : MonoBehaviour
         main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, true); // Open the setting screen
 
 
-        // # Data #
-        main.DataManager.SaveDatas();
-
         // # Audio #
         if (main.DataManager.audioData.soundOn) main.GameAudioManager.MuteSound(true);
     }
@@ -325,10 +324,6 @@ public class GameManager : MonoBehaviour
         main.SettingsManager.SetScreen(ScreenNumber.ALL, false);
 
         StartCoroutine(UnpauseCR(0.5f));
-
-
-        // # Data #
-        main.DataManager.SaveDatas();
     }
 
     /// <summary>
@@ -363,11 +358,14 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
-        // # Leaderboard #
-        LeaderboardManager.PostScore(gameData, Score, WaveNumber);
+        if (gameData.gameMode != GameMode.DRILL && gameData.gameMode != GameMode.TUTORIAL)
+        {
+            // # Leaderboard #
+            LeaderboardManager.PostScore(gameData, Score, WaveNumber);
 
-        // # Stats #
-        StatsManager.AddGameToStats(gameData, Score, WaveNumber);
+            // # Stats #
+            StatsManager.AddGameToStats(gameData, Score, WaveNumber);
+        }
 
         // # Coins #
         int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);

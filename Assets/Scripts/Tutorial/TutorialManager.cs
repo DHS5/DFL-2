@@ -8,6 +8,7 @@ public class TutorialManager : MonoBehaviour
     private DataManager dataManager;
 
     [SerializeField] private GameObject tutorialPlayer;
+    [SerializeField] private GameObject tutorialStadium;
 
 
     private bool step0 = true;
@@ -17,7 +18,9 @@ public class TutorialManager : MonoBehaviour
     private bool step4 = false;
     private bool step5 = false;
 
-
+    [Space]
+    [SerializeField] private GameObject tutoContainer;
+    [Space]
     [SerializeField] private float step1Time;
     [SerializeField] private float step2Time;
     [SerializeField] private float step3Time;
@@ -25,13 +28,16 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private float step5Time;
     [SerializeField] private float step6Time;
     [SerializeField] private float lastStepTime;
-
+    [Space]
     [SerializeField] private GameObject step1Text;
     [SerializeField] private GameObject step2Text;
     [SerializeField] private GameObject step3Text;
     [SerializeField] private GameObject step4Text;
     [SerializeField] private GameObject step5Text;
     [SerializeField] private GameObject step6Text;
+
+
+    private TutorialPopup[] tutos;
 
 
     private float side = 0f;
@@ -43,26 +49,56 @@ public class TutorialManager : MonoBehaviour
 
         if (dataManager.gameData.gameMode == GameMode.TUTORIAL)
         {
-            dataManager.gameData.gameMode = GameMode.DRILL;
+            //dataManager.gameData.gameMode = GameMode.DRILL;
             dataManager.gameData.gameDrill = GameDrill.PRACTICE;
             dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
             dataManager.gameData.gameOptions.Clear();
             dataManager.gameData.gameWeather = GameWeather.SUN;
             dataManager.gameData.player = tutorialPlayer;
-            dataManager.gameData.stadiumIndex = 0;
+            dataManager.gameData.stadium = tutorialStadium;
         }
+
+        InitTutosArray();
     }
 
     private void Start()
     {
         main.GameUIManager.SetScreen(GameScreen.TUTO, true);
-        
-        Invoke(nameof(Step1), step1Time);
+
+        StartCoroutine(TutorialCR());
+
+        //Invoke(nameof(Step1), step1Time);
 
         main.FieldManager.field.entryGoalpost.SetActive(true);
     }
 
-    private void Update()
+
+    private void InitTutosArray()
+    {
+        tutos = tutoContainer.GetComponentsInChildren<TutorialPopup>();
+        foreach (TutorialPopup tuto in tutos)
+        {
+            tuto.gameObject.SetActive(false);
+        }
+    }
+
+
+    private IEnumerator TutorialCR()
+    {
+        for (int i = 0; i < tutos.Length; i++)
+        {
+            yield return new WaitForSeconds(tutos[i].timeBeforeShowingUp);
+
+            tutos[i].PreCondition();
+
+            yield return new WaitUntil(() => tutos[i].CanPass);
+
+            Destroy(tutos[i].gameObject);
+        }
+    }
+
+
+    private void FormerUpdate()
     {
         if (step0)
         {

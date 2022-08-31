@@ -98,6 +98,9 @@ public class CardManager : MonoBehaviour
 
     private void GetCard<T,U>(List<U> cardSOs, GameObject prefab, ref List<T> cards, GameObject container, int index, int teamIndex) where T : Card where U : CardSO
     {
+        DestroyCards(container);
+        cards.Clear();
+
         int i = 0;
         foreach (CardSO cardSO in cardSOs)
         {
@@ -134,7 +137,7 @@ public class CardManager : MonoBehaviour
         GetCard(DataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex);
 
         // Enemy cards
-        for (int i = 0; i < enemyCContainers.Length; i++)
+        for (int i = enemyCContainers.Length - 1; i >= 0; i--)
             GetCard(DataManager.cardsContainer.enemyCards.GetCardsByIndex(i), enemyCardPrefab, ref enemyCards[i], enemyCContainers[i], EnemyIndex[i]);
 
         // Attacker cards
@@ -147,6 +150,7 @@ public class CardManager : MonoBehaviour
         // Parkour cards
         GetCard(DataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex);
     }
+
 
     private int NextCard<T>(List<T> cards, int index) where T : Card
     {
@@ -242,5 +246,14 @@ public class CardManager : MonoBehaviour
     {
         if (index == 0) { index = limit; }
         else { index--; }
+    }
+
+    private void DestroyCards(GameObject container)
+    {
+        for (int i = 0; i < container.transform.childCount; i++)
+        {
+            if (container.transform.GetChild(i).GetComponent<Card>() != null)
+                Destroy(container.transform.GetChild(i).gameObject);
+        }
     }
 }

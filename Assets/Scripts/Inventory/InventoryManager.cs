@@ -100,11 +100,15 @@ public class InventoryManager : MonoBehaviour
             inv[i] = (int)parkours[i];
         }
         main.DataManager.inventoryData.parkours = inv;
+
+        main.DataManager.SaveDatas();
     }
 
 
     private void GetInventory()
     {
+        ClearInventory();
+
         // Players
         foreach (int i in main.DataManager.inventoryData.players)
             players.Add((PlayerEnum) i);
@@ -121,6 +125,15 @@ public class InventoryManager : MonoBehaviour
         // Parkours
         foreach (int i in main.DataManager.inventoryData.parkours)
             parkours.Add((ParkourEnum) i);
+    }
+
+    private void ClearInventory()
+    {
+        players.Clear();
+        stadiums.Clear();
+        attackers.Clear();
+        weapons.Clear();
+        parkours.Clear();
     }
 
     private void GetWeaponsFromInventory()

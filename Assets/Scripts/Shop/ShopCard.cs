@@ -41,8 +41,8 @@ public abstract class ShopCard : MonoBehaviour
             if (dataManager.inventoryData.coins >= price)
             {
                 Debug.Log("Buy");
-                inventoryManager.AddToInventory(cardSO.cardObject);
                 shopManager.Buy(cardSO.price);
+                inventoryManager.AddToInventory(cardSO.cardObject);
                 shopManager.DestroyShopButton(cardSO);
                 shopManager.DeactivateShopCards();
             }

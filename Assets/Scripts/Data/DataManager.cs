@@ -102,7 +102,6 @@ public struct GameData
     public int gameEnemiesRange;
 
     public GameObject player;
-    public int stadiumIndex;
     public DefenderAttributesSO enemy;
     public GameObject[] team;
     public GameObject stadium;
@@ -253,7 +252,7 @@ public class DataManager : MonoBehaviour
 
     private void InitGameData()
     {
-        gameData.stadiumIndex = playerPrefs.stadiumIndex;
+        //gameData.stadiumIndex = playerPrefs.stadiumIndex;
 
         gameData.team = new GameObject[5];
     }

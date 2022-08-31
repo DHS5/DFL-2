@@ -13,6 +13,9 @@ public class TackleAttributesSO : DefenderAttributesSO
     [Tooltip("X-Distance around the trajectories's intersection point")]
     public float precision;
     [Space]
+    [Tooltip("Multiplier of the side distance when attacking")]
+    public float attackReach;
+    [Space]
     [Tooltip("If Z-Dist < positionningDist --> Ready")]
     public float positionningDist;
     [Tooltip("If Z-Dist < readyDist --> Tired/Attack")]
