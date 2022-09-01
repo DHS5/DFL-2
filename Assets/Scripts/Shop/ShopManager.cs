@@ -55,7 +55,7 @@ public class ShopManager : MonoBehaviour
             // Stadium shop buttons
             GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCPrefab);
             // Team shop buttons
-            GenerateShopButton(cardsContainer.teamCards, teamShopBContainer, attackerShopCPrefab);
+            //GenerateShopButton(cardsContainer.teamCards, teamShopBContainer, attackerShopCPrefab);
             // Weapon shop buttons
             GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCPrefab);
 

@@ -19,8 +19,8 @@ public class TeamManager : MonoBehaviour
     private Player player;
 
 
-    [Tooltip("List of the attackers's prefabs")]
-    [SerializeField] private GameObject[] attackersPrefabs;
+    [Tooltip("Attackers's base prefabs")]
+    [SerializeField] private GameObject[] attackerBasePrefabs;
 
 
     [Tooltip("List of the team's front attackers")]
@@ -141,7 +141,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Instantiate an attacker from the attackers prefab list with a semi-random position
     /// </summary>
-    private void InstantiateAttacker(GameObject attackerPrefab)
+    private void InstantiateAttacker(AttackerAttributesSO att)
     {
         Vector3 zonePos = main.FieldManager.field.enterZone.transform.position;
         float xScale = main.FieldManager.field.enterZone.transform.localScale.x / 2;
@@ -149,7 +149,8 @@ public class TeamManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        Attacker attacker = Instantiate(attackerPrefab, randomPos, Quaternion.identity).GetComponent<Attacker>();
+        Attacker attacker = Instantiate(attackerBasePrefabs[(int)att.Type], randomPos, Quaternion.identity).GetComponent<Attacker>();
+        attacker.GetAttribute(att);
         attacker.teamManager = this;
         attacker.player = player;
         attacker.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
@@ -158,7 +159,7 @@ public class TeamManager : MonoBehaviour
 
     private void AddAttackerToList(Attacker a)
     {
-        switch (a.type)
+        switch (a.Attribute.Type)
         {
             case AttackerType.FRONT:
                 frontAttackers.Add(a);

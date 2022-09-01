@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendFAS : AttackerState
+public class DefendFAS : FrontAttackerState
 {
-    new FrontAttacker attacker;
-
     public DefendFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
-
-        attacker = _attacker;
     }
 
     public override void Enter()
@@ -20,7 +16,7 @@ public class DefendFAS : AttackerState
 
         animator.SetTrigger("Block");
 
-        agent.speed = attacker.defenseSpeed;
+        agent.speed = att.defenseSpeed;
     }
 
 
@@ -28,7 +24,7 @@ public class DefendFAS : AttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
         if (attacker.targetPos.z < attacker.playerPos.z)

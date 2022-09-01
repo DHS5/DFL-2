@@ -62,6 +62,7 @@ public class LoginManager : MonoBehaviour
         {
             ConnectionManager.ConnectionState = value;
             ActuStateText();
+            ActuButtons();
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
 
             if (ConnectionManager.SessionConnected)
@@ -89,6 +90,7 @@ public class LoginManager : MonoBehaviour
         {
             main.LeaderboardManager.LoadLeaderboards();
             ActuStateText();
+            ActuButtons();
         }
     }
 
@@ -120,15 +122,16 @@ public class LoginManager : MonoBehaviour
             loginAsGuestButton.interactable = true;
         }
 
-        ActuDisconnectButton();
+        ActuButtons();
 
         Wait(false);
     }
 
-    public void ActuDisconnectButton()
+    public void ActuButtons()
     {
         disconnectButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
         restoreOnlineSaveButton.interactable = (State == ConnectionState.CONNECTED || State == ConnectionState.GUEST);
+        homeLoginButton.gameObject.SetActive(State == ConnectionState.NO_SESSION);
     }
 
 

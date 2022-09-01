@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendBAS : AttackerState
+public class DefendBAS : BackAttackerState
 {
-    new BackAttacker attacker;
-
     public DefendBAS(BackAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
-
-        attacker = _attacker;
     }
 
     public override void Enter()
@@ -20,7 +16,7 @@ public class DefendBAS : AttackerState
 
         animator.SetTrigger("BackBlock");
 
-        agent.speed = attacker.defenseSpeed;
+        agent.speed = att.defenseSpeed;
     }
 
 
@@ -28,7 +24,7 @@ public class DefendBAS : AttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
         if (attacker.targetPos.z < attacker.playerPos.z - attacker.ProtectionRadius)

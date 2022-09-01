@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WaitFAS : AttackerState
+public class WaitFAS : FrontAttackerState
 {
-    new FrontAttacker attacker;
-
     public WaitFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.WAIT;
-
-        attacker = _attacker;
     }
 
     public override void Update()

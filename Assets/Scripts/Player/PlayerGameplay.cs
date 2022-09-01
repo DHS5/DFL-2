@@ -100,6 +100,10 @@ public class PlayerGameplay : MonoBehaviour
                 Hurt(collision.impulse.normalized);
                 Debug.Log("Hurt by enemy");
             }
+            if (collision.gameObject.CompareTag("Enemy") && player.controller.Sprinting && player.controller.playerAtt.CanTruck)
+            {
+                collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision.impulse);
+            }
 
             // When the player collides with an obstacle --> game over
             if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)

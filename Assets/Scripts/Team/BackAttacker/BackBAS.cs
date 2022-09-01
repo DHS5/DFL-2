@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BackBAS : AttackerState
+public class BackBAS : BackAttackerState
 {
-    new BackAttacker attacker;
-
     public BackBAS(BackAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.BACK;
-
-        attacker = _attacker;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        agent.speed = attacker.back2PlayerSpeed;
+        agent.speed = att.back2PlayerSpeed;
 
         animator.SetTrigger("Sprint");
     }
@@ -27,7 +23,7 @@ public class BackBAS : AttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos - attacker.playerDir * (attacker.positionRadius / 2);
+        attacker.destination = attacker.playerPos - attacker.playerDir * (att.positionRadius / 2);
 
         if (attacker.InZone(attacker.transform.position))
         {

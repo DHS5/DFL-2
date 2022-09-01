@@ -103,7 +103,7 @@ public struct GameData
 
     public GameObject player;
     public DefenderAttributesSO enemy;
-    public GameObject[] team;
+    public AttackerAttributesSO[] team;
     public GameObject stadium;
     public Parkour parkour;
     public List<GameObject> weapons;
@@ -141,6 +141,7 @@ public class DataManager : MonoBehaviour
     public CardsContainerSO cardsContainer;
 
     private int onlineFileID;
+    private bool onlineFileIDLoaded = false;
 
     private bool reloadAll = false;
 
@@ -163,7 +164,9 @@ public class DataManager : MonoBehaviour
         set
         {
             onlineFileID = value;
-            LootLockerSDKManager.UpdateOrCreateKeyValue("OnlineFileID", value.ToString(), (response) => { });
+            onlineFileIDLoaded = false;
+            LootLockerSDKManager.UpdateOrCreateKeyValue("OnlineFileID", value.ToString(), 
+                (response) => { onlineFileIDLoaded = true; });
         }
     }
 
@@ -254,7 +257,7 @@ public class DataManager : MonoBehaviour
     {
         //gameData.stadiumIndex = playerPrefs.stadiumIndex;
 
-        gameData.team = new GameObject[5];
+        gameData.team = new AttackerAttributesSO[5];
     }
 
     private void InitStatsDatas()
@@ -368,26 +371,28 @@ public class DataManager : MonoBehaviour
 
         if (ConnectionManager.SessionConnected)
         {
-            LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
+            LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
             {
                 if (response.success)
-                    Debug.Log("Deleted file successfully");
-                else
-                    Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
-
-                LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
                 {
-                    if (response.success)
-                    {
-                        Debug.Log("File uploaded successfully");
-                        OnlineFileID = response.id;
-                    }
+                    Debug.Log("File uploaded successfully");
 
-                    done = true;
-                });
+                    LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
+                    {
+                        if (response.success)
+                            Debug.Log("Deleted file successfully");
+                        else
+                            Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
+
+                        done = true;
+                    });
+
+                    OnlineFileID = response.id;
+                }
             });
 
             yield return new WaitUntil(() => done);
+            yield return new WaitUntil(() => onlineFileIDLoaded);
         }
     }
 

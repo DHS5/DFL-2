@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WaitSAS : AttackerState
+public class WaitSAS : SideAttackerState
 {
-    new SideAttacker attacker;
-
-    private int side;
-
-    public WaitSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator, int _side) : base(_attacker, _agent, _animator)
+    public WaitSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.WAIT;
-
-        attacker = _attacker;
-
-        side = _side;
     }
 
     public override void Update()
@@ -24,7 +16,7 @@ public class WaitSAS : AttackerState
 
         if (attacker.player != null && attacker.player.gameplay.onField)
         {
-            nextState = new ProtectSAS(attacker, agent, animator, side);
+            nextState = new ProtectSAS(attacker, agent, animator);
             stage = Event.EXIT;
         }
     }

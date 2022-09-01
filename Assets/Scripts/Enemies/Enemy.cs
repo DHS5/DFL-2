@@ -60,9 +60,11 @@ public abstract class Enemy : MonoBehaviour
 
     [Tooltip("Destination of the enemy (on the nav mesh)")]
     [HideInInspector] public Vector3 destination;
+    
 
     protected bool gameOver;
 
+    private bool trucked = false;
 
 
     private Vector3 b4StopVelocity;
@@ -163,5 +165,22 @@ public abstract class Enemy : MonoBehaviour
         gameOver = true;
         animator.SetTrigger("GameOver");
         navMeshAgent.isStopped = true;
+    }
+
+    public virtual void Trucked(Vector3 impact)
+    {
+        if (!trucked)
+        {
+            trucked = true;
+            DestroyColliders();
+            Debug.Log("You've been trucked !");
+            currentState = currentState.Trucked(impact);
+        }
+    }
+
+    private void DestroyColliders()
+    {
+        foreach (Collider c in GetComponentsInChildren<Collider>())
+            Destroy(c);
     }
 }

@@ -141,8 +141,8 @@ public class CardManager : MonoBehaviour
             GetCard(DataManager.cardsContainer.enemyCards.GetCardsByIndex(i), enemyCardPrefab, ref enemyCards[i], enemyCContainers[i], EnemyIndex[i]);
 
         // Attacker cards
-        for (int i = 0; i < attackerCContainers.Length; i++)
-            GetCard(DataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], i);
+        //for (int i = 0; i < attackerCContainers.Length; i++)
+        //    GetCard(DataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], i);
 
         // Stadium cards
         GetCard(DataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex);
@@ -214,12 +214,12 @@ public class CardManager : MonoBehaviour
     public void NextCardAttacker(int i) 
     {
         AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i]);
-        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.prefab;
+        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.attribute;
     }
     public void PrevCardAttacker(int i) 
     { 
         AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i]);
-        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.prefab;
+        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.attribute;
     }
 
     public void NextCardStadium() 

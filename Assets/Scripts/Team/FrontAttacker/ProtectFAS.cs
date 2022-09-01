@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ProtectFAS : AttackerState
+public class ProtectFAS : FrontAttackerState
 {
-    new FrontAttacker attacker;
-
     public ProtectFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.PROTECT;
-
-        attacker = _attacker;
     }
 
     public override void Enter()
@@ -27,7 +23,7 @@ public class ProtectFAS : AttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.transform.position + attacker.playerDir * attacker.positionRadius;
+        attacker.destination = attacker.transform.position + attacker.playerDir * att.positionRadius;
         attacker.destination = attacker.ClampInZone(attacker.destination);
 
         if (attacker.hasDefender)

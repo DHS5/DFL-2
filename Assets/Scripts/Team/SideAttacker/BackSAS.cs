@@ -3,26 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BackSAS : AttackerState
+public class BackSAS : SideAttackerState
 {
-    new SideAttacker attacker;
-
-    private int side;
-
-    public BackSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator, int _side) : base(_attacker, _agent, _animator)
+    public BackSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.BACK;
-
-        attacker = _attacker;
-
-        side = _side;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        agent.speed = attacker.back2PlayerSpeed;
+        agent.speed = att.back2PlayerSpeed;
 
         animator.SetTrigger("Sprint");
     }
@@ -31,17 +23,17 @@ public class BackSAS : AttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.positionRadius * 
-            (side * Vector3.Cross(attacker.player.transform.up, attacker.playerDir).normalized + attacker.playerDir).normalized;
+        attacker.destination = attacker.playerPos + att.positionRadius * 
+            ((int)att.Side * Vector3.Cross(attacker.player.transform.up, attacker.playerDir).normalized + attacker.playerDir).normalized;
 
         if (attacker.InZone(attacker.transform.position))
         {
-            nextState = new ProtectSAS(attacker, agent, animator, side);
+            nextState = new ProtectSAS(attacker, agent, animator);
             stage = Event.EXIT;
         }
         else if (attacker.hasDefender)
         {
-            nextState = new DefendSAS(attacker, agent, animator, side);
+            nextState = new DefendSAS(attacker, agent, animator);
             stage = Event.EXIT;
         }
     }

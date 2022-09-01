@@ -7,7 +7,7 @@ public class CardsContainerSO : ScriptableObject
 {
     public List<PlayerCardSO> playerCards;
     public List<StadiumCardSO> stadiumCards;
-    public List<AttackerCardSO> teamCards;
+    public TeamCardsContainer teamCards;
     public EnemyCardsContainer enemyCards;
     public List<ParkourCardSO> parkourCards;
     public List<WeaponCardSO> weaponCards;
@@ -31,4 +31,15 @@ public class EnemyCardsContainer
             _ => easyEnemyCards,
         };
     }
+}
+
+
+[System.Serializable]
+public class TeamCardsContainer
+{
+    [Header("Team cards")]
+    public List<FrontAttackerCardSO> frontAttackers;
+    public List<LSideAttackerCardSO> lSideAttackers;
+    public List<RSideAttackerCardSO> rSideAttackers;
+    public List<BackAttackerCardSO> backAttackers;
 }

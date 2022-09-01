@@ -27,10 +27,10 @@ public class AttackerCard : Card
     {
         base.Start();
 
-        Attacker a = attackerCardSO.prefab.GetComponent<Attacker>();
-        positionText.text += attackerCardSO.position;
-        speedSlider.value = (a.back2PlayerSpeed + a.defenseSpeed) / 2;
-        proximitySlider.value = a.positionRadius;
-        reactivitySlider.value = 1 - a.reactivity;
+        AttackerAttributesSO att = attackerCardSO.attribute;
+        positionText.text += attackerCardSO.Position;
+        speedSlider.value = (att.back2PlayerSpeed + att.defenseSpeed) / 2;
+        proximitySlider.value = att.positionRadius;
+        reactivitySlider.value = 1 - att.reactivity;
     }
 }

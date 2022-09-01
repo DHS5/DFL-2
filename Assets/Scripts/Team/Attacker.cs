@@ -14,7 +14,7 @@ public class Attacker : MonoBehaviour
 
     protected AttackerState currentState;
 
-    [HideInInspector] public AttackerType type;
+    public AttackerAttributesSO Attribute { get; private set; }
 
 
     [HideInInspector] public Player player;
@@ -24,12 +24,12 @@ public class Attacker : MonoBehaviour
 
     protected bool gameOver;
 
-    public float reactivity;
-    public float positionRadius;
-    [Range(0,1)] public float defenseDistMultiplier;
-
-    public float back2PlayerSpeed;
-    public float defenseSpeed;
+    //public float reactivity;
+    //public float positionRadius;
+    //[Range(0,1)] public float defenseDistMultiplier;
+    //
+    //public float back2PlayerSpeed;
+    //public float defenseSpeed;
 
 
     [HideInInspector] public Vector3 playerPos;
@@ -69,33 +69,20 @@ public class Attacker : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-
     private void Update()
     {
-        // Walk
-        //if (navMeshAgent.velocity.magnitude > walkLimit && navMeshAgent.velocity.magnitude < runLimit)
-        //{
-        //    animator.SetFloat("Speed", 1f);
-        //    if (target != null) lookRot = Quaternion.LookRotation(target.transform.position - transform.position);
-        //    else lookRot = transform.rotation;
-        //    navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, lookRot, 5 * Time.deltaTime);
-        //}
-        //// Run
-        //else if (navMeshAgent.velocity.magnitude >= runLimit)
-        //{
-        //    animator.SetFloat("Speed", 2f);
-        //}
-        //// Idle
-        //else
-        //{
-        //    animator.SetFloat("Speed", 0f);
-        //
-        //    if (target != null) lookRot = Quaternion.LookRotation(target.transform.position - transform.position);
-        //    else lookRot = transform.rotation;
-        //    navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, lookRot, 5 * Time.deltaTime);
-        //}
+        if (Attribute != null && Attribute.reactivity == 0 && player.gameplay.onField && !gameOver)
+        {
+            ProtectPlayer();
+        }
     }
 
+    // ### Functions ###
+
+    public virtual void GetAttribute(AttackerAttributesSO att)
+    {
+        Attribute = att;
+    }
 
 
     /// <summary>
@@ -147,6 +134,19 @@ public class Attacker : MonoBehaviour
             // Gets the direction from player to target
             player2TargetDir = (targetPos - playerPos).normalized;
         }
+
+
+        currentState = currentState.Process();
+
+        if (player.gameplay.onField && !gameOver)
+        {
+            navMeshAgent.SetDestination(destination);
+        }
+
+        if (Attribute.reactivity != 0 && !gameOver)
+        {
+            Invoke(nameof(ProtectPlayer), Attribute.reactivity);
+        }
     }
 
 
@@ -164,10 +164,7 @@ public class Attacker : MonoBehaviour
         teamManager.AddEnemy(target);
     }
 
-    protected virtual void BlockEnemy()
-    {
-
-    }
+    protected virtual void BlockEnemy() { }
 
 
     public virtual Vector3 ClampInZone(Vector3 destination) 

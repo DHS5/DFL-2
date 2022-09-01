@@ -180,8 +180,6 @@ public class GameManager : MonoBehaviour
         gameData.gameEnemiesRange = enemiesRange;
 
         waveNumber = 1;
-
-        Debug.Log(gameData.gameMode);
     }
 
 

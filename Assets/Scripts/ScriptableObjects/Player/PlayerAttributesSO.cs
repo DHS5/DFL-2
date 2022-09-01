@@ -113,4 +113,8 @@ public class PlayerAttributesSO : ScriptableObject
     
     [Tooltip("Flip speed of the player")]
     [SerializeField] private float flipSpeed; public float FlipSpeed { get { return flipSpeed; } }
+
+
+    [Space]
+    public Material teamMaterial;
 }

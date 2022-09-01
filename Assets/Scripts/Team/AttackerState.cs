@@ -23,7 +23,6 @@ public abstract class AttackerState
     public Animator animator;
 
 
-
     protected float startTime;
 
 

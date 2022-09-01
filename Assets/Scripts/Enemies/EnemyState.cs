@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL, TIRED, READY }
+public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL, TIRED, READY, TRUCKED }
 
 
 public abstract class EnemyState
@@ -65,13 +65,11 @@ public abstract class EnemyState
         return this;
     }
 
-    protected void EnemyOrientation()
+    
+    public EnemyState Trucked(Vector3 impact)
     {
-        //if (controller.playerManager.gameManager.GameOn)
-        //{
-        //    controller.playerManager.TPPlayer.transform.localRotation =
-        //    Quaternion.Slerp(controller.playerManager.TPPlayer.transform.localRotation,
-        //        Quaternion.LookRotation(controller.Velocity, Vector3.up), 0.02f);
-        //}
+        nextState = new TruckedES(enemy, agent, animator, impact);
+        stage = Event.EXIT;
+        return Process();
     }
 }
