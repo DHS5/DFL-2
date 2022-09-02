@@ -18,7 +18,7 @@ public class ShopManager : MonoBehaviour
     [Space]
     [SerializeField] private GameObject playerShopBContainer;
     [SerializeField] private GameObject stadiumShopBContainer;
-    [SerializeField] private GameObject teamShopBContainer;
+    [SerializeField] private GameObject[] teamShopBContainer;
     [SerializeField] private GameObject weaponShopBContainer;
 
     [Header("UI prefabs")]
@@ -55,7 +55,8 @@ public class ShopManager : MonoBehaviour
             // Stadium shop buttons
             GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCPrefab);
             // Team shop buttons
-            //GenerateShopButton(cardsContainer.teamCards, teamShopBContainer, attackerShopCPrefab);
+            for (int i = 0; i < teamShopBContainer.Length; i++)
+                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainer[i], attackerShopCPrefab);
             // Weapon shop buttons
             GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCPrefab);
 

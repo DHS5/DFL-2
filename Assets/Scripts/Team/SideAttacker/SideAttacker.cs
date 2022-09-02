@@ -10,6 +10,8 @@ public class SideAttacker : Attacker
 
     public override void GetAttribute(AttackerAttributesSO att)
     {
+        base.GetAttribute(att);
+
         Att = att as SideAttAttributesSO;
 
         currentState = new WaitSAS(this, navMeshAgent, animator);

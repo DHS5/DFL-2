@@ -216,8 +216,8 @@ public class DataManager : MonoBehaviour
             if (playerPrefs.enemyIndex[i] >= cardsContainer.enemyCards.GetCardsByIndex(i).Count) playerPrefs.enemyIndex[i] = 0;
         if (playerPrefs.stadiumIndex >= inventoryData.stadiums.Length) playerPrefs.stadiumIndex = 0;
         if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
-        for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
-            if (playerPrefs.teamIndex[i] >= inventoryData.attackers.Length) playerPrefs.teamIndex[i] = 0;
+        //for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
+        //    if (playerPrefs.teamIndex[i] >= inventoryData.attackers.Length) playerPrefs.teamIndex[i] = 1; // Playerprefs team corresponds to the attacker number
     }
 
     private void InitProgression()
@@ -255,9 +255,11 @@ public class DataManager : MonoBehaviour
 
     private void InitGameData()
     {
-        //gameData.stadiumIndex = playerPrefs.stadiumIndex;
+        gameData.enemy = cardsContainer.enemyCards.easyEnemyCards[playerPrefs.enemyIndex[0]].attribute;
 
         gameData.team = new AttackerAttributesSO[5];
+        for (int i = 0; i < gameData.team.Length; i++)
+            gameData.team[i] = cardsContainer.teamCards.GetAttacker(playerPrefs.teamIndex[i]).attribute;
     }
 
     private void InitStatsDatas()

@@ -8,6 +8,8 @@ public class FrontAttacker : Attacker
 
     public override void GetAttribute(AttackerAttributesSO att)
     {
+        base.GetAttribute(att);
+
         Att = att as FrontAttAttributesSO;
 
         currentState = new WaitFAS(this, navMeshAgent, animator);

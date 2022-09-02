@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CardManager : MonoBehaviour
 {
@@ -35,9 +36,11 @@ public class CardManager : MonoBehaviour
 
 
     [Header("Team Choice Screen")]
+    [SerializeField] private TMP_Dropdown attackerPositionDropdown;
     [SerializeField] private GameObject[] attackerCContainers;
     [SerializeField] private GameObject attackerCardPrefab;
-    private List<AttackerCard>[] attackerCards = new List<AttackerCard>[5];
+    private List<AttackerCard>[] attackerCards = new List<AttackerCard>[4];
+    private int[] attackerChoiceIndex = { 0, 0, 0, 0 };
 
 
     [Header("Parkour Choice Screen")]
@@ -64,11 +67,26 @@ public class CardManager : MonoBehaviour
         get { return DataManager.playerPrefs.enemyIndex; }
         set { DataManager.playerPrefs.enemyIndex = value; }
     }
-    public int[] AttackerIndex
+
+    public int AttackerPosition
     {
-        get { return DataManager.playerPrefs.teamIndex; }
-        set { DataManager.playerPrefs.teamIndex = value; }
+        get { return attackerPositionDropdown.value; }
+        set
+        { 
+            CloseAttackerContainers();
+            attackerCContainers[value].SetActive(true);
+        }
     }
+    private int AttackerChoiceIndex
+    {
+        get { return attackerChoiceIndex[AttackerPosition]; }
+        set { attackerChoiceIndex[AttackerPosition] = value; }
+    }
+    public AttackerCard CurrentCard
+    {
+        get { return attackerCards[AttackerPosition][AttackerChoiceIndex]; }
+    }
+
     public int ParkourIndex
     {
         get { return DataManager.playerPrefs.parkourIndex; }
@@ -96,7 +114,7 @@ public class CardManager : MonoBehaviour
     }
 
 
-    private void GetCard<T,U>(List<U> cardSOs, GameObject prefab, ref List<T> cards, GameObject container, int index, int teamIndex) where T : Card where U : CardSO
+    private void GetCard<T,U>(List<U> cardSOs, GameObject prefab, ref List<T> cards, GameObject container, int index) where T : Card where U : CardSO
     {
         DestroyCards(container);
         cards.Clear();
@@ -110,7 +128,6 @@ public class CardManager : MonoBehaviour
                 T card = Instantiate(prefab, container.transform).GetComponent<T>();
                 card.cardSO = cardSO;
                 if (i != index) card.gameObject.SetActive(false);
-                else if (teamIndex != -1) card.cardSO.SetActive(teamIndex);
                 else card.cardSO.SetActive();
 
                 if (card as ParkourCard != null)
@@ -122,10 +139,6 @@ public class CardManager : MonoBehaviour
                 i++;
             }
         }
-    }
-    private void GetCard<T,U>(List<U> cardSOs, GameObject prefab, ref List<T> cards, GameObject container, int index) where T : Card where U : CardSO
-    {
-        GetCard(cardSOs, prefab, ref cards, container, index, -1);
     }
 
     public void GetCards()
@@ -141,8 +154,9 @@ public class CardManager : MonoBehaviour
             GetCard(DataManager.cardsContainer.enemyCards.GetCardsByIndex(i), enemyCardPrefab, ref enemyCards[i], enemyCContainers[i], EnemyIndex[i]);
 
         // Attacker cards
-        //for (int i = 0; i < attackerCContainers.Length; i++)
-        //    GetCard(DataManager.cardsContainer.teamCards, attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], AttackerIndex[i], i);
+        for (int i = 0; i < attackerCContainers.Length; i++)
+            GetCard(DataManager.cardsContainer.teamCards.GetCardsByIndex(i), attackerCardPrefab, ref attackerCards[i], attackerCContainers[i], 0);
+        AttackerPosition = 0;
 
         // Stadium cards
         GetCard(DataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex);
@@ -211,15 +225,13 @@ public class CardManager : MonoBehaviour
         DataManager.gameData.enemy = enemyCards[i][EnemyIndex[i]].enemyCardSO.attribute;
     }
 
-    public void NextCardAttacker(int i) 
+    public void NextCardAttacker()
     {
-        AttackerIndex[i] = NextCard(attackerCards[i], AttackerIndex[i]);
-        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.attribute;
+        AttackerChoiceIndex = NextCard(attackerCards[AttackerPosition], AttackerChoiceIndex);
     }
-    public void PrevCardAttacker(int i) 
-    { 
-        AttackerIndex[i] = PrevCard(attackerCards[i], AttackerIndex[i]);
-        DataManager.gameData.team[i] = attackerCards[i][AttackerIndex[i]].attackerCardSO.attribute;
+    public void PrevCardAttacker()
+    {
+        AttackerChoiceIndex = PrevCard(attackerCards[AttackerPosition], AttackerChoiceIndex);
     }
 
     public void NextCardStadium() 
@@ -255,5 +267,11 @@ public class CardManager : MonoBehaviour
             if (container.transform.GetChild(i).GetComponent<Card>() != null)
                 Destroy(container.transform.GetChild(i).gameObject);
         }
+    }
+
+    private void CloseAttackerContainers()
+    {
+        foreach (GameObject g in attackerCContainers)
+            g.SetActive(false);
     }
 }

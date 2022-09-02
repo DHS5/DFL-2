@@ -41,17 +41,6 @@ public class Attacker : MonoBehaviour
     [HideInInspector] public float playerTargetDist;
     [HideInInspector] public Vector3 player2TargetDir;
 
-
-    [SerializeField] private float size;
-    public float Size
-    {
-        get { return size; }
-        set
-        {
-            size = value;
-            transform.localScale *= size;
-        }
-    }
     
     [HideInInspector] public bool hasDefender = false;
 
@@ -82,6 +71,20 @@ public class Attacker : MonoBehaviour
     public virtual void GetAttribute(AttackerAttributesSO att)
     {
         Attribute = att;
+        navMeshAgent.speed = att.speed;
+        navMeshAgent.acceleration = att.acceleration;
+        navMeshAgent.angularSpeed = att.rotationSpeed;
+        navMeshAgent.autoBraking = att.autoBraking;
+
+        Rescale(att);
+
+        GetComponentInChildren<Renderer>().material = player.controller.playerAtt.teamMaterial;
+    }
+
+    private void Rescale(AttackerAttributesSO att)
+    {
+        var scale = gameObject.transform.localScale;
+        gameObject.transform.localScale = new Vector3(scale.x * att.size.x, scale.y * att.size.y, scale.z * att.size.z);
     }
 
 

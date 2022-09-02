@@ -9,17 +9,7 @@ public class AttackerCard : Card
 {
     [Header("Attacker card's specifics")]
 
-    [Tooltip("")]
-    [SerializeField] private TextMeshProUGUI positionText;
-
-    [Tooltip("")]
-    [SerializeField] private Slider speedSlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider proximitySlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider reactivitySlider;
+    [SerializeField] private AttackerCapacityCard capacityCard;
 
     public AttackerCardSO attackerCardSO { get { return cardSO as AttackerCardSO; } }
 
@@ -28,9 +18,23 @@ public class AttackerCard : Card
         base.Start();
 
         AttackerAttributesSO att = attackerCardSO.attribute;
-        positionText.text += attackerCardSO.Position;
-        speedSlider.value = (att.back2PlayerSpeed + att.defenseSpeed) / 2;
-        proximitySlider.value = att.positionRadius;
-        reactivitySlider.value = 1 - att.reactivity;
+        capacityCard.info.position = "Position : " + attackerCardSO.Position;
+        capacityCard.info.speedInfo.value = (att.back2PlayerSpeed + att.defenseSpeed) / 2;
+        capacityCard.info.rotSpeedInfo.value = att.defenseRotSpeed;
+        capacityCard.info.proximityInfo.value = att.positionRadius;
+        capacityCard.info.reactivityInfo.value = 1 - att.reactivity;
+
+        capacityCard.ApplyInfos();
+    }
+
+    public void ApplyCardSOInfo(AttackerCardSO card)
+    {
+        InfoActive = false;
+        cardSO = card;
+
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
+        else
+            Start();
     }
 }

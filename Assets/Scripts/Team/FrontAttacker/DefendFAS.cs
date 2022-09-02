@@ -17,6 +17,7 @@ public class DefendFAS : FrontAttackerState
         animator.SetTrigger("Block");
 
         agent.speed = att.defenseSpeed;
+        agent.angularSpeed = att.defenseRotSpeed;
     }
 
 
@@ -41,5 +42,6 @@ public class DefendFAS : FrontAttackerState
         animator.ResetTrigger("Block");
 
         attacker.UnTarget();
+        agent.angularSpeed = att.rotationSpeed;
     }
 }

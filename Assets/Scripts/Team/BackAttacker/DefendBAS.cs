@@ -17,6 +17,7 @@ public class DefendBAS : BackAttackerState
         animator.SetTrigger("BackBlock");
 
         agent.speed = att.defenseSpeed;
+        agent.angularSpeed = att.defenseRotSpeed;
     }
 
 
@@ -41,5 +42,6 @@ public class DefendBAS : BackAttackerState
         animator.ResetTrigger("BackBlock");
 
         attacker.UnTarget();
+        agent.angularSpeed = att.rotationSpeed;
     }
 }

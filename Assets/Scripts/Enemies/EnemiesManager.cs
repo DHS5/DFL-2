@@ -16,19 +16,10 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject[] basePrefabs;
 
     [Header("Defenders")]
-    [Header("Enemy's prefab lists")]
-    [Tooltip("List of the Wingmen's prefabs")]
-    [SerializeField] private GameObject[] wingmenPrefabs;
-    [Tooltip("List of the Bigmen's prefabs")]
-    [SerializeField] private GameObject[] linemenPrefabs;
     [Tooltip("")]
     [SerializeField] private AudioClip[] defenderAudios;
 
     [Header("Zombies")]
-    [Tooltip("List of the classic zombie's prefabs")]
-    [SerializeField] private GameObject[] classicZPrefabs;
-    [Tooltip("List of the sleeping zombie's prefabs")]
-    [SerializeField] private GameObject[] sleepingZPrefabs;
     [Tooltip("")]
     [SerializeField] private AudioClip[] zombieAudios;
 
@@ -277,7 +268,10 @@ public class EnemiesManager : MonoBehaviour
     {
         if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE)
         {
-            CreateEnemy(main.GameManager.gameData.enemy, main.FieldManager.field.OneVOneEnemyPos, defenderAudios);
+            int diff = (int)main.GameManager.gameData.gameDifficulty;
+            DefenderAttributesSO def = main.DataManager.cardsContainer.enemyCards.GetCardsByIndex(diff)[main.DataManager.playerPrefs.enemyIndex[diff]].attribute;
+
+            CreateEnemy(def, main.FieldManager.field.OneVOneEnemyPos, defenderAudios);
         }
     }
 }

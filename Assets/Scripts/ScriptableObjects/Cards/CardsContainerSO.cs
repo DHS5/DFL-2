@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "CardsContainer", menuName = "ScriptableObjects/Container/Cards", order = 1)]
 public class CardsContainerSO : ScriptableObject
@@ -42,4 +43,28 @@ public class TeamCardsContainer
     public List<LSideAttackerCardSO> lSideAttackers;
     public List<RSideAttackerCardSO> rSideAttackers;
     public List<BackAttackerCardSO> backAttackers;
+
+    public AttackerCardSO GetAttacker(int index)
+    {
+        foreach (FrontAttackerCardSO a in frontAttackers) if ((int) a.attacker == index) return a;
+        foreach (LSideAttackerCardSO a in lSideAttackers) if ((int) a.attacker == index) return a;
+        foreach (RSideAttackerCardSO a in rSideAttackers) if ((int) a.attacker == index) return a;
+        foreach (BackAttackerCardSO a in backAttackers) if ((int) a.attacker == index) return a;
+
+        Debug.Log("return null for : " + index);
+        return null;
+    }
+
+
+    public List<AttackerCardSO> GetCardsByIndex(int index)
+    {
+        return index switch
+        {
+            0 => frontAttackers.Cast<AttackerCardSO>().ToList(),
+            1 => lSideAttackers.Cast<AttackerCardSO>().ToList(),
+            2 => rSideAttackers.Cast<AttackerCardSO>().ToList(),
+            3 => backAttackers.Cast<AttackerCardSO>().ToList(),
+            _ => frontAttackers.Cast<AttackerCardSO>().ToList(),
+        };
+    }
 }

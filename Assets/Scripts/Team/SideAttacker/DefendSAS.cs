@@ -18,6 +18,7 @@ public class DefendSAS : SideAttackerState
         animator.SetFloat("Side", (int)att.Side);
 
         agent.speed = att.defenseSpeed;
+        agent.angularSpeed = att.defenseRotSpeed;
     }
 
 
@@ -43,5 +44,6 @@ public class DefendSAS : SideAttackerState
         animator.SetFloat("Side", 0f);
 
         attacker.UnTarget();
+        agent.angularSpeed = att.rotationSpeed;
     }
 }

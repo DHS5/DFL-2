@@ -8,6 +8,8 @@ public class BackAttacker : Attacker
 
     public override void GetAttribute(AttackerAttributesSO att)
     {
+        base.GetAttribute(att);
+
         Att = att as BackAttAttributesSO;
 
         currentState = new WaitBAS(this, navMeshAgent, animator);

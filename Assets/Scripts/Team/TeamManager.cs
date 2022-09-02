@@ -54,8 +54,6 @@ public class TeamManager : MonoBehaviour
 
 
 
-    readonly float sizeMultiplier = 0.1f;
-
 
     private void Awake()
     {
@@ -150,10 +148,9 @@ public class TeamManager : MonoBehaviour
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
         Attacker attacker = Instantiate(attackerBasePrefabs[(int)att.Type], randomPos, Quaternion.identity).GetComponent<Attacker>();
+        attacker.player = player;
         attacker.GetAttribute(att);
         attacker.teamManager = this;
-        attacker.player = player;
-        attacker.Size *= Random.Range(1 - sizeMultiplier, 1 + sizeMultiplier);
         AddAttackerToList(attacker);
     }
 
