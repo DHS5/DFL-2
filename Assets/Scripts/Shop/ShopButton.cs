@@ -6,63 +6,35 @@ using TMPro;
 
 public class ShopButton : MonoBehaviour
 {
-    private ShopManager shopManager;
-    private InventoryManager inventoryManager;
-
-
     [Header("UI components")]
-    [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI text;
-
-    [Header("Fields")]
-    [Tooltip("Text to display under the button")]
-    [SerializeField] private string title;
-    [Tooltip("Sprite to display on the button")]
-    [SerializeField] private Sprite sprite;
-    [Tooltip("Sprite to display on the shop card")]
-    [SerializeField] private Sprite shopCardSprite;
-    [Tooltip("Shop card prefab")]
-    [HideInInspector] public GameObject shopCardPrefab;
-    [Tooltip("Shop object prefab (object to buy)")]
-    [SerializeField] private GameObject shopObjectPrefab;
-    [Tooltip("Price of the object")]
-    [SerializeField] private int price;
+    [SerializeField] private Image picture;
 
 
-    [HideInInspector] public ShopCardSO cardSO;
-
+    private ShopCardSO cardSO;
 
     private ShopCard shopCard;
 
+    [HideInInspector] public bool buyable;
 
-    private void Start()
+
+    public void GetCard(ShopCardSO _cardSO, ShopCard _shopCard, bool _buyable)
     {
-        text.text = cardSO.Title;
-        button.image.sprite = cardSO.shopSprite;
+        cardSO = _cardSO;
+        shopCard = _shopCard;
+        buyable = _buyable;
+        picture.sprite = cardSO.mainSprite;
     }
 
 
     /// <summary>
-    /// Instantiate a shop card and passes it the corresponding prefab
+    /// Gives the ShopCard the cardSO and generates it
     /// </summary>
     /// <param name="g">Parent of the shop card</param>
-    public void InstantiateShopCard()
+    public void ApplyOnShopCard()
     {
         if (shopCard == null)
         {
-            shopCard = Instantiate(shopCardPrefab, shopManager.OpenShop().transform).GetComponent<ShopCard>();
-            shopCard.GenerateCard(cardSO, inventoryManager, shopManager);
+            shopCard.GenerateCard(cardSO, this, buyable);
         }
-        else
-        {
-            shopCard.gameObject.SetActive(true);
-            shopManager.OpenShop();
-        }
-    }
-
-    public void GetManagers(in InventoryManager inv, in ShopManager shop)
-    {
-        inventoryManager = inv;
-        shopManager = shop;
     }
 }

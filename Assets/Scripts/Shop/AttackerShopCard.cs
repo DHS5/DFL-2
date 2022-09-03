@@ -24,9 +24,9 @@ public class AttackerShopCard : ShopCard
 
     [HideInInspector] public AttackerCardSO attackerCardSO;
 
-    public override void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
     {
-        base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
+        base.GenerateCard(_cardSO, _shopButton, _buyable);
 
         attackerCardSO = cardSO as AttackerCardSO;
 

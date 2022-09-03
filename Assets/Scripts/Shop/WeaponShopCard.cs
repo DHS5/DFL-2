@@ -6,33 +6,23 @@ using UnityEngine.UI;
 public class WeaponShopCard : ShopCard
 {
     [Header("Weapon card's specifics")]
-
-    [Tooltip("")]
-    [SerializeField] private Slider rangeSlider;
-    
-    [Tooltip("")]
-    [SerializeField] private Slider angleSlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider ammunitionSlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider reloadTimeSlider;
-    
-    [Tooltip("")]
-    [SerializeField] private Slider maxVictimSlider;
+    public WeaponCapacityCard capacityCard;
 
     [HideInInspector] public WeaponCardSO weaponCardSO;
 
-    public override void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
     {
-        base.GenerateCard(_cardSO, _inventoryManager, _shopManager);
+        base.GenerateCard(_cardSO, _shopButton, _buyable);
+
+        weaponCardSO = cardSO as WeaponCardSO;
 
         Weapon w = weaponCardSO.prefab.GetComponent<WeaponBonus>().prefab.GetComponent<Weapon>();
-        rangeSlider.value = w.Range;
-        angleSlider.value = w.Angle;
-        ammunitionSlider.value = w.Ammunition;
-        reloadTimeSlider.value = w.ReloadTime;
-        maxVictimSlider.value = w.MaxVictim;
+        capacityCard.info.rangeInfo.value = w.Range;
+        capacityCard.info.angleInfo.value = w.Angle;
+        capacityCard.info.ammunitionInfo.value = w.Ammunition;
+        capacityCard.info.reloadInfo.value = w.ReloadTime;
+        capacityCard.info.maxVictimInfo.value = w.MaxVictim;
+
+        capacityCard.ApplyInfos();
     }
 }

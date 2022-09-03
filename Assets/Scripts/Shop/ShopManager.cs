@@ -10,23 +10,24 @@ public class ShopManager : MonoBehaviour
     [Header("Cards scriptable object")]
     [SerializeField] private CardsContainerSO cardsContainer;
 
-    [Header("UI Components")]
+    [Header("Coins texts")]
     [SerializeField] private TextMeshProUGUI[] coinsTexts;
-    [Space]
-    [SerializeField] private GameObject shopBackground;
-    [SerializeField] private GameObject shopCardContainer;
-    [Space]
+
+    [Header("Shop Button Containers")]
     [SerializeField] private GameObject playerShopBContainer;
     [SerializeField] private GameObject stadiumShopBContainer;
-    [SerializeField] private GameObject[] teamShopBContainer;
+    [SerializeField] private GameObject[] teamShopBContainers;
     [SerializeField] private GameObject weaponShopBContainer;
 
+    [Header("Shop Cards")]
+    [SerializeField] private PlayerShopCard playerShopCard;
+    [SerializeField] private AttackerShopCard attackerShopCard;
+    [SerializeField] private StadiumShopCard stadiumShopCard;
+    [SerializeField] private WeaponShopCard weaponShopCard;
+
     [Header("UI prefabs")]
-    [SerializeField] private GameObject shopButtonPrefab;
-    [SerializeField] private GameObject playerShopCPrefab;
-    [SerializeField] private GameObject stadiumShopCPrefab;
-    [SerializeField] private GameObject attackerShopCPrefab;
-    [SerializeField] private GameObject weaponShopCPrefab;
+    [SerializeField] private GameObject characterShopButtonPrefab;
+    [SerializeField] private GameObject simpleShopButtonPrefab;
 
     private List<ShopButton> shopButtons = new(); 
 
@@ -51,63 +52,51 @@ public class ShopManager : MonoBehaviour
         if (!cardsGenerated)
         {
             // Player shop buttons
-            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCPrefab);
+            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, characterShopButtonPrefab);
             // Stadium shop buttons
-            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCPrefab);
+            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, simpleShopButtonPrefab);
             // Team shop buttons
-            for (int i = 0; i < teamShopBContainer.Length; i++)
-                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainer[i], attackerShopCPrefab);
+            for (int i = 0; i < teamShopBContainers.Length; i++)
+                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCard, characterShopButtonPrefab);
             // Weapon shop buttons
-            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCPrefab);
+            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, simpleShopButtonPrefab);
 
             cardsGenerated = true;
         }
     }
 
-    private void GenerateShopButton<T>(List<T> cards, GameObject container, GameObject shopCPrefab) where T : ShopCardSO
+    private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab) where T : ShopCardSO
     {
         foreach (T card in cards)
-        {
-            if (!main.InventoryManager.IsInInventory(card.cardObject))
-            {
-                ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
-                sb.shopCardPrefab = shopCPrefab;
-                sb.cardSO = card;
-                sb.GetManagers(main.InventoryManager, this);
+        {            
+            ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
+            sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject));
 
-                shopButtons.Add(sb);
-            }
+            shopButtons.Add(sb);
         }
     }
 
-    public GameObject OpenShop()
-    {
-        shopBackground.SetActive(true);
 
-        return shopCardContainer;
+    public void ActuShopButton(ShopButton shopButton, bool _buyable)
+    {
+        shopButton.buyable = _buyable;
     }
 
-    public void DeactivateShopCards()
+    public void Buy(ShopCard card)
     {
-        shopBackground.SetActive(false);
-
-        foreach(ShopCard sc in shopCardContainer.GetComponentsInChildren<ShopCard>())
-            sc.gameObject.SetActive(false);
-    }
-
-    public void DestroyShopButton(CardSO card)
-    {
-        foreach (ShopButton sb in shopButtons)
+        if (main.DataManager.inventoryData.coins >= card.cardSO.price)
         {
-            if (sb.cardSO == card)
-                Destroy(sb.gameObject);
-        }
-    }
+            main.DataManager.inventoryData.coins -= card.cardSO.price;
+            ActuCoinsTexts();
 
-    public void Buy(int price)
-    {
-        main.DataManager.inventoryData.coins -= price;
-        ActuCoinsTexts();
+            main.InventoryManager.AddToInventory(card.cardSO.cardObject);
+            ActuShopButton(card.shopButton, false);
+            card.Buyable = false;
+        }
+        else
+        {
+            Debug.Log("You don't have enough coins to buy " + card.cardSO.Title);
+        }
     }
 
 

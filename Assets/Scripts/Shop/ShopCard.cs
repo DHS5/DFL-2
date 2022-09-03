@@ -6,9 +6,6 @@ using TMPro;
 
 public abstract class ShopCard : MonoBehaviour
 {
-    private InventoryManager inventoryManager;
-    private ShopManager shopManager;
-
     [Header("UI components")]
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text;
@@ -16,40 +13,26 @@ public abstract class ShopCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI popupText;
 
-    protected ShopCardSO cardSO;
-    protected int price;
-
-
-    public virtual void GenerateCard(ShopCardSO _cardSO, InventoryManager _inventoryManager, ShopManager _shopManager)
+    public ShopCardSO cardSO { get; private set; }
+    public ShopButton shopButton { get; private set; }
+    protected int Price
     {
-        cardSO = _cardSO;
-        inventoryManager = _inventoryManager;
-        shopManager = _shopManager;
-
-        text.text = cardSO.Title;
-        image.sprite = cardSO.mainSprite;
-        price = cardSO.price;
-        buttonText.text = price.ToString();
-        popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
+        set { buttonText.text = value.ToString(); }
+    }
+    public bool Buyable
+    {
+        set { buyButton.gameObject.SetActive(value); }
     }
 
-    public virtual void Buy()
+    public virtual void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
     {
-        DataManager dataManager = DataManager.InstanceDataManager;
-        if (dataManager != null)
-        {
-            if (dataManager.inventoryData.coins >= price)
-            {
-                Debug.Log("Buy");
-                shopManager.Buy(cardSO.price);
-                inventoryManager.AddToInventory(cardSO.cardObject);
-                shopManager.DestroyShopButton(cardSO);
-                shopManager.DeactivateShopCards();
-            }
-            else
-            {
-                Debug.Log("You don't have enough coins to buy " + text.text);
-            }
-        }
+        cardSO = _cardSO;
+        shopButton = _shopButton;
+
+        Buyable = _buyable;
+        text.text = cardSO.Title;
+        image.sprite = cardSO.shopSprite;
+        Price = cardSO.price;
+        popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
     }
 }
