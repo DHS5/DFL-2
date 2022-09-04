@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Kittle_Attributes
   m_EditorClassIdentifier: 
   size: {x: 1.1, y: 1.1, z: 1.1}
-  dirSensitivity: 8
-  dirGravity: 4
+  dirSensitivity: 10
+  dirGravity: 6
   accSensitivity: 6
   accGravity: 6
   snap: 0.001
   normalSpeed: 12
   normalSideSpeed: 5
-  accelerationM: 1.5
+  accelerationM: 1.6
   accSideSpeed: 4
   accelerationTime: 2
   accelerationRestTime: 4
@@ -41,10 +41,10 @@ MonoBehaviour:
   canTruck: 1
   jukeSideSpeed: 10
   jukeSpeed: 11
-  spinSideSpeed: 10
-  spinSpeed: 15
-  feintSideSpeed: 13
-  feintSpeed: 16
+  spinSideSpeed: 0
+  spinSpeed: 0
+  feintSideSpeed: 15
+  feintSpeed: 18
   slideSpeed: 0
   flipSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 14f3de7d3bbcd1547be3689aa6a2a926, type: 2}

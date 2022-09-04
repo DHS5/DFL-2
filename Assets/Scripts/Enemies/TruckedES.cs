@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class TruckedES : EnemyState
 {
     Vector3 impact;
-    readonly float impactSpeed = 20;
+    readonly float impactSpeed = 15;
 
     public TruckedES(Enemy _enemy, NavMeshAgent _agent, Animator _animator, Vector3 _impact) : base(_enemy, _agent, _animator)
     {

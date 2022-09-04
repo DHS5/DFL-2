@@ -49,20 +49,9 @@ MonoBehaviour:
   enemy: {fileID: 0}
   audioSource: {fileID: 0}
   player: {fileID: 0}
-  intelligence: 0
-  reactivity: 0
-  anticipation: 0
-  precision: 0
-  waitDist: 0
-  attackDist: 0
-  attackSpeed: 0
-  size: 0
-  patient: 0
-  patience: 0
-  chaseDist: 0
-  positionningDist: 0
   playerPosition: {x: 0, y: 0, z: 0}
   playerLookDirection: {x: 0, y: 0, z: 0}
+  playerForward: {x: 0, y: 0, z: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
   playerSpeed: 0
   toPlayerDirection: {x: 0, y: 0, z: 0}
@@ -70,8 +59,10 @@ MonoBehaviour:
   rawDistance: 0
   xDistance: 0
   zDistance: 0
+  playerOnGround: 0
   playerOnField: 0
   destination: {x: 0, y: 0, z: 0}
+  precision: 0
 --- !u!195 &-5014122044181378086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -90,7 +81,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

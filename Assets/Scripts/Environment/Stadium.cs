@@ -23,6 +23,7 @@ public class Stadium : MonoBehaviour
     public Camera stadiumCamera;
 
     public Material enemyMaterial;
+    public Color fogColor;
 
     [SerializeField] private ParticleSystem rain;
 

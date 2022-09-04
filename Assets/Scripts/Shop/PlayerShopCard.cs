@@ -26,7 +26,7 @@ public class PlayerShopCard : ShopCard
         capacityCard.info.slowInfo.value = p.SlowM;
         capacityCard.info.shiftInfo.value = p.SlowSideSpeed;
         capacityCard.info.jumpHeightInfo.value = p.JumpHeight;
-        capacityCard.info.jumpStaminaInfo.value = p.JumpStamina;
+        capacityCard.info.jumpStaminaInfo.value = p.JumpStamina / p.JumpRechargeTime;
 
         capacityCard.info.dirSensitivityInfo.value = p.DirSensitivity;
         capacityCard.info.dirGravityInfo.value = p.DirGravity;

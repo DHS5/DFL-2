@@ -52,7 +52,7 @@ public class PlayerCapacityCard : MonoBehaviour
         feintToggle.isOn = infos.canFeint;
         spinToggle.isOn = infos.canSpin;
         jukeSpinToggle.isOn = infos.canJukeSpin;
-        slideToggle.isOn = infos.canSlideTackle;
+        slideToggle.isOn = infos.canSlide;
         flipToggle.isOn = infos.canFlip;
         truckToggle.isOn = infos.canTruck;
         slideTackleToggle.isOn = infos.canSlideTackle;

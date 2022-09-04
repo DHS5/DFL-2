@@ -73,13 +73,13 @@ public class EnvironmentManager : MonoBehaviour
 
             RenderSettings.fog = true;
             RenderSettings.fogDensity = rainFogDensity;
-            RenderSettings.fogColor = baseFogColor;
+            RenderSettings.fogColor = main.GameManager.gameData.stadium.GetComponentInChildren<Stadium>().fogColor;
         }
         if (main.GameManager.gameData.gameWeather == GameWeather.FOG) // FOG
         {
             envStyleNumber = EnvironmentStyle.FOG;
             RenderSettings.fog = true;
-            RenderSettings.fogColor = baseFogColor;
+            RenderSettings.fogColor = main.GameManager.gameData.stadium.GetComponentInChildren<Stadium>().fogColor;
 
             // # Options #
             if (main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF)) // OBJECTIF

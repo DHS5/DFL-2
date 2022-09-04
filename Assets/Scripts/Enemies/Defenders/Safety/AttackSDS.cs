@@ -28,7 +28,7 @@ public class AttackSDS : SafetyState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * 1;
 
         if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle)
         {
