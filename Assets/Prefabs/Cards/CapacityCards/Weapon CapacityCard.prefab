@@ -81,6 +81,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b6f4e6284938b47ba76d28831ba3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  info:
+    rangeInfo:
+      title: Range
+      minValue: 0
+      maxValue: 60
+      value: 0
+    angleInfo:
+      title: Shoot Angle
+      minValue: 0
+      maxValue: 90
+      value: 0
+    ammunitionInfo:
+      title: Ammunition
+      minValue: 1
+      maxValue: 30
+      value: 0
+    reloadInfo:
+      title: ReloadTime
+      minValue: 0
+      maxValue: 5
+      value: 0
+    maxVictimInfo:
+      title: Max Victim
+      minValue: 1
+      maxValue: 5
+      value: 0
   rangeGauge: {fileID: 799602950732443798}
   angleGauge: {fileID: 799602949943215283}
   ammunitionGauge: {fileID: 799602950922242021}

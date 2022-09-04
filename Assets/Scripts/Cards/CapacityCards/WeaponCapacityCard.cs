@@ -30,6 +30,7 @@ public class WeaponCapacityCard : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class WeaponCapacityCardInfo
 {
     public CapacityCardGaugeInfo rangeInfo;

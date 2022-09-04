@@ -32,7 +32,7 @@ public class ShopButton : MonoBehaviour
     /// <param name="g">Parent of the shop card</param>
     public void ApplyOnShopCard()
     {
-        if (shopCard == null)
+        if (shopCard != null)
         {
             shopCard.GenerateCard(cardSO, this, buyable);
         }

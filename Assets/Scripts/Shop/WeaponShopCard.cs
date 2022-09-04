@@ -17,6 +17,7 @@ public class WeaponShopCard : ShopCard
         weaponCardSO = cardSO as WeaponCardSO;
 
         Weapon w = weaponCardSO.prefab.GetComponent<WeaponBonus>().prefab.GetComponent<Weapon>();
+
         capacityCard.info.rangeInfo.value = w.Range;
         capacityCard.info.angleInfo.value = w.Angle;
         capacityCard.info.ammunitionInfo.value = w.Ammunition;

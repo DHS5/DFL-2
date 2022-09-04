@@ -21,7 +21,7 @@ public class ShopManager : MonoBehaviour
 
     [Header("Shop Cards")]
     [SerializeField] private PlayerShopCard playerShopCard;
-    [SerializeField] private AttackerShopCard attackerShopCard;
+    [SerializeField] private AttackerShopCard[] attackerShopCards;
     [SerializeField] private StadiumShopCard stadiumShopCard;
     [SerializeField] private WeaponShopCard weaponShopCard;
 
@@ -29,10 +29,31 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject characterShopButtonPrefab;
     [SerializeField] private GameObject simpleShopButtonPrefab;
 
-    private List<ShopButton> shopButtons = new(); 
+
+    [Header("Player Shop")]
+
+    [Header("Team Shop")]
+    [SerializeField] private TMP_Dropdown attackerPositionDropdown;
+
+    [Header("Stadium Shop")]
+    [Header("Weapon Shop")]
+
 
 
     private bool cardsGenerated = false;
+
+    // ### Properties ###
+    public int AttackerPosition
+    {
+        get { return attackerPositionDropdown.value; }
+        set
+        {
+            CloseTeamContainers();
+            teamShopBContainers[value].SetActive(true);
+            attackerShopCards[value].gameObject.SetActive(true);
+        }
+    }
+    
 
     // ### Functions ###
 
@@ -57,7 +78,8 @@ public class ShopManager : MonoBehaviour
             GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, simpleShopButtonPrefab);
             // Team shop buttons
             for (int i = 0; i < teamShopBContainers.Length; i++)
-                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCard, characterShopButtonPrefab);
+                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], characterShopButtonPrefab);
+            AttackerPosition = 0;
             // Weapon shop buttons
             GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, simpleShopButtonPrefab);
 
@@ -67,12 +89,16 @@ public class ShopManager : MonoBehaviour
 
     private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab) where T : ShopCardSO
     {
+        bool first = true;
         foreach (T card in cards)
-        {            
+        {
             ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
             sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject));
-
-            shopButtons.Add(sb);
+            if (first)
+            {
+                sb.ApplyOnShopCard();
+                first = false;
+            }
         }
     }
 
@@ -106,5 +132,16 @@ public class ShopManager : MonoBehaviour
     {
         foreach (TextMeshProUGUI t in coinsTexts)
             t.text = main.DataManager.inventoryData.coins.ToString();
+    }
+
+
+    // ### Tools ###
+
+    private void CloseTeamContainers()
+    {
+        foreach (GameObject g in teamShopBContainers)
+            g.SetActive(false);
+        foreach (AttackerShopCard sc in attackerShopCards)
+            sc.gameObject.SetActive(false);
     }
 }
