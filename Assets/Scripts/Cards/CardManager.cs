@@ -23,12 +23,6 @@ public class CardManager : MonoBehaviour
     private List<StadiumCard> stadiumCards = new List<StadiumCard>();
 
 
-    [Header("Player Choice Screen")]
-    [SerializeField] private GameObject playerCompCContainer;
-    [SerializeField] private GameObject playerCompCardPrefab;
-    private List<PlayerCompleteCard> playerCompCards = new List<PlayerCompleteCard>();
-
-
     [Header("Enemy Choice Screen")]
     [SerializeField] private GameObject[] enemyCContainers;
     [SerializeField] private GameObject enemyCardPrefab;
@@ -146,9 +140,6 @@ public class CardManager : MonoBehaviour
         // Player simple cards
         GetCard(DataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex);
 
-        // Player complete cards
-        GetCard(DataManager.cardsContainer.playerCards, playerCompCardPrefab, ref playerCompCards, playerCompCContainer, PlayerIndex);
-
         // Enemy cards
         for (int i = enemyCContainers.Length - 1; i >= 0; i--)
             GetCard(DataManager.cardsContainer.enemyCards.GetCardsByIndex(i), enemyCardPrefab, ref enemyCards[i], enemyCContainers[i], EnemyIndex[i]);
@@ -194,14 +185,12 @@ public class CardManager : MonoBehaviour
 
     public void NextCardPlayer()
     {
-        NextCard(playerCompCards, PlayerIndex);
         PlayerIndex = NextCard(playerSimpleCards, PlayerIndex);
         DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.prefab;
 
     }
     public void PrevCardPlayer()
     {
-        PrevCard(playerCompCards, PlayerIndex);
         PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex);
         DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.prefab;
     }

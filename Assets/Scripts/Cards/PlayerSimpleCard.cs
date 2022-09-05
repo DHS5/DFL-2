@@ -7,14 +7,7 @@ using UnityEngine.AI;
 public class PlayerSimpleCard : Card
 {
     [Header("Player card's specifics")]
-    [Tooltip("")]
-    [SerializeField] private Slider physicalSlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider handlingSlider;
-
-    [Tooltip("")]
-    [SerializeField] private Slider skillsSlider;
+    public PlayerCapacityCard capacityCard;
 
 
     public PlayerCardSO playerCardSO { get { return cardSO as PlayerCardSO; } }
@@ -23,8 +16,10 @@ public class PlayerSimpleCard : Card
     {
         base.Start();
 
-        physicalSlider.value = playerCardSO.physical;
-        handlingSlider.value = playerCardSO.handling;
-        skillsSlider.value = playerCardSO.skills;
+        capacityCard.info.physicalInfo.value = playerCardSO.physical;
+        capacityCard.info.handlingInfo.value = playerCardSO.handling;
+        capacityCard.info.skillsInfo.value = playerCardSO.skills;
+
+        capacityCard.ApplyInfos();
     }
 }

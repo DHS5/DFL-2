@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerShopCard : ShopCard
 {
     [Header("Player shop card's specifics")]
-    public PlayerCapacityCard capacityCard;
+    public PlayerCapacityShopCard capacityCard;
 
 
     [HideInInspector] public PlayerCardSO playerCardSO;

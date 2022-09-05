@@ -8,13 +8,11 @@ public class WeaponShopCard : ShopCard
     [Header("Weapon card's specifics")]
     public WeaponCapacityCard capacityCard;
 
-    [HideInInspector] public WeaponCardSO weaponCardSO;
+    public WeaponCardSO weaponCardSO { get { return cardSO as WeaponCardSO; } }
 
     public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
     {
         base.GenerateCard(_cardSO, _shopButton, _buyable);
-
-        weaponCardSO = cardSO as WeaponCardSO;
 
         Weapon w = weaponCardSO.prefab.GetComponent<WeaponBonus>().prefab.GetComponent<Weapon>();
 
