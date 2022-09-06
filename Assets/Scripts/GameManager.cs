@@ -455,9 +455,9 @@ public class GameManager : MonoBehaviour
     private int CalculateScore()
     {
         return waveNumber * 100 -
-                (int)(main.FieldManager.field.fieldZone.transform.position.z +
+                (int)((main.FieldManager.field.fieldZone.transform.position.z +
                 main.FieldManager.field.fieldZone.transform.localScale.z / 2 -
                 main.PlayerManager.player.transform.position.z) / 
-                (int) (main.FieldManager.field.fieldZone.transform.localScale.z / 100);
+                (main.FieldManager.field.fieldZone.transform.localScale.z / 100));
     }
 }

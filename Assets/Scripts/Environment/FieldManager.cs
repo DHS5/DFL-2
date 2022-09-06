@@ -17,6 +17,10 @@ public class FieldManager : MonoBehaviour
     [SerializeField] private NavMeshSurface surface;
 
 
+    [Header("Training stadium (1v1)")]
+    [SerializeField] private GameObject trainingStadium;
+
+
     [Tooltip("Current stadium game object")]
     private GameObject stadiumObject;
 
@@ -50,7 +54,8 @@ public class FieldManager : MonoBehaviour
 
         // ### Creation of the field and the stadium
         // ## Instantiation of the prefabs
-        stadiumObject = Instantiate(main.GameManager.gameData.stadium, fieldPosition, Quaternion.identity);
+        bool isOneVOne = main.GameManager.gameData.gameMode == GameMode.DRILL && main.GameManager.gameData.gameDrill == GameDrill.ONEVONE;
+        stadiumObject = Instantiate(isOneVOne ? trainingStadium : main.GameManager.gameData.stadium, fieldPosition, Quaternion.identity);
 
         field = stadiumObject.GetComponentInChildren<Field>();
         stadium = stadiumObject.GetComponentInChildren<Stadium>();

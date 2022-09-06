@@ -8,9 +8,9 @@ public static class CoinsManager
     {
         int coins = 0;
 
-        if (data.gameMode != GameMode.DRILL)
+        if (data.gameMode != GameMode.DRILL && data.gameMode != GameMode.TUTORIAL)
         {
-            coins = score * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) + 100 * (wave * (wave - 1)) / 2;
+            coins = score + 100 * (wave * (wave - 1)) / 2;
 
             if (data.gameOptions.Contains(GameOption.BONUS))
                 coins /= 3;
@@ -27,6 +27,8 @@ public static class CoinsManager
                 coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWeather);
             else if (data.gameDrill == GameDrill.ONEVONE)
                 coins = score / (10 - (int)data.gameWeather);
+
+            coins *= ((int)data.gameDifficulty * 2 + 1) * ((int)data.gameWeather + 1);
         }
 
         return coins;

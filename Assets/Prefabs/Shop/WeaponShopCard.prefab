@@ -359,8 +359,8 @@ RectTransform:
   - {fileID: 8250756823903981216}
   - {fileID: 8250756823543210094}
   - {fileID: 1965589600379302319}
-  - {fileID: 8849684055086319514}
   - {fileID: 8250756823763223568}
+  - {fileID: 8849684055086319514}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -387,7 +387,6 @@ MonoBehaviour:
   buttonText: {fileID: 8849684054888633700}
   popupText: {fileID: 3756520451779772664}
   capacityCard: {fileID: 0}
-  weaponCardSO: {fileID: 0}
 --- !u!1 &8250756823543210095
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,11 +481,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 31.55
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -631,7 +630,7 @@ PrefabInstance:
     - target: {fileID: 7723667188648007759, guid: 005ccefec7b44934eb5f14a992cbd5ea,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7723667188648007759, guid: 005ccefec7b44934eb5f14a992cbd5ea,
         type: 3}
@@ -1181,7 +1180,7 @@ PrefabInstance:
     - target: {fileID: 599250737904774189, guid: bbe594b8c31adef41b88e93d2b0be9ea,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 599250737904774189, guid: bbe594b8c31adef41b88e93d2b0be9ea,
         type: 3}

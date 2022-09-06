@@ -53,8 +53,9 @@ public class Field : MonoBehaviour
     public GameObject bonusZone;
     public GameObject obstacleZone;
 
-    [SerializeField] private Vector3 oneVOneEnemyPos;
-    public Vector3 OneVOneEnemyPos { get { return oneVOneEnemyPos + transform.position; } }
+    [Header("Enemy Spawn Position")]
+    [SerializeField] private GameObject enemySpawnPos;
+    public Vector3 OneVOneEnemyPos { get { return enemySpawnPos.transform.position; } }
 
 
     /// <summary>
@@ -74,18 +75,18 @@ public class Field : MonoBehaviour
 
         // ### Goalposts
         // ## Goalpost 1
-        goalpost1Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
-        goalpost1Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
+        if (goalpost1Base != null) goalpost1Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
+        if (goalpost1Metal != null) goalpost1Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
         // ## Goalpost 2
-        goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
-        goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
+        if (goalpost2Base != null) goalpost2Base.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostBase;
+        if (goalpost2Metal != null) goalpost2Metal.GetComponent<MeshRenderer>().material = fieldMaterials.goalpostMetal;
 
-        if (DataManager.InstanceDataManager != null)
+        if (entryGoalpost != null && DataManager.InstanceDataManager != null)
             entryGoalpost.SetActive(DataManager.InstanceDataManager.gameplayData.goalpost);
 
-        if (ambianceProfile != null)
+        if (ambianceProfile != null && ambianceGlobalVolume != null)
             ambianceGlobalVolume.profile = ambianceProfile;
-        else ambianceGlobalVolume.profile = null;
+        else if (ambianceGlobalVolume != null) ambianceGlobalVolume.profile = null;
 
         if (data.HasValue && data.GetValueOrDefault().gameMode == GameMode.ZOMBIE)
             ambianceGlobalVolume.profile = zombieProfile;
