@@ -87,6 +87,11 @@ public class EnvironmentManager : MonoBehaviour
             else
                 RenderSettings.fogDensity = normalFogIntensity;
         }
+        if (main.GameManager.gameData.gameWeather == GameWeather.NIGHT) // NIGHT
+        {
+            envStyleNumber = EnvironmentStyle.NIGHT;
+            RenderSettings.ambientIntensity = nightLightIntensity;
+        }
 
         // # Modes #
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) // ZOMBIE

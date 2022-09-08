@@ -22,7 +22,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Option
 /// </summary>
-[System.Serializable] public enum GameWeather { NULL = -1, SUN = 0, RAIN = 1, FOG = 2 }
+[System.Serializable] public enum GameWeather { NULL = -1, SUN = 0, RAIN = 1, FOG = 2, NIGHT = 3 }
 
 /// <summary>
 /// Game Option

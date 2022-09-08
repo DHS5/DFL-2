@@ -26,7 +26,6 @@ public class InfoButton : MonoBehaviour
     [SerializeField] private float yPos;
     [Space]
     [SerializeField] private float xSize;
-    [SerializeField] private float ySize;
 
     [Header("UI components")]
     [SerializeField] private GameObject infoButtonObject;
@@ -52,11 +51,12 @@ public class InfoButton : MonoBehaviour
         windowRect.anchoredPosition = new Vector2(xPos, yPos);
 
         windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, xSize);
-        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ySize);
 
         SearchParent();
 
         Rescale();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textComponent.transform as RectTransform);
     }
 
     private void OnEnable()
@@ -98,6 +98,8 @@ public class InfoButton : MonoBehaviour
         if (parentToggle != null) parentToggle.interactable = !state & parentToggleInteractable;
         if (parentDropdown != null) parentDropdown.interactable = !state & parentDropdownInteractable;
         if (parentSlider != null) parentSlider.interactable = !state & parentSliderInteractable;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textComponent.transform as RectTransform);
     }
 
 

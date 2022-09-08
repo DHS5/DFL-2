@@ -66,11 +66,7 @@ public class GameUIManager : MonoBehaviour
     [Tooltip("Text indicating the number of shoot left")]
     [SerializeField] private TextMeshProUGUI shootLeftText;
 
-    [Tooltip("")]
-    [SerializeField] private Image knifeIcon;
-
-    [Tooltip("")]
-    [SerializeField] private Image bulletIcon;
+    [SerializeField] private Image weaponIcon;
 
 
     [Header("Restart Screen")]
@@ -307,14 +303,19 @@ public class GameUIManager : MonoBehaviour
 
     // # Weapons #
 
-    public void DisplayWeapon(int ammunition, bool fireArm, bool canShoot, bool state)
+    public void DisplayWeapon(int ammunition, bool canShoot, bool state)
     {
         weaponsObject.SetActive(state);
         weaponsBackground.SetActive(canShoot);
 
         shootLeftText.text = ammunition.ToString();
 
-        bulletIcon.enabled = state & fireArm;
-        knifeIcon.enabled = state & !fireArm;
+        weaponIcon.enabled = state;
+    }
+
+    public void DisplayWeapon(Sprite weaponSprite, int ammunition, bool canShoot, bool state)
+    {
+        weaponIcon.sprite = weaponSprite;
+        DisplayWeapon(ammunition, canShoot, state);
     }
 }

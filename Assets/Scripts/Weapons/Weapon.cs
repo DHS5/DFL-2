@@ -41,6 +41,9 @@ public class Weapon : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [Tooltip("Sprite of the weapon's ammunition")]
+    [SerializeField] private Sprite weaponSprite;
+    
     [Tooltip("AudioClip of the weapon (played on use)")]
     [SerializeField] private AudioClip audioClip;
 
@@ -75,7 +78,7 @@ public class Weapon : MonoBehaviour
     {
         canShoot = true;
 
-        weaponsManager.ActuGameUI();
+        weaponsManager.ActuGameUI(weaponSprite, ammunition, canShoot, ammunition > 0);
     }
 
     private void Update()
@@ -166,7 +169,7 @@ public class Weapon : MonoBehaviour
             }
         } while (victims < maxVictim && target != null);
 
-        weaponsManager.ActuGameUI();
+        weaponsManager.ActuGameUI(ammunition, canShoot, ammunition > 0);
 
         if (ammunition > 0)
         {
@@ -194,6 +197,6 @@ public class Weapon : MonoBehaviour
     {
         canShoot = true;
 
-        weaponsManager.ActuGameUI();
+        weaponsManager.ActuGameUI(ammunition, canShoot, ammunition > 0);
     }
 }

@@ -49,7 +49,6 @@ public class TutorialManager : MonoBehaviour
 
         if (dataManager.gameData.gameMode == GameMode.TUTORIAL)
         {
-            //dataManager.gameData.gameMode = GameMode.DRILL;
             dataManager.gameData.gameDrill = GameDrill.PRACTICE;
             dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
             dataManager.gameData.gameOptions.Clear();

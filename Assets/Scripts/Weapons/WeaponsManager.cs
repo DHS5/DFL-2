@@ -90,8 +90,12 @@ public class WeaponsManager : MonoBehaviour
     }
 
 
-    public void ActuGameUI()
+    public void ActuGameUI(int ammunition, bool canShoot, bool state)
     {
-        main.GameUIManager.DisplayWeapon(currentWeapon.WeaponInfo.ammunitionLeft, currentWeapon.fireArm, currentWeapon.WeaponInfo.canShoot, currentWeapon.WeaponInfo.ammunitionLeft > 0);
+        main.GameUIManager.DisplayWeapon(ammunition, canShoot, state);
+    }
+    public void ActuGameUI(Sprite sprite, int ammunition, bool canShoot, bool state)
+    {
+        main.GameUIManager.DisplayWeapon(sprite, ammunition, canShoot, state);
     }
 }
