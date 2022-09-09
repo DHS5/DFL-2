@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ParkourManager : MonoBehaviour
 {
@@ -40,5 +41,23 @@ public class ParkourManager : MonoBehaviour
         Vector3 position = main.FieldManager.field.enterZone.transform.position;
 
         Parkour = Instantiate(main.GameManager.gameData.parkour.gameObject, position, Quaternion.identity).GetComponent<Parkour>();
+    }
+
+    public void Win()
+    {
+        main.DataManager.inventoryData.coins += Parkour.Reward;
+
+        UnlockNextParkour();
+    }
+
+    private void UnlockNextParkour()
+    {
+        List<int> parkours = main.DataManager.inventoryData.parkours.ToList();
+
+        foreach (int i in main.DataManager.inventoryData.parkours)
+            if (i == (int)Parkour.ParkourNum + 1) return;
+
+        parkours.Add((int)Parkour.ParkourNum + 1);
+        main.DataManager.inventoryData.parkours = parkours.ToArray();
     }
 }

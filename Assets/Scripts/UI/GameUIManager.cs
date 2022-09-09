@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 
-public enum GameScreen { GAME = 0, RESTART = 1, TUTO = 2, WIN = 3 }
+public enum GameScreen { GAME = 0, RESTART = 1, TUTO = 2, WIN = 3, LOSE = 4 }
 
 
 public class GameUIManager : MonoBehaviour
@@ -169,6 +169,16 @@ public class GameUIManager : MonoBehaviour
     {
         SetScreen(GameScreen.GAME, false);
         SetScreen(GameScreen.WIN, true);
+    }
+    
+    /// <summary>
+    /// Called when the player win
+    /// Activates the win screen and deactivates the game screen
+    /// </summary>
+    public void Lose()
+    {
+        SetScreen(GameScreen.GAME, false);
+        SetScreen(GameScreen.LOSE, true);
     }
 
 

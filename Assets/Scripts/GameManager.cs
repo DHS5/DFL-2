@@ -157,6 +157,8 @@ public class GameManager : MonoBehaviour
         // Pause the game on press P
         if (Input.GetKeyDown(KeyCode.Tab)) GameOn = !GameOn;
 
+        //if (GameOver && Input.GetKeyDown(KeyCode.KeypadEnter)) Restart();
+
         if (main.PlayerManager.player.gameplay.onField)
         {
             Score = CalculateScore();
@@ -366,7 +368,7 @@ public class GameManager : MonoBehaviour
         }
 
         // # Coins #
-        int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill);
+        int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill, main.FieldManager.stadium.coinsPercentage);
         main.DataManager.inventoryData.coins += coins;
         main.GameUIManager.ActuCoins(coins);
 
@@ -377,7 +379,8 @@ public class GameManager : MonoBehaviour
         main.DataManager.SaveDatas();
 
         // # UI #
-        main.GameUIManager.GameOver();
+        if (gameData.gameMode == GameMode.DRILL && gameData.gameDrill == GameDrill.PARKOUR) main.GameUIManager.Lose();
+        else main.GameUIManager.GameOver();
 
         // Weapons
         if (gameData.gameMode == GameMode.ZOMBIE && gameData.gameOptions.Contains(GameOption.WEAPONS))
@@ -413,8 +416,8 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
 
-        // # Coins #
-        main.DataManager.inventoryData.coins += main.ParkourManager.Parkour.Reward;
+        // # Parkour #
+        main.ParkourManager.Win();
 
         // # Data #
         main.DataManager.SaveDatas();

@@ -24,6 +24,7 @@ public class Stadium : MonoBehaviour
 
     public Material enemyMaterial;
     public Color fogColor;
+    public float coinsPercentage;
 
     [SerializeField] private ParticleSystem rain;
 

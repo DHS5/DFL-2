@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CoinsManager
 {
-    public static int GameCoins(GameData data, int score, int wave, int kills)
+    public static int GameCoins(GameData data, int score, int wave, int kills, float percentage)
     {
         int coins = 0;
 
@@ -29,6 +29,8 @@ public static class CoinsManager
                 coins = score / (10 - (int)data.gameWeather);
 
             coins *= ((int)data.gameDifficulty * 2 + 1) * ((int)data.gameWeather + 1);
+
+            coins = (int) (coins * percentage);
         }
 
         return coins;

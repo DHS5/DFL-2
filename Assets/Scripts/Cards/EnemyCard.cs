@@ -8,26 +8,30 @@ using TMPro;
 public class EnemyCard : Card
 {
     [Header("Enemy card's specifics")]
+    public EnemyCapacityCard capacityCard;
+
     [SerializeField] private TextMeshProUGUI positionText;
 
-    [SerializeField] private Slider speedSlider;
-
-    [SerializeField] private Slider intelligenceSlider;
-
-    [SerializeField] private Slider reactivitySlider;
-
     public EnemyCardSO enemyCardSO { get { return cardSO as EnemyCardSO; } }
+
+    public override bool InfoActive { get => false; set => infoToggle = null; }
 
     protected override void Start()
     {
         base.Start();
 
-        positionText.text = "position :\n" + enemyCardSO.position;
+        positionText.text = enemyCardSO.position;
 
         DefenderAttributesSO e = enemyCardSO.attribute;
 
-        speedSlider.value = e.speed;
-        intelligenceSlider.value = e.intelligence;
-        reactivitySlider.value = 1 - e.reactivity;
+        capacityCard.info.speedInfo.value = e.speed;
+        capacityCard.info.accInfo.value = e.acceleration;
+        capacityCard.info.rotSpeedInfo.value = e.rotationSpeed;
+
+        capacityCard.info.reactivityInfo.value = 1 - e.reactivity;
+        capacityCard.info.intelligenceInfo.value = e.intelligence;
+        capacityCard.info.attackDistInfo.value = e.attackDist;
+
+        capacityCard.ApplyInfos();
     }
 }

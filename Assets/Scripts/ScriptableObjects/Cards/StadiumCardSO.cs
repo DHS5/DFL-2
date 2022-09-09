@@ -15,6 +15,15 @@ public class StadiumCardSO : ShopCardSO
     public GameObject prefab;
     public override object cardObject { get { return stadium; } }
 
+    public float coinsPercentage;
+
+
+    private void OnValidate()
+    {
+        if (prefab != null)
+            coinsPercentage = prefab.GetComponentInChildren<Stadium>().coinsPercentage;
+    }
+
 
     public override void SetActive()
     {
