@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
         LaunchGame(false);
 
         Physics.IgnoreLayerCollision(7, 8);
+        Physics.IgnoreLayerCollision(8, 9);
     }
 
 

@@ -7,6 +7,8 @@ public class WeaponShopCard : ShopCard
 {
     [Header("Weapon card's specifics")]
     public WeaponCapacityCard capacityCard;
+    [Space]
+    [SerializeField] private Image bulletImage;
 
     public WeaponCardSO weaponCardSO { get { return cardSO as WeaponCardSO; } }
 
@@ -14,7 +16,9 @@ public class WeaponShopCard : ShopCard
     {
         base.GenerateCard(_cardSO, _shopButton, _buyable);
 
-        Weapon w = weaponCardSO.prefab.GetComponent<WeaponBonus>().prefab.GetComponent<Weapon>();
+        Weapon w = weaponCardSO.prefab.GetComponent<Weapon>();
+
+        bulletImage.sprite = weaponCardSO.bulletSprite;
 
         capacityCard.info.rangeInfo.value = w.Range;
         capacityCard.info.angleInfo.value = w.Angle;

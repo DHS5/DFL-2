@@ -9,6 +9,9 @@ public class Parkour : MonoBehaviour
 
     [SerializeField] private int reward;
     public int Reward { get { return reward; } }
+    
+    [SerializeField] private int baseReward;
+    public int BaseReward { get { return baseReward; } }
 
     [SerializeField] [Range(1, 10)] private int difficulty;
     public int Difficulty { get { return difficulty; } }

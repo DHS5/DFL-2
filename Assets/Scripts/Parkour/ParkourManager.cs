@@ -45,19 +45,28 @@ public class ParkourManager : MonoBehaviour
 
     public void Win()
     {
-        main.DataManager.inventoryData.coins += Parkour.Reward;
+        if (Won((int)Parkour.ParkourNum))
+            main.DataManager.inventoryData.coins += Parkour.BaseReward;
 
-        UnlockNextParkour();
+        else
+        {
+            main.DataManager.inventoryData.coins += Parkour.Reward;
+            UnlockNextParkour();
+        }
     }
 
     private void UnlockNextParkour()
     {
         List<int> parkours = main.DataManager.inventoryData.parkours.ToList();
-
-        foreach (int i in main.DataManager.inventoryData.parkours)
-            if (i == (int)Parkour.ParkourNum + 1) return;
-
         parkours.Add((int)Parkour.ParkourNum + 1);
         main.DataManager.inventoryData.parkours = parkours.ToArray();
+    }
+
+    public static bool Won(int parkourNum)
+    {
+        foreach (int i in DataManager.InstanceDataManager.inventoryData.parkours)
+            if (i == parkourNum + 1) return true;
+
+        return false;
     }
 }

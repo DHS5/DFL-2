@@ -7,11 +7,9 @@ public class WeaponBonus : MonoBehaviour
     private WeaponsManager weaponsManager;
 
 
-    public GameObject prefab;
-
-
 
     // ### Functions ###
+
 
     public void Getter(in WeaponsManager _weaponsManager)
     {
@@ -26,7 +24,7 @@ public class WeaponBonus : MonoBehaviour
         {
             gameObject.SetActive(false);
 
-            weaponsManager.InstantiateWeapon(prefab);
+            weaponsManager.InstantiateWeapon();
         }
     }
 }

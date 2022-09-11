@@ -29,7 +29,7 @@ public class ParkourCard : TerrainCard
     protected override void Start() 
     {
         image.sprite = cardSO.mainSprite;
-        rewardText.text = parkourCardSO.reward.ToString();
+        rewardText.text = ParkourManager.Won((int)parkourCardSO.parkour) ? parkourCardSO.baseReward.ToString() : parkourCardSO.reward.ToString();
     }
 
     public void On()

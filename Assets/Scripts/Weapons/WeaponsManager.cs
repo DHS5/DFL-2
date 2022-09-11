@@ -7,6 +7,8 @@ public class WeaponsManager : MonoBehaviour
     [Tooltip("Main Manager")]
     private MainManager main;
 
+    [Space]
+    [SerializeField] private GameObject weaponGetPointPrefab;
 
     private Weapon fpWeapon;
     private Weapon tpWeapon;
@@ -46,15 +48,17 @@ public class WeaponsManager : MonoBehaviour
         float zScale = weaponZone.transform.localScale.z / 2;
 
         // Gets a random position in the first part of the field zone
-        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 1.5f, Random.Range(-zScale, zScale)) + zonePos;
+        Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        WeaponBonus bonus = Instantiate(main.GameManager.gameData.weapons[Random.Range(0, main.GameManager.gameData.weapons.Count)], randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
+        WeaponBonus bonus = Instantiate(weaponGetPointPrefab, randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
         bonus.Getter(this);
     }
 
 
-    public void InstantiateWeapon(GameObject prefab)
+    public void InstantiateWeapon()
     {
+        GameObject prefab = main.GameManager.gameData.weapons[Random.Range(0, main.GameManager.gameData.weapons.Count)];
+
         if (currentWeapon != null)
         {
             currentWeapon.DestroyWeapon();

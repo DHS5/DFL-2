@@ -16,6 +16,7 @@ public class ParkourCardSO : InventoryCardSO
     [Space]
     [Range(0, 10)] public int difficulty;
     public int reward;
+    public int baseReward;
 
 
     private void OnValidate()
@@ -25,6 +26,7 @@ public class ParkourCardSO : InventoryCardSO
             parkour = prefab.ParkourNum;
             difficulty = prefab.Difficulty;
             reward = prefab.Reward;
+            baseReward = prefab.BaseReward;
         }
     }
 
