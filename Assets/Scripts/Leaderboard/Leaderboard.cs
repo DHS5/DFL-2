@@ -31,21 +31,21 @@ public class Leaderboard : MonoBehaviour
 
     public void Add(LeaderboardItem item, bool safe)
     {
-        if (!safe || !AlreadyIn(item))
+        if (true)
         {
             LeaderboardRow newRow = Instantiate(leaderboardRowPrefab, container.transform).GetComponent<LeaderboardRow>();
             newRow.Item = item;
             newRow.transform.SetSiblingIndex(item.rank - 1);
 
             // If not already in and safe --> Search for the same player and destroys
-            if (safe)
-            {
-                for (int i = item.rank; i < container.transform.childCount; i++)
-                {
-                    if (container.transform.GetChild(i).GetComponent<LeaderboardRow>().Item.name == item.name)
-                        Destroy(container.transform.GetChild(i).gameObject);
-                }
-            }
+            //if (safe)
+            //{
+            //    for (int i = item.rank; i < container.transform.childCount; i++)
+            //    {
+            //        if (container.transform.GetChild(i).GetComponent<LeaderboardRow>().Item.name == item.name)
+            //            Destroy(container.transform.GetChild(i).gameObject);
+            //    }
+            //}
 
             scrollviewContainer.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, TotalHeight);
         }

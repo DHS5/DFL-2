@@ -42,7 +42,7 @@ public class Weapon : MonoBehaviour
     private AudioSource audioSource;
 
     [Tooltip("Sprite of the weapon's ammunition")]
-    [SerializeField] private Sprite weaponSprite;
+    public Sprite weaponSprite;
     
     [Tooltip("AudioClip of the weapon (played on use)")]
     [SerializeField] private AudioClip audioClip;
@@ -151,7 +151,7 @@ public class Weapon : MonoBehaviour
 
                     if (dist < range && toZAngle < angle)
                     {
-                        score = dist * (toZAngle / angle);
+                        score = dist * dist * (toZAngle / angle);
                         if (score < minScore)
                         {
                             target = z;
