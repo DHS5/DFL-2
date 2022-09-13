@@ -19,6 +19,12 @@ public class PlayerCardSO : ShopCardSO
     [Range(0, 10)] public int handling;
     [Range(0, 5)] public int skills;
 
+    [Header("Locker Room's attributes")]
+    public Mesh playerMesh;
+    public Avatar playerAvatar;
+    public Material numberMaterial;
+    public PlayerPauses playerPause;
+
 
     public override void SetActive()
     {

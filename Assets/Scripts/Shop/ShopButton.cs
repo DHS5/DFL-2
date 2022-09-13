@@ -14,7 +14,11 @@ public class ShopButton : MonoBehaviour
 
     private ShopCard shopCard;
 
+    private LockerRoom lockerRoom;
+
     [HideInInspector] public bool buyable;
+
+    private bool isPlayer = false;
 
 
     public void GetCard(ShopCardSO _cardSO, ShopCard _shopCard, bool _buyable)
@@ -23,6 +27,13 @@ public class ShopButton : MonoBehaviour
         shopCard = _shopCard;
         buyable = _buyable;
         picture.sprite = cardSO.mainSprite;
+    }
+
+    public void GetCard(ShopCardSO _cardSO, ShopCard _shopCard, bool _buyable, LockerRoom locker)
+    {
+        GetCard(_cardSO, _shopCard, _buyable);
+        lockerRoom = locker;
+        isPlayer = true;
     }
 
 
@@ -35,6 +46,7 @@ public class ShopButton : MonoBehaviour
         if (shopCard != null)
         {
             shopCard.GenerateCard(cardSO, this, buyable);
+            if (isPlayer) lockerRoom.ApplyPlayerInfo(cardSO as PlayerCardSO);
         }
     }
 }

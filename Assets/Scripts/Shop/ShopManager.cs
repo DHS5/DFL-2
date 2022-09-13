@@ -31,6 +31,7 @@ public class ShopManager : MonoBehaviour
 
 
     [Header("Player Shop")]
+    public LockerRoom lockerRoom;
 
     [Header("Team Shop")]
     [SerializeField] private TMP_Dropdown attackerPositionDropdown;
@@ -73,27 +74,29 @@ public class ShopManager : MonoBehaviour
         if (!cardsGenerated)
         {
             // Player shop buttons
-            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, characterShopButtonPrefab);
+            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, characterShopButtonPrefab, true);
             // Stadium shop buttons
-            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, simpleShopButtonPrefab);
+            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, simpleShopButtonPrefab, false);
             // Team shop buttons
             for (int i = 0; i < teamShopBContainers.Length; i++)
-                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], characterShopButtonPrefab);
+                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], characterShopButtonPrefab, false);
             AttackerPosition = 0;
             // Weapon shop buttons
-            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, simpleShopButtonPrefab);
+            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, simpleShopButtonPrefab, false);
 
             cardsGenerated = true;
         }
     }
 
-    private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab) where T : ShopCardSO
+    private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab, bool isPlayer) where T : ShopCardSO
     {
         bool first = true;
         foreach (T card in cards)
         {
             ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
-            sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject));
+            if (!isPlayer) sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject));
+            else sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), lockerRoom);
+
             if (first)
             {
                 sb.ApplyOnShopCard();

@@ -31,7 +31,7 @@ public abstract class ShopCard : MonoBehaviour
 
         Buyable = _buyable;
         text.text = cardSO.Title;
-        image.sprite = cardSO.shopSprite;
+        if (image != null) image.sprite = cardSO.shopSprite;
         Price = cardSO.price;
         popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
     }
