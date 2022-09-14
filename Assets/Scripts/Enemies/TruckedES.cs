@@ -13,9 +13,11 @@ public class TruckedES : EnemyState
         name = EState.TRUCKED;
 
         enemy = _enemy;
-        if (_impact != Vector3.zero) impact = new Vector3(_impact.x, _impact.y, -Mathf.Abs(_impact.z));
-        else impact = -Vector3.forward;
+        //if (_impact != Vector3.zero) impact = new Vector3(_impact.x, _impact.y, -Mathf.Abs(_impact.z));
+        //else impact = -Vector3.forward;
 
+
+        impact = enemy.playerPosition - enemy.transform.position;
 
         agent.isStopped = true;
         agent.updateRotation = false;
