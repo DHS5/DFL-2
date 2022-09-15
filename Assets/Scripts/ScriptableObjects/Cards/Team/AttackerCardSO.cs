@@ -16,4 +16,6 @@ public abstract class AttackerCardSO : ShopCardSO
     public override object cardObject { get { return attacker; } }
 
     public abstract string Position { get; }
+
+    public Sprite largeSprite;
 }

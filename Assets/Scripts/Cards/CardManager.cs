@@ -33,7 +33,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private TMP_Dropdown attackerPositionDropdown;
     [SerializeField] private GameObject[] attackerCContainers;
     [SerializeField] private GameObject attackerCardPrefab;
-    private List<AttackerCard>[] attackerCards = new List<AttackerCard>[4];
+    private List<AttackerLargeCard>[] attackerCards = new List<AttackerLargeCard>[4];
     private int[] attackerChoiceIndex = { 0, 0, 0, 0 };
 
 
@@ -76,7 +76,7 @@ public class CardManager : MonoBehaviour
         get { return attackerChoiceIndex[AttackerPosition]; }
         set { attackerChoiceIndex[AttackerPosition] = value; }
     }
-    public AttackerCard CurrentCard
+    public AttackerLargeCard CurrentCard
     {
         get { return attackerCards[AttackerPosition][AttackerChoiceIndex]; }
     }
@@ -104,7 +104,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < enemyCards.Length; i++)
             enemyCards[i] = new List<EnemyCard>();
         for (int i = 0; i < attackerCards.Length; i++)
-            attackerCards[i] = new List<AttackerCard>();
+            attackerCards[i] = new List<AttackerLargeCard>();
     }
 
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class AttackerCard : Card
+public class AttackerLargeCard : Card
 {
     [Header("Attacker card's specifics")]
 
@@ -13,10 +13,14 @@ public class AttackerCard : Card
 
     public AttackerCardSO attackerCardSO { get { return cardSO as AttackerCardSO; } }
 
+    public override bool InfoActive { get => false; set => infoToggle = null; }
+
 
     protected override void Start()
     {
         base.Start();
+
+        image.sprite = attackerCardSO.largeSprite;
 
         AttackerAttributesSO att = attackerCardSO.attribute;
         capacityCard.info.position = "Position : " + attackerCardSO.Position;
