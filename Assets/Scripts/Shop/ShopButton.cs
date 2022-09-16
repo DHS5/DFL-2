@@ -8,6 +8,7 @@ public class ShopButton : MonoBehaviour
 {
     [Header("UI components")]
     [SerializeField] private Image picture;
+    [SerializeField] private TextMeshProUGUI nameText;
 
 
     private ShopCardSO cardSO;
@@ -27,6 +28,7 @@ public class ShopButton : MonoBehaviour
         shopCard = _shopCard;
         buyable = _buyable;
         picture.sprite = cardSO.mainSprite;
+        if (nameText != null) nameText.text = cardSO.Title;
     }
 
     public void GetCard(ShopCardSO _cardSO, ShopCard _shopCard, bool _buyable, LockerRoom locker)

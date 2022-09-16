@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using LootLocker.Requests;
 
 
@@ -27,6 +28,7 @@ public class LeaderboardManager : MonoBehaviour
 
 
     [SerializeField] private GameObject[] leaderboardObjects;
+    [SerializeField] private RectTransform leaderboardLayout;
 
 
     private Leaderboard currentLeaderboard;
@@ -54,6 +56,7 @@ public class LeaderboardManager : MonoBehaviour
             currentLeaderboard.SetActive(true);
             LoadPersonnalHighscore();
             //LoadLeaderboard();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(leaderboardLayout);
         }
     }
 
@@ -110,7 +113,7 @@ public class LeaderboardManager : MonoBehaviour
             {
                 for (int i = 0; i < leaderboards.Length; i++)
                 {
-                    LoadLeaderboard(i, false);
+                    LoadLeaderboard(i);
                 }
 
                 CurrentLeaderboard = leaderboards[0];
@@ -121,7 +124,7 @@ public class LeaderboardManager : MonoBehaviour
             {
                 for (int i = 0; i < leaderboards.Length; i++)
                 {
-                    LoadLeaderboard(i, true);
+                    LoadLeaderboard(i);
                 }
 
                 CurrentLeaderboard = leaderboards[LeaderboardIndex];
@@ -133,14 +136,9 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public void ClearLeaderboards()
-    {
-        foreach (var leaderboard in leaderboards)
-            leaderboard.Clear();
-    }
 
 
-    private void LoadLeaderboard(int index, bool safe)
+    private void LoadLeaderboard(int index)
     {
         LootLockerSDKManager.GetScoreList(leaderboardIDs[index], leaderboardLimit, (response) =>
         {
@@ -153,7 +151,7 @@ public class LeaderboardManager : MonoBehaviour
                     string[] meta = MetaToStrings(scores[j].metadata);
                     string pseudo = scores[j].player.name != "" ? scores[j].player.name : scores[j].member_id;
                     LeaderboardItem item = new() { rank = scores[j].rank, name = pseudo, score = scores[j].score, wave = meta[2], wheather = meta[0], options = meta[1] };
-                    leaderboards[index].Add(item, safe);
+                    leaderboards[index].Add(item);
 
                     if (int.Parse(scores[j].member_id) == PlayerInfo.id)
                         leaderboards[index].personnalHigh = item;

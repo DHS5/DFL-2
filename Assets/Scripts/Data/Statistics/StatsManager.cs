@@ -11,6 +11,7 @@ public class StatsManager : MonoBehaviour
     private DataManager dataManager;
 
     [SerializeField] private StatBoard[] statBoards;
+    [SerializeField] private RectTransform statsLayout;
 
 
     private StatsData[] stats = new StatsData[9];
@@ -31,6 +32,8 @@ public class StatsManager : MonoBehaviour
             if (currentStatBoard != null) currentStatBoard.SetActive = false;
             currentStatBoard = value;
             currentStatBoard.SetActive = true;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(statsLayout);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(statsLayout);
         }
     }
 

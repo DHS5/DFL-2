@@ -27,7 +27,7 @@ public class StatBoard : MonoBehaviour
 
     // ### Properties ###
 
-    public bool SetActive { set { gameObject.SetActive(value); } }
+    public bool SetActive { set { gameObject.SetActive(value); LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform); } }
 
     public StatsData Data
     {
@@ -37,15 +37,6 @@ public class StatBoard : MonoBehaviour
             data = value;
             ApplyData();
         }
-    }
-
-    private float TotalHeight
-    {
-        get { return gaugeContainer.childCount * GaugeHeight; }
-    }
-    private float GaugeHeight
-    {
-        get { return waveGaugePrefab.GetComponent<RectTransform>().rect.height; }
     }
 
     // ### Functions ###
@@ -73,7 +64,8 @@ public class StatBoard : MonoBehaviour
             {
                 waveGauges.Add(Instantiate(waveGaugePrefab, gaugeContainer.transform).GetComponent<WaveGauge>());
                 waveGauges[i].transform.SetSiblingIndex(i);
-                gaugeContainer.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, TotalHeight);
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(gaugeContainer);
             }
             if (data.gameNumber != 0) waveGauges[i].Set((i + 1).ToString(), (float)data.wavesReached[i] / data.gameNumber);
             else waveGauges[i].Set((i + 1).ToString(), 0);
