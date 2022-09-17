@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , DEAD , WIN , LOSE , SLIP }
+public enum PState { RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , FLIP , GAMEOVER , SLIP }
 
 
 public abstract class PlayerState
 {
-    protected enum Event { ENTER , UPDATE , EXIT , DEAD , WIN , LOSE }
+    protected enum Event { ENTER , UPDATE , EXIT , GAMEOVER }
 
 
     public PState name;
@@ -32,6 +32,9 @@ public abstract class PlayerState
 
     protected float startTime;
     protected float animTime;
+
+
+    private Coroutine celebrationCR;
 
 
     protected bool IsRaining
@@ -72,9 +75,7 @@ public abstract class PlayerState
 
     public PlayerState Process()
     {
-        if (stage == Event.DEAD) { return new DeadPS(player); }
-        if (stage == Event.WIN) { return new WinPS(player); }
-        if (stage == Event.LOSE) { return new LosePS(player); }
+        if (stage == Event.GAMEOVER) { return new GameOverPS(player); }
 
         if (stage == Event.ENTER) Enter();
         else if (stage == Event.UPDATE) Update();
@@ -91,16 +92,6 @@ public abstract class PlayerState
     {
         Vector3 direction = front ? Vector3.forward : controller.Velocity;
 
-        //if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
-        //{
-        //    player.tPPlayer.transform.localRotation =
-        //    Quaternion.Slerp(player.tPPlayer.transform.localRotation,
-        //        Quaternion.LookRotation(direction, Vector3.up), 0.02f);
-        //
-        //    player.fPPlayer.transform.localRotation =
-        //        Quaternion.Slerp(player.fPPlayer.transform.localRotation,
-        //            Quaternion.LookRotation(direction, Vector3.up), 0.02f);
-        //}
         if (player.gameManager.GameOn && controller.Velocity != Vector3.zero)
         {
             player.tPPlayer.transform.localRotation =
@@ -142,13 +133,24 @@ public abstract class PlayerState
             a.SetFloat(name, value);
         }
     }
-
-    public void SetWeapon(bool state, bool bigWeapon)
+    protected void SetInt(string name, int value)
     {
         foreach (Animator a in animators)
         {
-            a.SetLayerWeight(a.GetLayerIndex(bigWeapon ? "BigWeapon Layer" : "SmallWeapon Layer"), state ? 1 : 0);
+            a.SetInteger(name, value);
         }
+    }
+    protected void SetLayer(string name, float weight)
+    {
+        foreach (Animator a in animators)
+        {
+            a.SetLayerWeight(a.GetLayerIndex(name), weight);
+        }
+    }
+
+    public void SetWeapon(bool state, bool bigWeapon)
+    {
+        SetLayer(bigWeapon ? "BigWeapon Layer" : "SmallWeapon Layer", state ? 1 : 0);
     }
 
     public void Shoot(bool fireArm)
@@ -161,30 +163,58 @@ public abstract class PlayerState
 
     private void DeactivateWeaponLayer()
     {
-        foreach (Animator a in animators)
+        SetLayer("BigWeapon Layer", 0);
+        SetLayer("SmallWeapon Layer", 0);
+    }
+
+    public void TD(bool state)
+    {
+        if (state) celebrationCR = player.StartCoroutine(TDCoroutine());
+        else
         {
-            a.SetLayerWeight(a.GetLayerIndex("BigWeapon Layer"), 0);
-            a.SetLayerWeight(a.GetLayerIndex("SmallWeapon Layer"), 0);
+            if (celebrationCR != null) player.StopCoroutine(celebrationCR);
+            SetLayer("TD", 0);
         }
+    }
+    private IEnumerator TDCoroutine()
+    {
+        float weight = 0;
+        while (weight < 0.99f)
+        {
+            weight = Mathf.Lerp(weight, 1, 0.2f);
+            SetLayer("TD", weight);
+            yield return new WaitForSeconds(0.01f);
+        }
+        SetLayer("TD", 1);
+    }
+    public void SetRandomCelebration()
+    {
+        int n = Random.Range(1, UD.celebrationNumber + 1);
+        SetInt("TD Number", n);
+        SetTrigger("TD");
     }
 
     public void Dead()
     {
         DeactivateWeaponLayer();
 
-        stage = Event.DEAD;
+        SetLayer("Dead", 1);
+        SetTrigger("Dead");
+
+        stage = Event.GAMEOVER;
         Process();
     }
     public void Win()
     {
-        stage = Event.WIN;
+        SetTrigger("Win");
+        stage = Event.GAMEOVER;
         Process();
     }
     public void Lose()
     {
-        DeactivateWeaponLayer();
+        SetTrigger("Lose");
 
-        stage = Event.LOSE;
+        stage = Event.GAMEOVER;
         Process();
     }
 }

@@ -21,16 +21,17 @@ public static class CoinsManager
             if (data.gameOptions.Contains(GameOption.WEAPONS))
             {
                 coins /= 3;
-                coins += kills * 10;
+                coins += kills * 10 * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1);
             }
-            else if (data.gameDrill == GameDrill.OBJECTIF)
-                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWeather);
-            else if (data.gameDrill == GameDrill.ONEVONE)
-                coins = score / (10 - (int)data.gameWeather);
 
             coins *= ((int)data.gameDifficulty * 2 + 1) * ((int)data.gameWeather + 1);
 
             coins = (int) (coins * percentage);
+        }
+        else if (data.gameMode == GameMode.DRILL)
+        {
+            if (data.gameDrill == GameDrill.OBJECTIF || data.gameDrill == GameDrill.ONEVONE)
+                coins = score / (10 - (int)data.gameDifficulty - (int)data.gameWeather);
         }
 
         return coins;

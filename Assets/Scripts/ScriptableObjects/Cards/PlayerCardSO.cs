@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public enum PlayerEnum { NULL, STEVE, KITTLE, OBJ, LAMAR, BLZ }
+public enum PlayerEnum { NULL, STEVE, KITTLE, OBJ, LAMAR, BLZ, CHEETAH, TAE, NOAH, KINGHENRY, JJ }
 
 [CreateAssetMenu(fileName = "PlayerCard", menuName = "ScriptableObjects/Card/PlayerCard", order = 1)]
 public class PlayerCardSO : ShopCardSO

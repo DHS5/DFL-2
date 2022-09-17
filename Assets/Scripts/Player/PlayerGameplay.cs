@@ -71,6 +71,8 @@ public class PlayerGameplay : MonoBehaviour
             // Goes to the next field
             Vector3 spawnPos = player.fieldManager.stadium.SpawnPosition.transform.position;
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), 0, player.fieldManager.stadium.SpawnPosition.transform.position.z);
+
+            player.controller.CurrentState.TD(false);
         }
 
         // When the player accounter a field limit
@@ -82,7 +84,12 @@ public class PlayerGameplay : MonoBehaviour
             // Changes the onField state of the player
             onField = !onField;
 
-            if (onField) player.gameManager.EnterField();
+            if (onField)
+            {
+                player.gameManager.EnterField();
+                player.controller.CurrentState.SetRandomCelebration();
+            }
+            else player.controller.CurrentState.TD(true);
         }
     }
 
@@ -97,8 +104,8 @@ public class PlayerGameplay : MonoBehaviour
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && Catchable)
             {
+                Debug.Log("Hurt by enemy " + Time.timeAsDouble);
                 Hurt(collision.impulse.normalized, collision.gameObject.transform.position);
-                Debug.Log("Hurt by enemy");
             }
             if (collision.gameObject.CompareTag("Enemy") && player.controller.Sprinting && player.controller.playerAtt.CanTruck)
             {
@@ -192,4 +199,8 @@ public class PlayerGameplay : MonoBehaviour
         player.playerManager.DeadPlayer();
     }
 
+    private void EndCelebration()
+    {
+        player.controller.CurrentState.TD(false);
+    }
 }

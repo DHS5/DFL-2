@@ -27,6 +27,7 @@ public class GameUIManager : MonoBehaviour
 
     [Tooltip("Score UI texts")]
     [SerializeField] private TextMeshProUGUI[] scoreTexts;
+    [SerializeField] private CoinsInfos coinsInfos;
     
     [Tooltip("Coins UI texts")]
     [SerializeField] private TextMeshProUGUI coinsText;
@@ -124,9 +125,10 @@ public class GameUIManager : MonoBehaviour
     /// Actualize the coins text
     /// </summary>
     /// <param name="score"></param>
-    public void ActuCoins(int coins)
+    public void ActuCoins(GameData data, int score, int wave, int kills, float percentage, int total)
     {
-        coinsText.text = coins.ToString();
+        coinsText.text = total.ToString();
+        coinsInfos.ApplyCoinsResult(data, score, wave, kills, percentage, total);
     }
     
     /// <summary>

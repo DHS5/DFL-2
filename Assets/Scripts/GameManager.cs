@@ -371,7 +371,7 @@ public class GameManager : MonoBehaviour
         // # Coins #
         int coins = CoinsManager.GameCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill, main.FieldManager.stadium.coinsPercentage);
         main.DataManager.inventoryData.coins += coins;
-        main.GameUIManager.ActuCoins(coins);
+        main.GameUIManager.ActuCoins(gameData, Score, WaveNumber, main.WeaponsManager.numberOfKill, main.FieldManager.stadium.coinsPercentage, coins);
 
         // # Missions #
         main.MissionManager.CompleteMissions(gameData, waveNumber);

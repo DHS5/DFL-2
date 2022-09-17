@@ -578,6 +578,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TeamLockerRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 2938983630047138918, guid: 4e182aa41eaf4e2419d0ea674b3cb2d1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2978426768814629760, guid: 4e182aa41eaf4e2419d0ea674b3cb2d1,
         type: 3}
       propertyPath: m_IsActive
@@ -891,18 +896,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -3608689983483504861, guid: 2ebd284fadd1ea84ba512b5ffded9eef,
-        type: 3}
+      objectReference: {fileID: 4300000, guid: aedc8ef7c1592764b8045557bd53d5b8, type: 2}
     - target: {fileID: 1574853607318420825, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f5886141438d0694bb13a24d3ac9f3ca, type: 2}
+      objectReference: {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
     - target: {fileID: 1574853607318420825, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 82b66e34a4bdfc143a662e3bbcfa376d, type: 2}
+      objectReference: {fileID: 2100000, guid: f1da6e1ff4688944a821d874eb120a7f, type: 2}
     - target: {fileID: 2599267228448223139, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_RootOrder
@@ -971,7 +975,7 @@ PrefabInstance:
     - target: {fileID: 3411937865306223897, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3578217381304039826, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
@@ -992,17 +996,18 @@ PrefabInstance:
         type: 3}
       propertyPath: playerCard
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: c33d50f0ca80c9940b444478c0577c30,
+        type: 2}
     - target: {fileID: 8145083368213091151, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 2ebd284fadd1ea84ba512b5ffded9eef, type: 3}
+      objectReference: {fileID: 9000000, guid: 731e3be7d681e8348a883e4c0e449e87, type: 3}
     - target: {fileID: 8145083368213091151, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: edf89c7a958077845a58cf4a6852fca8, type: 2}
+      objectReference: {fileID: 9100000, guid: 50da2408cf5abb24d9862ab27503cc9c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4464cebbe14fe74e82edee324ef5719, type: 3}
 --- !u!1 &1199610092
