@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PlayerPauses { SIMPLE, BICEPSFLEX, PECFLEX, FER, GTL, SHOWEM, HOLD, HOLDNBFLEX, DOUBLEFLEX }
+public enum PlayerPauses { SIMPLE, BICEPSFLEX, PECFLEX, FER, GTL, SHOWEM, HOLD, HOLDNBFLEX, DOUBLEFLEX, KING }
 
 
 public class LockerRoom : MonoBehaviour
