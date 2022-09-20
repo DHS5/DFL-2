@@ -70,7 +70,7 @@ public class PlayerGameplay : MonoBehaviour
 
             // Goes to the next field
             Vector3 spawnPos = player.fieldManager.stadium.SpawnPosition.transform.position;
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), 0, player.fieldManager.stadium.SpawnPosition.transform.position.z);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), spawnPos.y, spawnPos.z);
 
             player.controller.CurrentState.TD(false);
         }

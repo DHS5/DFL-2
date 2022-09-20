@@ -42,7 +42,7 @@ public class SlowrunPS : PlayerState
             stage = Event.EXIT;
         }
         // Jump
-        else if (!att.CanFlip && Input.GetKeyDown(KeyCode.Space))
+        else if (!att.CanFlip && Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
         {
             nextState = new JumpPS(player);
             stage = Event.EXIT;

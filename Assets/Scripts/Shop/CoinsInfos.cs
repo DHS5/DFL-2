@@ -26,7 +26,7 @@ public class CoinsInfos : MonoBehaviour
         scoreText.text = "Score : " + score;
         waveText.text = "Wave : " + 100 * (wave * (wave - 1)) / 2;
         optionsText.text = "Options multiplier : " + OptionsMultiplier(data);
-        killsText.text = kills != 0 ? "Kills : " + kills + " * " + 10 * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) : "0";
+        killsText.text = kills != 0 ? "Kills : " + kills + " * " + 10 * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) : "Kills : 0";
         difficultyText.text = "Difficulty multiplier : " + ((int)data.gameDifficulty * 2 + 1);
         weatherText.text = "Weather multiplier : " + ((int)data.gameWeather + 1);
         stadiumText.text = "Stadium multiplier : " + percentage;

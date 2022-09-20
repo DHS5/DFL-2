@@ -40,7 +40,6 @@ public class SprintPS : PlayerState
 
         controller.SideSpeed = att.AccSideSpeed * side;
 
-        
         // Jump
         if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
         {
@@ -54,13 +53,13 @@ public class SprintPS : PlayerState
             stage = Event.EXIT;
         }
         // Run
-        else if ((acc == 0 && side == 0) || (!controller.CanAccelerate && side == 0))
+        else if ((acc <= 0 && side == 0) || (!controller.CanAccelerate && side == 0))
         {
             nextState = new RunPS(player);
             stage = Event.EXIT;
         }
         // Siderun
-        else if ((acc == 0 && side != 0) || (!controller.CanAccelerate && side != 0))
+        else if ((acc <= 0 && side != 0) || (!controller.CanAccelerate && side != 0))
         {
             nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
