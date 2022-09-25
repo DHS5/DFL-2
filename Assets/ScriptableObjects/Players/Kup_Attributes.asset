@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f363ec69e91ff4897a3360bb91ccb7, type: 3}
+  m_Name: Kup_Attributes
+  m_EditorClassIdentifier: 
+  size: {x: 1, y: 1.02, z: 1}
+  dirSensitivity: 18
+  dirGravity: 16
+  accSensitivity: 10
+  accGravity: 8
+  snap: 0.005
+  normalSpeed: 14
+  normalSideSpeed: 9
+  accelerationM: 1.3
+  accSideSpeed: 10
+  accelerationTime: 3
+  accelerationRestTime: 6
+  slowM: 0.3
+  slowSideSpeed: 12
+  jumpHeight: 2.25
+  flipHeight: 0
+  jumpCost: 1.5
+  flipCost: 0
+  jumpStamina: 2
+  jumpRechargeTime: 7
+  canJuke: 1
+  canSpin: 1
+  canJukeSpin: 1
+  canFeint: 1
+  canSlide: 1
+  canFlip: 0
+  canTruck: 0
+  jukeSideSpeed: 12
+  jukeSpeed: 14
+  spinSideSpeed: 9
+  spinSpeed: 15
+  feintSideSpeed: 21
+  feintSpeed: 24
+  slideSpeed: 18
+  flipSpeed: 0
+  teamMaterial: {fileID: 2100000, guid: 5dc243a784d9aba4a8da3d24bc99ab18, type: 2}

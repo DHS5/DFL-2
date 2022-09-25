@@ -24,6 +24,7 @@ public class PlayerCardSO : ShopCardSO
     public Avatar playerAvatar;
     public Material numberMaterial;
     public PlayerPauses playerPause;
+    public bool footballActive;
 
 
     public override void SetActive()

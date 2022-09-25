@@ -24,11 +24,16 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private AttackerShopCard[] attackerShopCards;
     [SerializeField] private StadiumShopCard stadiumShopCard;
     [SerializeField] private WeaponShopCard weaponShopCard;
+    
+    [Header("Shop Screens")]
+    [SerializeField] private GameObject[] shopScreens;
+    [SerializeField] private GameObject[] shopButtonsBackgrounds;
 
     [Header("UI prefabs")]
     [SerializeField] private GameObject playerShopButtonPrefab;
     [SerializeField] private GameObject attackerShopButtonPrefab;
-    [SerializeField] private GameObject simpleShopButtonPrefab;
+    [SerializeField] private GameObject stadiumShopButtonPrefab;
+    [SerializeField] private GameObject weaponShopButtonPrefab;
 
 
     [Header("Player Shop")]
@@ -77,13 +82,13 @@ public class ShopManager : MonoBehaviour
             // Player shop buttons
             GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, playerShopButtonPrefab, true);
             // Stadium shop buttons
-            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, simpleShopButtonPrefab, false);
+            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, stadiumShopButtonPrefab, false);
             // Team shop buttons
             for (int i = 0; i < teamShopBContainers.Length; i++)
                 GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], attackerShopButtonPrefab, false);
             AttackerPosition = 0;
             // Weapon shop buttons
-            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, simpleShopButtonPrefab, false);
+            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, weaponShopButtonPrefab, false);
 
             cardsGenerated = true;
         }
@@ -147,5 +152,14 @@ public class ShopManager : MonoBehaviour
             g.SetActive(false);
         foreach (AttackerShopCard sc in attackerShopCards)
             sc.gameObject.SetActive(false);
+    }
+
+    public void SetShopScreenActive(int screenNumber)
+    {
+        foreach (GameObject g in shopScreens) g.SetActive(false);
+        foreach (GameObject g in shopButtonsBackgrounds) g.SetActive(false);
+
+        shopScreens[screenNumber].SetActive(true);
+        shopButtonsBackgrounds[screenNumber].SetActive(true);
     }
 }

@@ -67,8 +67,8 @@ public class StatBoard : MonoBehaviour
 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(gaugeContainer);
             }
-            if (data.gameNumber != 0) waveGauges[i].Set((i + 1).ToString(), (float)data.wavesReached[i] / data.gameNumber);
-            else waveGauges[i].Set((i + 1).ToString(), 0);
+            if (data.gameNumber != 0) waveGauges[i].Set((i + 1).ToString(), data.wavesReached[i].ToString(), (float)data.wavesReached[i] / data.gameNumber);
+            else waveGauges[i].Set((i + 1).ToString(), "0", 0);
         }
     }
 }

@@ -11,6 +11,7 @@ public class LockerRoom : MonoBehaviour
     [Header("Components")]
     [SerializeField] Animator playerAnimator;
     [SerializeField] SkinnedMeshRenderer playerRenderer;
+    [SerializeField] GameObject footballGameObject;
 
     [Header("Content")]
     [SerializeField] private PlayerCardSO playerCard;
@@ -26,7 +27,7 @@ public class LockerRoom : MonoBehaviour
     }
 
 
-    public void ApplyPlayerInfo(Mesh _mesh, Avatar _avatar, Material _numberMat, PlayerPauses pause)
+    public void ApplyPlayerInfo(Mesh _mesh, Avatar _avatar, Material _numberMat, PlayerPauses pause, bool ball)
     {
         if (trigger != "") playerAnimator.ResetTrigger(trigger);
 
@@ -35,10 +36,11 @@ public class LockerRoom : MonoBehaviour
         playerAnimator.avatar = _avatar;
         trigger = pause.ToString();
         playerAnimator.SetTrigger(trigger);
+        footballGameObject.SetActive(ball);
     }
 
     public void ApplyPlayerInfo(PlayerCardSO playerCard)
     {
-        ApplyPlayerInfo(playerCard.playerMesh, playerCard.playerAvatar, playerCard.numberMaterial, playerCard.playerPause);
+        ApplyPlayerInfo(playerCard.playerMesh, playerCard.playerAvatar, playerCard.numberMaterial, playerCard.playerPause, playerCard.footballActive);
     }
 }

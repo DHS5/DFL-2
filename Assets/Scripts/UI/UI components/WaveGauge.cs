@@ -8,11 +8,13 @@ public class WaveGauge : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI waveText;
+    [SerializeField] private TextMeshProUGUI resultText;
 
 
-    public void Set(string text, float value)
+    public void Set(string wave, string result, float value)
     {
-        waveText.text = text;
+        waveText.text = wave;
+        resultText.text = result;
         slider.value = value;
     }
 }

@@ -12,6 +12,7 @@ public abstract class ShopCard : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI popupText;
+    [SerializeField] private GameObject lockGO;
 
     public ShopCardSO cardSO { get; private set; }
     public ShopButton shopButton { get; private set; }
@@ -34,5 +35,6 @@ public abstract class ShopCard : MonoBehaviour
         if (image != null) image.sprite = cardSO.shopSprite;
         Price = cardSO.price;
         popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
+        lockGO.SetActive(cardSO.locked);
     }
 }

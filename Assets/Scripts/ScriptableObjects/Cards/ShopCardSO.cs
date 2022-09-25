@@ -8,4 +8,6 @@ public abstract class ShopCardSO : InventoryCardSO
     public int price;
     [Space]
     public Sprite shopSprite;
+    [Space]
+    public bool locked;
 }
