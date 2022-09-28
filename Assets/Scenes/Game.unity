@@ -2309,12 +2309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd82323d7e5d4a458d0a6fc6c0daa4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs:
-  - {fileID: 220146158451610779, guid: 0d7ab6fa65797894d946be849bf936e1, type: 3}
-  - {fileID: 220146158451610779, guid: 3811738a5ac4bf04c896303ad94d0476, type: 3}
+  playerBasePrefab: {fileID: 8812354164878341571, guid: fca79a4b7dd98bf4d91cb63cf6322af6,
+    type: 3}
   playerObject: {fileID: 0}
   player: {fileID: 0}
-  startPosition: {x: 0, y: 0, z: -30}
 --- !u!114 &675627204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,7 +2332,11 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     gameEnemiesRange: 0
-    player: {fileID: 0}
+    player:
+      avatar: {fileID: 0}
+      mesh: {fileID: 0}
+      materials: []
+      attributes: {fileID: 0}
     enemy: {fileID: 0}
     team: []
     stadium: {fileID: 0}
@@ -2621,24 +2623,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050870490a967034d968e77d19ace58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialPlayer: {fileID: 8700006197307017710, guid: d32fb99e8de17af4da4656f1bd6bbddc,
-    type: 3}
+  tutorialPlayer:
+    avatar: {fileID: 9000000, guid: f4985c2167e340243b20241146752362, type: 3}
+    mesh: {fileID: 4300000, guid: 953d01fc15961a54385929b9c22a7abb, type: 2}
+    materials:
+    - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - {fileID: 2100000, guid: 9169ce51675d3ec4eae0a82275dc0294, type: 2}
+    attributes: {fileID: 11400000, guid: 0b0720c238b807041999d8fcbdc5dba3, type: 2}
   tutorialStadium: {fileID: 8435990074255346326, guid: 5bbe71c36e87a7f40b83cd4a804052bd,
     type: 3}
   tutoContainer: {fileID: 1678406102}
-  step1Time: 1
-  step2Time: 2
-  step3Time: 3
-  step4Time: 3
-  step5Time: 3
-  step6Time: 3
-  lastStepTime: 8
-  step1Text: {fileID: 0}
-  step2Text: {fileID: 0}
-  step3Text: {fileID: 0}
-  step4Text: {fileID: 0}
-  step5Text: {fileID: 0}
-  step6Text: {fileID: 0}
 --- !u!114 &675627217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2679,8 +2673,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88652541649812747b8d0fd31f4f3ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parkourPlayer: {fileID: 8700006197307017710, guid: 99538f39e2f011e459debc5776685fd0,
-    type: 3}
+  parkourPlayer:
+    avatar: {fileID: 9000000, guid: 17d20e83cdb00d7498baa54d6df978d6, type: 3}
+    mesh: {fileID: 4300000, guid: de810f39da2932b4aa4de4b7197b5948, type: 2}
+    materials:
+    - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - {fileID: 2100000, guid: 15a1cbf0367c447418a6a27283bfb1e2, type: 2}
+    attributes: {fileID: 11400000, guid: d469ffc0381061d459a3711c69c10077, type: 2}
   parkourStadium: {fileID: 4467880661333431846, guid: 804b7bcbc39b259439cf67db559fb1f7,
     type: 3}
 --- !u!114 &675627220

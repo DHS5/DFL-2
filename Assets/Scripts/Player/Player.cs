@@ -49,4 +49,11 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    public void CreatePlayer(PlayerInfo player)
+    {
+        fPPlayer.CreateFPPlayer(player.avatar, player.mesh, player.materials);
+        tPPlayer.CreateTPPlayer(player.avatar, player.mesh, player.materials);
+
+        controller.playerAtt = player.attributes;
+    }
 }

@@ -10,15 +10,12 @@ public class PlayerManager : MonoBehaviour
 
     
 
-    [Tooltip("List of player prefabs")]
-    [SerializeField] private GameObject[] playerPrefabs;
+    [Tooltip("Player prefab")]
+    [SerializeField] private GameObject playerBasePrefab;
 
     [HideInInspector] public GameObject playerObject;
     [HideInInspector] public Player player;
 
-
-    [Tooltip("Player's start position")]
-    [SerializeField] private Vector3 startPosition;
 
     
     // ### Properties ###
@@ -89,8 +86,9 @@ public class PlayerManager : MonoBehaviour
 
     public void PreparePlayer()
     {
-        playerObject = Instantiate(main.GameManager.gameData.player, startPosition, Quaternion.identity);
+        playerObject = Instantiate(playerBasePrefab, Vector3.zero, Quaternion.identity);
         player = playerObject.GetComponentInChildren<Player>();
+        player.CreatePlayer(main.GameManager.gameData.player);
 
         player.gameManager = main.GameManager;
         player.fieldManager = main.FieldManager;

@@ -17,6 +17,8 @@ public class FPPlayer : MonoBehaviour
     [Tooltip("Game Object of the football")]
     public GameObject football;
 
+    [Tooltip("First person renderer")]
+    public SkinnedMeshRenderer fpRenderer;
 
 
     private void Awake()
@@ -24,5 +26,13 @@ public class FPPlayer : MonoBehaviour
         animator = GetComponent<Animator>();
 
         fpsCamera = GetComponentInChildren<FirstPersonCameraController>();
+    }
+
+    public void CreateFPPlayer(Avatar avatar, Mesh mesh, Material[] materials)
+    {
+        animator.avatar = avatar;
+
+        fpRenderer.sharedMesh = mesh;
+        fpRenderer.materials = materials;
     }
 }

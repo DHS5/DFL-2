@@ -26408,7 +26408,11 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     gameEnemiesRange: 0
-    player: {fileID: 0}
+    player:
+      avatar: {fileID: 0}
+      mesh: {fileID: 0}
+      materials: []
+      attributes: {fileID: 0}
     enemy: {fileID: 0}
     team: []
     stadium: {fileID: 0}
@@ -68758,12 +68762,12 @@ PrefabInstance:
     - target: {fileID: 3925944617888033825, guid: 0863bec102919aa4d94e2ed2a42450fa,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1200
+      value: 1250
       objectReference: {fileID: 0}
     - target: {fileID: 3925944617888033825, guid: 0863bec102919aa4d94e2ed2a42450fa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3925944618015134661, guid: 0863bec102919aa4d94e2ed2a42450fa,
         type: 3}

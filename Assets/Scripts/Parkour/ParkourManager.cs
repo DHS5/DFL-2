@@ -13,7 +13,7 @@ public class ParkourManager : MonoBehaviour
     public Parkour Parkour { get; private set; }
 
 
-    [SerializeField] private GameObject parkourPlayer;
+    [SerializeField] private PlayerInfo parkourPlayer;
     [SerializeField] private GameObject parkourStadium;
 
 

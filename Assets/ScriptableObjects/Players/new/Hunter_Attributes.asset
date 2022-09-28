@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f363ec69e91ff4897a3360bb91ccb7, type: 3}
+  m_Name: Hunter_Attributes
+  m_EditorClassIdentifier: 
+  size: {x: 1, y: 1.1, z: 1}
+  dirSensitivity: 4
+  dirGravity: 1
+  accSensitivity: 2
+  accGravity: 1
+  snap: 0.001
+  normalSpeed: 14
+  normalSideSpeed: 6
+  accelerationM: 1.3
+  accSideSpeed: 4
+  accelerationTime: 2
+  accelerationRestTime: 5
+  slowM: 0.6
+  slowSideSpeed: 9
+  jumpHeight: 1
+  flipHeight: 0
+  jumpCost: 2
+  flipCost: 0
+  jumpStamina: 3
+  jumpRechargeTime: 15
+  canJuke: 0
+  canSpin: 0
+  canJukeSpin: 0
+  canFeint: 0
+  canSlide: 0
+  canFlip: 0
+  canTruck: 1
+  jukeSideSpeed: 0
+  jukeSpeed: 0
+  spinSideSpeed: 5
+  spinSpeed: 12
+  feintSideSpeed: 0
+  feintSpeed: 0
+  slideSpeed: 0
+  flipSpeed: 0
+  teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

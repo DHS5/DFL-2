@@ -20,11 +20,22 @@ public class TPPlayer : MonoBehaviour
     [Tooltip("Game Object of the football")]
     public GameObject football;
 
+    [Tooltip("Third person renderer")]
+    public SkinnedMeshRenderer tpRenderer;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
         tpsCamera = tPCamera.GetComponent<ThirdPersonCameraController>();
+    }
+
+    public void CreateTPPlayer(Avatar avatar, Mesh mesh, Material[] materials)
+    {
+        animator.avatar = avatar;
+
+        tpRenderer.sharedMesh = mesh;
+        tpRenderer.materials = materials;
     }
 }

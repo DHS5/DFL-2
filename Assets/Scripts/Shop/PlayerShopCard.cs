@@ -17,7 +17,7 @@ public class PlayerShopCard : ShopCard
 
         playerCardSO = cardSO as PlayerCardSO;
 
-        PlayerAttributesSO p = playerCardSO.prefab.GetComponentInChildren<PlayerController>().playerAtt;
+        PlayerAttributesSO p = playerCardSO.playerInfo.attributes;
         
         capacityCard.info.speedInfo.value = p.NormalSpeed;
         capacityCard.info.sideSpeedInfo.value = p.NormalSideSpeed;

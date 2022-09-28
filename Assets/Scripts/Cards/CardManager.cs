@@ -186,13 +186,13 @@ public class CardManager : MonoBehaviour
     public void NextCardPlayer()
     {
         PlayerIndex = NextCard(playerSimpleCards, PlayerIndex);
-        DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.prefab;
+        DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.playerInfo;
 
     }
     public void PrevCardPlayer()
     {
         PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex);
-        DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.prefab;
+        DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.playerInfo;
     }
     public void OpenCardContainerEnemy()
     {

@@ -101,12 +101,23 @@ public struct GameData
     public GameDrill gameDrill;
     public int gameEnemiesRange;
 
-    public GameObject player;
+    public PlayerInfo player;
     public DefenderAttributesSO enemy;
     public AttackerAttributesSO[] team;
     public GameObject stadium;
     public Parkour parkour;
     public List<GameObject> weapons;
+}
+
+
+[System.Serializable]
+public struct PlayerInfo
+{
+    public Avatar avatar;
+    public Mesh mesh;
+    public Material[] materials;
+
+    public PlayerAttributesSO attributes;
 }
 
 

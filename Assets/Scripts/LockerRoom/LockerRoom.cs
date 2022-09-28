@@ -27,12 +27,12 @@ public class LockerRoom : MonoBehaviour
     }
 
 
-    public void ApplyPlayerInfo(Mesh _mesh, Avatar _avatar, Material _numberMat, PlayerPauses pause, bool ball)
+    public void ApplyPlayerInfo(Mesh _mesh, Avatar _avatar, Material[] materials, PlayerPauses pause, bool ball)
     {
         if (trigger != "") playerAnimator.ResetTrigger(trigger);
 
         playerRenderer.sharedMesh = _mesh;
-        playerRenderer.materials = new Material[] { playerRenderer.materials[0], _numberMat };
+        playerRenderer.materials = materials;
         playerAnimator.avatar = _avatar;
         trigger = pause.ToString();
         playerAnimator.SetTrigger(trigger);
@@ -41,6 +41,6 @@ public class LockerRoom : MonoBehaviour
 
     public void ApplyPlayerInfo(PlayerCardSO playerCard)
     {
-        ApplyPlayerInfo(playerCard.playerMesh, playerCard.playerAvatar, playerCard.numberMaterial, playerCard.playerPause, playerCard.footballActive);
+        ApplyPlayerInfo(playerCard.playerInfo.mesh, playerCard.playerInfo.avatar, playerCard.playerInfo.materials, playerCard.playerPause, playerCard.footballActive);
     }
 }

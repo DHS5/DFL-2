@@ -28,15 +28,9 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public PlayerAttributesSO playerAtt;
+    [HideInInspector] public PlayerAttributesSO playerAtt;
     public PlayerUniversalDataSO playerUD;
 
-    // Control parameters
-    private float dirSensitivity;
-    private float dirGravity;
-    private float accSensitivity;
-    private float accGravity;
-    private float snap;
 
 
     private float realDir;
@@ -65,6 +59,10 @@ public class PlayerController : MonoBehaviour
     private float jumpCharge;
 
 
+    private bool isRaining;
+
+
+
     // Player state variables
     public bool OnGround { get; private set; }
     public bool CanAccelerate { get; set; }
@@ -75,6 +73,31 @@ public class PlayerController : MonoBehaviour
 
 
     // ### Properties ###
+
+    // Control parameters
+    private float DirSensitivity
+    {
+        get { return isRaining ? playerAtt.DirSensitivity / 2 : playerAtt.DirSensitivity; }
+    }
+    private float DirGravity
+    {
+        get { return isRaining ? playerAtt.DirGravity / 2 : playerAtt.DirGravity; }
+    }
+    private float AccSensitivity
+    {
+        get { return isRaining ? playerAtt.AccSensitivity / 2 : playerAtt.AccSensitivity; }
+    }
+    private float AccGravity
+    {
+        get { return isRaining ? playerAtt.AccGravity / 2 : playerAtt.AccGravity; }
+    }
+    private float Snap
+    {
+        get { return playerAtt.snap; }
+    }
+
+
+
 
     public float Direction
     {
@@ -119,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerRigidbody = GetComponent<Rigidbody>();
 
-        GetControlParams();
+        //GetControlParams();
     }
 
 
@@ -174,36 +197,28 @@ public class PlayerController : MonoBehaviour
 
 
     // # Handling #
-    private void GetControlParams()
-    {
-        dirSensitivity = playerAtt.DirSensitivity;
-        dirGravity = playerAtt.DirGravity;
-        accSensitivity = playerAtt.AccSensitivity;
-        accGravity = playerAtt.AccGravity;
-        snap = playerAtt.snap;
-    }
 
     private void FilterDir()
     {
         float rawDir = Input.GetAxisRaw("Horizontal");
 
         if (rawDir != 0)
-            realDir += rawDir * dirSensitivity * Time.deltaTime;
+            realDir += rawDir * DirSensitivity * Time.deltaTime;
         else if (rawDir == 0)
         {
             if (realDir > 0)
             {
-                realDir -= dirGravity * Time.deltaTime;
+                realDir -= DirGravity * Time.deltaTime;
                 if (realDir < 0) realDir = 0f;
             }
             else if (realDir < 0)
             {
-                realDir += dirGravity * Time.deltaTime;
+                realDir += DirGravity * Time.deltaTime;
                 if (realDir > 0) realDir = 0f;
             }
         }
 
-        if (Mathf.Abs(realDir) <= snap) SnapDir();
+        if (Mathf.Abs(realDir) <= Snap) SnapDir();
 
         realDir = Mathf.Clamp(realDir, -1, 1);
     }
@@ -212,22 +227,22 @@ public class PlayerController : MonoBehaviour
         float rawAcc = Input.GetAxisRaw("Vertical");
 
         if (rawAcc != 0)
-            realAcc += rawAcc * accSensitivity * Time.deltaTime;
+            realAcc += rawAcc * AccSensitivity * Time.deltaTime;
         else if (rawAcc == 0)
         {
             if (realAcc > 0)
             {
-                realAcc -= accGravity * Time.deltaTime;
+                realAcc -= AccGravity * Time.deltaTime;
                 if (realAcc < 0) realAcc = 0f;
             }
             else if (realAcc < 0)
             {
-                realAcc += accGravity * Time.deltaTime;
+                realAcc += AccGravity * Time.deltaTime;
                 if (realAcc > 0) realAcc = 0f;
             }
         }
 
-        if (Mathf.Abs(realAcc) <= snap) SnapAcc();
+        if (Mathf.Abs(realAcc) <= Snap) SnapAcc();
 
         realAcc = Mathf.Clamp(realAcc, -1, 1);
     }
@@ -285,10 +300,6 @@ public class PlayerController : MonoBehaviour
     // # Weather #
     public void Rain()
     {
-        dirGravity /= 2;
-        dirSensitivity /= 2;
-
-        accGravity /= 2;
-        accSensitivity /= 2;
+        isRaining = true;
     }
 }

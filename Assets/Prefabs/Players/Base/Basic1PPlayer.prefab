@@ -428,6 +428,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+  - {fileID: 2100000, guid: 7a65a956f3f19b14e8378321637162dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -452,7 +453,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: 27222ee2d8b63a14a9f2bd0f2149f9c5, type: 2}
+  m_Mesh: {fileID: 4300000, guid: d29fa438d7353a745b977a81187405a3, type: 2}
   m_Bones:
   - {fileID: 7738972481988155364}
   - {fileID: 3085109550034338787}
@@ -1209,7 +1210,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6073253291412684307}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: af0f50771ebb3ce4faebd75d466ccc8b, type: 3}
+  m_Avatar: {fileID: 9000000, guid: b957c9d6a41795a4786851a2afaedb14, type: 2}
   m_Controller: {fileID: 9100000, guid: 4441f3d96771ed54c94b0956f2840137, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -1236,6 +1237,7 @@ MonoBehaviour:
   fpsCamera: {fileID: 0}
   rightHand: {fileID: 7483826319577335814}
   football: {fileID: 2802134341115233756}
+  fpRenderer: {fileID: 0}
 --- !u!1 &7111583479470159558
 GameObject:
   m_ObjectHideFlags: 0

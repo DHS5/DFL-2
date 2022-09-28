@@ -18,12 +18,15 @@ MonoBehaviour:
   shopSprite: {fileID: 0}
   locked: 0
   player: 6
-  prefab: {fileID: 8700006197307017710, guid: 99fa8dc889c5c0a449de90d44796e8be, type: 3}
+  playerInfo:
+    avatar: {fileID: 9000000, guid: 7895695ce8507864a855bab843e6eed0, type: 2}
+    mesh: {fileID: 4300000, guid: bd4eccf4d59c10e45bb316d06e2aa70d, type: 2}
+    materials:
+    - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - {fileID: 2100000, guid: f1da6e1ff4688944a821d874eb120a7f, type: 2}
+    attributes: {fileID: 11400000, guid: d0cadae14f9f4514b81ae3da498b1232, type: 2}
   physical: 10
   handling: 10
   skills: 5
-  playerMesh: {fileID: 4300000, guid: bd4eccf4d59c10e45bb316d06e2aa70d, type: 2}
-  playerAvatar: {fileID: 9000000, guid: 731e3be7d681e8348a883e4c0e449e87, type: 3}
-  numberMaterial: {fileID: 2100000, guid: f1da6e1ff4688944a821d874eb120a7f, type: 2}
   playerPause: 1
   footballActive: 0

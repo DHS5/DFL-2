@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e894e78248112a43845d544fbbb3187, type: 3}
+  m_Name: CMC_PlayerCard
+  m_EditorClassIdentifier: 
+  Title: CMC
+  mainSprite: {fileID: 0}
+  price: 0
+  shopSprite: {fileID: 0}
+  locked: 0
+  player: 20
+  playerInfo:
+    avatar: {fileID: 9000000, guid: c4db4c9593ece99448b88bcbd57645fe, type: 2}
+    mesh: {fileID: 4300000, guid: 29e1f338c2bd7ae4198045094faae26a, type: 2}
+    materials:
+    - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - {fileID: 2100000, guid: 89fd3485522c11a449d8a58b59ccf3ce, type: 2}
+    attributes: {fileID: 11400000, guid: 313ebddc42f58e24cbced26cdf55bd5c, type: 2}
+  physical: 0
+  handling: 0
+  skills: 0
+  playerPause: 0
+  footballActive: 0
