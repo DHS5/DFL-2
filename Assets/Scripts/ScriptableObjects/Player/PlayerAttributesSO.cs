@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 [CreateAssetMenu(fileName = "PlayerAttribute", menuName = "ScriptableObjects/Player/PlayerAttribute", order = 1)]
 public class PlayerAttributesSO : ScriptableObject
 {
@@ -11,45 +12,45 @@ public class PlayerAttributesSO : ScriptableObject
 
 
     [Header("Control parameters")]
-    [SerializeField] private float dirSensitivity; public float DirSensitivity { get { return dirSensitivity; } }
-    [SerializeField] private float dirGravity; public float DirGravity { get { return dirGravity; } }
+    [SerializeField][Range(4, 20)] private float dirSensitivity; public float DirSensitivity { get { return dirSensitivity; } }
+    [SerializeField][Range(1, 20)] private float dirGravity; public float DirGravity { get { return dirGravity; } }
     [Space]
-    [SerializeField] private float accSensitivity; public float AccSensitivity { get { return accSensitivity; } }
-    [SerializeField] private float accGravity; public float AccGravity { get { return accGravity; } }
+    [SerializeField][Range(2, 20)] private float accSensitivity; public float AccSensitivity { get { return accSensitivity; } }
+    [SerializeField][Range(1, 20)] private float accGravity; public float AccGravity { get { return accGravity; } }
     [Space]
-    public float snap;
+    [Range(0.001f, 0.01f)] public float snap;
 
 
     [Header("Normal speed variables of the player")]
     [Tooltip("Forward speed of the player when running forward")]
-    [SerializeField] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
+    [SerializeField][Range(10, 18)] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
 
     [Tooltip("Side speed multiplier of the player")]
-    [SerializeField] private float normalSideSpeed; public float NormalSideSpeed { get { return normalSideSpeed; } }
+    [SerializeField][Range(5, 10)] private float normalSideSpeed; public float NormalSideSpeed { get { return normalSideSpeed; } }
 
 
 
     [Header("Acceleration parameters")]
     [Tooltip("Acceleration multiplier of the player")]
-    [SerializeField] private float accelerationM; public float AccelerationM { get { return accelerationM; } }
+    [SerializeField][Range(1.1f, 1.75f)] private float accelerationM; public float AccelerationM { get { return accelerationM; } }
 
     [Tooltip("Side speed during an acceleration of the player")]
-    [SerializeField] private float accSideSpeed; public float AccSideSpeed { get { return accSideSpeed; } }
+    [SerializeField][Range(2, 8)] private float accSideSpeed; public float AccSideSpeed { get { return accSideSpeed; } }
     [Space]
     [Tooltip("Time during which the player is able to accelerate")]
-    public float accelerationTime;
+    [Range(1, 6)] public float accelerationTime;
 
     [Tooltip("Time during which the player need to rest to accelerate again")]
-    public float accelerationRestTime;
+    [Range(3, 12)] public float accelerationRestTime;
 
 
 
     [Header("Slowrun parameters")]
     [Tooltip("Slowrun multiplier of the player")]
-    [SerializeField] private float slowM; public float SlowM { get { return slowM; } }
+    [SerializeField][Range(0.1f, 0.9f)] private float slowM; public float SlowM { get { return slowM; } }
 
     [Tooltip("Side speed during a slowrun of the player")]
-    [SerializeField] private float slowSideSpeed; public float SlowSideSpeed { get { return slowSideSpeed; } }
+    [SerializeField][Range(7, 14)] private float slowSideSpeed; public float SlowSideSpeed { get { return slowSideSpeed; } }
 
 
 

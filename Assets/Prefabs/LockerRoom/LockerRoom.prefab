@@ -495,6 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bde27f6d6d9dd045af31e6e02b683a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 1793213174155604877}
   playerAnimator: {fileID: 8145083368213091151}
   playerRenderer: {fileID: 1574853607318420825}
   footballGameObject: {fileID: 37185860327646865}
@@ -885,7 +886,7 @@ PrefabInstance:
     - target: {fileID: 1152613424189235777, guid: 6d41f45e6e3f0294ba09139b3f0340b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1152613424189235777, guid: 6d41f45e6e3f0294ba09139b3f0340b8,
         type: 3}
@@ -943,6 +944,12 @@ GameObject:
 --- !u!137 &1574853607318420825 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4761318827217940594, guid: 6d41f45e6e3f0294ba09139b3f0340b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6325476359242026283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1793213174155604877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5704476184249171622, guid: 6d41f45e6e3f0294ba09139b3f0340b8,
     type: 3}
   m_PrefabInstance: {fileID: 6325476359242026283}
   m_PrefabAsset: {fileID: 0}

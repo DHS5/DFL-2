@@ -27,7 +27,7 @@ public class SlowsiderunPS : PlayerState
         PlayerOrientation();
 
 
-        controller.SideSpeed = att.SlowSideSpeed * side;
+        controller.SideSpeed = (att.NormalSideSpeed + ((att.SlowSideSpeed - att.NormalSideSpeed) * Mathf.Abs(acc))) * side;
 
 
         // Spin

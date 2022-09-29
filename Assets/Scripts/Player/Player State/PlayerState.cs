@@ -28,6 +28,8 @@ public abstract class PlayerState
 
     protected float acc;
     protected float side;
+    protected float rawAcc;
+    protected float rawSide;
     protected float startSide;
 
     protected float startTime;
@@ -68,6 +70,8 @@ public abstract class PlayerState
     {
         acc = controller.Acceleration;
         side = controller.Direction;
+        rawAcc = Input.GetAxisRaw("Vertical");
+        rawSide = Input.GetAxisRaw("Horizontal");
     }
     public virtual void Exit() { stage = Event.EXIT; Debug.Log(name + " -> " + nextState.name); }
 

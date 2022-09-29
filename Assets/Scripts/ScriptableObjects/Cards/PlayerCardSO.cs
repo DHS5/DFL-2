@@ -10,6 +10,9 @@ public enum PlayerEnum
     CMC, HOP, KELCE, DK, TAYLOR, KEENAN, DIGZ, NAJEE, EVANS, McLAW, CHUBB, MOSTERT, PITTS, COOKS, HUNTER, ENGRAM, FIELDS, RUSSEL, SAUCE, MEYERS
 }
 
+public enum PlayerClass { ROOKIE, STAR, ALLPRO, ICON, LEGEND }
+
+
 [CreateAssetMenu(fileName = "PlayerCard", menuName = "ScriptableObjects/Card/PlayerCard", order = 1)]
 public class PlayerCardSO : ShopCardSO
 {
@@ -17,6 +20,7 @@ public class PlayerCardSO : ShopCardSO
     public PlayerEnum player;
 
     public PlayerInfo playerInfo;
+    public PlayerClass playerClass;
     public override object cardObject { get { return player; } }
 
     [Header("General levels")]
