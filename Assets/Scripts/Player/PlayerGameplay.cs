@@ -28,6 +28,7 @@ public class PlayerGameplay : MonoBehaviour
     [HideInInspector] public bool freeze = true;
 
     [HideInInspector] public bool isTrucking = false;
+    [HideInInspector] public bool isHighKneeing = false;
 
 
 
@@ -39,7 +40,7 @@ public class PlayerGameplay : MonoBehaviour
 
     private bool Catchable
     {
-        get { return !isInvincible && !isTrucking; }
+        get { return !isInvincible && !isTrucking && !isHighKneeing; }
     }
 
 
@@ -107,7 +108,7 @@ public class PlayerGameplay : MonoBehaviour
                 Debug.Log("Hurt by enemy " + Time.timeAsDouble);
                 Hurt(collision.impulse.normalized, collision.gameObject.transform.position);
             }
-            if (collision.gameObject.CompareTag("Enemy") && player.controller.Sprinting && player.controller.playerAtt.CanTruck)
+            if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
             {
                 collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision.impulse);
             }

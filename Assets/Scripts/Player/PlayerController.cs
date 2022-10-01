@@ -125,14 +125,6 @@ public class PlayerController : MonoBehaviour
         set { sideSpeed = value; }
     }
 
-    /// <summary>
-    /// Jump power of the player
-    /// </summary>
-    public Vector3 JumpPower
-    {
-        get { return new Vector3(0, Mathf.Sqrt(playerAtt.JumpHeight * jumpCst * -2 * (Physics.gravity.y * gravityScale)), 0); ; }
-    }
-
 
     // ### Base functions ###
 
@@ -275,17 +267,30 @@ public class PlayerController : MonoBehaviour
         jumpCharge = Mathf.Clamp(jumpCharge + Time.deltaTime * (playerAtt.JumpStamina / playerAtt.JumpRechargeTime), 0, playerAtt.JumpStamina);
     }
 
-    public void Jump(float cost)
+
+
+
+    /// <summary>
+    /// Jump power of the player
+    /// </summary>
+    public Vector3 JumpPower(float height)
     {
-        PlayerRigidbody.AddForce(JumpPower + bonusJump, ForceMode.Impulse);
-        OnGround = false;
-        jumpCharge -= cost;
+        return new Vector3(0, Mathf.Sqrt(height * jumpCst * -2 * (Physics.gravity.y * gravityScale)), 0);
     }
-    public void Flip(float cost)
+    /// <summary>
+    /// Triggers the player's jump
+    /// </summary>
+    /// <param name="cost"></param>
+    /// <returns>Hang time</returns>
+    public float Jump(float cost, float bonusHeight)
     {
-        PlayerRigidbody.AddForce(JumpPower + playerAtt.FlipHeight + bonusJump, ForceMode.Impulse);
+        float height = playerAtt.JumpHeight + bonusHeight + bonusJump.y;
+
+        PlayerRigidbody.AddForce(JumpPower(height), ForceMode.Impulse);
         OnGround = false;
         jumpCharge -= cost;
+
+        return 0.5f + 0.09f * (height - 2);
     }
 
 

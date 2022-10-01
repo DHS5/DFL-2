@@ -16,7 +16,8 @@ public class SlidePS : PlayerState
 
         controller.Slide();
         controller.Speed = att.SlideSpeed;
-        
+        controller.SideSpeed = Vector3.Dot(controller.Velocity.normalized * att.SlideSpeed, Vector3.right);
+
         base.Enter();
     }
 
@@ -30,15 +31,15 @@ public class SlidePS : PlayerState
             // Sprint
             if (acc > 0 && controller.CanAccelerate)
                 nextState = new SprintPS(player);
-            // Slow
-            else if (acc < 0)
-                nextState = new SlowrunPS(player);
             // Siderun
             else if (acc == 0 && side != 0)
                 nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
             // Slowsiderun
             else if (acc < 0 && side != 0)
                 nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
+            // Slow
+            else if (acc < 0)
+                nextState = new SlowrunPS(player);
             // Run
             else
                 nextState = new RunPS(player);

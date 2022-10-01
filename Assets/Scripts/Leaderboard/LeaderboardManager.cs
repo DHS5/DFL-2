@@ -22,6 +22,7 @@ public class LeaderboardManager : MonoBehaviour
 {
     private MenuMainManager main;
 
+    [SerializeField] private GameObject waitPopup;
 
     [SerializeField] private Leaderboard[] leaderboards;
     [SerializeField] private LeaderboardRow personnalHighRow;
@@ -40,8 +41,6 @@ public class LeaderboardManager : MonoBehaviour
     private int mode;
     private int difficulty;
 
-
-    private bool loaded = false;
 
 
     // ### Properties ###
@@ -108,27 +107,14 @@ public class LeaderboardManager : MonoBehaviour
         if (ConnectionManager.SessionConnected)
         {
             ShowLeaderboards(true);
+            Wait(true);
 
-            if (loaded)
+            for (int i = 0; i < leaderboards.Length; i++)
             {
-                for (int i = 0; i < leaderboards.Length; i++)
-                {
-                    LoadLeaderboard(i);
-                }
-
-                CurrentLeaderboard = leaderboards[0];
-                loaded = true;
+                LoadLeaderboard(i);
             }
 
-            else
-            {
-                for (int i = 0; i < leaderboards.Length; i++)
-                {
-                    LoadLeaderboard(i);
-                }
-
-                CurrentLeaderboard = leaderboards[LeaderboardIndex];
-            }
+            CurrentLeaderboard = leaderboards[0];
         }
         else
         {
@@ -161,6 +147,8 @@ public class LeaderboardManager : MonoBehaviour
                 Debug.Log("Successfully loaded");
             }
             else Debug.Log("Failed to load");
+
+            Wait(false);
         });
     }
 
@@ -215,8 +203,8 @@ public class LeaderboardManager : MonoBehaviour
 
 
 
-    private LeaderboardItem emptyRow()
+    private void Wait(bool state)
     {
-        return new LeaderboardItem() { rank = 0, name = "Empty", score = 0, wave = "0", wheather = "", options = "" };
+        waitPopup.SetActive(state);
     }
 }

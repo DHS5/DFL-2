@@ -40,7 +40,7 @@ public class PlayerShopCard : ShopCard
         capacityCard.info.canSlide = p.CanSlide;
         capacityCard.info.canFlip = p.CanFlip;
         capacityCard.info.canTruck = p.CanTruck;
-        capacityCard.info.canSlideTackle = false;
+        capacityCard.info.canHighKnee = p.CanHighKnee;
 
         capacityCard.ApplyInfos();
     }

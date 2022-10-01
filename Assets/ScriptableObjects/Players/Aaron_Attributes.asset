@@ -13,38 +13,44 @@ MonoBehaviour:
   m_Name: Aaron_Attributes
   m_EditorClassIdentifier: 
   size: {x: 0.9, y: 0.9, z: 0.9}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  dirSensitivity: 11
+  dirGravity: 11
+  accSensitivity: 10
+  accGravity: 10
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
-  accelerationM: 1.3
-  accSideSpeed: 4
+  normalSpeed: 15
+  normalSideSpeed: 8
+  accelerationM: 1.35
+  accSideSpeed: 6
   accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  accelerationRestTime: 4
+  slowM: 0.4
+  slowSideSpeed: 11.5
+  jumpHeight: 2
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 0
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
-  canJuke: 0
-  canSpin: 0
+  hurdleCost: 0
+  jumpStamina: 2
+  jumpRechargeTime: 6
+  canJuke: 1
+  canSpin: 1
   canJukeSpin: 0
-  canFeint: 0
-  canSlide: 0
+  canFeint: 1
+  canSlide: 1
   canFlip: 0
-  canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
-  slideSpeed: 0
+  canHurdle: 0
+  canTruck: 0
+  canHighKnee: 0
+  canSprintFeint: 0
+  jukeSideSpeed: 10
+  jukeSpeed: 13
+  spinSideSpeed: 10
+  spinSpeed: 14
+  feintSideSpeed: 12
+  feintSpeed: 15
+  slideSpeed: 16
   flipSpeed: 0
+  sprintFeintSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

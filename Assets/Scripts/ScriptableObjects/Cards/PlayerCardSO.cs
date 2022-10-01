@@ -26,7 +26,7 @@ public class PlayerCardSO : ShopCardSO
     [Header("General levels")]
     [Range(0, 10)] public int physical;
     [Range(0, 10)] public int handling;
-    [Range(0, 5)] public int skills;
+    [Range(0, 10)] public int skills;
 
     [Header("Locker Room's attributes")]
     public PlayerPauses playerPause;

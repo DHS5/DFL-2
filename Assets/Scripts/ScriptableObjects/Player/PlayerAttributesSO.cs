@@ -23,7 +23,7 @@ public class PlayerAttributesSO : ScriptableObject
 
     [Header("Normal speed variables of the player")]
     [Tooltip("Forward speed of the player when running forward")]
-    [SerializeField][Range(10, 18)] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
+    [SerializeField][Range(11, 18)] private float normalSpeed; public float NormalSpeed { get { return normalSpeed; } }
 
     [Tooltip("Side speed multiplier of the player")]
     [SerializeField][Range(5, 10)] private float normalSideSpeed; public float NormalSideSpeed { get { return normalSideSpeed; } }
@@ -41,7 +41,7 @@ public class PlayerAttributesSO : ScriptableObject
     [Range(1, 6)] public float accelerationTime;
 
     [Tooltip("Time during which the player need to rest to accelerate again")]
-    [Range(3, 12)] public float accelerationRestTime;
+    [Range(2, 12)] public float accelerationRestTime;
 
 
 
@@ -59,10 +59,14 @@ public class PlayerAttributesSO : ScriptableObject
     [SerializeField] private float jumpHeight; public float JumpHeight { get { return jumpHeight; } }
     
     [Tooltip("Bonus height the player is reaching when fliping")]
-    [SerializeField] private float flipHeight; public Vector3 FlipHeight { get { return new Vector3(0, flipHeight, 0); } }
+    [SerializeField] private float flipHeight; public float FlipHeight { get { return flipHeight; } }
+    
+    [Tooltip("Bonus height the player is reaching when hurdling")]
+    [SerializeField] private float hurdleHeight; public float HurdleHeight { get { return hurdleHeight; } }
+    
+    [Tooltip("Height the player is reaching when high kneeing")]
+    [SerializeField] private float highKneeHeight; public float HighKneeHeight { get { return highKneeHeight; } }
 
-    [Tooltip("Hang time when the player's jumping")]
-    public float HangTime { get { return 0.5f + 0.09f * (jumpHeight - 2); } }
 
     [Space]
     [Tooltip("Jump cost")]
@@ -70,6 +74,12 @@ public class PlayerAttributesSO : ScriptableObject
     
     [Tooltip("Flip cost")]
     [SerializeField] private float flipCost; public float FlipCost { get { return flipCost; } }
+    
+    [Tooltip("Hurdle cost")]
+    [SerializeField] private float hurdleCost; public float HurdleCost { get { return hurdleCost; } }
+    
+    [Tooltip("High Knee cost")]
+    [SerializeField] private float highKneeCost; public float HighKneeCost { get { return highKneeCost; } }
 
     [Tooltip("Total jump and flip stamina")]
     [SerializeField] private float jumpStamina; public float JumpStamina { get { return jumpStamina; } }
@@ -87,7 +97,10 @@ public class PlayerAttributesSO : ScriptableObject
     [SerializeField] private bool canFeint; public bool CanFeint { get { return canFeint; } }
     [SerializeField] private bool canSlide; public bool CanSlide { get { return canSlide; } }
     [SerializeField] private bool canFlip; public bool CanFlip { get { return canFlip; } }
+    [SerializeField] private bool canHurdle; public bool CanHurdle { get { return canHurdle; } }
     [SerializeField] private bool canTruck; public bool CanTruck { get { return canTruck; } }
+    [SerializeField] private bool canHighKnee; public bool CanHighKnee { get { return canHighKnee; } }
+    [SerializeField] private bool canSprintFeint; public bool CanSprintFeint { get { return canSprintFeint; } }
 
 
     [Header("Skill moves speed")]
@@ -114,6 +127,9 @@ public class PlayerAttributesSO : ScriptableObject
     
     [Tooltip("Flip speed of the player")]
     [SerializeField] private float flipSpeed; public float FlipSpeed { get { return flipSpeed; } }
+    
+    [Tooltip("Sprint Feint speed of the player")]
+    [SerializeField] private float sprintFeintSpeed; public float SprintFeintSpeed { get { return sprintFeintSpeed; } }
 
 
     [Space]

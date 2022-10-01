@@ -13,11 +13,9 @@ public class JumpPS : PlayerState
     public override void Enter()
     {
         SetTrigger("Jump");
-        SetFloat("HangTime", 1 / att.HangTime);
+        SetFloat("HangTime", 1 / controller.Jump(att.JumpCost, 0));
 
-        controller.Jump(att.JumpCost);
-
-        player.playerManager.JumpUIAnimation();
+        player.playerManager.JumpUIAnimation(att.JumpCost);
         
         base.Enter();
     }

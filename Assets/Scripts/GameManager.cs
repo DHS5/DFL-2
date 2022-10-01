@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
 
         gameData.gameEnemiesRange = enemiesRange;
 
-        waveNumber = 1;
+        WaveNumber = 1;
     }
 
 

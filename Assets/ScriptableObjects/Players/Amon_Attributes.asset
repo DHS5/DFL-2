@@ -10,41 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f363ec69e91ff4897a3360bb91ccb7, type: 3}
-  m_Name: Pitts_Attributes
+  m_Name: Amon_Attributes
   m_EditorClassIdentifier: 
-  size: {x: 1.13, y: 1.13, z: 1.13}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  size: {x: 0.98, y: 0.98, z: 0.98}
+  dirSensitivity: 10
+  dirGravity: 8
+  accSensitivity: 9
+  accGravity: 8
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
-  accelerationM: 1.3
-  accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
+  normalSpeed: 14.5
+  normalSideSpeed: 7
+  accelerationM: 1.5
+  accSideSpeed: 5
+  accelerationTime: 1.5
+  accelerationRestTime: 3
   slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  slowSideSpeed: 10
+  jumpHeight: 2.5
   flipHeight: 0
-  jumpCost: 2
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
+  jumpStamina: 1
+  jumpRechargeTime: 6
   canJuke: 0
-  canSpin: 0
+  canSpin: 1
   canJukeSpin: 0
-  canFeint: 0
+  canFeint: 1
   canSlide: 0
   canFlip: 0
-  canTruck: 1
+  canTruck: 0
+  canHighKnee: 0
   jukeSideSpeed: 0
   jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  spinSideSpeed: 11
+  spinSpeed: 14
+  feintSideSpeed: 13
+  feintSpeed: 16
   slideSpeed: 0
   flipSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

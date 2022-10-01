@@ -55,7 +55,7 @@ public class PlayerCapacityShopCard : MonoBehaviour
         slideToggle.isOn = infos.canSlide;
         flipToggle.isOn = infos.canFlip;
         truckToggle.isOn = infos.canTruck;
-        slideTackleToggle.isOn = infos.canSlideTackle;
+        slideTackleToggle.isOn = infos.canHighKnee;
 
         dirSensitivityGauge.ApplyGaugeInfo(infos.dirSensitivityInfo);
         dirGravityGauge.ApplyGaugeInfo(infos.dirGravityInfo);
@@ -90,7 +90,7 @@ public class PlayerShopCapacityCardInfo
     public bool canSlide;
     public bool canFlip;
     public bool canTruck;
-    public bool canSlideTackle;
+    public bool canHighKnee;
 
     [Header("Handling")]
     public CapacityCardGaugeInfo dirSensitivityInfo;

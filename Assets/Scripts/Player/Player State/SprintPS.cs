@@ -41,16 +41,37 @@ public class SprintPS : PlayerState
         controller.SideSpeed = att.AccSideSpeed * side;
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.Space) && controller.CanJump(att.JumpCost))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextState = new JumpPS(player);
-            stage = Event.EXIT;
+            if (att.CanHurdle && controller.CanJump(att.HurdleCost))
+            {
+                nextState = new HurdlePS(player);
+                stage = Event.EXIT;
+            }
+            else if (att.CanHighKnee && controller.CanJump(att.HighKneeCost))
+            {
+                nextState = new HighKneePS(player);
+                stage = Event.EXIT;
+            }
+            else if (controller.CanJump(att.JumpCost))
+            {
+                nextState = new JumpPS(player);
+                stage = Event.EXIT;
+            }
         }
         // Slide
-        else if (Input.GetAxisRaw("Vertical") < 0 && att.CanSlide && !controller.AlreadySlide)
+        else if (Input.GetAxisRaw("Vertical") < 0)
         {
-            nextState = new SlidePS(player);
-            stage = Event.EXIT;
+            if (att.CanSlide && !controller.AlreadySlide)
+            {
+                nextState = new SlidePS(player);
+                stage = Event.EXIT;
+            }
+            else if (att.CanSprintFeint)
+            {
+                nextState = new SprintFeintPS(player);
+                stage = Event.EXIT;
+            }
         }
         // Run
         else if ((acc <= 0 && side == 0) || (!controller.CanAccelerate && side == 0))
