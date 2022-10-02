@@ -43,14 +43,14 @@ public class SprintPS : PlayerState
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (att.CanHurdle && controller.CanJump(att.HurdleCost))
-            {
-                nextState = new HurdlePS(player);
-                stage = Event.EXIT;
-            }
-            else if (att.CanHighKnee && controller.CanJump(att.HighKneeCost))
+            if (att.CanHighKnee && controller.CanJump(att.HighKneeCost))
             {
                 nextState = new HighKneePS(player);
+                stage = Event.EXIT;
+            }
+            else if (att.CanHurdle && controller.CanJump(att.HurdleCost))
+            {
+                nextState = new HurdlePS(player);
                 stage = Event.EXIT;
             }
             else if (controller.CanJump(att.JumpCost))

@@ -13,38 +13,46 @@ MonoBehaviour:
   m_Name: Saquad_Attributes
   m_EditorClassIdentifier: 
   size: {x: 0.98, y: 0.98, z: 0.98}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  dirSensitivity: 11
+  dirGravity: 11
+  accSensitivity: 13
+  accGravity: 13
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
-  accelerationM: 1.3
-  accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  normalSpeed: 16
+  normalSideSpeed: 8
+  accelerationM: 1.4
+  accSideSpeed: 5
+  accelerationTime: 3
+  accelerationRestTime: 8
+  slowM: 0.5
+  slowSideSpeed: 12
+  jumpHeight: 3
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 0
+  highKneeHeight: -1
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
-  canJuke: 0
+  hurdleCost: 0
+  highKneeCost: 1
+  jumpStamina: 2
+  jumpRechargeTime: 10
+  canJuke: 1
   canSpin: 0
   canJukeSpin: 0
-  canFeint: 0
+  canFeint: 1
   canSlide: 0
   canFlip: 0
-  canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  canHurdle: 0
+  canTruck: 0
+  canHighKnee: 1
+  canSprintFeint: 1
+  jukeSideSpeed: 13.5
+  jukeSpeed: 15
+  spinSideSpeed: 0
+  spinSpeed: 0
+  feintSideSpeed: 14
+  feintSpeed: 17
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 1
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

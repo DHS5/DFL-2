@@ -10,41 +10,49 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f363ec69e91ff4897a3360bb91ccb7, type: 3}
-  m_Name: Diggs_Attributes
+  m_Name: Jamarr_Attributes
   m_EditorClassIdentifier: 
   size: {x: 0.98, y: 0.98, z: 0.98}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  dirSensitivity: 12
+  dirGravity: 12
+  accSensitivity: 15
+  accGravity: 14
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
+  normalSpeed: 15.5
+  normalSideSpeed: 9
   accelerationM: 1.3
   accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  accelerationTime: 5
+  accelerationRestTime: 11
+  slowM: 0.35
+  slowSideSpeed: 13.25
+  jumpHeight: 2.5
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 0.75
+  highKneeHeight: 0
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
-  canJuke: 0
-  canSpin: 0
+  hurdleCost: 1
+  highKneeCost: 0
+  jumpStamina: 1.75
+  jumpRechargeTime: 12
+  canJuke: 1
+  canSpin: 1
   canJukeSpin: 0
-  canFeint: 0
+  canFeint: 1
   canSlide: 0
   canFlip: 0
-  canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  canHurdle: 1
+  canTruck: 0
+  canHighKnee: 0
+  canSprintFeint: 1
+  jukeSideSpeed: 12
+  jukeSpeed: 14
+  spinSideSpeed: 11
+  spinSpeed: 15
+  feintSideSpeed: 13
+  feintSpeed: 16
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 0.1
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}
