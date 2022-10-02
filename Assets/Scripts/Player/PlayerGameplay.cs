@@ -34,6 +34,8 @@ public class PlayerGameplay : MonoBehaviour
 
     private float tunnelWidth = 5f;
     private float recupTime = 1.5f;
+    private float impactMin = 15;
+    private float impactMax = 30;
 
 
     // ### Properties ###
@@ -106,7 +108,7 @@ public class PlayerGameplay : MonoBehaviour
             if (collision.gameObject.CompareTag("Enemy") && Catchable)
             {
                 Debug.Log("Hurt by enemy " + Time.timeAsDouble);
-                Hurt(collision.impulse.normalized, collision.gameObject.transform.position);
+                Hurt(collision);
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
             {
@@ -123,13 +125,13 @@ public class PlayerGameplay : MonoBehaviour
                     a.volume = 1f;
                 }
                 
-                Hurt(collision.impulse.normalized, collision.gameObject.transform.position);
+                Hurt(collision);
                 Debug.Log("Hurt by obstacle");
             }
 
             if (collision.gameObject.CompareTag("StadiumLimit"))
             {
-                Dead(collision.impulse.normalized, collision.gameObject.transform.position);
+                Dead(collision);
                 Debug.Log("OutOfBounds");
             }
 
@@ -147,7 +149,7 @@ public class PlayerGameplay : MonoBehaviour
         }
     }
 
-    private void Hurt(Vector3 collisionVector, Vector3 colliderPos)
+    private void Hurt(Collision collision)
     {
         player.audioSource.Play();
 
@@ -159,7 +161,7 @@ public class PlayerGameplay : MonoBehaviour
             Invoke(nameof(NotInvincible), recupTime);
         }
         // If the player has no life left, GAME OVER
-        else Dead(collisionVector, colliderPos);
+        else Dead(collision);
     }
 
     private void NotInvincible() { isInvincible = false; }
@@ -168,16 +170,16 @@ public class PlayerGameplay : MonoBehaviour
     /// Game Over for the player
     /// </summary>
     /// <param name="g"></param>
-    private void Dead(Vector3 collisionVector, Vector3 colliderPos)
+    private void Dead(Collision collision)
     {
         // Player animator dead
         player.controller.CurrentState.Dead();
-        //player.activeBody.gameObject.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(-collisionVector).eulerAngles.y, 0);
-        //player.controller.PlayerRigidbody.AddForce(collisionVector * 25, ForceMode.Impulse);
-        Vector3 impact = (colliderPos - transform.position).normalized;
-        impact = new Vector3(impact.x, 0, impact.z);
-        player.activeBody.gameObject.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
-        player.controller.PlayerRigidbody.AddForce(impact * 25, ForceMode.Impulse);
+        Vector3 impactDir = (collision.GetContact(0).point - transform.position).normalized;
+        float impactPower = Mathf.Clamp(collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
+        Vector3 impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;
+
+        player.activeBody.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
+        player.controller.PlayerRigidbody.AddForce(-impact, ForceMode.Impulse);
 
         player.playerManager.DeadPlayer();
     }

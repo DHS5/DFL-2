@@ -12,9 +12,9 @@ public class WeaponShopCard : ShopCard
 
     public WeaponCardSO weaponCardSO { get { return cardSO as WeaponCardSO; } }
 
-    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
+    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable, bool _enoughMoney)
     {
-        base.GenerateCard(_cardSO, _shopButton, _buyable);
+        base.GenerateCard(_cardSO, _shopButton, _buyable, _enoughMoney);
 
         Weapon w = weaponCardSO.prefab.GetComponent<Weapon>();
 

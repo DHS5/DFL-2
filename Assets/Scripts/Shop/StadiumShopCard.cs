@@ -10,9 +10,9 @@ public class StadiumShopCard : ShopCard
 
     public StadiumCardSO stadiumCardSO { get { return cardSO as StadiumCardSO; } }
 
-    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
+    public override void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable, bool _enoughMoney)
     {
-        base.GenerateCard(_cardSO, _shopButton, _buyable);
+        base.GenerateCard(_cardSO, _shopButton, _buyable, _enoughMoney);
 
         percentageText.text = "+" + (stadiumCardSO.coinsPercentage - 1) * 100 + "%";
     }

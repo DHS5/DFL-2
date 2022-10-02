@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Cheetah_Attributes
   m_EditorClassIdentifier: 
   size: {x: 0.93, y: 0.93, z: 0.93}
-  dirSensitivity: 12
-  dirGravity: 8
+  dirSensitivity: 14
+  dirGravity: 10
   accSensitivity: 20
   accGravity: 20
   snap: 0.005
@@ -22,29 +22,37 @@ MonoBehaviour:
   normalSideSpeed: 9
   accelerationM: 1.5
   accSideSpeed: 5
-  accelerationTime: 3
-  accelerationRestTime: 3
-  slowM: 0.6
+  accelerationTime: 2.5
+  accelerationRestTime: 6
+  slowM: 0.5
   slowSideSpeed: 13
   jumpHeight: 3
   flipHeight: 0.25
+  hurdleHeight: 0.25
+  highKneeHeight: 0
   jumpCost: 1
-  flipCost: 1.5
+  flipCost: 2.5
+  hurdleCost: 1.5
+  highKneeCost: 0
   jumpStamina: 3.5
-  jumpRechargeTime: 10
+  jumpRechargeTime: 22
   canJuke: 1
   canSpin: 1
   canJukeSpin: 0
   canFeint: 1
   canSlide: 1
   canFlip: 1
+  canHurdle: 1
   canTruck: 0
-  jukeSideSpeed: 13
-  jukeSpeed: 15
-  spinSideSpeed: 12
-  spinSpeed: 19
-  feintSideSpeed: 21
-  feintSpeed: 24
+  canHighKnee: 0
+  canSprintFeint: 0
+  jukeSideSpeed: 10
+  jukeSpeed: 14
+  spinSideSpeed: 10
+  spinSpeed: 17
+  feintSideSpeed: 11
+  feintSpeed: 18
   slideSpeed: 20
   flipSpeed: 15
+  sprintFeintSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 3ad3650542e379c4ba778c68034a71f0, type: 2}

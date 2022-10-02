@@ -15,36 +15,44 @@ MonoBehaviour:
   size: {x: 1.03, y: 1.03, z: 1.03}
   dirSensitivity: 18
   dirGravity: 16
-  accSensitivity: 10
-  accGravity: 8
+  accSensitivity: 14
+  accGravity: 12
   snap: 0.005
-  normalSpeed: 14
-  normalSideSpeed: 9
+  normalSpeed: 16.5
+  normalSideSpeed: 9.5
   accelerationM: 1.3
-  accSideSpeed: 10
-  accelerationTime: 3
+  accSideSpeed: 8
+  accelerationTime: 4
   accelerationRestTime: 6
-  slowM: 0.3
-  slowSideSpeed: 12
+  slowM: 0.25
+  slowSideSpeed: 13.5
   jumpHeight: 2.25
-  flipHeight: 0
+  flipHeight: 0.5
+  hurdleHeight: 0.75
+  highKneeHeight: 0
   jumpCost: 1.5
-  flipCost: 0
+  flipCost: 2
+  hurdleCost: 1
+  highKneeCost: 0
   jumpStamina: 2
-  jumpRechargeTime: 7
+  jumpRechargeTime: 12
   canJuke: 1
   canSpin: 1
   canJukeSpin: 1
   canFeint: 1
-  canSlide: 1
-  canFlip: 0
+  canSlide: 0
+  canFlip: 1
+  canHurdle: 1
   canTruck: 0
-  jukeSideSpeed: 12
-  jukeSpeed: 14
-  spinSideSpeed: 9
-  spinSpeed: 15
-  feintSideSpeed: 21
-  feintSpeed: 24
-  slideSpeed: 18
-  flipSpeed: 0
+  canHighKnee: 0
+  canSprintFeint: 1
+  jukeSideSpeed: 14
+  jukeSpeed: 16
+  spinSideSpeed: 12.5
+  spinSpeed: 17
+  feintSideSpeed: 14
+  feintSpeed: 19
+  slideSpeed: 0
+  flipSpeed: 15
+  sprintFeintSpeed: 0.1
   teamMaterial: {fileID: 2100000, guid: 5dc243a784d9aba4a8da3d24bc99ab18, type: 2}

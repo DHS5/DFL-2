@@ -100,8 +100,8 @@ public class ShopManager : MonoBehaviour
         foreach (T card in cards)
         {
             ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
-            if (!isPlayer) sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject));
-            else sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), lockerRoom);
+            if (!isPlayer) sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), main.DataManager.inventoryData.coins >= card.price);
+            else sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), main.DataManager.inventoryData.coins >= card.price, lockerRoom);
 
             if (first)
             {

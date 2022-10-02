@@ -13,38 +13,46 @@ MonoBehaviour:
   m_Name: Kelce_Attributes
   m_EditorClassIdentifier: 
   size: {x: 1.1, y: 1.11, z: 1.1}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  dirSensitivity: 8
+  dirGravity: 10
+  accSensitivity: 6
+  accGravity: 6
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
-  accelerationM: 1.3
-  accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  normalSpeed: 15.5
+  normalSideSpeed: 8
+  accelerationM: 1.1
+  accSideSpeed: 7
+  accelerationTime: 4
+  accelerationRestTime: 12
+  slowM: 0.35
+  slowSideSpeed: 11.5
+  jumpHeight: 1.75
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 0
+  highKneeHeight: 0.5
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
-  canJuke: 0
-  canSpin: 0
-  canJukeSpin: 0
-  canFeint: 0
+  hurdleCost: 0
+  highKneeCost: 1
+  jumpStamina: 1
+  jumpRechargeTime: 10
+  canJuke: 1
+  canSpin: 1
+  canJukeSpin: 1
+  canFeint: 1
   canSlide: 0
   canFlip: 0
+  canHurdle: 0
   canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  canHighKnee: 1
+  canSprintFeint: 0
+  jukeSideSpeed: 9
+  jukeSpeed: 12
+  spinSideSpeed: 11
+  spinSpeed: 14
+  feintSideSpeed: 10
+  feintSpeed: 15
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

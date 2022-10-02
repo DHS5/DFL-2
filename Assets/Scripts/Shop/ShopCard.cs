@@ -25,7 +25,7 @@ public abstract class ShopCard : MonoBehaviour
         set { buyButton.gameObject.SetActive(value); }
     }
 
-    public virtual void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable)
+    public virtual void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable, bool enoughMoney)
     {
         cardSO = _cardSO;
         shopButton = _shopButton;
@@ -35,6 +35,7 @@ public abstract class ShopCard : MonoBehaviour
         if (image != null) image.sprite = cardSO.shopSprite;
         Price = cardSO.price;
         popupText.text = "Are you sure you want to buy " + cardSO.Title + " ?";
+        buyButton.interactable = enoughMoney;
         lockGO.SetActive(cardSO.locked);
     }
 }

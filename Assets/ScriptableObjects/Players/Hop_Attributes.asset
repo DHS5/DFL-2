@@ -13,38 +13,46 @@ MonoBehaviour:
   m_Name: Hop_Attributes
   m_EditorClassIdentifier: 
   size: {x: 1, y: 1, z: 1}
-  dirSensitivity: 4
-  dirGravity: 1
-  accSensitivity: 2
-  accGravity: 1
+  dirSensitivity: 12
+  dirGravity: 12
+  accSensitivity: 12
+  accGravity: 12
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
+  normalSpeed: 16.5
+  normalSideSpeed: 9
   accelerationM: 1.3
-  accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  accSideSpeed: 7
+  accelerationTime: 3.5
+  accelerationRestTime: 9
+  slowM: 0.3
+  slowSideSpeed: 13.5
+  jumpHeight: 2
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 1
+  highKneeHeight: 0
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
+  hurdleCost: 1.5
+  highKneeCost: 0
+  jumpStamina: 1.5
   jumpRechargeTime: 15
-  canJuke: 0
-  canSpin: 0
-  canJukeSpin: 0
-  canFeint: 0
+  canJuke: 1
+  canSpin: 1
+  canJukeSpin: 1
+  canFeint: 1
   canSlide: 0
   canFlip: 0
-  canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
-  spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  canHurdle: 1
+  canTruck: 0
+  canHighKnee: 0
+  canSprintFeint: 1
+  jukeSideSpeed: 13
+  jukeSpeed: 14
+  spinSideSpeed: 13
+  spinSpeed: 16
+  feintSideSpeed: 14
+  feintSpeed: 19
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 0.1
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}

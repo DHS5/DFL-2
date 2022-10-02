@@ -14,37 +14,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1.08, y: 1.08, z: 1.08}
   dirSensitivity: 8
-  dirGravity: 8
+  dirGravity: 10
   accSensitivity: 8
-  accGravity: 8
+  accGravity: 10
   snap: 0.001
-  normalSpeed: 14
-  normalSideSpeed: 6
-  accelerationM: 1.3
-  accSideSpeed: 4
-  accelerationTime: 2
-  accelerationRestTime: 5
-  slowM: 0.6
-  slowSideSpeed: 9
-  jumpHeight: 1
+  normalSpeed: 16.5
+  normalSideSpeed: 8
+  accelerationM: 1.4
+  accSideSpeed: 5
+  accelerationTime: 2.5
+  accelerationRestTime: 7
+  slowM: 0.5
+  slowSideSpeed: 12.5
+  jumpHeight: 2.5
   flipHeight: 0
-  jumpCost: 2
+  hurdleHeight: 0.75
+  highKneeHeight: 0
+  jumpCost: 1
   flipCost: 0
-  jumpStamina: 3
-  jumpRechargeTime: 15
-  canJuke: 0
+  hurdleCost: 1
+  highKneeCost: 0
+  jumpStamina: 2
+  jumpRechargeTime: 18
+  canJuke: 1
   canSpin: 0
-  canJukeSpin: 0
-  canFeint: 0
+  canJukeSpin: 1
+  canFeint: 1
   canSlide: 0
   canFlip: 0
+  canHurdle: 1
   canTruck: 1
-  jukeSideSpeed: 0
-  jukeSpeed: 0
-  spinSideSpeed: 5
+  canHighKnee: 0
+  canSprintFeint: 0
+  jukeSideSpeed: 11
+  jukeSpeed: 13
+  spinSideSpeed: 9
   spinSpeed: 12
-  feintSideSpeed: 0
-  feintSpeed: 0
+  feintSideSpeed: 11
+  feintSpeed: 16
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 0a98dd5e5c8bf3a4eb1a1f3e9b4acdac, type: 2}
