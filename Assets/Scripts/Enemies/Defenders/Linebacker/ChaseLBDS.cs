@@ -9,7 +9,7 @@ public class ChaseLBDS : LinebackerState
     {
         name = EState.CHASE;
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
     }
 
     public override void Enter()
@@ -18,14 +18,14 @@ public class ChaseLBDS : LinebackerState
 
         animator.SetTrigger("Run");
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
     }
 
     public override void Update()
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
 
         // Attack
         if (CanAttack())

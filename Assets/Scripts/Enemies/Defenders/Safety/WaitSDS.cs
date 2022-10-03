@@ -28,7 +28,7 @@ public class WaitSDS : SafetyState
             if (enemy.zDistance < att.waitDist)
             {
                 // If out the precision cone
-                if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.waitAngle)
+                if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.waitAngle + att.waitMargin || Mathf.Abs(enemy.toPlayerAngle) > att.backAngle)
                 {
                     // Intercept
                     if (enemy.rawDistance > att.chaseDist)
@@ -42,7 +42,7 @@ public class WaitSDS : SafetyState
                 // If in the precision cone and distance < patience --> attack
                 else if (enemy.rawDistance < att.patience)
                 {
-                    nextState = new AttackSDS(enemy, agent, animator);
+                    nextState = new ChaseSDS(enemy, agent, animator);
                     stage = Event.EXIT;
                 }
             }

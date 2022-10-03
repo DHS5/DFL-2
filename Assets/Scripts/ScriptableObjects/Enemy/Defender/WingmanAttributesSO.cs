@@ -10,6 +10,9 @@ public class WingmanAttributesSO : DefenderAttributesSO
     public override int Type { get { return (int) DefenderType.WINGMAN; } }
 
     [Header("Wingman attributes")]
+    [Tooltip("Precision in the interception process")]
+    [Range(0, 1)] public float precision;
+    [Space]
     [Tooltip("If in the angle --> Chase")]
     public float chaseAngle;
     [Space]

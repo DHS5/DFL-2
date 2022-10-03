@@ -63,7 +63,7 @@ public class AttackCDS : CornerbackState
     {
         float distP;
 
-        float speedC = enemy.playerSpeed / agent.speed;
+        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / agent.speed;
 
         float A = 1 - (1 / (speedC * speedC));
 
@@ -76,7 +76,7 @@ public class AttackCDS : CornerbackState
         if (A == 0)
         {
             distP = C / -B;
-            if (distP < 0)
+            if (distP < 0 || B == 0)
                 distP = att.anticipation;
         }
 
@@ -104,7 +104,7 @@ public class AttackCDS : CornerbackState
             distP = att.anticipation;
         }
 
-        enemy.destination = enemy.playerPosition + distP * att.intelligence * enemy.playerVelocity;
+        enemy.destination = enemy.playerPosition + distP * att.attackPrecision * enemy.playerVelocity;
 
         agent.velocity = (enemy.destination - enemy.transform.position).normalized * att.attackSpeed;
 

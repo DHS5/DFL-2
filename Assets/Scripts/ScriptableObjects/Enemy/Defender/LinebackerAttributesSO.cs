@@ -15,4 +15,7 @@ public class LinebackerAttributesSO : DefenderAttributesSO
     [Space]
     [Tooltip("If Z-Dist < positionningDist --> Chase/Attack")]
     public float positionningDist;
+    [Space]
+    [Tooltip("Precision in the attack process")]
+    [Range(0.75f, 1.25f)] public float attackPrecision;
 }

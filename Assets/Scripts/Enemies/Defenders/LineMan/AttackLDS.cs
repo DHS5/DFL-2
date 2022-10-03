@@ -29,7 +29,7 @@ public class AttackLDS : LineManState
 
         Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
         
-        enemy.destination = enemy.playerPosition + playerDir * attackOffset * att.attackSpeed;
+        enemy.destination = enemy.playerPosition + att.attackSpeed * attackOffset * playerDir;
         
         agent.velocity = playerDir * att.attackSpeed;
 

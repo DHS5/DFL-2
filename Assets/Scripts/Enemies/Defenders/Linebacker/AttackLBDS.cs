@@ -7,13 +7,9 @@ public class AttackLBDS : LinebackerState
 {
     readonly float animTime = 1.6f;
     
-    private float baseSpeed;
-    
     public AttackLBDS(LineBacker _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
-
-        baseSpeed = agent.speed;
     }
 
     public override void Enter()
@@ -25,6 +21,8 @@ public class AttackLBDS : LinebackerState
         agent.speed = att.attackSpeed;
 
         Attack();
+
+        Debug.Log(enemy.destination);
     }
 
     public override void Update()
@@ -38,7 +36,8 @@ public class AttackLBDS : LinebackerState
         if (Time.time - startTime > 3 * animTime / 4)
         {
             enemy.destination = enemy.playerPosition;
-            agent.speed = baseSpeed;
+            enemy.destination += DestinationDir * 3;
+            agent.speed = att.speed;
         }
 
         if (Time.time - startTime > animTime)
@@ -46,11 +45,13 @@ public class AttackLBDS : LinebackerState
             nextState = new ChaseLBDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
+
+        Debug.Log(enemy.destination);
     }
 
     public override void Exit()
     {
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Attack");
 
@@ -63,7 +64,7 @@ public class AttackLBDS : LinebackerState
     {
         float distP;
 
-        float speedC = enemy.playerSpeed / agent.speed;
+        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / agent.speed;
 
         float A = 1 - (1 / (speedC * speedC));
 
@@ -77,7 +78,7 @@ public class AttackLBDS : LinebackerState
         {
             Debug.Log("A == 0");
             distP = C / -B;
-            if (distP < 0)
+            if (distP < 0 || B == 0)
                 distP = att.anticipation;
         }
 
@@ -106,7 +107,10 @@ public class AttackLBDS : LinebackerState
             distP = att.anticipation;
         }
 
-        enemy.destination = enemy.playerPosition + distP * att.intelligence * enemy.playerVelocity;
+        enemy.destination = enemy.playerPosition + distP * att.attackPrecision * enemy.playerVelocity;
+
+        Debug.Log(distP + " // " + enemy.playerPosition + " // " + distP * att.attackPrecision * enemy.playerVelocity);
+        Debug.Log(enemy.destination);
 
         agent.velocity = (enemy.destination - enemy.transform.position).normalized * att.attackSpeed;
 

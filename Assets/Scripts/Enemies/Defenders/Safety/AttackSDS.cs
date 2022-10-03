@@ -4,14 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class AttackSDS : SafetyState
-{
-    private float baseSpeed;
-    
+{    
     public AttackSDS(Safety _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
-
-        baseSpeed = att.speed;
 
         agent.speed = att.attackSpeed;
     }
@@ -28,7 +24,8 @@ public class AttackSDS : SafetyState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * 1;
+        enemy.destination = enemy.playerPosition;
+        enemy.destination += DestinationDir * 3;
 
         if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle)
         {
@@ -39,7 +36,7 @@ public class AttackSDS : SafetyState
 
     public override void Exit()
     {
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Chase");
 

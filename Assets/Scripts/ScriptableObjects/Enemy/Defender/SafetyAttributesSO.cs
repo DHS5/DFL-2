@@ -10,10 +10,14 @@ public class SafetyAttributesSO : DefenderAttributesSO
     public override int Type { get { return (int) DefenderType.SAFETY; } }
 
     [Header("Safety attributes")]
-    [Tooltip("Pourcentage of interpolation between player velocity and player forward")]
-    [Range(0, 1)] public float precision;
+    [Tooltip("Precision in the interception process")]
+    [Range(0.5f, 1)] public float precision;
     [Tooltip("If in the angle --> Wait")]
     public float waitAngle;
+    [Tooltip("Wait angle margin")]
+    public float waitMargin;
+    [Tooltip("If toPlayerAngle > backAngle --> turn his back")]
+    [Range(100, 130)] public float backAngle;
     [Space]
     [Tooltip("If RawDist < chaseDist --> Chase / else --> Intercept")]
     public float chaseDist;

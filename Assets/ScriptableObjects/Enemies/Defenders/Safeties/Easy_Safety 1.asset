@@ -9,23 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f6ce89cc207da4d883324aed287f7d, type: 3}
-  m_Name: MicahHyde_AttSO
+  m_Script: {fileID: 11500000, guid: 822fe6385ada1fa4f94cd51e90f9752a, type: 3}
+  m_Name: Easy_Safety 1
   m_EditorClassIdentifier: 
-  level: 3
-  size: {x: 1, y: 1, z: 1}
+  level: 1
+  size: {x: 1.05, y: 1.05, z: 1.05}
   speed: 10
   acceleration: 12
   attackSpeed: 12
-  rotationSpeed: 540
+  rotationSpeed: 1080
   autoBraking: 1
-  reactivity: 0.1
-  enemyName: Micahh
-  intelligence: 0.6
-  anticipation: 5
-  waitDist: 100
-  attackDist: 8
-  attackAngle: 90
+  reactivity: 0.05
+  enemyName: Hola
+  intelligence: 1
+  anticipation: 3
+  waitDist: 60
+  attackDist: 5
+  attackAngle: 75
   precision: 1
-  chaseAngle: 5
+  waitAngle: 20
+  waitMargin: 5
+  backAngle: 130
   chaseDist: 15
+  patience: 10

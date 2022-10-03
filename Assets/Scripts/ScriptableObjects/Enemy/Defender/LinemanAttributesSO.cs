@@ -15,4 +15,7 @@ public class LinemanAttributesSO : DefenderAttributesSO
     [Space]
     [Tooltip("If Z-Dist < positionningDist --> Chase/Attack")]
     public float positionningDist;
+    [Space]
+    [Tooltip("Ratio of positionning between current position and player's position")]
+    [Range(0.5f, 1.25f)] public float positioningRatio;
 }

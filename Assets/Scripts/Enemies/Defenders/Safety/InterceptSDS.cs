@@ -26,7 +26,7 @@ public class InterceptSDS : SafetyState
             enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation +
                  ((enemy.rawDistance / att.speed) // Minimum time to reach the destination
                  * enemy.playerSpeed) // * playerSpeed to have the distance the player will have run
-                 * att.intelligence); // * intelligence (0 ... 1)
+                 * att.precision); // * precision (0.5 ... 1)
         }
         else
         {
@@ -39,7 +39,7 @@ public class InterceptSDS : SafetyState
             nextState = new ChaseSDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
-        if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) < att.waitAngle)
+        if (Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) < att.waitAngle && Mathf.Abs(enemy.toPlayerAngle) < att.backAngle)
         {
             nextState = new WaitSDS(enemy, agent, animator);
             stage = Event.EXIT;

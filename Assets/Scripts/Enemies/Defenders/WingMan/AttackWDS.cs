@@ -5,13 +5,9 @@ using UnityEngine.AI;
 
 public class AttackWDS : WingManState
 {
-    private float baseSpeed;
-    
     public AttackWDS(WingMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
-
-        baseSpeed = att.speed;
 
         agent.speed = att.attackSpeed;
     }
@@ -28,7 +24,8 @@ public class AttackWDS : WingManState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * 1;
+        enemy.destination = enemy.playerPosition;
+        enemy.destination += DestinationDir * 3;
 
         if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle)
         {
@@ -39,7 +36,7 @@ public class AttackWDS : WingManState
 
     public override void Exit()
     {
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Chase");
 

@@ -9,6 +9,8 @@ public class LinebackerState : EnemyState
 
     new protected LineBacker enemy;
 
+    protected Vector3 PlayerDir { get { return Vector3.Lerp(enemy.playerLookDirection, enemy.playerForward, att.intelligence); } }
+
     public LinebackerState(LineBacker _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         enemy = _enemy;

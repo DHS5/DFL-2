@@ -10,6 +10,7 @@ public class ChaseLDS : LineManState
         name = EState.CHASE;
     }
 
+
     public override void Enter()
     {
         base.Enter();
@@ -22,7 +23,7 @@ public class ChaseLDS : LineManState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
 
         // Attack
         if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)

@@ -57,19 +57,21 @@ public class GameManager : MonoBehaviour
 
 
     [Tooltip("Current wave number")]
-    [HideInInspector] private int waveNumber;
+    private int waveNumber;
 
     [Tooltip("Current score")]
-    [HideInInspector] private int score;
+    private int score;
 
 
 
     [Tooltip("Whether the game is running")]
-    [HideInInspector] private bool gameOn = false;
+    private bool gameOn = false;
 
     [Tooltip("Whether the game is over")]
-    [HideInInspector] private bool gameOver = false;
+    private bool gameOver = false;
 
+
+    private bool transitionning = false;
 
     // ### Properties ###
 
@@ -101,6 +103,7 @@ public class GameManager : MonoBehaviour
         get { return gameOn; }
         set
         {
+            if (transitionning) return;
             if (value == false && gameOn == true)
             {
                 gameOn = false;
@@ -320,6 +323,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void UnpauseGame()
     {
+        transitionning = true;
+
         main.CursorManager.LockCursor();
         
         main.SettingsManager.SetScreen(ScreenNumber.ALL, false);
@@ -351,6 +356,8 @@ public class GameManager : MonoBehaviour
         main.SettingsManager.SetEventSystem(true);
 
         gameOn = true;
+
+        transitionning = false;
     }
 
     /// <summary>

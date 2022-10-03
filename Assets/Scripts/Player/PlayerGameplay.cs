@@ -107,7 +107,7 @@ public class PlayerGameplay : MonoBehaviour
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && Catchable)
             {
-                Debug.Log("Hurt by enemy " + Time.timeAsDouble);
+                Debug.Log("Hurt by enemy ");
                 Hurt(collision);
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))

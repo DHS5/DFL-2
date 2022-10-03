@@ -27,6 +27,14 @@ public abstract class EnemyState
     protected float startTime;
 
 
+    // ### Properties ###
+
+    protected Vector3 DestinationDir
+    {
+        get { return (enemy.destination - enemy.transform.position).normalized;}
+    }
+
+
     public EnemyState(Enemy _enemy ,NavMeshAgent _agent, Animator _animator)
     {
         stage = Event.ENTER;

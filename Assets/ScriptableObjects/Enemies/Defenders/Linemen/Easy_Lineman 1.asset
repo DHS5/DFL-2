@@ -9,23 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f6ce89cc207da4d883324aed287f7d, type: 3}
-  m_Name: IsaiahSimmons_AttSO
+  m_Script: {fileID: 11500000, guid: e69ddb4abfbed09469d09f92d39ed664, type: 3}
+  m_Name: Easy_Lineman 1
   m_EditorClassIdentifier: 
-  level: 2
-  size: {x: 1.05, y: 1.05, z: 1.05}
-  speed: 11
-  acceleration: 18
-  attackSpeed: 13
+  level: 1
+  size: {x: 1.25, y: 1.25, z: 1.25}
+  speed: 6
+  acceleration: 12
+  attackSpeed: 10
   rotationSpeed: 1080
   autoBraking: 1
-  reactivity: 0.15
-  enemyName: Isaiah
-  intelligence: 0.4
+  reactivity: 0.2
+  enemyName: Campbell
+  intelligence: 0.5
   anticipation: 3
-  waitDist: 80
+  waitDist: 100
   attackDist: 5
-  attackAngle: 75
-  precision: 1
-  chaseAngle: 5
-  chaseDist: 10
+  attackAngle: 45
+  precision: 2
+  positionningDist: 15
+  positioningRatio: 1

@@ -16,4 +16,7 @@ public class CornerbackAttributesSO : DefenderAttributesSO
     public bool modeTime;
     [Tooltip("Time before impact at which the interceptor attacks")]
     public float attackTime;
+    [Space]
+    [Tooltip("Precision in the attack process")]
+    [Range(0.75f, 1.25f)] public float attackPrecision;
 }

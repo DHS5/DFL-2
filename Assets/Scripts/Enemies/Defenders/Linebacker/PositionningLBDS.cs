@@ -20,7 +20,7 @@ public class PositionningLBDS : LinebackerState
             animator.SetTrigger("Run");
             animator.ResetTrigger("Wait");
             agent.updateRotation = true;
-            enemy.destination = enemy.playerPosition + enemy.zDistance * enemy.playerForward;
+            enemy.destination = enemy.playerPosition + Mathf.Max(Mathf.Abs(enemy.xDistance / enemy.zDistance), 1) * enemy.zDistance * enemy.playerForward;
         }
         else
         {

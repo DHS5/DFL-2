@@ -23,7 +23,7 @@ public class ChaseWDS : WingManState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.anticipation;
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
 
         // Attack
         if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)
@@ -32,7 +32,7 @@ public class ChaseWDS : WingManState
             stage = Event.EXIT;
         }
         // Intercept
-        if (enemy.rawDistance > att.chaseDist && Mathf.Abs(Vector3.Angle(enemy.playerVelocity, -enemy.toPlayerDirection)) > att.chaseAngle)
+        if (enemy.rawDistance > att.chaseDist && Mathf.Abs(Vector3.Angle(PlayerDir, -enemy.toPlayerDirection)) > att.chaseAngle)
         {
             nextState = new InterceptWDS(enemy, agent, animator);
             stage = Event.EXIT;

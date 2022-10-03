@@ -46,7 +46,7 @@ public class InterceptCDS : CornerbackState
     {
         float distP;
 
-        float speedC = enemy.playerSpeed / agent.speed;
+        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / agent.speed;
 
         float A = 1 - (1 / (speedC * speedC));
 
@@ -59,7 +59,7 @@ public class InterceptCDS : CornerbackState
         if (A == 0)
         {
             distP = C / -B;
-            if (distP < 0)
+            if (distP < 0 || B == 0)
                 distP = att.anticipation;
         }
 
