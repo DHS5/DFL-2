@@ -74,9 +74,9 @@ public abstract class EnemyState
     }
 
     
-    public EnemyState Trucked(Vector3 impact)
+    public EnemyState Trucked(Collision collision)
     {
-        nextState = new TruckedES(enemy, agent, animator, impact);
+        nextState = new TruckedES(enemy, agent, animator, collision);
         stage = Event.EXIT;
         return Process();
     }

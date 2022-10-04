@@ -16,18 +16,6 @@ public class SleepingZombie : Zombie
         currentState = new WaitSZS(this, navMeshAgent, animator);
     }
 
-    public override void ChasePlayer()
-    {
-        base.ChasePlayer();
-
-        currentState = currentState.Process();
-
-        if (playerG.onField && !gameOver && !dead)
-        {
-            navMeshAgent.SetDestination(destination);
-        }
-    }
-
     private void Update()
     {
         if (playerG.onField && !gameOver && !dead)

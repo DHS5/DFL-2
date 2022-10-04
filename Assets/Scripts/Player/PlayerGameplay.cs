@@ -32,10 +32,10 @@ public class PlayerGameplay : MonoBehaviour
 
 
 
-    private float tunnelWidth = 5f;
-    private float recupTime = 1.5f;
-    private float impactMin = 15;
-    private float impactMax = 30;
+    readonly private float tunnelWidth = 5f;
+    readonly private float recupTime = 1.5f;
+    readonly private float impactMin = 15;
+    readonly private float impactMax = 30;
 
 
     // ### Properties ###
@@ -112,7 +112,7 @@ public class PlayerGameplay : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
             {
-                collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision.impulse);
+                collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision);
             }
 
             // When the player collides with an obstacle --> game over

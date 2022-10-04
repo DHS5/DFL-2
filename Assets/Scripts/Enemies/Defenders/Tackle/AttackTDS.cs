@@ -19,7 +19,7 @@ public class AttackTDS : TackleState
     {
         base.Enter();
 
-        side = enemy.playerVelocity.x;
+        side = Mathf.Clamp(enemy.playerVelocity.x, -1, 1);
         if (side == 0) side = enemy.playerPosition.x - enemy.transform.position.x;
 
         animator.SetFloat("Side", side);
@@ -29,7 +29,11 @@ public class AttackTDS : TackleState
         agent.updateRotation = false;
         agent.speed = att.attackSpeed;
 
-        enemy.destination = enemy.transform.position - enemy.transform.right * side * att.attackReach;
+        enemy.destination = enemy.transform.position - att.attackReach * side * enemy.transform.right;
+        agent.velocity = DestinationDir * att.attackSpeed;
+        //Vector3 target = enemy.transform.position - att.attackReach * side * enemy.transform.right;
+        //Vector3 dir = (target - enemy.transform.position).normalized;
+        //agent.velocity = dir * att.attackSpeed;
     }
 
     public override void Update()

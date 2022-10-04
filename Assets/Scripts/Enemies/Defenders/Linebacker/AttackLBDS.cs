@@ -45,8 +45,6 @@ public class AttackLBDS : LinebackerState
             nextState = new ChaseLBDS(enemy, agent, animator);
             stage = Event.EXIT;
         }
-
-        Debug.Log(enemy.destination);
     }
 
     public override void Exit()
@@ -108,10 +106,6 @@ public class AttackLBDS : LinebackerState
         }
 
         enemy.destination = enemy.playerPosition + distP * att.attackPrecision * enemy.playerVelocity;
-
-        Debug.Log(distP + " // " + enemy.playerPosition + " // " + distP * att.attackPrecision * enemy.playerVelocity);
-        Debug.Log(enemy.destination);
-
         agent.velocity = (enemy.destination - enemy.transform.position).normalized * att.attackSpeed;
 
         //enemy.transform.LookAt(enemy.player.activeBody.transform);

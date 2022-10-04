@@ -64,7 +64,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool gameOver;
 
-    private bool trucked = false;
+    protected bool trucked = false;
 
 
     private Vector3 b4StopVelocity;
@@ -167,14 +167,15 @@ public abstract class Enemy : MonoBehaviour
         navMeshAgent.isStopped = true;
     }
 
-    public virtual void Trucked(Vector3 impact)
+    public virtual void Trucked(Collision collision)
     {
         if (!trucked)
         {
             trucked = true;
+            gameOver = true;
             DestroyColliders();
             Debug.Log("You've been trucked !");
-            currentState = currentState.Trucked(impact);
+            currentState = currentState.Trucked(collision);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PositionningTDS : TackleState
 {
-    private float anticipation { get { return enemy.playerSpeed * enemy.xDistance / agent.speed; } }
+    private float anticipation { get { return att.anticipation * enemy.playerSpeed * enemy.xDistance / (agent.speed * enemy.zDistance); } }
 
     public PositionningTDS(Tackle _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
@@ -26,7 +26,7 @@ public class PositionningTDS : TackleState
             agent.isStopped = false;
             agent.updateRotation = true;
 
-            enemy.destination = enemy.playerPosition + att.intelligence * anticipation * enemy.playerForward;
+            enemy.destination = enemy.playerPosition + (anticipation * anticipation + enemy.zDistance) * enemy.playerForward;
             enemy.destination = new Vector3(enemy.destination.x, enemy.destination.y, Mathf.Max(enemy.transform.position.z, enemy.destination.z));
         }
         else

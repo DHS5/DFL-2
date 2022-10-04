@@ -21,6 +21,21 @@ public class Zombie : Enemy
             Attribute = att as ZombieAttributesSO;
     }
 
+
+    public override void ChasePlayer()
+    {
+        base.ChasePlayer();
+
+        currentState = currentState.Process();
+
+        if (playerG.onField && !gameOver && !dead)
+        {
+            navMeshAgent.SetDestination(destination);
+        }
+    }
+
+
+
     public virtual void Dead()
     {
         dead = true;

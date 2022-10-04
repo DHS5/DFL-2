@@ -21,7 +21,7 @@ public class WaitTDS : TackleState
     {
         base.Update();
 
-        enemy.destination = enemy.transform.position;
+        agent.isStopped = true;
 
         enemy.transform.LookAt(enemy.player.transform);
 
@@ -37,6 +37,8 @@ public class WaitTDS : TackleState
     public override void Exit()
     {
         base.Exit();
+
+        agent.isStopped = false;
 
         animator.ResetTrigger("Wait");
     }

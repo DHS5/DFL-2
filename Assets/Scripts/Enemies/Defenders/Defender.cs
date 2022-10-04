@@ -35,7 +35,7 @@ public class Defender : Enemy
 
         currentState = currentState.Process();
 
-        if (playerG.onField)
+        if (playerG.onField && !gameOver)
         {
             navMeshAgent.SetDestination(destination);
         }

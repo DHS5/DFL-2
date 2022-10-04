@@ -26,9 +26,6 @@ public class PositionningLDS : LineManState
             animator.ResetTrigger("Wait");
             agent.updateRotation = true;
             enemy.destination = enemy.playerPosition + (Mathf.Clamp(enemy.zDistance / att.waitDist, 0, Mathf.Max(0, 1 - att.positioningRatio)) + Mathf.Max(Mathf.Abs(enemy.xDistance / enemy.zDistance), att.positioningRatio)) * enemy.zDistance * PlayerDir;
-
-            Debug.Log(Mathf.Clamp(enemy.zDistance / att.waitDist, 0, 1 - att.positioningRatio)
-                + " // " + Mathf.Max(Mathf.Abs(enemy.xDistance / enemy.zDistance), att.positioningRatio));
         }
         else
         {

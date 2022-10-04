@@ -20,13 +20,6 @@ public class BigZombie : Zombie
     {
         base.ChasePlayer();
 
-        currentState = currentState.Process();
-
-        if (playerG.onField && !dead)
-        {
-            navMeshAgent.SetDestination(destination);
-        }
-
         if (Attribute.reactivity != 0 && !gameOver && !dead)
         {
             Invoke(nameof(ChasePlayer), Attribute.reactivity);

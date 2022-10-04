@@ -6,27 +6,44 @@ using UnityEngine.AI;
 public class TruckedES : EnemyState
 {
     Vector3 impact;
-    readonly float impactSpeed = 15;
+    Vector3 impactDir;
+    float impactPower;
 
-    public TruckedES(Enemy _enemy, NavMeshAgent _agent, Animator _animator, Vector3 _impact) : base(_enemy, _agent, _animator)
+    readonly float impactMin = 10;
+    readonly float impactMax = 20;
+
+    public TruckedES(Enemy _enemy, NavMeshAgent _agent, Animator _animator, Collision _collision) : base(_enemy, _agent, _animator)
     {
         name = EState.TRUCKED;
 
         enemy = _enemy;
-        //if (_impact != Vector3.zero) impact = new Vector3(_impact.x, _impact.y, -Mathf.Abs(_impact.z));
-        //else impact = -Vector3.forward;
 
-
-        impact = enemy.playerPosition - enemy.transform.position;
-
+        agent.ResetPath();
         agent.isStopped = true;
         agent.updateRotation = false;
 
+        impactDir = (_collision.GetContact(0).point - enemy.transform.position).normalized;
+        impactPower = Mathf.Clamp(_collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
+        impact = impactPower * new Vector3(impactDir.x, 0, -Mathf.Max(Mathf.Abs(impactDir.z), Mathf.Abs(impactDir.x))).normalized;
 
-        Debug.Log(impact + ";" + Quaternion.LookRotation(impact).eulerAngles);
+        Debug.Log(impact);
+
         enemy.transform.rotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
-        agent.velocity = -impact.normalized * impactSpeed;
+        agent.velocity = -impact;
 
+        Debug.Log(agent.velocity);
+
+        animator.SetLayerWeight(animator.GetLayerIndex("Trucked Layer"), 1);
         animator.SetTrigger("Trucked");
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        agent.ResetPath();
+        agent.isStopped = true;
+
+        agent.velocity = -impact;
     }
 }
