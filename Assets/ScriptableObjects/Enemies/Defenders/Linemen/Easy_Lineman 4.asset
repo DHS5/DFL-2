@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e69ddb4abfbed09469d09f92d39ed664, type: 3}
-  m_Name: Easy_Lineman 1
+  m_Name: Easy_Lineman 4
   m_EditorClassIdentifier: 
-  level: 1
-  size: {x: 1.25, y: 1.25, z: 1.25}
-  speed: 6
-  acceleration: 12
-  attackSpeed: 10
-  rotationSpeed: 1080
+  level: 4
+  size: {x: 1.3, y: 1.3, z: 1.3}
+  speed: 12.5
+  acceleration: 15
+  attackSpeed: 15
+  rotationSpeed: 2160
   autoBraking: 1
-  reactivity: 0.2
+  reactivity: 0
   enemyName: Campbell
-  intelligence: 0.5
+  intelligence: 0.75
   anticipation: 3
-  waitDist: 100
-  attackDist: 5
-  attackAngle: 45
-  precision: 2
-  positionningDist: 15
-  positioningRatio: 0.5
+  waitDist: 75
+  attackDist: 8
+  attackAngle: 75
+  precision: 6
+  positionningDist: 6
+  positioningRatio: 1.05
+  attackAnticipation: 2.5

@@ -21,8 +21,6 @@ public class AttackLBDS : LinebackerState
         agent.speed = att.attackSpeed;
 
         Attack();
-
-        Debug.Log(enemy.destination);
     }
 
     public override void Update()

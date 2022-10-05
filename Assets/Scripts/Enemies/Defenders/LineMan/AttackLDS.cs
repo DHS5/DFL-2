@@ -10,13 +10,9 @@ public class AttackLDS : LineManState
     // Compensation for : * enemy.attackSpeed
     readonly float attackOffset = 0.2f;
     
-    private float baseSpeed;
-    
     public AttackLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
-
-        baseSpeed = agent.speed;
     }
 
     public override void Enter()
@@ -27,13 +23,13 @@ public class AttackLDS : LineManState
 
         agent.speed = att.attackSpeed;
 
-        Vector3 playerDir = (enemy.playerPosition - enemy.transform.position).normalized;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.attackAnticipation;
         
-        enemy.destination = enemy.playerPosition + att.attackSpeed * attackOffset * playerDir;
+        enemy.destination += att.attackSpeed * attackOffset * DestinationDir;
         
-        agent.velocity = playerDir * att.attackSpeed;
+        agent.velocity = DestinationDir * att.attackSpeed;
 
-        enemy.transform.LookAt(enemy.player.activeBody.transform);
+        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 
     public override void Update()
@@ -58,7 +54,7 @@ public class AttackLDS : LineManState
 
     public override void Exit()
     {
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Attack");
 

@@ -19,8 +19,10 @@ public class AttackTDS : TackleState
     {
         base.Enter();
 
-        side = Mathf.Clamp(enemy.playerVelocity.x, -1, 1);
+        side = enemy.playerVelocity.x;
         if (side == 0) side = enemy.playerPosition.x - enemy.transform.position.x;
+
+        side /= Mathf.Abs(side);
 
         animator.SetFloat("Side", side);
         animator.SetTrigger(enemy.playerOnGround ? "Attack" : "Jump");
@@ -31,9 +33,6 @@ public class AttackTDS : TackleState
 
         enemy.destination = enemy.transform.position - att.attackReach * side * enemy.transform.right;
         agent.velocity = DestinationDir * att.attackSpeed;
-        //Vector3 target = enemy.transform.position - att.attackReach * side * enemy.transform.right;
-        //Vector3 dir = (target - enemy.transform.position).normalized;
-        //agent.velocity = dir * att.attackSpeed;
     }
 
     public override void Update()

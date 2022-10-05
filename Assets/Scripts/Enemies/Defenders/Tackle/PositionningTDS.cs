@@ -26,7 +26,7 @@ public class PositionningTDS : TackleState
             agent.isStopped = false;
             agent.updateRotation = true;
 
-            enemy.destination = enemy.playerPosition + (anticipation * anticipation + enemy.zDistance) * enemy.playerForward;
+            enemy.destination = enemy.playerPosition + (att.intelligence * anticipation * anticipation + enemy.zDistance) * enemy.playerForward;
             enemy.destination = new Vector3(enemy.destination.x, enemy.destination.y, Mathf.Max(enemy.transform.position.z, enemy.destination.z));
         }
         else

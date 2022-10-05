@@ -24,7 +24,7 @@ public class AttackWDS : WingManState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.attackAnticipation;
         enemy.destination += DestinationDir * 3;
 
         if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle)

@@ -175,15 +175,37 @@ public class EnemiesManager : MonoBehaviour
         enemies.Add(enemy);
     }
 
-    private T GetRandomEnemy<T>(T[] enemies) where T : EnemyAttributesSO
+    private T GetRandomEnemy<T>(T[] enemies, int[] randomArray, int arraySize) where T : EnemyAttributesSO
+    {
+        return enemies[randomArray[Random.Range(0, arraySize)]];
+    }
+
+    private void GetRandomArray<T>(T[] enemies, out int[] array, out int size)
     {
         GameData gd = main.GameManager.gameData;
+        int startRank = enemyContainer.startRank;
 
         // Clamps the level so it doesn't get out of the enemyPrefabs length
-        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber, 1, enemies.Length);
-        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber - gd.gameEnemiesRange, 0, enemies.Length - 1);
+        int maxLevel = Mathf.Clamp(main.GameManager.WaveNumber + startRank, startRank + 1, enemies.Length);
+        int minLevel = Mathf.Clamp(main.GameManager.WaveNumber - gd.gameEnemiesRange + startRank, startRank, enemies.Length - 1);
 
-        return enemies[Random.Range(minLevel, maxLevel)];
+        int range = maxLevel - minLevel;
+        size = range * (range + 1) / 2;
+        array = new int[size];
+        int r = 0;
+        for (int i = minLevel; i < maxLevel; i++)
+        {
+            for (int j = minLevel - 1; j < i; j++)
+            {
+                array[r] = i;
+                r++;
+            }
+        }
+
+        string a = "";
+        for (int i = 0; i < size; i++)
+            a += array[i];
+        Debug.Log(a);
     }
 
     private Vector3 GetRandomPos(Vector3 pos, float xScale, float zScale)
@@ -205,10 +227,14 @@ public class EnemiesManager : MonoBehaviour
         Vector3 center = centerZone.transform.position;
         float xScale = centerZone.transform.localScale.x / 2;
         float zScale = centerZone.transform.localScale.z / 2;
+
+        GetRandomArray(linemanPrefabs, out int[] linemanArray, out int linemanSize);
+        GetRandomArray(wingmanPrefabs, out int[] wingmanArray, out int wingmanSize);
+
         // 5 Linemen in the center
         for (int i = 0; i < 5; i++)
         {
-            CreateEnemy(GetRandomEnemy(linemanPrefabs), GetRandomPos(center, xScale, zScale), defenderAudios);
+            CreateEnemy(GetRandomEnemy(linemanPrefabs, linemanArray, linemanSize), GetRandomPos(center, xScale, zScale), defenderAudios);
         }
 
         // Spawn in the left zone
@@ -218,7 +244,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the left
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(left, xScale, zScale), defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(left, xScale, zScale), defenderAudios);
         }
 
         // Spawn in the right zone
@@ -228,7 +254,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the right
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs), GetRandomPos(right, xScale, zScale),  defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(right, xScale, zScale),  defenderAudios);
         }
 
     }
@@ -247,14 +273,20 @@ public class EnemiesManager : MonoBehaviour
         float xScale = obstacleZone.transform.localScale.x / 2;
         float zScale = obstacleZone.transform.localScale.z / 2;
         int r;
+
+        GetRandomArray(sleepingZPrefabs, out int[] sleepArray, out int sleepSize);
+        GetRandomArray(bigZPrefabs, out int[] bigArray, out int bigSize);
+        GetRandomArray(classicZPrefabs, out int[] classicArray, out int classicSize);
+
+
         // Spawn on the whole field
         for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
             r = Random.Range(1, sleepingZProportion + 1);
             ZombieAttributesSO enemy;
-            if (r == 1) enemy = GetRandomEnemy(sleepingZPrefabs);
-            else if (r == 2) enemy = GetRandomEnemy(bigZPrefabs);
-            else enemy = GetRandomEnemy(classicZPrefabs);
+            if (r == 1) enemy = GetRandomEnemy(sleepingZPrefabs, sleepArray, sleepSize);
+            else if (r == 2) enemy = GetRandomEnemy(bigZPrefabs, bigArray, bigSize);
+            else enemy = GetRandomEnemy(classicZPrefabs, classicArray, classicSize);
 
             CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), zombieAudios);
         }

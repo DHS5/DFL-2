@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41f6ce89cc207da4d883324aed287f7d, type: 3}
-  m_Name: Easy_Wingman 1
+  m_Name: Easy_Wingman 3
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
   size: {x: 0.95, y: 0.95, z: 0.95}
-  speed: 9
-  acceleration: 8
-  attackSpeed: 10
-  rotationSpeed: 360
-  autoBraking: 0
-  reactivity: 0.25
+  speed: 13
+  acceleration: 12
+  attackSpeed: 14
+  rotationSpeed: 1080
+  autoBraking: 1
+  reactivity: 0
   enemyName: DreGreen
-  intelligence: 0.25
-  anticipation: 3
-  waitDist: 100
-  attackDist: 8
-  attackAngle: 45
-  precision: 0.5
-  chaseAngle: 5
-  chaseDist: 15
+  intelligence: 0.8
+  anticipation: 2
+  waitDist: 80
+  attackDist: 4
+  attackAngle: 60
+  precision: 0.8
+  attackAnticipation: 1.5
+  chaseAngle: 15
+  chaseDist: 10

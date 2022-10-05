@@ -23,7 +23,7 @@ public class ChaseLDS : LineManState
         base.Update();
 
 
-        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance / enemy.zDistance) * att.intelligence);
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance) * att.intelligence);
 
         // Attack
         if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)

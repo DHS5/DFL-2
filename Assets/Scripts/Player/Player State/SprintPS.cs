@@ -35,7 +35,6 @@ public class SprintPS : PlayerState
 
         PlayerOrientation();
 
-
         controller.Speed = att.NormalSpeed * (1 - (1 - att.AccelerationM) * acc);
 
         controller.SideSpeed = att.AccSideSpeed * side;
@@ -73,17 +72,20 @@ public class SprintPS : PlayerState
                 stage = Event.EXIT;
             }
         }
-        // Run
-        else if ((acc <= 0 && side == 0) || (!controller.CanAccelerate && side == 0))
+        if (stage != Event.EXIT)
         {
-            nextState = new RunPS(player);
-            stage = Event.EXIT;
-        }
-        // Siderun
-        else if ((acc <= 0 && side != 0) || (!controller.CanAccelerate && side != 0))
-        {
-            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
-            stage = Event.EXIT;
+            // Run
+            if ((acc <= 0 && side == 0) || (!controller.CanAccelerate && side == 0))
+            {
+                nextState = new RunPS(player);
+                stage = Event.EXIT;
+            }
+            // Siderun
+            else if ((acc <= 0 && side != 0) || (!controller.CanAccelerate && side != 0))
+            {
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
+                stage = Event.EXIT;
+            }
         }
     }
 

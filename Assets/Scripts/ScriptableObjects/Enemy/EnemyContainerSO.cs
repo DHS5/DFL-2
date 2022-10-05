@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyContainer", menuName = "ScriptableObjects/Enemy/EnemyContainer", order = 1)]
 public class EnemyContainerSO : ScriptableObject 
 {
+    public int startRank;
+
     [Header("Defenders")]
     public DefenderTypeArrays easyD;
     public DefenderTypeArrays normalD;

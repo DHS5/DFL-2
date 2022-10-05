@@ -18,4 +18,7 @@ public class LinemanAttributesSO : DefenderAttributesSO
     [Space]
     [Tooltip("Ratio of positionning between current position and player's position")]
     [Range(0.5f, 1.25f)] public float positioningRatio;
+    [Space]
+    [Tooltip("Anticipation of the player movement during the attack")]
+    public float attackAnticipation;
 }

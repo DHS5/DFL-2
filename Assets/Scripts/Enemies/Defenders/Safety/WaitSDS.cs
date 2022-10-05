@@ -39,8 +39,8 @@ public class WaitSDS : SafetyState
 
                     stage = Event.EXIT;
                 }
-                // If in the precision cone and distance < patience --> attack
-                else if (enemy.rawDistance < att.patience)
+                // If in the precision cone and zDistance < patience --> attack
+                else if (enemy.zDistance < att.patience)
                 {
                     nextState = new ChaseSDS(enemy, agent, animator);
                     stage = Event.EXIT;

@@ -9,23 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e69ddb4abfbed09469d09f92d39ed664, type: 3}
-  m_Name: Easy_Lineman 1
+  m_Script: {fileID: 11500000, guid: 2e13f94e54c110047b56b241a2229de6, type: 3}
+  m_Name: Easy_Cornerback 3
   m_EditorClassIdentifier: 
   level: 1
-  size: {x: 1.25, y: 1.25, z: 1.25}
-  speed: 6
-  acceleration: 12
-  attackSpeed: 10
+  size: {x: 0.95, y: 0.95, z: 0.95}
+  speed: 14
+  acceleration: 15
+  attackSpeed: 16
   rotationSpeed: 1080
   autoBraking: 1
-  reactivity: 0.2
-  enemyName: Campbell
-  intelligence: 0.5
-  anticipation: 3
-  waitDist: 100
+  reactivity: 0.05
+  enemyName: DaBaker
+  intelligence: 1
+  anticipation: 5
+  waitDist: 60
   attackDist: 5
-  attackAngle: 45
-  precision: 2
-  positionningDist: 15
-  positioningRatio: 0.5
+  attackAngle: 60
+  modeTime: 0
+  attackTime: 0
+  attackPrecision: 1.25

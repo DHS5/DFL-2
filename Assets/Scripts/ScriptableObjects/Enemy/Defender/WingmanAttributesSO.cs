@@ -12,6 +12,8 @@ public class WingmanAttributesSO : DefenderAttributesSO
     [Header("Wingman attributes")]
     [Tooltip("Precision in the interception process")]
     [Range(0, 1)] public float precision;
+    [Tooltip("Anticipation of the player movement during attack")]
+    public float attackAnticipation;
     [Space]
     [Tooltip("If in the angle --> Chase")]
     public float chaseAngle;
