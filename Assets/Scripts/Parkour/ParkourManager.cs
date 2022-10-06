@@ -24,7 +24,7 @@ public class ParkourManager : MonoBehaviour
 
         if (dataManager.gameData.gameMode == GameMode.DRILL && dataManager.gameData.gameDrill == GameDrill.PARKOUR)
         {
-            dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
+            dataManager.gameData.gameDifficulty = GameDifficulty.ROOKIE;
             dataManager.gameData.gameOptions.Clear();
             dataManager.gameData.gameWeather = GameWeather.NIGHT;
             dataManager.gameData.player = parkourPlayer;

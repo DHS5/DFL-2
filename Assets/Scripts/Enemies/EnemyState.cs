@@ -33,6 +33,10 @@ public abstract class EnemyState
     {
         get { return (enemy.destination - enemy.transform.position).normalized;}
     }
+    protected float ToDestinationAngle
+    {
+        get { return Vector3.Angle(enemy.transform.forward, DestinationDir); }
+    }
 
 
     public EnemyState(Enemy _enemy ,NavMeshAgent _agent, Animator _animator)

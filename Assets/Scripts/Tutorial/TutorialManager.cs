@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
         if (dataManager.gameData.gameMode == GameMode.TUTORIAL)
         {
             dataManager.gameData.gameDrill = GameDrill.PRACTICE;
-            dataManager.gameData.gameDifficulty = GameDifficulty.EASY;
+            dataManager.gameData.gameDifficulty = GameDifficulty.ROOKIE;
             dataManager.gameData.gameOptions.Clear();
             dataManager.gameData.gameWeather = GameWeather.SUN;
             dataManager.gameData.player = tutorialPlayer;

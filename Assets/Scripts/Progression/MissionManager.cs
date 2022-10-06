@@ -10,8 +10,10 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private Mission teamMission;
     [SerializeField] private Mission zombieMission;
     [Space]
-    [SerializeField] private Mission normalMission;
-    [SerializeField] private Mission hardMission;
+    [SerializeField] private Mission proMission;
+    [SerializeField] private Mission starMission;
+    [SerializeField] private Mission veteranMission;
+    [SerializeField] private Mission legendMission;
     [Space]
     [SerializeField] private Mission rainMission;
     [SerializeField] private Mission fogMission;
@@ -45,17 +47,27 @@ public class MissionManager : MonoBehaviour
                 main.DataManager.progressionData.zombieMode = false;
         }
 
-        // Normal
-        if (pData.normalDiff)
+        // Pro
+        if (pData.proDiff)
         {
-            if (normalMission.CompleteMission(data, wave))
-                main.DataManager.progressionData.normalDiff = false;
+            if (proMission.CompleteMission(data, wave))
+                main.DataManager.progressionData.proDiff = false;
         }
-        // Hard
-        if (pData.hardDiff)
+        // Star
+        if (pData.starDiff)
         {
-            if (hardMission.CompleteMission(data, wave))
-                main.DataManager.progressionData.hardDiff = false;
+            if (starMission.CompleteMission(data, wave))
+                main.DataManager.progressionData.starDiff = false;
+        }
+        if (pData.veteranDiff)
+        {
+            if (veteranMission.CompleteMission(data, wave))
+                main.DataManager.progressionData.veteranDiff = false;
+        }
+        if (pData.legendDiff)
+        {
+            if (legendMission.CompleteMission(data, wave))
+                main.DataManager.progressionData.legendDiff = false;
         }
 
         // Rain

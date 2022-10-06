@@ -12,12 +12,15 @@ public class Mission
     [SerializeField] private List<GameWeather> gameWeathers;
     [SerializeField] private List<GameOption> gameOptions;
     [SerializeField] private GameDrill gameDrill;
-
+    [Space]
     [SerializeField] private int waveToReach;
+    [Space]
+    [SerializeField] private bool locked;
 
 
     public bool CompleteMission(GameData data, int wave)
     {
+        if (locked) return false;
         if (wave >= waveToReach)
         {
             Debug.Log(waveToReach);

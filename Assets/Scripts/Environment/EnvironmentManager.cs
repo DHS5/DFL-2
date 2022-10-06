@@ -21,15 +21,13 @@ public class EnvironmentManager : MonoBehaviour
 
     [Header("Rain")]
     [SerializeField] private float rainFogDensity;
-    [SerializeField] private int normalRainAddition;
-    [SerializeField] private int hardRainAddition;
+    [SerializeField] private int[] rainAdditions;
 
     [Header("Fog")]
     [SerializeField] private float normalFogIntensity;
     [SerializeField] private float objectifFogIntensity;
 
-    [SerializeField] private float normalFogIncrease;
-    [SerializeField] private float hardFogIncrease;
+    [SerializeField] private float[] fogIncreases;
 
     [SerializeField] private Color baseFogColor;
     [SerializeField] private Color zombieFogColor;
@@ -109,26 +107,20 @@ public class EnvironmentManager : MonoBehaviour
     public void GenerateEnvironment()
     {
         // # Modes #
-        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.WaveNumber == 10) // !ZOMBIE
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.WaveNumber == 6) // !ZOMBIE
             BedTime(); // Night time when player reaching wave 10
 
         // # Weather #
         if (main.GameManager.gameData.gameWeather == GameWeather.RAIN) // RAIN
         {
             // Increases the rain according to the difficulty
-            if (main.GameManager.gameData.gameDifficulty == GameDifficulty.HARD) // HARD
-                IncreaseRain(hardRainAddition);
-            else if (main.GameManager.gameData.gameDifficulty == GameDifficulty.NORMAL) // NORMAL
-                IncreaseRain(normalRainAddition);
+            IncreaseRain(rainAdditions[(int)main.GameManager.gameData.gameDifficulty]);
         }
         if (main.GameManager.gameData.gameWeather == GameWeather.FOG) // FOG
         {
             // # Difficulties #
             // Increases the fog according to the difficulty
-            if (main.GameManager.gameData.gameDifficulty == GameDifficulty.HARD) // HARD
-                IncreaseFog(hardFogIncrease);
-            else if (main.GameManager.gameData.gameDifficulty == GameDifficulty.NORMAL) // NORMAL
-                IncreaseFog(normalFogIncrease);
+            IncreaseFog(fogIncreases[(int)main.GameManager.gameData.gameDifficulty]);
         }
     }
 

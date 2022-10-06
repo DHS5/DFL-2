@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class AttackCDS : CornerbackState
 {
-    private float baseSpeed;
-
     readonly private float animTime = 1.6f;
     
     public AttackCDS(Cornerback _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
@@ -21,8 +19,6 @@ public class AttackCDS : CornerbackState
         base.Enter();
 
         animator.SetTrigger("Attack");
-
-        baseSpeed = agent.speed;
         agent.speed = att.attackSpeed;
 
         Attack();
@@ -35,10 +31,13 @@ public class AttackCDS : CornerbackState
 
         if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
         {
-            enemy.destination = enemy.transform.position;
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
         if (Time.time - startTime > 3 * animTime / 4)
         {
+            agent.isStopped = false;
+            agent.speed = att.speed;
             enemy.destination = enemy.playerPosition;
         }
 
@@ -51,7 +50,7 @@ public class AttackCDS : CornerbackState
 
     public override void Exit()
     {
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Attack");
 
@@ -106,8 +105,16 @@ public class AttackCDS : CornerbackState
 
         enemy.destination = enemy.playerPosition + distP * att.attackPrecision * enemy.playerVelocity;
 
-        agent.velocity = (enemy.destination - enemy.transform.position).normalized * att.attackSpeed;
+        if (ToDestinationAngle > att.attackAngle)
+        {
+            enemy.destination = enemy.playerPosition;
+            Debug.Log("straight to it");
+        }
 
-        enemy.transform.rotation = Quaternion.LookRotation(enemy.destination);
+        enemy.destination += DestinationDir * 5;
+
+        agent.velocity = DestinationDir * att.attackSpeed;
+
+        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 }

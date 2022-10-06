@@ -9,38 +9,53 @@ public class EnemyContainerSO : ScriptableObject
     public int startRank;
 
     [Header("Defenders")]
-    public DefenderTypeArrays easyD;
-    public DefenderTypeArrays normalD;
-    public DefenderTypeArrays hardD;
+    public DefenderTypeArrays rookieD;
+    public DefenderTypeArrays proD;
+    public DefenderTypeArrays starD;
+    public DefenderTypeArrays veteranD;
+    public DefenderTypeArrays legendD;
 
     public DefenderTypeArrays GetArrays(int difficulty)
     {
         switch (difficulty)
         {
             case 0:
-                return easyD;
+                return rookieD;
             case 1:
-                return normalD;
-            default:
-                return hardD;
+                return proD;
+            case 2:
+                return starD;
+            case 3:
+                return veteranD;
+            case 4:
+                return legendD;
+            default: return rookieD;
         }
     }
 
     [Header("Zombies")]
-    public ZombieTypeArrays easyZ;
-    public ZombieTypeArrays normalZ;
-    public ZombieTypeArrays hardZ;
+    public ZombieTypeArrays rookieZ;
+    public ZombieTypeArrays proZ;
+    public ZombieTypeArrays starZ;
+    public ZombieTypeArrays veteranZ;
+    public ZombieTypeArrays legendZ;
 
     public ZombieTypeArrays GetZArrays(int difficulty)
     {
         switch (difficulty)
         {
             case 0:
-                return easyZ;
+                return rookieZ;
             case 1:
-                return normalZ;
+                return proZ;
+            case 2:
+                return starZ;
+            case 3:
+                return veteranZ;
+            case 4:
+                return legendZ;
             default:
-                return hardZ;
+                return rookieZ;
         }
     }
 }

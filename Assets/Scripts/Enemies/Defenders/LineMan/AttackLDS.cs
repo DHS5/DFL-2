@@ -6,9 +6,6 @@ using UnityEngine.AI;
 public class AttackLDS : LineManState
 {
     readonly float animTime = 1.6f;
-
-    // Compensation for : * enemy.attackSpeed
-    readonly float attackOffset = 0.2f;
     
     public AttackLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
@@ -24,8 +21,14 @@ public class AttackLDS : LineManState
         agent.speed = att.attackSpeed;
 
         enemy.destination = enemy.playerPosition + enemy.playerVelocity * att.attackAnticipation;
-        
-        enemy.destination += att.attackSpeed * attackOffset * DestinationDir;
+
+        if (ToDestinationAngle > att.attackAngle)
+        {
+            enemy.destination = enemy.playerPosition;
+            Debug.Log("straight to it");
+        }
+
+        enemy.destination += 5 * DestinationDir;
         
         agent.velocity = DestinationDir * att.attackSpeed;
 
@@ -38,10 +41,13 @@ public class AttackLDS : LineManState
 
         if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
         {
-            enemy.destination = enemy.transform.position;
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
         if (Time.time - startTime > 3 * animTime / 4)
         {
+            agent.isStopped = false;
+            agent.speed = att.speed;
             enemy.destination = enemy.playerPosition;
         }
 

@@ -70,8 +70,10 @@ public struct ProgressionData
     public bool teamMode;
     public bool zombieMode;
 
-    public bool normalDiff;
-    public bool hardDiff;
+    public bool proDiff;
+    public bool starDiff;
+    public bool veteranDiff;
+    public bool legendDiff;
 
     public bool rainWeather;
     public bool fogWeather;
@@ -143,7 +145,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector] public PlayerData playerData;
     [HideInInspector] public InventoryData inventoryData;
     [HideInInspector] public ProgressionData progressionData;
-    [HideInInspector] public StatsData[] statsDatas = new StatsData[9];
+    [HideInInspector] public StatsData[] statsDatas = new StatsData[15];
 
     // Current game data
     [HideInInspector] public GameData gameData;
@@ -219,8 +221,8 @@ public class DataManager : MonoBehaviour
     {
         if (playerPrefs.teamIndex.Length != 5)
             playerPrefs.teamIndex = new int[5];
-        if (playerPrefs.enemyIndex.Length != 3)
-            playerPrefs.enemyIndex = new int[3];
+        if (playerPrefs.enemyIndex.Length != 5)
+            playerPrefs.enemyIndex = new int[5];
 
         if (playerPrefs.playerIndex >= inventoryData.players.Length) playerPrefs.playerIndex = 0;
         for (int i = 0; i < playerPrefs.enemyIndex.Length; i++)
@@ -236,8 +238,10 @@ public class DataManager : MonoBehaviour
         progressionData.teamMode = true;
         progressionData.zombieMode = true;
 
-        progressionData.normalDiff = true;
-        progressionData.hardDiff = true;
+        progressionData.proDiff = true;
+        progressionData.starDiff = true;
+        progressionData.veteranDiff = true;
+        progressionData.legendDiff = true;
 
         progressionData.rainWeather = true;
         progressionData.fogWeather = true;
@@ -266,7 +270,7 @@ public class DataManager : MonoBehaviour
 
     private void InitGameData()
     {
-        gameData.enemy = cardsContainer.enemyCards.easyEnemyCards[playerPrefs.enemyIndex[0]].attribute;
+        gameData.enemy = cardsContainer.enemyCards.rookieEnemyCards[playerPrefs.enemyIndex[0]].attribute;
 
         gameData.team = new AttackerAttributesSO[5];
         for (int i = 0; i < gameData.team.Length; i++)
@@ -275,7 +279,7 @@ public class DataManager : MonoBehaviour
 
     private void InitStatsDatas()
     {
-        statsDatas = new StatsData[9];
+        statsDatas = new StatsData[15];
         for (int i = 0; i < statsDatas.Length; i++)
             statsDatas[i].wavesReached = new int[1] {0};
     }
@@ -309,7 +313,7 @@ public class DataManager : MonoBehaviour
     public void ClearGameData()
     {
         gameData.gameMode = GameMode.DEFENDERS;
-        gameData.gameDifficulty = GameDifficulty.EASY;
+        gameData.gameDifficulty = GameDifficulty.ROOKIE;
         gameData.gameWeather = GameWeather.SUN;
         gameData.gameOptions = new List<GameOption>();
         gameData.gameDrill = GameDrill.PRACTICE;

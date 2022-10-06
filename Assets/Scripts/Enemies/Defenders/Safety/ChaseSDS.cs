@@ -24,6 +24,7 @@ public class ChaseSDS : SafetyState
 
 
         enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance) * att.intelligence);//Mathf.Abs(enemy.xDistance / enemy.zDistance)
+        enemy.destination += DestinationDir * 2;
 
         // Attack
         if (enemy.rawDistance < att.attackDist && enemy.toPlayerAngle < att.attackAngle)

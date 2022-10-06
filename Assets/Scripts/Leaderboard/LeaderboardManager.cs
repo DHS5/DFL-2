@@ -35,7 +35,7 @@ public class LeaderboardManager : MonoBehaviour
     private Leaderboard currentLeaderboard;
 
     readonly int leaderboardLimit = 100;
-    readonly static int[] leaderboardIDs = { 4969, 4970, 4971, 4972, 4974, 4975, 4976, 4977, 4978 };
+    readonly static int[] leaderboardIDs = { 4969, 4970, 4971, 7638, 7639, 4972, 4974, 4975, 7640, 7641, 4976, 4977, 4978, 7642, 7643 };
 
 
     private int mode;
@@ -67,7 +67,7 @@ public class LeaderboardManager : MonoBehaviour
     public int Mode { set { mode = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
     public int Difficulty { set { difficulty = value; CurrentLeaderboard = leaderboards[LeaderboardIndex]; } }
 
-    public int LeaderboardIndex { get { return mode * 3 + difficulty; } }
+    public int LeaderboardIndex { get { return mode * 5 + difficulty; } }
 
     // ### Built-in ###
 
@@ -191,7 +191,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private static int GameTypeToLeaderboardIndex(GameData gD)
     {
-        return (int)gD.gameMode * 3 + (int)gD.gameDifficulty;
+        return (int)gD.gameMode * 5 + (int)gD.gameDifficulty;
     }
 
 

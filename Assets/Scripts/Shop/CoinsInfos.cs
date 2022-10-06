@@ -23,8 +23,8 @@ public class CoinsInfos : MonoBehaviour
         else if (data.gameMode == GameMode.DRILL || data.gameMode == GameMode.TUTORIAL)
             ApplyCoinsResultTuto();
 
-        scoreText.text = "Score : " + score;
-        waveText.text = "Wave : " + 100 * (wave * (wave - 1)) / 2;
+        scoreText.text = "Score : " + score * 2;
+        waveText.text = "Wave : " + 100 * (wave * wave);
         optionsText.text = "Options multiplier : " + OptionsMultiplier(data);
         killsText.text = kills != 0 ? "Kills : " + kills + " * " + 10 * ((int)data.gameDifficulty + 1) * ((int)data.gameWeather + 1) : "Kills : 0";
         difficultyText.text = "Difficulty multiplier : " + ((int)data.gameDifficulty * 2 + 1);

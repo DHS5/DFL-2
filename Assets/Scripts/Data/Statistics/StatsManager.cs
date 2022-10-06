@@ -14,7 +14,7 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private RectTransform statsLayout;
 
 
-    private StatsData[] stats = new StatsData[9];
+    private StatsData[] stats = new StatsData[15];
 
 
     private StatBoard currentStatBoard;
@@ -40,7 +40,7 @@ public class StatsManager : MonoBehaviour
     public int Mode { set { mode = value; CurrentStatBoard = statBoards[BoardIndex]; } }
     public int Difficulty { set { difficulty = value; CurrentStatBoard = statBoards[BoardIndex]; } }
 
-    public int BoardIndex { get { return mode * 3 + difficulty; } }
+    public int BoardIndex { get { return mode * 5 + difficulty; } }
 
 
     private void Awake()
@@ -59,7 +59,7 @@ public class StatsManager : MonoBehaviour
 
         DataManager dataManager = DataManager.InstanceDataManager;
 
-        int index = (int)type.gameMode * 3 + (int)type.gameDifficulty;
+        int index = (int)type.gameMode * 5 + (int)type.gameDifficulty;
 
         StatsData stats = dataManager.statsDatas[index];
 

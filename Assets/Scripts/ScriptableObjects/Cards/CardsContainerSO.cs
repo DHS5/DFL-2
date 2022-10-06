@@ -18,18 +18,22 @@ public class CardsContainerSO : ScriptableObject
 [System.Serializable]
 public class EnemyCardsContainer
 {
-    public List<EnemyCardSO> easyEnemyCards;
-    public List<EnemyCardSO> normalEnemyCards;
-    public List<EnemyCardSO> hardEnemyCards;
+    public List<EnemyCardSO> rookieEnemyCards;
+    public List<EnemyCardSO> proEnemyCards;
+    public List<EnemyCardSO> starEnemyCards;
+    public List<EnemyCardSO> veteranEnemyCards;
+    public List<EnemyCardSO> legendEnemyCards;
 
     public List<EnemyCardSO> GetCardsByIndex(int index)
     {
         return index switch
         {
-            0 => easyEnemyCards,
-            1 => normalEnemyCards,
-            2 => hardEnemyCards,
-            _ => easyEnemyCards,
+            0 => rookieEnemyCards,
+            1 => proEnemyCards,
+            2 => starEnemyCards,
+            3 => veteranEnemyCards,
+            4 => legendEnemyCards,
+            _ => rookieEnemyCards,
         };
     }
 }

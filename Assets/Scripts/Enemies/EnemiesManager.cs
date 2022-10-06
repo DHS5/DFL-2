@@ -205,7 +205,6 @@ public class EnemiesManager : MonoBehaviour
         string a = "";
         for (int i = 0; i < size; i++)
             a += array[i];
-        Debug.Log(a);
     }
 
     private Vector3 GetRandomPos(Vector3 pos, float xScale, float zScale)

@@ -10,7 +10,7 @@ public static class CoinsManager
 
         if (data.gameMode != GameMode.DRILL && data.gameMode != GameMode.TUTORIAL)
         {
-            coins = score + 100 * (wave * (wave - 1)) / 2;
+            coins = score * 2 + 100 * (wave * wave);
 
             if (data.gameOptions.Contains(GameOption.BONUS))
                 coins /= 3;

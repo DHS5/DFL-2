@@ -33,8 +33,10 @@ public class ProgressionManager : MonoBehaviour
 
 
 
-    readonly string normalDiffText = "Reach wave 10 in any mode (except Drill) to unlock normal difficulty";
-    readonly string hardDiffText = "Reach wave 10 in normal difficulty in any mode (except Drill) to unlock hard difficulty";
+    readonly string proDiffText = "Reach wave 6 in Defender or Team mode to unlock pro difficulty";
+    readonly string starDiffText = "Reach wave 6 in pro difficulty in Defender or Team mode to unlock star difficulty";
+    readonly string veteranDiffText = "Reach wave 6 in star difficulty in Defender or Team mode to unlock veteran difficulty";
+    readonly string legendDiffText = "Reach wave 6 in veteran difficulty in Defender or Team mode to unlock legend difficulty";
     
     readonly string rainWeatherText = "Reach wave 5 in objectif option to unlock rain wheather";
     readonly string fogWeatherText = "Reach wave 5 in rain wheather to unlock fog wheather";
@@ -87,11 +89,13 @@ public class ProgressionManager : MonoBehaviour
         GetLocksFromDropdown(ref difficultyLocks, difficultyDropdown);
         GetLocksFromDropdown(ref weatherLocks, weatherDropdown);
 
-        if (difficultyLocks.Length > 2)
+        if (difficultyLocks.Length > 4)
         {
             difficultyLocks[0].Locked = false;
-            difficultyLocks[1].Locked = progressionData.normalDiff; difficultyLocks[1].text.text = normalDiffText;
-            difficultyLocks[2].Locked = progressionData.hardDiff; difficultyLocks[2].text.text = hardDiffText;
+            difficultyLocks[1].Locked = progressionData.proDiff; difficultyLocks[1].text.text = proDiffText;
+            difficultyLocks[2].Locked = progressionData.starDiff; difficultyLocks[2].text.text = starDiffText;
+            difficultyLocks[3].Locked = progressionData.veteranDiff; difficultyLocks[3].text.text = veteranDiffText;
+            difficultyLocks[4].Locked = progressionData.legendDiff; difficultyLocks[4].text.text = legendDiffText;
         }
         
         if (weatherLocks.Length > 2)

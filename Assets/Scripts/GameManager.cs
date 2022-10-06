@@ -12,7 +12,7 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Game Difficulty
 /// </summary>
-[System.Serializable] public enum GameDifficulty { NULL = -1, EASY = 0 , NORMAL = 1 , HARD = 2 }
+[System.Serializable] public enum GameDifficulty { NULL = -1, ROOKIE = 0 , PRO = 1 , STAR = 2 , VETERAN = 3 , LEGEND = 4 }
 
 /// <summary>
 /// Game Option

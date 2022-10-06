@@ -29,10 +29,12 @@ public class AttackLBDS : LinebackerState
 
         if (Time.time - startTime > animTime / 2 && Time.time - startTime < 3 * animTime / 4)
         {
-            enemy.destination = enemy.transform.position;
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
         if (Time.time - startTime > 3 * animTime / 4)
         {
+            agent.isStopped = false;
             enemy.destination = enemy.playerPosition;
             enemy.destination += DestinationDir * 3;
             agent.speed = att.speed;
@@ -104,9 +106,17 @@ public class AttackLBDS : LinebackerState
         }
 
         enemy.destination = enemy.playerPosition + distP * att.attackPrecision * enemy.playerVelocity;
-        agent.velocity = (enemy.destination - enemy.transform.position).normalized * att.attackSpeed;
 
-        //enemy.transform.LookAt(enemy.player.activeBody.transform);
-        enemy.transform.rotation = Quaternion.LookRotation(enemy.destination);
+        if (ToDestinationAngle > att.attackAngle)
+        {
+            enemy.destination = enemy.playerPosition;
+            Debug.Log("straight to it");
+        }
+
+        enemy.destination += DestinationDir * 5;
+
+        agent.velocity = DestinationDir * att.attackSpeed;
+
+        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 }

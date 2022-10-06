@@ -2397,12 +2397,15 @@ MonoBehaviour:
   zombieLightIntensity: 0.8
   nightLightIntensity: 0.6
   rainFogDensity: 0.005
-  normalRainAddition: 150
-  hardRainAddition: 300
+  rainAdditions: 0000000064000000c80000002c01000090010000
   normalFogIntensity: 0.05
   objectifFogIntensity: 0.03
-  normalFogIncrease: 0.01
-  hardFogIncrease: 0.03
+  fogIncreases:
+  - 0
+  - 0.005
+  - 0.01
+  - 0.02
+  - 0.03
   baseFogColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
   zombieFogColor: {r: 0.33962262, g: 0.2672125, b: 0.2672125, a: 0}
 --- !u!114 &675627208
@@ -2701,6 +2704,7 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     waveToReach: 6
+    locked: 0
   zombieMission:
     gameModes: 01000000
     gameDifficulties: 
@@ -2708,20 +2712,39 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     waveToReach: 6
-  normalMission:
+    locked: 0
+  proMission:
     gameModes: 0000000001000000
     gameDifficulties: 00000000
     gameWeathers: 
     gameOptions: 
     gameDrill: 0
-    waveToReach: 10
-  hardMission:
+    waveToReach: 6
+    locked: 0
+  starMission:
     gameModes: 0000000001000000
     gameDifficulties: 01000000
     gameWeathers: 
     gameOptions: 
     gameDrill: 0
-    waveToReach: 10
+    waveToReach: 6
+    locked: 0
+  veteranMission:
+    gameModes: 0000000001000000
+    gameDifficulties: 02000000
+    gameWeathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 6
+    locked: 0
+  legendMission:
+    gameModes: 0000000001000000
+    gameDifficulties: 03000000
+    gameWeathers: 
+    gameOptions: 
+    gameDrill: 0
+    waveToReach: 6
+    locked: 0
   rainMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 
@@ -2729,6 +2752,7 @@ MonoBehaviour:
     gameOptions: 02000000
     gameDrill: 0
     waveToReach: 4
+    locked: 0
   fogMission:
     gameModes: 000000000200000001000000
     gameDifficulties: 
@@ -2736,6 +2760,7 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     waveToReach: 5
+    locked: 0
   bonusMission:
     gameModes: 00000000
     gameDifficulties: 
@@ -2743,6 +2768,7 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     waveToReach: 3
+    locked: 0
   obstacleMission:
     gameModes: 02000000
     gameDifficulties: 
@@ -2750,6 +2776,7 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 0
     waveToReach: 5
+    locked: 0
   objectifMission:
     gameModes: 03000000
     gameDifficulties: 
@@ -2757,6 +2784,7 @@ MonoBehaviour:
     gameOptions: 
     gameDrill: 2
     waveToReach: 5
+    locked: 0
   weaponMission:
     gameModes: 02000000
     gameDifficulties: 
@@ -2764,6 +2792,7 @@ MonoBehaviour:
     gameOptions: 01000000
     gameDrill: 0
     waveToReach: 4
+    locked: 0
 --- !u!1 &766326295
 GameObject:
   m_ObjectHideFlags: 0
