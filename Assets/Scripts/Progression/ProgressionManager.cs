@@ -15,16 +15,9 @@ public class ProgressionManager : MonoBehaviour
     [HideInInspector] public ProgressionData progressionData;
 
     [Header("UI components")]
-    [SerializeField] private TMP_Dropdown difficultyDropdown;
-    [SerializeField] private TMP_Dropdown weatherDropdown;
-    [Space]
-    [Space]
-    [SerializeField] private Lock teamLock;
-    [SerializeField] private Lock zombieLock;
-
-    private Lock[] difficultyLocks;
-
-    private Lock[] weatherLocks;
+    [SerializeField] private Lock[] modeLocks;
+    [SerializeField] private Lock[] difficultyLocks;
+    [SerializeField] private Lock[] weatherLocks;
     [Space]
     [SerializeField] private Lock bonusLock;
     [SerializeField] private Lock[] obstacleLocks;
@@ -32,14 +25,21 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] private Lock weaponLock;
 
 
+    readonly string teamModeText = "Reach wave 5 in any mode (except drill) to unlock team mode";
+    readonly string zombieModeText = "Reach wave 5 in team mode to unlock zombie mode";
 
     readonly string proDiffText = "Reach wave 6 in Defender or Team mode to unlock pro difficulty";
     readonly string starDiffText = "Reach wave 6 in pro difficulty in Defender or Team mode to unlock star difficulty";
     readonly string veteranDiffText = "Reach wave 6 in star difficulty in Defender or Team mode to unlock veteran difficulty";
     readonly string legendDiffText = "Reach wave 6 in veteran difficulty in Defender or Team mode to unlock legend difficulty";
     
-    readonly string rainWeatherText = "Reach wave 5 in objectif option to unlock rain wheather";
+    readonly string rainWeatherText = "Reach wave 4 in objectif option to unlock rain wheather";
     readonly string fogWeatherText = "Reach wave 5 in rain wheather to unlock fog wheather";
+
+    readonly string bonusOptionText = "Reach wave 3 in any mode to unlock bonus option";
+    readonly string obstacleOptionText = "Reach wave 5 in zombie mode to unlock obstacles option";
+    readonly string objectifOptionText = "Reach wave 5 in objectif drill to unlock objectif option";
+    readonly string weaponOptionText = "Reach wave 3 in obstacle zombie to unlock weapon option";
 
 
     private void Awake()
@@ -57,52 +57,25 @@ public class ProgressionManager : MonoBehaviour
     {
         progressionData = main.DataManager.progressionData;
     }
-    private void SetProgressionData()
-    {
-        main.DataManager.progressionData = progressionData;
-    }
 
     public void ApplyProgressionData()
     {
-        teamLock.Locked = progressionData.teamMode;
-        zombieLock.Locked = progressionData.zombieMode;
+        modeLocks[0].ApplyLockInfos(progressionData.teamMode, teamModeText);
+        modeLocks[1].ApplyLockInfos(progressionData.zombieMode, zombieModeText);
 
-        bonusLock.Locked = progressionData.bonusOpt;
+        difficultyLocks[0].ApplyLockInfos(progressionData.proDiff, proDiffText);
+        difficultyLocks[1].ApplyLockInfos(progressionData.starDiff, starDiffText);
+        difficultyLocks[2].ApplyLockInfos(progressionData.veteranDiff, veteranDiffText);
+        difficultyLocks[3].ApplyLockInfos(progressionData.legendDiff, legendDiffText);
+
+        weatherLocks[0].ApplyLockInfos(progressionData.rainWeather, rainWeatherText);
+        weatherLocks[1].ApplyLockInfos(progressionData.fogWeather, fogWeatherText);
+
+        bonusLock.ApplyLockInfos(progressionData.bonusOpt, bonusOptionText);
         foreach (Lock l in obstacleLocks)
-            l.Locked = progressionData.obstacleOpt;
+            l.ApplyLockInfos(progressionData.obstacleOpt, obstacleOptionText);
         foreach (Lock l in objectifLocks)
-            l.Locked = progressionData.objectifOpt;
-        weaponLock.Locked = progressionData.weaponOpt;
-    }
-
-
-
-    private void GetLocksFromDropdown(ref Lock[] locks, TMP_Dropdown dropdown)
-    {
-        locks = dropdown.GetComponentsInChildren<Lock>();
-    }  
-
-
-
-    public void ApplyDropdownLocks()
-    {
-        GetLocksFromDropdown(ref difficultyLocks, difficultyDropdown);
-        GetLocksFromDropdown(ref weatherLocks, weatherDropdown);
-
-        if (difficultyLocks.Length > 4)
-        {
-            difficultyLocks[0].Locked = false;
-            difficultyLocks[1].Locked = progressionData.proDiff; difficultyLocks[1].text.text = proDiffText;
-            difficultyLocks[2].Locked = progressionData.starDiff; difficultyLocks[2].text.text = starDiffText;
-            difficultyLocks[3].Locked = progressionData.veteranDiff; difficultyLocks[3].text.text = veteranDiffText;
-            difficultyLocks[4].Locked = progressionData.legendDiff; difficultyLocks[4].text.text = legendDiffText;
-        }
-        
-        if (weatherLocks.Length > 2)
-        {
-            weatherLocks[0].Locked = false;
-            weatherLocks[1].Locked = progressionData.rainWeather; weatherLocks[1].text.text = rainWeatherText;
-            weatherLocks[2].Locked = progressionData.fogWeather; weatherLocks[2].text.text = fogWeatherText;
-        }
+            l.ApplyLockInfos(progressionData.objectifOpt, objectifOptionText);
+        weaponLock.ApplyLockInfos(progressionData.weaponOpt, weaponOptionText);
     }
 }

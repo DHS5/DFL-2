@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class AttackerCard : Card
+public class AttackerCard : ImageCard
 {
     [Header("Attacker card's specifics")]
 
@@ -30,7 +30,6 @@ public class AttackerCard : Card
 
     public void ApplyCardSOInfo(AttackerCardSO card)
     {
-        InfoActive = false;
         cardSO = card;
 
         if (!gameObject.activeSelf)

@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StadiumCard : TerrainCard
+public class StadiumCard : ImageCard
 {
     public StadiumCardSO stadiumCardSO { get { return cardSO as StadiumCardSO; } }
 
     protected override void Start()
     {
         base.Start();
+
+        image.sprite = stadiumCardSO.shopSprite;
     }
 }

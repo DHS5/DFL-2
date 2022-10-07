@@ -16,11 +16,12 @@ public class CardManager : MonoBehaviour
     [Header("Game Screen")]
     [SerializeField] private GameObject playerSimpleCContainer;
     [SerializeField] private GameObject playerSimpleCardPrefab;
-    private List<PlayerSimpleCard> playerSimpleCards = new List<PlayerSimpleCard>();
+    private List<PlayerSimpleCard> playerSimpleCards = new();
+    [SerializeField] private LockerRoom lockerRoom;
 
     [SerializeField] private GameObject stadiumCContainer;
     [SerializeField] private GameObject stadiumCardPrefab;
-    private List<StadiumCard> stadiumCards = new List<StadiumCard>();
+    private List<StadiumCard> stadiumCards = new();
 
 
     [Header("Enemy Choice Screen")]
@@ -40,7 +41,7 @@ public class CardManager : MonoBehaviour
     [Header("Parkour Choice Screen")]
     [SerializeField] private GameObject parkourCContainer;
     [SerializeField] private GameObject parkourCardPrefab;
-    private List<ParkourCard> parkourCards = new List<ParkourCard>();
+    private List<ParkourCard> parkourCards = new();
 
 
 
@@ -139,6 +140,7 @@ public class CardManager : MonoBehaviour
     {
         // Player simple cards
         GetCard(DataManager.cardsContainer.playerCards, playerSimpleCardPrefab, ref playerSimpleCards, playerSimpleCContainer, PlayerIndex);
+        lockerRoom.ApplyPlayerInfo(playerSimpleCards[PlayerIndex].playerCardSO);
 
         // Enemy cards
         for (int i = enemyCContainers.Length - 1; i >= 0; i--)
@@ -159,25 +161,21 @@ public class CardManager : MonoBehaviour
 
     private int NextCard<T>(List<T> cards, int index) where T : Card
     {
-        bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
         Next(ref index, cards.Count - 1);
 
         cards[index].gameObject.SetActive(true);
-        cards[index].InfoActive = infoActive;
 
         return index;
     }
     private int PrevCard<T>(List<T> cards, int index) where T : Card
     {
-        bool infoActive = cards[index].InfoActive;
         cards[index].gameObject.SetActive(false);
 
         Prev(ref index, cards.Count - 1);
 
         cards[index].gameObject.SetActive(true);
-        cards[index].InfoActive = infoActive;
 
         return index;
     }
@@ -187,12 +185,13 @@ public class CardManager : MonoBehaviour
     {
         PlayerIndex = NextCard(playerSimpleCards, PlayerIndex);
         DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.playerInfo;
-
+        lockerRoom.ApplyPlayerInfo(playerSimpleCards[PlayerIndex].playerCardSO);
     }
     public void PrevCardPlayer()
     {
         PlayerIndex = PrevCard(playerSimpleCards, PlayerIndex);
         DataManager.gameData.player = playerSimpleCards[PlayerIndex].playerCardSO.playerInfo;
+        lockerRoom.ApplyPlayerInfo(playerSimpleCards[PlayerIndex].playerCardSO);
     }
     public void OpenCardContainerEnemy()
     {

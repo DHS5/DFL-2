@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         // Pause the game on press P
         if (Input.GetKeyDown(KeyCode.Tab)) GameOn = !GameOn;
 
-        //if (GameOver && Input.GetKeyDown(KeyCode.KeypadEnter)) Restart();
+        if (GameOver && Input.GetKeyDown(KeyCode.Return)) Tools.ReloadScene();
 
         if (main.PlayerManager.player.gameplay.onField)
         {

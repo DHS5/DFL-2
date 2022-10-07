@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ParkourCard : TerrainCard
+public class ParkourCard : ImageCard
 {
     [Header("Parkour card's specifics")]
 

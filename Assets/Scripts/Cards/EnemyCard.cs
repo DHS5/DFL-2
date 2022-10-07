@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class EnemyCard : Card
+public class EnemyCard : ImageCard
 {
     [Header("Enemy card's specifics")]
     public EnemyCapacityCard capacityCard;
@@ -13,8 +13,6 @@ public class EnemyCard : Card
     [SerializeField] private TextMeshProUGUI positionText;
 
     public EnemyCardSO enemyCardSO { get { return cardSO as EnemyCardSO; } }
-
-    public override bool InfoActive { get => false; set => infoToggle = null; }
 
     protected override void Start()
     {

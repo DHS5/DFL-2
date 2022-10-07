@@ -5,15 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class AttackerLargeCard : Card
+public class AttackerLargeCard : ImageCard
 {
     [Header("Attacker card's specifics")]
 
     [SerializeField] private AttackerCapacityCard capacityCard;
 
     public AttackerCardSO attackerCardSO { get { return cardSO as AttackerCardSO; } }
-
-    public override bool InfoActive { get => false; set => infoToggle = null; }
 
 
     protected override void Start()
@@ -34,7 +32,6 @@ public class AttackerLargeCard : Card
 
     public void ApplyCardSOInfo(AttackerCardSO card)
     {
-        InfoActive = false;
         cardSO = card;
 
         if (!gameObject.activeSelf)

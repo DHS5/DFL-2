@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class PlayerSimpleCard : Card
 {
     [Header("Player card's specifics")]
-    public PlayerCapacityCard capacityCard;
+    public PlayerCapacityShopCard capacityCard;
 
 
     public PlayerCardSO playerCardSO { get { return cardSO as PlayerCardSO; } }
@@ -16,9 +16,32 @@ public class PlayerSimpleCard : Card
     {
         base.Start();
 
-        capacityCard.info.physicalInfo.value = playerCardSO.physical;
-        capacityCard.info.handlingInfo.value = playerCardSO.handling;
-        capacityCard.info.skillsInfo.value = playerCardSO.skills;
+        PlayerAttributesSO p = playerCardSO.playerInfo.attributes;
+
+        capacityCard.info.speedInfo.value = p.NormalSpeed;
+        capacityCard.info.sideSpeedInfo.value = p.NormalSideSpeed;
+        capacityCard.info.sprintInfo.value = p.AccelerationM;
+        capacityCard.info.staminaInfo.value = p.accelerationTime / p.accelerationRestTime;
+        capacityCard.info.slowInfo.value = p.SlowM;
+        capacityCard.info.shiftInfo.value = p.SlowSideSpeed;
+        capacityCard.info.jumpHeightInfo.value = p.JumpHeight;
+        capacityCard.info.jumpStaminaInfo.value = p.JumpStamina / p.JumpRechargeTime;
+
+        capacityCard.info.dirSensitivityInfo.value = p.DirSensitivity;
+        capacityCard.info.dirGravityInfo.value = p.DirGravity;
+        capacityCard.info.accSensitivityInfo.value = p.AccSensitivity;
+        capacityCard.info.accGravityInfo.value = p.AccGravity;
+
+        capacityCard.info.canJuke = p.CanJuke;
+        capacityCard.info.canFeint = p.CanFeint;
+        capacityCard.info.canSpin = p.CanSpin;
+        capacityCard.info.canJukeSpin = p.CanJukeSpin;
+        capacityCard.info.canSlide = p.CanSlide;
+        capacityCard.info.canFlip = p.CanFlip;
+        capacityCard.info.canTruck = p.CanTruck;
+        capacityCard.info.canHighKnee = p.CanHighKnee;
+        capacityCard.info.canSprintFeint = p.CanSprintFeint;
+        capacityCard.info.canHurdle = p.CanHurdle;
 
         capacityCard.ApplyInfos();
     }

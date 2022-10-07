@@ -28,7 +28,9 @@ public class PlayerCapacityShopCard : MonoBehaviour
     [SerializeField] private Toggle slideToggle;
     [SerializeField] private Toggle flipToggle;
     [SerializeField] private Toggle truckToggle;
-    [SerializeField] private Toggle slideTackleToggle;
+    [SerializeField] private Toggle highKneeToggle;
+    [SerializeField] private Toggle sprintFeintToggle;
+    [SerializeField] private Toggle hurdleToggle;
 
     [Header("Handling Zone")]
     [SerializeField] private CapacityCardGauge dirSensitivityGauge;
@@ -55,7 +57,9 @@ public class PlayerCapacityShopCard : MonoBehaviour
         slideToggle.isOn = infos.canSlide;
         flipToggle.isOn = infos.canFlip;
         truckToggle.isOn = infos.canTruck;
-        slideTackleToggle.isOn = infos.canHighKnee;
+        highKneeToggle.isOn = infos.canHighKnee;
+        sprintFeintToggle.isOn = infos.canSprintFeint;
+        hurdleToggle.isOn = infos.canHurdle;
 
         dirSensitivityGauge.ApplyGaugeInfo(infos.dirSensitivityInfo);
         dirGravityGauge.ApplyGaugeInfo(infos.dirGravityInfo);
@@ -91,6 +95,8 @@ public class PlayerShopCapacityCardInfo
     public bool canFlip;
     public bool canTruck;
     public bool canHighKnee;
+    public bool canSprintFeint;
+    public bool canHurdle;
 
     [Header("Handling")]
     public CapacityCardGaugeInfo dirSensitivityInfo;

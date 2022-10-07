@@ -12,21 +12,22 @@ public class Tools : MonoBehaviour
     /// Load a scene
     /// </summary>
     /// <param name="scene">Scene number</param>
-    public void LoadScene(int scene)
+    public static void LoadScene(int scene)
     {
         SaveData();
 
         if (SceneManager.GetActiveScene().buildIndex != scene)
         {
             SceneManager.LoadScene(scene);
+            Time.timeScale = 1.0f;
         }
     }
-    public void LoadScene(SceneNumber scene)
+    public static void LoadScene(SceneNumber scene)
     {
         LoadScene((int)scene);
     }
 
-    public void ReloadScene()
+    public static void ReloadScene()
     {
         SaveData();
 
@@ -36,7 +37,7 @@ public class Tools : MonoBehaviour
     /// <summary>
     /// Quits the game
     /// </summary>
-    public void QuitInstant()
+    public static void QuitInstant()
     {
         SaveData();
 #if UNITY_EDITOR
@@ -48,7 +49,7 @@ public class Tools : MonoBehaviour
     }
 
 
-    private void SaveData()
+    public static void SaveData()
     {
         DataManager dataManager = DataManager.InstanceDataManager;
         if (dataManager != null)
@@ -58,7 +59,7 @@ public class Tools : MonoBehaviour
 
     // # UI #
 
-    public void InverseState(GameObject g)
+    public static void InverseState(GameObject g)
     {
         g.SetActive(!g.activeSelf);
     }

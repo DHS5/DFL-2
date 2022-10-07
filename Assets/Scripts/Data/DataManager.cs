@@ -195,8 +195,6 @@ public class DataManager : MonoBehaviour
             // Clears the options when starting the menu
             if (InstanceDataManager.reloadAll) InstanceDataManager.LoadData();
             else InstanceDataManager.StartCoroutine(InstanceDataManager.LoadMenuManagers());
-
-            InstanceDataManager.ClearGameData();
             return;
         }
         InstanceDataManager = this;
