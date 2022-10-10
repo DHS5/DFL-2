@@ -10,6 +10,9 @@ public class AttackerShopCard : ShopCard
     [Header("Attacker card's specifics")]
     public AttackerCapacityShopCard capacityCard;
 
+    [Header("Locker Room of the Attackers")]
+    public AttackerLockerRoom lockerRoom;
+
 
     [HideInInspector] public AttackerCardSO attackerCardSO;
 
@@ -36,5 +39,13 @@ public class AttackerShopCard : ShopCard
 
 
         capacityCard.ApplyInfos();
+
+        lockerRoom.ApplyAttackerInfo(attackerCardSO);
+    }
+
+
+    private void OnEnable()
+    {
+        lockerRoom.ApplyAttackerInfo(attackerCardSO);
     }
 }

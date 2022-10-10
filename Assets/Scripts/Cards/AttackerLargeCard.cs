@@ -5,22 +5,23 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class AttackerLargeCard : ImageCard
+public class AttackerLargeCard : Card
 {
     [Header("Attacker card's specifics")]
-
     [SerializeField] private AttackerCapacityCard capacityCard;
+
+    [Header("Locker Room of the Attackers")]
+    public AttackerLockerRoom lockerRoom;
 
     public AttackerCardSO attackerCardSO { get { return cardSO as AttackerCardSO; } }
 
-
-    protected override void Start()
+    public void ApplyCardSOInfo(AttackerCardSO card)
     {
-        base.Start();
+        cardSO = card;
 
-        image.sprite = attackerCardSO.largeSprite;
+        titleText.text = card.Title;
 
-        AttackerAttributesSO att = attackerCardSO.attribute;
+        AttackerAttributesSO att = card.attribute;
         capacityCard.info.position = "Position : " + attackerCardSO.Position;
         capacityCard.info.speedInfo.value = (att.back2PlayerSpeed + att.defenseSpeed) / 2;
         capacityCard.info.rotSpeedInfo.value = att.defenseRotSpeed;
@@ -28,15 +29,12 @@ public class AttackerLargeCard : ImageCard
         capacityCard.info.reactivityInfo.value = 1 - att.reactivity;
 
         capacityCard.ApplyInfos();
+
+        lockerRoom.ApplyAttackerInfo(attackerCardSO);
     }
 
-    public void ApplyCardSOInfo(AttackerCardSO card)
+    private void OnEnable()
     {
-        cardSO = card;
-
-        if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
-        else
-            Start();
+        lockerRoom.ApplyAttackerInfo(attackerCardSO);
     }
 }

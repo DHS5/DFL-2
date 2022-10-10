@@ -18,4 +18,8 @@ public abstract class AttackerCardSO : ShopCardSO
     public abstract string Position { get; }
 
     public Sprite largeSprite;
+
+    [Header("Locker room attributes")]
+    public Mesh mesh;
+    public Avatar avatar;
 }

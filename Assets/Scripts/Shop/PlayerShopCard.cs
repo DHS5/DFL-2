@@ -8,6 +8,9 @@ public class PlayerShopCard : ShopCard
     [Header("Player shop card's specifics")]
     public PlayerCapacityShopCard capacityCard;
 
+    [Header("Locker Room of the Players")]
+    public LockerRoom lockerRoom;
+
 
     [HideInInspector] public PlayerCardSO playerCardSO;
 
@@ -45,5 +48,12 @@ public class PlayerShopCard : ShopCard
         capacityCard.info.canHurdle = p.CanHurdle;
 
         capacityCard.ApplyInfos();
+
+        lockerRoom.ApplyPlayerInfo(playerCardSO);
+    }
+
+    private void OnEnable()
+    {
+        lockerRoom.ApplyPlayerInfo(playerCardSO);
     }
 }

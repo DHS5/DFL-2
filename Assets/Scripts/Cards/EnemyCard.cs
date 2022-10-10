@@ -5,20 +5,28 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class EnemyCard : ImageCard
+public class EnemyCard : Card
 {
+    [Header("Manager")]
+    [SerializeField] private CardManager cardManager;
+
     [Header("Enemy card's specifics")]
     public EnemyCapacityCard capacityCard;
+
+    [Header("Locker room of the enemies")]
+    public EnemyLockerRoom lockerRoom;
 
     [SerializeField] private TextMeshProUGUI positionText;
 
     public EnemyCardSO enemyCardSO { get { return cardSO as EnemyCardSO; } }
 
-    protected override void Start()
-    {
-        base.Start();
 
-        positionText.text = enemyCardSO.position;
+    public void ApplyEnemyInfos(EnemyCardSO card)
+    {
+        cardSO = card;
+
+        titleText.text = card.Title;
+        positionText.text = card.position;
 
         DefenderAttributesSO e = enemyCardSO.attribute;
 
@@ -31,5 +39,12 @@ public class EnemyCard : ImageCard
         capacityCard.info.attackDistInfo.value = e.attackDist;
 
         capacityCard.ApplyInfos();
+
+        lockerRoom.ApplyEnemyInfo(card);
+    }
+
+    private void OnEnable()
+    {
+        cardManager.ActuEnemy();
     }
 }

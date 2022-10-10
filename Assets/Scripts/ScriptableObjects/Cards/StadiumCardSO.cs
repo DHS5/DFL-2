@@ -17,11 +17,17 @@ public class StadiumCardSO : ShopCardSO
 
     public float coinsPercentage;
 
+    public Material enemyMaterial;
+
 
     private void OnValidate()
     {
         if (prefab != null)
-            coinsPercentage = prefab.GetComponentInChildren<Stadium>().coinsPercentage;
+        {
+            Stadium s = prefab.GetComponentInChildren<Stadium>();
+            coinsPercentage = s.coinsPercentage;
+            enemyMaterial = s.enemyMaterial;
+        }
     }
 
 

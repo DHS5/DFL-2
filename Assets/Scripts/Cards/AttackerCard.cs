@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
-public class AttackerCard : ImageCard
+public class AttackerCard : Card
 {
     [Header("Attacker card's specifics")]
 

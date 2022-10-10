@@ -80,29 +80,27 @@ public class ShopManager : MonoBehaviour
         if (!cardsGenerated)
         {
             // Player shop buttons
-            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, playerShopButtonPrefab, true);
+            GenerateShopButton(cardsContainer.playerCards, playerShopBContainer, playerShopCard, playerShopButtonPrefab);
             // Stadium shop buttons
-            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, stadiumShopButtonPrefab, false);
+            GenerateShopButton(cardsContainer.stadiumCards, stadiumShopBContainer, stadiumShopCard, stadiumShopButtonPrefab);
             // Team shop buttons
             for (int i = 0; i < teamShopBContainers.Length; i++)
-                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], attackerShopButtonPrefab, false);
+                GenerateShopButton(cardsContainer.teamCards.GetCardsByIndex(i), teamShopBContainers[i], attackerShopCards[i], attackerShopButtonPrefab);
             AttackerPosition = 0;
             // Weapon shop buttons
-            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, weaponShopButtonPrefab, false);
+            GenerateShopButton(cardsContainer.weaponCards, weaponShopBContainer, weaponShopCard, weaponShopButtonPrefab);
 
             cardsGenerated = true;
         }
     }
 
-    private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab, bool isPlayer) where T : ShopCardSO
+    private void GenerateShopButton<T>(List<T> cards, GameObject container, ShopCard shopCard, GameObject shopButtonPrefab) where T : ShopCardSO
     {
         bool first = true;
         foreach (T card in cards)
         {
             ShopButton sb = Instantiate(shopButtonPrefab, container.transform).GetComponent<ShopButton>();
-            if (!isPlayer) sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), main.DataManager.inventoryData.coins >= card.price);
-            else sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), main.DataManager.inventoryData.coins >= card.price, lockerRoom);
-
+            sb.GetCard(card, shopCard, !main.InventoryManager.IsInInventory(card.cardObject), main.DataManager.inventoryData.coins >= card.price);
             if (first)
             {
                 sb.ApplyOnShopCard();

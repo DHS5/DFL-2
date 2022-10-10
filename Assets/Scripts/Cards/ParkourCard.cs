@@ -9,9 +9,10 @@ public class ParkourCard : ImageCard
     [Header("Parkour card's specifics")]
 
     [SerializeField] private Toggle toggle;
-    [SerializeField] private TextMeshProUGUI rewardText;
+    [SerializeField] private TextMeshProUGUI firstRewardText;
+    [SerializeField] private TextMeshProUGUI thenText;
 
-    private Slider difficultyGauge;
+    [SerializeField] private Slider difficultyGauge;
 
     private int index;
 
@@ -19,17 +20,12 @@ public class ParkourCard : ImageCard
     public ParkourCardSO parkourCardSO { get { return cardSO as ParkourCardSO; } }
 
 
-    protected void Awake()
-    {
-        difficultyGauge = GetComponentInChildren<Slider>();
-
-        difficultyGauge.value = parkourCardSO.difficulty;
-    }
-
-    protected override void Start() 
+    protected override void Start()
     {
         image.sprite = cardSO.mainSprite;
-        rewardText.text = ParkourManager.Won((int)parkourCardSO.parkour) ? parkourCardSO.baseReward.ToString() : parkourCardSO.reward.ToString();
+        firstRewardText.text = parkourCardSO.reward.ToString();
+        thenText.text = parkourCardSO.baseReward.ToString();
+        difficultyGauge.value = parkourCardSO.difficulty;
     }
 
     public void On()

@@ -28,15 +28,21 @@ public class AttackerChoiceCard : MonoBehaviour
             AttackerCardSO cardSO = dataManager.cardsContainer.teamCards.GetAttacker(dataManager.playerPrefs.teamIndex[attackerNumber]);
 
             card.gameObject.SetActive(true);
-            card.ApplyCardSOInfo(cardSO);
+            ApplyInfos(cardSO);
             DataManager.InstanceDataManager.gameData.team[attackerNumber] = cardSO.attribute;
         }
     }
 
     public void Add()
     {
-        card.ApplyCardSOInfo(cardManager.CurrentCard.attackerCardSO);
+        ApplyInfos(cardManager.CurrentAttackerCard);
         DataManager.InstanceDataManager.gameData.team[attackerNumber] = card.attackerCardSO.attribute;
         DataManager.InstanceDataManager.playerPrefs.teamIndex[attackerNumber] = (int) card.attackerCardSO.attacker;
+    }
+
+    private void ApplyInfos(AttackerCardSO cardSO)
+    {
+        card.ApplyCardSOInfo(cardSO);
+        cardManager.teamLockerRoom.ApplyAttackerInfo(attackerNumber, cardSO);
     }
 }

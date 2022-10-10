@@ -11,6 +11,10 @@ public class EnemyCardSO : CardSO
     public GameDifficulty difficulty;
     public string position;
 
+    [Header("Locker room attributes")]
+    public Mesh mesh;
+    public Avatar avatar;
+
     private void OnValidate()
     {
         if (attribute != null)
