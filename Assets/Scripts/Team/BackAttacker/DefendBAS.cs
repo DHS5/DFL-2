@@ -25,10 +25,10 @@ public class DefendBAS : BackAttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + attacker.playerDir * att.anticipation + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
-        if (attacker.targetPos.z < attacker.playerPos.z - attacker.ProtectionRadius)
+        if (attacker.targetPos.z < attacker.playerPos.z - attacker.ProtectionRadius || attacker.playerTargetDist + 2 < attacker.playerDist)
         {
             nextState = new BackBAS(attacker, agent, animator);
             stage = Event.EXIT;

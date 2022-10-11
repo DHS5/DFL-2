@@ -102,6 +102,7 @@ public struct GameData
     public List<GameOption> gameOptions;
     public GameDrill gameDrill;
     public int gameEnemiesRange;
+    public int tutoNumber;
 
     public PlayerInfo player;
     public DefenderAttributesSO enemy;
@@ -195,6 +196,9 @@ public class DataManager : MonoBehaviour
             // Clears the options when starting the menu
             if (InstanceDataManager.reloadAll) InstanceDataManager.LoadData();
             else InstanceDataManager.StartCoroutine(InstanceDataManager.LoadMenuManagers());
+
+            if (InstanceDataManager.gameData.gameMode == GameMode.TUTORIAL) InstanceDataManager.InitGameData();
+
             return;
         }
         InstanceDataManager = this;

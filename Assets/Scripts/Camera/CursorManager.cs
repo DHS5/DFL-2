@@ -62,4 +62,22 @@ public class CursorManager : MonoBehaviour
 
         locked = false;
     }
+
+    public static void ForceUnlockCursor()
+    {
+        Debug.Log("unlock");
+        // Unlock the cursor in the middle of the screen
+        Cursor.lockState = CursorLockMode.None;
+
+        // Makes the cursor visible
+        Cursor.visible = true;
+    }
+    public static void ForceLockCursor()
+    {
+        // Unlock the cursor in the middle of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Makes the cursor visible
+        Cursor.visible = false;
+    }
 }

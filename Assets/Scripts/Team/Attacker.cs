@@ -24,13 +24,6 @@ public class Attacker : MonoBehaviour
 
     protected bool gameOver;
 
-    //public float reactivity;
-    //public float positionRadius;
-    //[Range(0,1)] public float defenseDistMultiplier;
-    //
-    //public float back2PlayerSpeed;
-    //public float defenseSpeed;
-
 
     [HideInInspector] public Vector3 playerPos;
     [HideInInspector] public Vector3 playerDir;
@@ -38,6 +31,7 @@ public class Attacker : MonoBehaviour
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public Vector3 targetDir;
 
+    [HideInInspector] public float playerDist;
     [HideInInspector] public float playerTargetDist;
     [HideInInspector] public Vector3 player2TargetDir;
 
@@ -132,6 +126,8 @@ public class Attacker : MonoBehaviour
             // Gets the player direction
             targetDir = target.GetComponent<NavMeshAgent>().velocity.normalized;
 
+            // Gets the distance between player and attacker
+            playerDist = Vector3.Distance(playerPos, transform.position);
             // Gets the distance between player and target
             playerTargetDist = Vector3.Distance(playerPos, targetPos);
             // Gets the direction from player to target

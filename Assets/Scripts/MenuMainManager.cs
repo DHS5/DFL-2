@@ -21,6 +21,7 @@ public class MenuMainManager : MonoBehaviour
     public ProgressionManager ProgressionManager { get; private set; }
     public LoginManager LoginManager { get; private set; }
     public CardManager CardManager { get; private set; }
+    public TutoUIManager TutoUIManager { get; private set; }
 
 
     [HideInInspector] public bool awake = false;
@@ -44,6 +45,7 @@ public class MenuMainManager : MonoBehaviour
         ProgressionManager = GetComponent<ProgressionManager>();
         LoginManager = GetComponent<LoginManager>();
         CardManager = GetComponent<CardManager>();
+        TutoUIManager = GetComponent<TutoUIManager>();
 
         SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
 

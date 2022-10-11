@@ -8,7 +8,7 @@ using TMPro;
 public class AttackerLargeCard : Card
 {
     [Header("Attacker card's specifics")]
-    [SerializeField] private AttackerCapacityCard capacityCard;
+    [SerializeField] private AttackerCapacityShopCard capacityCard;
 
     [Header("Locker Room of the Attackers")]
     public AttackerLockerRoom lockerRoom;
@@ -22,11 +22,19 @@ public class AttackerLargeCard : Card
         titleText.text = card.Title;
 
         AttackerAttributesSO att = card.attribute;
-        capacityCard.info.position = "Position : " + attackerCardSO.Position;
-        capacityCard.info.speedInfo.value = (att.back2PlayerSpeed + att.defenseSpeed) / 2;
-        capacityCard.info.rotSpeedInfo.value = att.defenseRotSpeed;
-        capacityCard.info.proximityInfo.value = att.positionRadius;
+
+        capacityCard.info.speedInfo.value = att.speed;
+        capacityCard.info.defSpeedInfo.value = att.defenseSpeed;
+        capacityCard.info.repositionSpeedInfo.value = att.back2PlayerSpeed;
+
+        capacityCard.info.rotSpeedInfo.value = att.rotationSpeed;
+        capacityCard.info.defRotSpeedInfo.value = att.defenseRotSpeed;
+
+        capacityCard.info.accInfo.value = att.acceleration;
+        capacityCard.info.sizeInfo.value = att.size.y;
+
         capacityCard.info.reactivityInfo.value = 1 - att.reactivity;
+        capacityCard.info.proximityInfo.value = att.positionRadius;
 
         capacityCard.ApplyInfos();
 

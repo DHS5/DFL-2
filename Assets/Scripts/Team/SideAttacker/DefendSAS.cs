@@ -26,10 +26,10 @@ public class DefendSAS : SideAttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + attacker.playerDir * att.anticipation + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
 
 
-        if (!attacker.IsThreat())
+        if (!attacker.IsThreat() || attacker.playerTargetDist + 2 < attacker.playerDist)
         {
             nextState = new BackSAS(attacker, agent, animator);
             stage = Event.EXIT;

@@ -45,6 +45,8 @@ public class TutorialPopup : MonoBehaviour
     {
         active = true;
         gameObject.SetActive(true);
+        if (showOkButton)
+            CursorManager.ForceUnlockCursor();
 
         Time.timeScale = 0;
     }
@@ -54,5 +56,6 @@ public class TutorialPopup : MonoBehaviour
         CanPass = true;
 
         Time.timeScale = 1;
+        CursorManager.ForceLockCursor();
     }
 }

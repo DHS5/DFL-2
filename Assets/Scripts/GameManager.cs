@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 
 
     private bool transitionning = false;
+    private float prevTimescale = 1.0f;
 
     // ### Properties ###
 
@@ -306,6 +307,7 @@ public class GameManager : MonoBehaviour
     {
         gameOn = false;
 
+        prevTimescale = Time.timeScale;
         Time.timeScale = 0f;
 
         main.CursorManager.UnlockCursor();
@@ -349,7 +351,7 @@ public class GameManager : MonoBehaviour
             i--;
         }
 
-        Time.timeScale = 1.0f;
+        Time.timeScale = prevTimescale;
 
         main.GameUIManager.ResumeGameText(3, false);
 

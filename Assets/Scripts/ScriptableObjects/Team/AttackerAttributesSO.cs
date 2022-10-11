@@ -24,6 +24,7 @@ public abstract class AttackerAttributesSO : ScriptableObject
 
     [Header("Behaviour parameters")]
     [Range(0, 1)] public float reactivity;
+    public float anticipation;
     [Space]
     public float positionRadius;
     [Range(0, 1)] public float defenseDistMultiplier;
