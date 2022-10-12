@@ -38,4 +38,6 @@ public abstract class ShopCard : MonoBehaviour
         buyButton.interactable = enoughMoney;
         lockGO.SetActive(cardSO.locked);
     }
+
+    public virtual void RefreshCard() { }
 }

@@ -112,7 +112,10 @@ public class PlayerGameplay : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
             {
-                collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision);
+                if (collision.GetContact(0).point.z > transform.position.z)
+                    collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision);
+                else
+                    Hurt(collision);
             }
 
             // When the player collides with an obstacle --> game over

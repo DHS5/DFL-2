@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   size: {x: 1.2, y: 1.2, z: 1.2}
-  speed: 10.5
-  acceleration: 9
+  speed: 11
+  acceleration: 11
   rotationSpeed: 540
   autoBraking: 1
   back2PlayerSpeed: 14
   defenseSpeed: 12
   defenseRotSpeed: 1080
-  reactivity: 0.2
-  positionRadius: 12
-  defenseDistMultiplier: 0.3
+  reactivity: 0.1
+  anticipation: 0.5
+  positionRadius: 8
+  defenseDistMultiplier: 0.4

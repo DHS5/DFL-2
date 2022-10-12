@@ -23,20 +23,7 @@ public class AttackerLargeCard : Card
 
         AttackerAttributesSO att = card.attribute;
 
-        capacityCard.info.speedInfo.value = att.speed;
-        capacityCard.info.defSpeedInfo.value = att.defenseSpeed;
-        capacityCard.info.repositionSpeedInfo.value = att.back2PlayerSpeed;
-
-        capacityCard.info.rotSpeedInfo.value = att.rotationSpeed;
-        capacityCard.info.defRotSpeedInfo.value = att.defenseRotSpeed;
-
-        capacityCard.info.accInfo.value = att.acceleration;
-        capacityCard.info.sizeInfo.value = att.size.y;
-
-        capacityCard.info.reactivityInfo.value = 1 - att.reactivity;
-        capacityCard.info.proximityInfo.value = att.positionRadius;
-
-        capacityCard.ApplyInfos();
+        capacityCard.ApplyInfos(att);
 
         lockerRoom.ApplyAttackerInfo(attackerCardSO);
     }

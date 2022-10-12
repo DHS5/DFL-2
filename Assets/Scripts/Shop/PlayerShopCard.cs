@@ -52,6 +52,13 @@ public class PlayerShopCard : ShopCard
         lockerRoom.ApplyPlayerInfo(playerCardSO);
     }
 
+    public override void RefreshCard()
+    {
+        capacityCard.ApplyInfos();
+
+        lockerRoom.ApplyPlayerInfo(playerCardSO);
+    }
+
     private void OnEnable()
     {
         lockerRoom.ApplyPlayerInfo(playerCardSO);

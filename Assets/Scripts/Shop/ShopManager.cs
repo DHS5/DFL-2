@@ -125,6 +125,7 @@ public class ShopManager : MonoBehaviour
             main.InventoryManager.AddToInventory(card.cardSO.cardObject);
             ActuShopButton(card.shopButton, false);
             card.Buyable = false;
+            card.RefreshCard();
         }
         else
         {

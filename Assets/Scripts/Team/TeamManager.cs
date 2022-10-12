@@ -46,18 +46,33 @@ public class TeamManager : MonoBehaviour
     [Header("Team caracteristics")]
     public float protectionRadius;
     public float teamReactivity;
+    [Range(0,1)] public float directionInterpolation;
 
 
     [Header("Limit angles")]
     public float frontAngle;
     public float backAngle;
 
-
+    // ### Properties ###
+    public Vector3 TeamDir
+    {
+        get { return Vector3.Slerp(player.controller.Velocity.normalized, player.transform.forward, directionInterpolation); }
+    }
+    private float TeamReactivity
+    {
+        get { return 0.04f - (int)main.GameManager.gameData.gameDifficulty * 0.01f; }
+    }
 
 
     private void Awake()
     {
         main = GetComponent<MainManager>();
+    }
+
+    private void Update()
+    {
+        if (TeamReactivity == 0 && player.gameplay.onField && main.GameManager.GameOn && !main.GameManager.GameOver)
+            ProtectPlayer();
     }
 
 
@@ -180,7 +195,7 @@ public class TeamManager : MonoBehaviour
     {
         player = main.PlayerManager.player;
 
-        for (int i = 0; i < 5 - (int) main.GameManager.gameData.gameDifficulty; i++)
+        for (int i = 0; i < 5 - ((int) main.GameManager.gameData.gameDifficulty / 2); i++)
         {
             InstantiateAttacker(main.GameManager.gameData.team[i]);
         }
@@ -209,7 +224,7 @@ public class TeamManager : MonoBehaviour
 
             if (enemyPlayerDist < protectionRadius)
             {
-                float enemyPlayerAngle = Vector3.Angle(e.transform.position - player.transform.position, player.controller.Velocity.normalized);
+                float enemyPlayerAngle = Vector3.Angle(e.transform.position - player.transform.position, TeamDir);
                 FindFreeAttackers(enemyPlayerAngle, e.transform.position.x - player.transform.position.x);
 
                 Attacker betterAttacker = null;
@@ -246,8 +261,8 @@ public class TeamManager : MonoBehaviour
             }
         }
         ActuEnemies();
-        if (player.gameplay.onField && main.GameManager.GameOn && !main.GameManager.GameOver)
-            Invoke(nameof(ProtectPlayer), teamReactivity);
+        if (player.gameplay.onField && main.GameManager.GameOn && !main.GameManager.GameOver && TeamReactivity != 0)
+            Invoke(nameof(ProtectPlayer), TeamReactivity);
     }
 
 

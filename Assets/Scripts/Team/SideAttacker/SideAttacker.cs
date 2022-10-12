@@ -23,7 +23,7 @@ public class SideAttacker : Attacker
 
     public override Vector3 ClampInZone(Vector3 destination)
     {
-        float minX = (Att.Side == SIDE.RIGHT) ? playerPos.x - Att.positionRadius : playerPos.x + Att.positionRadius / 2;
+        float minX = (Att.Side == SIDE.LEFT) ? playerPos.x - Att.positionRadius : playerPos.x + Att.positionRadius / 2;
         float maxX = (Att.Side == SIDE.LEFT) ? playerPos.x - Att.positionRadius / 2 : playerPos.x + Att.positionRadius;
         destination.x = Mathf.Clamp(destination.x, minX, maxX);
         destination.z = Mathf.Clamp(destination.z, playerPos.z, playerPos.z + (Mathf.Abs(destination.x - playerPos.x) * Mathf.Sqrt(2) / 2));

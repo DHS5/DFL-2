@@ -24,21 +24,14 @@ public class AttackerShopCard : ShopCard
 
         AttackerAttributesSO att = attackerCardSO.attribute;
 
-        capacityCard.info.speedInfo.value = att.speed;
-        capacityCard.info.defSpeedInfo.value = att.defenseSpeed;
-        capacityCard.info.repositionSpeedInfo.value = att.back2PlayerSpeed;
+        capacityCard.ApplyInfos(att);
 
-        capacityCard.info.rotSpeedInfo.value = att.rotationSpeed;
-        capacityCard.info.defRotSpeedInfo.value = att.defenseRotSpeed;
+        lockerRoom.ApplyAttackerInfo(attackerCardSO);
+    }
 
-        capacityCard.info.accInfo.value = att.acceleration;
-        capacityCard.info.sizeInfo.value = att.size.y;
-
-        capacityCard.info.reactivityInfo.value = 1 - att.reactivity;
-        capacityCard.info.proximityInfo.value = att.positionRadius;
-
-
-        capacityCard.ApplyInfos();
+    public override void RefreshCard()
+    {
+        capacityCard.ApplyInfos(attackerCardSO.attribute);
 
         lockerRoom.ApplyAttackerInfo(attackerCardSO);
     }

@@ -14,10 +14,9 @@ public class AttackerCapacityShopCard : MonoBehaviour
     [Space]
     [SerializeField] private CapacityCardGauge rotationSpeedGauge;
     [SerializeField] private CapacityCardGauge defRotationSpeedGauge;
-    [Space]
-    [SerializeField] private CapacityCardGauge accSpeedGauge;
     [SerializeField] private CapacityCardGauge sizeSpeedGauge;
     [Space]
+    [SerializeField] private CapacityCardGauge anticipationGauge;
     [SerializeField] private CapacityCardGauge reactivityGauge;
     [SerializeField] private CapacityCardGauge proximityGauge;
     [SerializeField] private CapacityCardGauge defProximityGauge;
@@ -32,12 +31,31 @@ public class AttackerCapacityShopCard : MonoBehaviour
         rotationSpeedGauge.ApplyGaugeInfo(infos.rotSpeedInfo);
         defRotationSpeedGauge.ApplyGaugeInfo(infos.defRotSpeedInfo);
 
-        accSpeedGauge.ApplyGaugeInfo(infos.accInfo);
+        anticipationGauge.ApplyGaugeInfo(infos.anticipationInfo);
         sizeSpeedGauge.ApplyGaugeInfo(infos.sizeInfo);
 
         reactivityGauge.ApplyGaugeInfo(infos.reactivityInfo);
         proximityGauge.ApplyGaugeInfo(infos.proximityInfo);
         defProximityGauge.ApplyGaugeInfo(infos.defProximityInfo);
+    }
+
+    public void ApplyInfos(AttackerAttributesSO att)
+    {
+        info.speedInfo.value = att.speed;
+        info.defSpeedInfo.value = att.defenseSpeed;
+        info.repositionSpeedInfo.value = att.back2PlayerSpeed;
+
+        info.rotSpeedInfo.value = att.rotationSpeed;
+        info.defRotSpeedInfo.value = att.defenseRotSpeed;
+
+        info.anticipationInfo.value = att.anticipation;
+        info.sizeInfo.value = att.size.y;
+
+        info.reactivityInfo.value = 1 - att.reactivity;
+        info.proximityInfo.value = att.positionRadius;
+        info.defProximityInfo.value = att.defenseDistMultiplier;
+
+        ApplyInfos();
     }
 
     public void ApplyInfos()
@@ -58,7 +76,7 @@ public class AttackerCapacityShopCardInfo
     public CapacityCardGaugeInfo rotSpeedInfo;
     public CapacityCardGaugeInfo defRotSpeedInfo;
     [Space]
-    public CapacityCardGaugeInfo accInfo;
+    public CapacityCardGaugeInfo anticipationInfo;
     public CapacityCardGaugeInfo sizeInfo;
     [Space]
     public CapacityCardGaugeInfo reactivityInfo;
