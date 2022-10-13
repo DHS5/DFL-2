@@ -16,7 +16,7 @@ public class DefendBAS : BackAttackerState
 
         animator.SetTrigger("BackBlock");
 
-        agent.speed = att.defenseSpeed;
+        agent.speed = attacker.PlayerSpeed + att.defenseSpeed;
         agent.angularSpeed = att.defenseRotSpeed;
     }
 
@@ -25,7 +25,7 @@ public class DefendBAS : BackAttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.playerDir * att.anticipation + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + AnticipationDir(att.anticipationType) * att.anticipation + att.defenseDistMultiplier * EnemyDir(att.anticipationType, att.anticipation);
 
 
         if (attacker.targetPos.z < attacker.playerPos.z - attacker.ProtectionRadius || attacker.playerTargetDist + 2 < attacker.playerDist)

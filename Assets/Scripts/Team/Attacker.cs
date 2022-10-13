@@ -19,6 +19,7 @@ public class Attacker : MonoBehaviour
 
     [HideInInspector] public Player player;
     [HideInInspector] public Enemy target;
+    [HideInInspector] public NavMeshAgent targetAgent;
 
     [HideInInspector] public Vector3 destination;
 
@@ -33,6 +34,8 @@ public class Attacker : MonoBehaviour
 
     [HideInInspector] public float playerDist;
     [HideInInspector] public float playerTargetDist;
+    [HideInInspector] public float playerTargetXDist;
+    [HideInInspector] public float playerTargetZDist;
     [HideInInspector] public Vector3 player2TargetDir;
 
     
@@ -44,6 +47,8 @@ public class Attacker : MonoBehaviour
 
 
     public float ProtectionRadius { get { return teamManager.protectionRadius; } }
+
+    public float PlayerSpeed { get { return player.controller.playerAtt.NormalSpeed; } }
 
 
     protected virtual void Awake()
@@ -65,7 +70,6 @@ public class Attacker : MonoBehaviour
     public virtual void GetAttribute(AttackerAttributesSO att)
     {
         Attribute = att;
-        navMeshAgent.speed = att.speed;
         navMeshAgent.acceleration = att.acceleration;
         navMeshAgent.angularSpeed = att.rotationSpeed;
         navMeshAgent.autoBraking = att.autoBraking;
@@ -124,12 +128,16 @@ public class Attacker : MonoBehaviour
             // Gets the player's position
             targetPos = target.transform.position;
             // Gets the player direction
-            targetDir = target.GetComponent<NavMeshAgent>().velocity.normalized;
+            targetDir = targetAgent.velocity.normalized;
 
             // Gets the distance between player and attacker
             playerDist = Vector3.Distance(playerPos, transform.position);
             // Gets the distance between player and target
             playerTargetDist = Vector3.Distance(playerPos, targetPos);
+            // Gets the X-distance between player and target
+            playerTargetXDist = Mathf.Abs(playerPos.x - targetPos.x);
+            // Gets the Z-distance between player and target
+            playerTargetZDist = targetPos.z - playerPos.z;
             // Gets the direction from player to target
             player2TargetDir = (targetPos - playerPos).normalized;
         }
@@ -155,6 +163,7 @@ public class Attacker : MonoBehaviour
         teamManager.SuppEnemy(enemy);
         hasDefender = true;
         target = enemy;
+        targetAgent = enemy.navMeshAgent;
     }
 
     public virtual void UnTarget()

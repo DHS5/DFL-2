@@ -7,12 +7,12 @@ public abstract class AttackerAttributesSO : ScriptableObject
 {
     public int level;
 
-    public abstract AttackerType Type { get; }
+    public abstract AttackerPosition Position { get; }
+    public AttackerType Type;
 
     [Header("Physic parameters")]
     public Vector3 size;
     [Space]
-    public float speed;
     public float acceleration;
     public int rotationSpeed;
     public bool autoBraking;
@@ -28,6 +28,9 @@ public abstract class AttackerAttributesSO : ScriptableObject
     [Space]
     public float positionRadius;
     [Range(0, 1)] public float defenseDistMultiplier;
+    [Space]
+    [Tooltip("If TRUE --> player anticipation\nif FALSE --> enemy anticipation")]
+    public bool anticipationType;
 }
 
 

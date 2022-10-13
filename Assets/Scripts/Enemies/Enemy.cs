@@ -12,7 +12,7 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public GameObject enemy;
 
     [Tooltip("Nav Mesh Agent of the enemy")]
-    protected NavMeshAgent navMeshAgent;
+    [HideInInspector] public NavMeshAgent navMeshAgent;
 
     [HideInInspector] public AudioSource audioSource;
 

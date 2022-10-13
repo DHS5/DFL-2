@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendSAS : SideAttackerState
+public class GuardSAS : SideAttackerState
 {
-    public DefendSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
+    public GuardSAS(SideAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
     }
@@ -17,7 +17,7 @@ public class DefendSAS : SideAttackerState
         animator.SetTrigger("SideBlock");
         animator.SetFloat("Side", (int)att.Side);
 
-        agent.speed = att.defenseSpeed;
+        agent.speed = attacker.PlayerSpeed + att.defenseSpeed;
         agent.angularSpeed = att.defenseRotSpeed;
     }
 
@@ -26,7 +26,7 @@ public class DefendSAS : SideAttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.playerDir * att.anticipation + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + AnticipationDir(att.anticipationType) * att.anticipation + att.defenseDistMultiplier * EnemyDir(att.anticipationType, att.anticipation);
 
 
         if (!attacker.IsThreat() || attacker.playerTargetDist + 2 < attacker.playerDist)

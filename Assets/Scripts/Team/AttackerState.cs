@@ -25,6 +25,7 @@ public abstract class AttackerState
 
     protected float startTime;
 
+    //protected Vector3 DestinationDir
 
     public AttackerState(Attacker _attacker, NavMeshAgent _agent, Animator _animator)
     {
@@ -62,5 +63,19 @@ public abstract class AttackerState
         }
 
         return this;
+    }
+
+
+
+    protected Vector3 AnticipationDir(bool anticipationType)
+    {
+        return anticipationType ? attacker.playerDir : Vector3.zero;
+    }
+    protected Vector3 EnemyDir(bool anticipationType, float anticipation)
+    {
+        if (anticipationType) return attacker.player2TargetDir * attacker.playerTargetDist;
+        Vector3 enemyDest = attacker.targetPos + attacker.targetDir * anticipation;
+        float dist = Vector3.Distance(enemyDest, attacker.playerPos);
+        return (enemyDest - attacker.playerPos).normalized * dist;
     }
 }

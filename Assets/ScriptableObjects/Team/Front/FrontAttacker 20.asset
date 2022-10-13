@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27ecff514cc6664b8fbaf85bc455645, type: 3}
   m_Name: FrontAttacker 20
   m_EditorClassIdentifier: 
-  level: 20
-  size: {x: 1.3, y: 1.3, z: 1.3}
-  speed: 18
-  acceleration: 16
+  level: 11
+  Type: 0
+  size: {x: 1.25, y: 1.25, z: 1.25}
+  acceleration: 15
   rotationSpeed: 1080
   autoBraking: 1
-  back2PlayerSpeed: 21
-  defenseSpeed: 19
+  back2PlayerSpeed: 3
+  defenseSpeed: 2
   defenseRotSpeed: 2160
   reactivity: 0
   anticipation: 0.8
-  positionRadius: 5
-  defenseDistMultiplier: 0.15
+  positionRadius: 8
+  defenseDistMultiplier: 0.4
+  anticipationType: 1
+  blockDistance: 0
+  blockAngle: 0

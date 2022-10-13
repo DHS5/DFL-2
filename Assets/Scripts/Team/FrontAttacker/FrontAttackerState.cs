@@ -15,4 +15,15 @@ public class FrontAttackerState : AttackerState
 
         att = attacker.Att;
     }
+
+
+    protected AttackerState Defend()
+    {
+        return att.Type switch
+        {
+            AttackerType.GUARD => new GuardFAS(attacker, agent, animator),
+            AttackerType.BLOCKER => new BlockFAS(attacker, agent, animator),
+            _ => new GuardFAS(attacker, agent, animator),
+        };
+    }
 }

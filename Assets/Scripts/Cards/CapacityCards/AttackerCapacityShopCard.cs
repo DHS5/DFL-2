@@ -41,7 +41,7 @@ public class AttackerCapacityShopCard : MonoBehaviour
 
     public void ApplyInfos(AttackerAttributesSO att)
     {
-        info.speedInfo.value = att.speed;
+        info.speedInfo.value = 0;
         info.defSpeedInfo.value = att.defenseSpeed;
         info.repositionSpeedInfo.value = att.back2PlayerSpeed;
 

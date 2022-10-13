@@ -14,7 +14,7 @@ public class ProtectFAS : FrontAttackerState
     {
         base.Enter();
 
-        agent.speed = attacker.player.controller.playerAtt.NormalSpeed;
+        agent.speed = attacker.PlayerSpeed;
 
         animator.SetTrigger("Run");
     }
@@ -28,7 +28,7 @@ public class ProtectFAS : FrontAttackerState
 
         if (attacker.hasDefender)
         {
-            nextState = new DefendFAS(attacker, agent, animator);
+            nextState = Defend();
             stage = Event.EXIT;
         }
         else if (!attacker.InZone(attacker.transform.position))

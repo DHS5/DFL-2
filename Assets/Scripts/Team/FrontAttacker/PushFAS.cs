@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefendFAS : FrontAttackerState
+public class PushFAS : FrontAttackerState
 {
-    public DefendFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
+    public PushFAS(FrontAttacker _attacker, NavMeshAgent _agent, Animator _animator) : base(_attacker, _agent, _animator)
     {
         name = AState.DEFEND;
     }
@@ -25,7 +25,7 @@ public class DefendFAS : FrontAttackerState
     {
         base.Update();
 
-        attacker.destination = attacker.playerPos + attacker.playerDir * att.anticipation + att.defenseDistMultiplier * attacker.playerTargetDist * attacker.player2TargetDir;
+        attacker.destination = attacker.playerPos + AnticipationDir(att.anticipationType) * att.anticipation + att.defenseDistMultiplier * EnemyDir(att.anticipationType, att.anticipation);
 
 
         if (attacker.targetPos.z < attacker.playerPos.z || attacker.playerTargetDist + 2 < attacker.playerDist)

@@ -14,7 +14,8 @@ public class BackSAS : SideAttackerState
     {
         base.Enter();
 
-        agent.speed = att.back2PlayerSpeed;
+        agent.speed = attacker.PlayerSpeed + att.back2PlayerSpeed;
+        agent.avoidancePriority = 99;
 
         animator.SetTrigger("Sprint");
     }
@@ -33,7 +34,7 @@ public class BackSAS : SideAttackerState
         }
         else if (attacker.hasDefender)
         {
-            nextState = new DefendSAS(attacker, agent, animator);
+            nextState = Defend();
             stage = Event.EXIT;
         }
     }
@@ -43,5 +44,6 @@ public class BackSAS : SideAttackerState
         base.Exit();
 
         animator.ResetTrigger("Sprint");
+        agent.avoidancePriority = 0;
     }
 }

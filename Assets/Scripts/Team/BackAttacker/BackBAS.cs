@@ -14,7 +14,8 @@ public class BackBAS : BackAttackerState
     {
         base.Enter();
 
-        agent.speed = att.back2PlayerSpeed;
+        agent.speed = attacker.PlayerSpeed + att.back2PlayerSpeed;
+        agent.avoidancePriority = 99;
 
         animator.SetTrigger("Sprint");
     }
@@ -42,5 +43,6 @@ public class BackBAS : BackAttackerState
         base.Exit();
 
         animator.ResetTrigger("Sprint");
+        agent.avoidancePriority = 0;
     }
 }

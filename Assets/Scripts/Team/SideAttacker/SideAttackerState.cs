@@ -15,4 +15,14 @@ public class SideAttackerState : AttackerState
 
         att = attacker.Att;
     }
+
+    protected AttackerState Defend()
+    {
+        return att.Type switch
+        {
+            AttackerType.GUARD => new GuardSAS(attacker, agent, animator),
+            AttackerType.BLOCKER => new BlockSAS(attacker, agent, animator),
+            _ => new GuardSAS(attacker, agent, animator),
+        };
+    }
 }

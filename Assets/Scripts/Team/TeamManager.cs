@@ -4,7 +4,10 @@ using UnityEngine;
 using System.Linq;
 
 
-public enum AttackerType { FRONT = 0, LSIDE = 1, RSIDE = 2, BACK = 3}
+public enum AttackerPosition { FRONT = 0, LSIDE = 1, RSIDE = 2, BACK = 3 }
+
+[System.Serializable]
+public enum AttackerType { GUARD = 0, BLOCKER = 1, PUSHER = 2 }
 
 /// <summary>
 /// Manages the team effort of the attackers
@@ -52,6 +55,7 @@ public class TeamManager : MonoBehaviour
     [Header("Limit angles")]
     public float frontAngle;
     public float backAngle;
+    public float sideAngleMargin;
 
     // ### Properties ###
     public Vector3 TeamDir
@@ -162,7 +166,7 @@ public class TeamManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        Attacker attacker = Instantiate(attackerBasePrefabs[(int)att.Type], randomPos, Quaternion.identity).GetComponent<Attacker>();
+        Attacker attacker = Instantiate(attackerBasePrefabs[(int)att.Position], randomPos, Quaternion.identity).GetComponent<Attacker>();
         attacker.player = player;
         attacker.GetAttribute(att);
         attacker.teamManager = this;
@@ -171,18 +175,18 @@ public class TeamManager : MonoBehaviour
 
     private void AddAttackerToList(Attacker a)
     {
-        switch (a.Attribute.Type)
+        switch (a.Attribute.Position)
         {
-            case AttackerType.FRONT:
+            case AttackerPosition.FRONT:
                 frontAttackers.Add(a);
                 break;
-            case AttackerType.BACK:
+            case AttackerPosition.BACK:
                 backAttackers.Add(a);
                 break;
-            case AttackerType.LSIDE:
+            case AttackerPosition.LSIDE:
                 sideLAttackers.Add(a);
                 break;
-            case AttackerType.RSIDE:
+            case AttackerPosition.RSIDE:
                 sideRAttackers.Add(a);
                 break;
             default:
@@ -270,16 +274,20 @@ public class TeamManager : MonoBehaviour
     {
         // Front
         if (angle <= frontAngle)
+        {
             freeAttackers = new List<Attacker>(frontAttackers);
+            if (angle >= frontAngle - sideAngleMargin)
+            {
+                foreach (Attacker a in xDist < 0 ? sideLAttackers : sideRAttackers)
+                    freeAttackers.Add(a);
+            }
+        }
         // Back
         else if (angle >= backAngle)
             freeAttackers = new List<Attacker>(backAttackers);
-        // L Side
-        else if (xDist < 0)
-            freeAttackers = new List<Attacker>(sideLAttackers);
-        // R Side
+        // L / R Side
         else
-            freeAttackers = new List<Attacker>(sideRAttackers);
+            freeAttackers = new List<Attacker>(xDist < 0 ? sideLAttackers : sideRAttackers);
         
 
         busyAttackers = new List<Attacker>(freeAttackers);
