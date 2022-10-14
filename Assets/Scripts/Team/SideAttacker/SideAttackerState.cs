@@ -22,6 +22,7 @@ public class SideAttackerState : AttackerState
         {
             AttackerType.GUARD => new GuardSAS(attacker, agent, animator),
             AttackerType.BLOCKER => new BlockSAS(attacker, agent, animator),
+            AttackerType.PUSHER => new PushSAS(attacker, agent, animator),
             _ => new GuardSAS(attacker, agent, animator),
         };
     }

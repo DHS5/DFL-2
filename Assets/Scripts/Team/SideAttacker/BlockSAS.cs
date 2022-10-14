@@ -7,6 +7,8 @@ public class BlockSAS : SideAttackerState
 {
     private bool blocked = false;
 
+    readonly float blockMargin = 0.5f;
+
     private float TargetDist
     {
         get { return Vector3.Distance(attacker.transform.position, attacker.targetPos); }
@@ -18,7 +20,7 @@ public class BlockSAS : SideAttackerState
             Vector3 aPos = attacker.transform.position;
             Vector3 tPos = attacker.targetPos;
             Vector3 pPos = attacker.playerPos;
-            return aPos.x < Mathf.Max(tPos.x, pPos.x) && aPos.x > Mathf.Min(tPos.x, pPos.x) && aPos.z < Mathf.Max(tPos.z, pPos.z) && aPos.z > Mathf.Min(tPos.z, pPos.z);
+            return aPos.x < Mathf.Max(tPos.x, pPos.x) && aPos.x > Mathf.Min(tPos.x, pPos.x) && aPos.z > Mathf.Min(tPos.z, pPos.z) && att.blockType ? aPos.z > tPos.z + blockMargin : true;//&& aPos.z < Mathf.Max(tPos.z, pPos.z)
         }
     }
 
@@ -33,6 +35,7 @@ public class BlockSAS : SideAttackerState
 
         agent.speed = attacker.PlayerSpeed + att.defenseSpeed;
         agent.angularSpeed = att.defenseRotSpeed;
+        agent.avoidancePriority = 0;
     }
 
 
@@ -42,9 +45,9 @@ public class BlockSAS : SideAttackerState
 
         //attacker.destination = attacker.playerPos + AnticipationDir(att.anticipationType) * att.anticipation + att.defenseDistMultiplier * EnemyDir(att.anticipationType, att.anticipation);
         //attacker.destination = attacker.targetPos + att.anticipation * attacker.targetDir;
-        attacker.destination = attacker.targetPos + (att.anticipationType ? att.anticipation : TargetDist * att.defenseDistMultiplier) * attacker.targetDir;
+        attacker.destination = attacker.targetPos + TargetDist * att.defenseDistMultiplier * attacker.targetDir + att.anticipation * attacker.playerDir;
 
-        if (!blocked && attacker.playerPos.z < attacker.transform.position.z && TargetDist < att.blockDistance && InTheMiddle)
+        if (!blocked && attacker.playerPos.z + attacker.playerTargetZDist * att.defenseDistMultiplier < attacker.transform.position.z && TargetDist < att.blockDistance && InTheMiddle)
         {
             blocked = true;
 
@@ -73,5 +76,6 @@ public class BlockSAS : SideAttackerState
         agent.isStopped = false;
         agent.updateRotation = true;
         agent.angularSpeed = att.rotationSpeed;
+        agent.avoidancePriority = 99;
     }
 }

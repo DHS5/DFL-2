@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AttackerCapacityShopCard : MonoBehaviour
 {
@@ -8,13 +9,12 @@ public class AttackerCapacityShopCard : MonoBehaviour
     public AttackerCapacityShopCardInfo info;
 
     [Header("UI components")]
-    [SerializeField] private CapacityCardGauge speedGauge;
+    [SerializeField] private TextMeshProUGUI typeText;
+    [Space]
     [SerializeField] private CapacityCardGauge defSpeedGauge;
     [SerializeField] private CapacityCardGauge repositionSpeedGauge;
-    [Space]
     [SerializeField] private CapacityCardGauge rotationSpeedGauge;
     [SerializeField] private CapacityCardGauge defRotationSpeedGauge;
-    [SerializeField] private CapacityCardGauge sizeSpeedGauge;
     [Space]
     [SerializeField] private CapacityCardGauge anticipationGauge;
     [SerializeField] private CapacityCardGauge reactivityGauge;
@@ -24,16 +24,14 @@ public class AttackerCapacityShopCard : MonoBehaviour
 
     public void ApplyInfos(AttackerCapacityShopCardInfo infos)
     {
-        speedGauge.ApplyGaugeInfo(infos.speedInfo);
+        typeText.text = infos.type;
+
         defSpeedGauge.ApplyGaugeInfo(infos.defSpeedInfo);
         repositionSpeedGauge.ApplyGaugeInfo(infos.repositionSpeedInfo);
-
         rotationSpeedGauge.ApplyGaugeInfo(infos.rotSpeedInfo);
         defRotationSpeedGauge.ApplyGaugeInfo(infos.defRotSpeedInfo);
 
         anticipationGauge.ApplyGaugeInfo(infos.anticipationInfo);
-        sizeSpeedGauge.ApplyGaugeInfo(infos.sizeInfo);
-
         reactivityGauge.ApplyGaugeInfo(infos.reactivityInfo);
         proximityGauge.ApplyGaugeInfo(infos.proximityInfo);
         defProximityGauge.ApplyGaugeInfo(infos.defProximityInfo);
@@ -41,19 +39,17 @@ public class AttackerCapacityShopCard : MonoBehaviour
 
     public void ApplyInfos(AttackerAttributesSO att)
     {
-        info.speedInfo.value = 0;
+        info.type = att.Type.ToString();
+
         info.defSpeedInfo.value = att.defenseSpeed;
         info.repositionSpeedInfo.value = att.back2PlayerSpeed;
-
         info.rotSpeedInfo.value = att.rotationSpeed;
         info.defRotSpeedInfo.value = att.defenseRotSpeed;
 
         info.anticipationInfo.value = att.anticipation;
-        info.sizeInfo.value = att.size.y;
-
         info.reactivityInfo.value = 1 - att.reactivity;
         info.proximityInfo.value = att.positionRadius;
-        info.defProximityInfo.value = att.defenseDistMultiplier;
+        info.defProximityInfo.value = att.defenseDistMultiplier != 0 ? att.defenseDistMultiplier : 1;
 
         ApplyInfos();
     }
@@ -69,7 +65,8 @@ public class AttackerCapacityShopCard : MonoBehaviour
 [System.Serializable]
 public class AttackerCapacityShopCardInfo
 {
-    public CapacityCardGaugeInfo speedInfo;
+    public string type;
+    [Space]
     public CapacityCardGaugeInfo defSpeedInfo;
     public CapacityCardGaugeInfo repositionSpeedInfo;
     [Space]
@@ -77,8 +74,6 @@ public class AttackerCapacityShopCardInfo
     public CapacityCardGaugeInfo defRotSpeedInfo;
     [Space]
     public CapacityCardGaugeInfo anticipationInfo;
-    public CapacityCardGaugeInfo sizeInfo;
-    [Space]
     public CapacityCardGaugeInfo reactivityInfo;
     public CapacityCardGaugeInfo proximityInfo;
     public CapacityCardGaugeInfo defProximityInfo;

@@ -15,7 +15,6 @@ public class BackFAS : FrontAttackerState
         base.Enter();
 
         agent.speed = attacker.PlayerSpeed + att.back2PlayerSpeed;
-        agent.avoidancePriority = 99;
 
         animator.SetTrigger("Sprint");
     }
@@ -43,6 +42,5 @@ public class BackFAS : FrontAttackerState
         base.Exit();
 
         animator.ResetTrigger("Sprint");
-        agent.avoidancePriority = 0;
     }
 }

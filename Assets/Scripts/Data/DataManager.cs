@@ -231,8 +231,8 @@ public class DataManager : MonoBehaviour
             if (playerPrefs.enemyIndex[i] >= cardsContainer.enemyCards.GetCardsByIndex(i).Count) playerPrefs.enemyIndex[i] = 0;
         if (playerPrefs.stadiumIndex >= inventoryData.stadiums.Length) playerPrefs.stadiumIndex = 0;
         if (playerPrefs.parkourIndex >= cardsContainer.parkourCards.Count) playerPrefs.parkourIndex = 0;
-        //for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
-        //    if (playerPrefs.teamIndex[i] >= inventoryData.attackers.Length) playerPrefs.teamIndex[i] = 1; // Playerprefs team corresponds to the attacker number
+        for (int i = 0; i < playerPrefs.teamIndex.Length; i++)
+            if (cardsContainer.teamCards.GetAttacker(playerPrefs.teamIndex[i]) == null) playerPrefs.teamIndex[i] = 1; // Playerprefs team corresponds to the attacker number
     }
 
     private void InitProgression()

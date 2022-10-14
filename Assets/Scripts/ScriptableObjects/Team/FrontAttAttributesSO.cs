@@ -9,8 +9,8 @@ public class FrontAttAttributesSO : AttackerAttributesSO
     public override AttackerPosition Position { get { return AttackerPosition.FRONT; } }
 
     public float blockDistance;
-    public float blockAngle;
     public float blockLate;
+    public float blockAngle;
 }
 
 

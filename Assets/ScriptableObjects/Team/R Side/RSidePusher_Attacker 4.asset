@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27ecff514cc6664b8fbaf85bc455645, type: 3}
-  m_Name: FrontAttacker 19
+  m_Script: {fileID: 11500000, guid: c835091eb8a90f44bb722a5fe6178d0f, type: 3}
+  m_Name: RSidePusher_Attacker 4
   m_EditorClassIdentifier: 
-  level: 12
+  level: 11
   Type: 2
   size: {x: 1.1, y: 1.1, z: 1.1}
-  acceleration: 20
-  rotationSpeed: 2160
+  acceleration: 18
+  rotationSpeed: 7380
   autoBraking: 1
-  back2PlayerSpeed: 5
+  back2PlayerSpeed: 7
   defenseSpeed: 3
-  defenseRotSpeed: 3240
+  defenseRotSpeed: 10800
   reactivity: 0
-  anticipation: 0.5
-  positionRadius: 12
-  defenseDistMultiplier: 0.9
+  anticipation: 1
+  positionRadius: 6
+  defenseDistMultiplier: 0.7
   anticipationType: 0
   blockDistance: 0
-  blockAngle: 0
+  blockLate: 0

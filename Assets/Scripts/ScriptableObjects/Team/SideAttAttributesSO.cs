@@ -9,8 +9,9 @@ public abstract class SideAttAttributesSO : AttackerAttributesSO
     public virtual SIDE Side { get; }
 
     public float blockDistance;
-    public float blockAngle;
     public float blockLate;
+    [Tooltip("If TRUE --> far block\nIf FALSE --> side block")]
+    public bool blockType;
 }
 
 

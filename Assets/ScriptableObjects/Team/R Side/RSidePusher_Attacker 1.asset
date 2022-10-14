@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c835091eb8a90f44bb722a5fe6178d0f, type: 3}
-  m_Name: RSideAttacker 20
+  m_Name: RSidePusher_Attacker 1
   m_EditorClassIdentifier: 
-  level: 20
-  Type: 0
-  size: {x: 1.2, y: 1.2, z: 1.2}
-  acceleration: 18
-  rotationSpeed: 3240
+  level: 2
+  Type: 2
+  size: {x: 1.1, y: 1.1, z: 1.1}
+  acceleration: 13
+  rotationSpeed: 3600
   autoBraking: 1
-  back2PlayerSpeed: 7
-  defenseSpeed: 4
-  defenseRotSpeed: 5400
-  reactivity: 0
-  anticipation: 1
-  positionRadius: 8
-  defenseDistMultiplier: 0.35
-  anticipationType: 0
+  back2PlayerSpeed: 5
+  defenseSpeed: 2
+  defenseRotSpeed: 4950
+  reactivity: 0.06
+  anticipation: 1.5
+  positionRadius: 12
+  defenseDistMultiplier: 0
+  anticipationType: 1
   blockDistance: 0
-  blockAngle: 0
+  blockLate: 0

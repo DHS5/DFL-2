@@ -7,15 +7,9 @@ public class BlockFAS : FrontAttackerState
 {
     private bool blocked = false;
 
-    private bool InTheMiddle
+    private float BlockAngle
     {
-        get
-        {
-            Vector3 aPos = attacker.transform.position;
-            Vector3 tPos = attacker.targetPos;
-            Vector3 pPos = attacker.playerPos;
-            return aPos.x < Mathf.Max(tPos.x, pPos.x) && aPos.x > Mathf.Min(tPos.x, pPos.x) && aPos.z < Mathf.Max(tPos.z, pPos.z) && aPos.z > Mathf.Min(tPos.z, pPos.z);
-        }
+        get { return Mathf.Abs(Vector3.Angle(-attacker.player2TargetDir, attacker.transform.position - attacker.targetPos)); }
     }
     private float TargetDist
     {
@@ -33,6 +27,7 @@ public class BlockFAS : FrontAttackerState
 
         agent.speed = attacker.PlayerSpeed + att.defenseSpeed;
         agent.angularSpeed = att.defenseRotSpeed;
+        agent.avoidancePriority = 0;
     }
 
 
@@ -42,8 +37,7 @@ public class BlockFAS : FrontAttackerState
 
         attacker.destination = attacker.playerPos + att.defenseDistMultiplier * EnemyDir(att.anticipationType, att.anticipation);
 
-
-        if (!blocked && attacker.playerPos.z < attacker.transform.position.z && TargetDist < att.blockDistance && InTheMiddle)// && TargetAngle < att.blockAngle)
+        if (!blocked && attacker.playerPos.z < attacker.transform.position.z && TargetDist < att.blockDistance && BlockAngle < att.blockAngle)// && TargetAngle < att.blockAngle)
         {
             blocked = true;
 
@@ -70,5 +64,6 @@ public class BlockFAS : FrontAttackerState
         attacker.UnTarget();
         agent.isStopped = false;
         agent.angularSpeed = att.rotationSpeed;
+        agent.avoidancePriority = 99;
     }
 }

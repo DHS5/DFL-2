@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: BackAttacker 4
   m_EditorClassIdentifier: 
   level: 4
-  size: {x: 1.25, y: 1.25, z: 1.25}
-  speed: 11.5
-  acceleration: 12
-  rotationSpeed: 720
+  Type: 0
+  size: {x: 1.15, y: 1.15, z: 1.15}
+  acceleration: 11
+  rotationSpeed: 1440
   autoBraking: 1
-  back2PlayerSpeed: 15
-  defenseSpeed: 13
-  defenseRotSpeed: 1080
-  reactivity: 0
-  anticipation: 0
-  positionRadius: 8
+  back2PlayerSpeed: 3.5
+  defenseSpeed: 2.5
+  defenseRotSpeed: 2160
+  reactivity: 0.03
+  anticipation: 0.5
+  positionRadius: 7
   defenseDistMultiplier: 0.45
-  anticipationType: 1
+  anticipationType: 0

@@ -18,6 +18,7 @@ public class DefendBAS : BackAttackerState
 
         agent.speed = attacker.PlayerSpeed + att.defenseSpeed;
         agent.angularSpeed = att.defenseRotSpeed;
+        agent.avoidancePriority = 0;
     }
 
 
@@ -43,5 +44,6 @@ public class DefendBAS : BackAttackerState
 
         attacker.UnTarget();
         agent.angularSpeed = att.rotationSpeed;
+        agent.avoidancePriority = 99;
     }
 }

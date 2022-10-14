@@ -49,12 +49,16 @@ MonoBehaviour:
   teamManager: {fileID: 0}
   player: {fileID: 0}
   target: {fileID: 0}
+  targetAgent: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   playerPos: {x: 0, y: 0, z: 0}
   playerDir: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}
+  playerDist: 0
   playerTargetDist: 0
+  playerTargetXDist: 0
+  playerTargetZDist: 0
   player2TargetDir: {x: 0, y: 0, z: 0}
   hasDefender: 0
 --- !u!195 &-2089228296504028350
@@ -69,7 +73,7 @@ NavMeshAgent:
   m_Radius: 0.7
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 0
+  avoidancePriority: 99
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1

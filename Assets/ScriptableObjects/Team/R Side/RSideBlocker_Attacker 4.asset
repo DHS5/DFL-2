@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c835091eb8a90f44bb722a5fe6178d0f, type: 3}
+  m_Name: RSideBlocker_Attacker 4
+  m_EditorClassIdentifier: 
+  level: 10
+  Type: 1
+  size: {x: 1.25, y: 1.25, z: 1.25}
+  acceleration: 16
+  rotationSpeed: 3240
+  autoBraking: 1
+  back2PlayerSpeed: 7
+  defenseSpeed: 4
+  defenseRotSpeed: 5400
+  reactivity: 0
+  anticipation: 5
+  positionRadius: 6
+  defenseDistMultiplier: 0.75
+  anticipationType: 0
+  blockDistance: 5
+  blockLate: 1
+  blockType: 1
