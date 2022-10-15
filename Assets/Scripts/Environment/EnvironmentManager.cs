@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum EnvironmentStyle { SUN = 0, RAIN = 1, NIGHT = 2, ZOMBIE = 3, FOG = 4 }
+public enum EnvironmentStyle { SUN = 0, RAIN = 1, NIGHT = 2, ZOMBIE = 3, FOG = 4, SUNSET1 = 5, SUNSET2 = 6 }
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class EnvironmentManager : MonoBehaviour
 
     [SerializeField] private Material[] skyboxes;
     [SerializeField] private GameObject[] directionnalLights;
+    [SerializeField] private float[] lightIntensities;
 
 
     [Header("Environment parameters")]
@@ -51,8 +52,11 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ActuEnvironment()
     {
-        RenderSettings.skybox = skyboxes[(int)envStyleNumber];
-        dirLight = Instantiate(directionnalLights[(int)envStyleNumber], Vector3.zero, dirLightRotation).GetComponent<Light>();
+        int style = (int)envStyleNumber;
+
+        RenderSettings.skybox = skyboxes[style];
+        dirLight = Instantiate(directionnalLights[style], Vector3.zero, dirLightRotation).GetComponent<Light>();
+        RenderSettings.ambientIntensity = lightIntensities[style];
     }
 
 
@@ -88,7 +92,6 @@ public class EnvironmentManager : MonoBehaviour
         if (main.GameManager.gameData.gameWeather == GameWeather.NIGHT) // NIGHT
         {
             envStyleNumber = EnvironmentStyle.NIGHT;
-            RenderSettings.ambientIntensity = nightLightIntensity;
         }
 
         // # Modes #
@@ -107,8 +110,16 @@ public class EnvironmentManager : MonoBehaviour
     public void GenerateEnvironment()
     {
         // # Modes #
-        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.WaveNumber == 6) // !ZOMBIE
-            BedTime(); // Night time when player reaching wave 10
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
+        {
+            if (main.GameManager.WaveNumber == 6) // !ZOMBIE
+                BedTime(); // Night time when player reaching wave 10
+            else if (main.GameManager.gameData.gameWeather == GameWeather.SUN)
+            {
+                if (main.GameManager.WaveNumber == 4) Sunset1();
+                else if (main.GameManager.WaveNumber == 5) Sunset2();
+            }
+        }
 
         // # Weather #
         if (main.GameManager.gameData.gameWeather == GameWeather.RAIN) // RAIN
@@ -140,11 +151,22 @@ public class EnvironmentManager : MonoBehaviour
         main.PlayerManager.player.effects.Rain(true, particleAddition);
     }
 
-    public void BedTime()
+    private void BedTime()
     {
         envStyleNumber = EnvironmentStyle.NIGHT;
         Destroy(dirLight.gameObject);
         ActuEnvironment();
-        RenderSettings.ambientIntensity = nightLightIntensity;
+    }
+    private void Sunset1()
+    {
+        envStyleNumber = EnvironmentStyle.SUNSET1;
+        Destroy(dirLight.gameObject);
+        ActuEnvironment();
+    }
+    private void Sunset2()
+    {
+        envStyleNumber = EnvironmentStyle.SUNSET2;
+        Destroy(dirLight.gameObject);
+        ActuEnvironment();
     }
 }
