@@ -21,7 +21,9 @@ public class HowToButton : MonoBehaviour
         {
             toggles[i].gameObject.SetActive(true);
         }
+        toggles[0].isOn = true;
     }
+
 
 
     public void SetSprite(int i)

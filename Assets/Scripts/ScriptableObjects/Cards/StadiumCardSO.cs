@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public enum StadiumEnum { NULL, TRAINING, POOL, ARROWHEAD, DOME, TIGER, APPLES, COLISEUM }
+public enum StadiumEnum { NULL, TRAINING, POOL, ARROWHEAD, DOME, TIGER, APPLES, COLISEUM, SOFI }
 
 [CreateAssetMenu(fileName = "StadiumCard", menuName = "ScriptableObjects/Card/StadiumCard", order = 1)]
 public class StadiumCardSO : ShopCardSO
