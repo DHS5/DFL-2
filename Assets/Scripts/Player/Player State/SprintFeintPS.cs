@@ -17,6 +17,8 @@ public class SprintFeintPS : PlayerState
         controller.Speed = att.SprintFeintSpeed;
         controller.SideSpeed = Vector3.Dot(controller.Velocity.normalized * att.SprintFeintSpeed, Vector3.right);
 
+        SlowMotion(UD.sprintFeintTime, 7.5f, 2);
+
         base.Enter();
     }
 

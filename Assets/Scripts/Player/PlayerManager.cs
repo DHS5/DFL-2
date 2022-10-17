@@ -154,4 +154,20 @@ public class PlayerManager : MonoBehaviour
     {
         main.GameUIManager.ModifyLife(state, lifeNumber);
     }
+
+
+    // Other
+
+    public int EnemyNumber(float radius, out bool zombie)
+    {
+        zombie = main.GameManager.gameData.gameMode == GameMode.ZOMBIE;
+
+        int total = 0;
+        foreach (Enemy e in main.EnemiesManager.enemies)
+        {
+            if (e.rawDistance <= radius && e.zDistance > -1) total++;
+        }
+
+        return total;
+    }
 }

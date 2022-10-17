@@ -20,6 +20,8 @@ public class JukePS : PlayerState
         controller.Speed = att.JukeSpeed;
         controller.SideSpeed = att.JukeSideSpeed * startSide;
 
+        SlowMotion(UD.jukeTime, 8f, 3);
+
         base.Enter();
     }
 

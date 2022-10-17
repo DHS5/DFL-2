@@ -18,7 +18,9 @@ public class HighKneePS : PlayerState
         SetFloat("HangTime", 1 / controller.Jump(att.HighKneeCost, att.HighKneeHeight));
 
         player.playerManager.JumpUIAnimation(att.HighKneeCost);
-        
+
+        SlowMotion(0.5f, 8f, 2);
+
         base.Enter();
     }
 

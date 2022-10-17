@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 public enum PState 
-{ RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , SPRINTFEINT , FLIP , HIGHKNEE , GAMEOVER , SLIP , HURDLE }
+{ RUN , SLOWRUN , SIDERUN , SLOWSIDERUN , SPRINT , JUMP , FEINT , JUKE , SPIN , SLIDE , SPRINTFEINT , FLIP , HIGHKNEE , 
+    GAMEOVER , SLIP , HURDLE }
 
 
 public abstract class PlayerState
@@ -109,10 +110,32 @@ public abstract class PlayerState
         }
 
     }
-
     protected void PlayerOrientation()
     {
         PlayerOrientation(false);
+    }
+
+    protected void SlowMotion(float time, float radius, int min)
+    {
+        int enemyNumber = player.playerManager.EnemyNumber(radius, out bool zombie);
+        if (enemyNumber >= min * (zombie ? 2 : 1))
+        {
+            player.StartCoroutine(SlowmoCR(time));
+            player.effects.SlowMoVolume(time+0.5f);
+        }
+    }
+    private IEnumerator SlowmoCR(float time)
+    {
+        float max = 1;
+        float min = 0.25f;
+        float sample = 100;
+        time += 0.5f;
+        Time.timeScale = min;
+        for (int i = 0; i < sample; i++)
+        {
+            Time.timeScale += (max - min) / sample;
+            yield return new WaitForSeconds(time / sample);
+        }
     }
 
     // Animators functions

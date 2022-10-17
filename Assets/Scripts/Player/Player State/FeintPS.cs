@@ -18,6 +18,8 @@ public class FeintPS : PlayerState
         controller.Speed = att.FeintSpeed;
         controller.SideSpeed = att.FeintSideSpeed * startSide;
 
+        SlowMotion(UD.feintTime, 8f, 2);
+
         base.Enter();
     }
 

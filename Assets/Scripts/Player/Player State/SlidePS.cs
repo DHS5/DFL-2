@@ -18,6 +18,8 @@ public class SlidePS : PlayerState
         controller.Speed = att.SlideSpeed;
         controller.SideSpeed = Vector3.Dot(controller.Velocity.normalized * att.SlideSpeed, Vector3.right);
 
+        SlowMotion(UD.slideTime, 7f, 2);
+
         base.Enter();
     }
 

@@ -18,7 +18,9 @@ public class FlipPS : PlayerState
         controller.Speed = att.FlipSpeed;
 
         player.playerManager.JumpUIAnimation(att.FlipCost);
-        
+
+        SlowMotion(0.5f, 8f, 2);
+
         base.Enter();
     }
 

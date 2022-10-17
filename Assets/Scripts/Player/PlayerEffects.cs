@@ -16,6 +16,9 @@ public class PlayerEffects : MonoBehaviour
 
     [Tooltip("Volume for the bonus post processing")]
     [SerializeField] private Volume bonusVolume;
+    
+    [Tooltip("Volume for the SlowMo post processing")]
+    [SerializeField] private Volume slowmoVolume;
 
     [Header("VFX game objects")]
     [Tooltip("Rain particle system")]
@@ -141,6 +144,25 @@ public class PlayerEffects : MonoBehaviour
 
         bonusVolume.gameObject.SetActive(false);
         bonusVolume.weight = 1;
+    }
+    
+    public void SlowMoVolume(float time)
+    {
+        slowmoVolume.gameObject.SetActive(true);
+        slowmoVolume.weight = 1;
+        StartCoroutine(SlowMoVolumeCR(time));
+    }
+
+    private IEnumerator SlowMoVolumeCR(float time)
+    {
+        float sample = 100;
+        for (int i = 0; i < sample; i++)
+        {
+            yield return new WaitForSeconds(time / sample);
+            slowmoVolume.weight -= 1 / sample;
+        }
+
+        slowmoVolume.gameObject.SetActive(false);
     }
 
     // # VFX #

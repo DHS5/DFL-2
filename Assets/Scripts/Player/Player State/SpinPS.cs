@@ -21,6 +21,8 @@ public class SpinPS : PlayerState
         controller.Speed = att.SpinSpeed;
         controller.SideSpeed = att.SpinSideSpeed * startSide;
 
+        SlowMotion(UD.spinTime, 5f, 1);
+
         base.Enter();
     }
 
