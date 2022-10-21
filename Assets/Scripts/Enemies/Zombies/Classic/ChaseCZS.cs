@@ -8,8 +8,6 @@ public class ChaseCZS : ClassicZState
     public ChaseCZS(ClassicZombie _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.CHASE;
-
-        enemy = _enemy;
     }
 
     public override void Enter()
@@ -23,7 +21,7 @@ public class ChaseCZS : ClassicZState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity;
 
 
         if (enemy.rawDistance < att.attackDist)

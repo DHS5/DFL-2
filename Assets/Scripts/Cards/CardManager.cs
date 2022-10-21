@@ -221,12 +221,12 @@ public class CardManager : MonoBehaviour
     }
     public void NextCardPlayer()
     {
-        PlayerIndex = Next(PlayerIndex, playerCards.Count - 1);
+        PlayerIndex = Next(PlayerIndex, playerCards.Count - 1, true);
         ActuPlayer();
     }
     public void PrevCardPlayer()
     {
-        PlayerIndex = Prev(PlayerIndex, playerCards.Count - 1);
+        PlayerIndex = Prev(PlayerIndex, playerCards.Count - 1, true);
         ActuPlayer();
     }
     // Enemy
@@ -237,14 +237,14 @@ public class CardManager : MonoBehaviour
     public void NextCardEnemy()
     {
         int i = (int)DataManager.gameData.gameDifficulty;
-        EnemyIndex[i] = Next(EnemyIndex[i], enemyCards[i].Count - 1);
+        EnemyIndex[i] = Next(EnemyIndex[i], enemyCards[i].Count - 1, false);
         DataManager.gameData.enemy = enemyCards[i][EnemyIndex[i]].attribute;
         ActuEnemy();
     }
     public void PrevCardEnemy()
     {
         int i = (int)DataManager.gameData.gameDifficulty;
-        EnemyIndex[i] = Prev(EnemyIndex[i], enemyCards[i].Count - 1);
+        EnemyIndex[i] = Prev(EnemyIndex[i], enemyCards[i].Count - 1, false);
         DataManager.gameData.enemy = enemyCards[i][EnemyIndex[i]].attribute;
         ActuEnemy();
     }
@@ -255,12 +255,12 @@ public class CardManager : MonoBehaviour
     }
     public void NextCardAttacker()
     {
-        AttackerChoiceIndex = Next(AttackerChoiceIndex, attackerCards[AttackerPosition].Count - 1);
+        AttackerChoiceIndex = Next(AttackerChoiceIndex, attackerCards[AttackerPosition].Count - 1, false);
         ActuAttacker();
     }
     public void PrevCardAttacker()
     {
-        AttackerChoiceIndex = Prev(AttackerChoiceIndex, attackerCards[AttackerPosition].Count - 1);
+        AttackerChoiceIndex = Prev(AttackerChoiceIndex, attackerCards[AttackerPosition].Count - 1, false);
         ActuAttacker();
     }
     // Stadium
@@ -296,18 +296,18 @@ public class CardManager : MonoBehaviour
         if (index == limit) { index = 0; }
         else { index++; }
     }
-    private int Next(int index, int limit)
+    private int Next(int index, int limit, bool cycle)
     {
-        return index == limit ? 0 : index + 1;
+        return index == limit ? (cycle ? 0 : index) : index + 1;
     }
     private void Prev(ref int index, int limit)
     {
         if (index == 0) { index = limit; }
         else { index--; }
     }
-    private int Prev(int index, int limit)
+    private int Prev(int index, int limit, bool cycle)
     {
-        return index == 0 ? limit : index - 1;
+        return index == 0 ? (cycle ? limit : index) : index - 1;
     }
 
     private void DestroyCards(GameObject container)

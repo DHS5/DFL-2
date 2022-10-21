@@ -38,25 +38,17 @@ public class InfoButton : MonoBehaviour
     private TMP_Dropdown parentDropdown;
     private Slider parentSlider;
 
-    private bool parentButtonInteractable;
-    private bool parentToggleInteractable;
-    private bool parentDropdownInteractable;
-    private bool parentSliderInteractable;
+    private bool parentInteractable;
 
 
     private void Awake()
     {
         textComponent.text = text;
 
-        windowRect.anchoredPosition = new Vector2(xPos, yPos);
-
-        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, xSize);
-
         SearchParent();
 
-        Rescale();
-
         LayoutRebuilder.ForceRebuildLayoutImmediate(textComponent.transform as RectTransform);
+        Reposition();
     }
 
     private void OnEnable()
@@ -67,6 +59,13 @@ public class InfoButton : MonoBehaviour
 
     // ### Functions ###
 
+    private void Reposition()
+    {
+        windowRect.anchoredPosition = new Vector2(xPos, yPos);
+
+        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, xSize);
+    }
+
     private void SearchParent()
     {
         parentButton = transform.parent.GetComponent<Button>();
@@ -75,29 +74,23 @@ public class InfoButton : MonoBehaviour
         parentSlider = transform.parent.GetComponent<Slider>();
     }
 
-    private void Rescale()
-    {
-        Vector3 parentScale = transform.parent.localScale;
-
-        transform.localScale = new Vector3(1/parentScale.x, 1/parentScale.y, 1/parentScale.z);
-    }
-
     private void GetParentState()
     {
-        if (parentButton != null) parentButtonInteractable = parentButton.interactable;
-        if (parentToggle != null) parentToggleInteractable = parentToggle.interactable;
-        if (parentDropdown != null) parentDropdownInteractable = parentDropdown.interactable;
-        if (parentSlider != null) parentSliderInteractable = parentSlider.interactable;
+        if (parentButton != null) parentInteractable = parentButton.interactable;
+        if (parentToggle != null) parentInteractable = parentToggle.interactable;
+        if (parentDropdown != null) parentInteractable = parentDropdown.interactable;
+        if (parentSlider != null) parentInteractable = parentSlider.interactable;
     }
 
     public void Open(bool state)
     {
         if (state == true) GetParentState();
 
-        if (parentButton != null) parentButton.interactable = !state & parentButtonInteractable;
-        if (parentToggle != null) parentToggle.interactable = !state & parentToggleInteractable;
-        if (parentDropdown != null) parentDropdown.interactable = !state & parentDropdownInteractable;
-        if (parentSlider != null) parentSlider.interactable = !state & parentSliderInteractable;
+        bool i = !state & parentInteractable;
+        if (parentButton != null) parentButton.interactable = i;
+        if (parentToggle != null) parentToggle.interactable = i;
+        if (parentDropdown != null) parentDropdown.interactable = i;
+        if (parentSlider != null) parentSlider.interactable = i;
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(textComponent.transform as RectTransform);
     }

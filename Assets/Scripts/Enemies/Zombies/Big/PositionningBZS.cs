@@ -23,17 +23,12 @@ public class PositionningBZS : BigZState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition + enemy.zDistance * enemy.playerForward;
+        enemy.destination = enemy.playerPosition + Mathf.Min(1, Mathf.Abs(enemy.xDistance) / att.waitXRange) * enemy.zDistance * enemy.playerForward;
 
 
         if (enemy.rawDistance < att.attackDist)
         {
             nextState = new AttackBZS(enemy, agent, animator);
-            stage = Event.EXIT;
-        }
-        else if (enemy.zDistance < 0 || enemy.xDistance < att.waitXRange)
-        {
-            nextState = new WaitBZS(enemy, agent, animator);
             stage = Event.EXIT;
         }
     }

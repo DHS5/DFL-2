@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class AttackCZS : ClassicZState
 {
-    private float baseSpeed;
-
     public AttackCZS(ClassicZombie _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
         name = EState.ATTACK;
@@ -18,8 +16,6 @@ public class AttackCZS : ClassicZState
     {
         base.Enter();
 
-        baseSpeed = agent.speed;
-
         agent.speed = att.attackSpeed;
 
         animator.SetTrigger("Attack");
@@ -29,7 +25,7 @@ public class AttackCZS : ClassicZState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition;
+        enemy.destination = enemy.playerPosition + enemy.playerVelocity;
 
 
         if (enemy.rawDistance > att.attackDist)
@@ -43,7 +39,7 @@ public class AttackCZS : ClassicZState
     {
         base.Exit();
 
-        agent.speed = baseSpeed;
+        agent.speed = att.speed;
 
         animator.ResetTrigger("Attack");
     }

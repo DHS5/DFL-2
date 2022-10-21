@@ -10,6 +10,8 @@ public class WaitCZS : ClassicZState
         name = EState.WAIT;
 
         enemy = _enemy;
+
+        agent.isStopped = true;
     }
 
 
@@ -17,13 +19,17 @@ public class WaitCZS : ClassicZState
     {
         base.Update();
 
-        enemy.destination = enemy.transform.position;
-
-
         if (enemy.playerOnField && enemy.zDistance < att.waitDist)
         {
             nextState = new ChaseCZS(enemy, agent, animator);
             stage = Event.EXIT;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        agent.isStopped = false;
     }
 }

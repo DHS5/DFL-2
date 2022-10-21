@@ -25,9 +25,8 @@ public class Zombie : Enemy
     public override void ChasePlayer()
     {
         base.ChasePlayer();
-
+        
         currentState = currentState.Process();
-
         if (playerG.onField && !gameOver && !dead)
         {
             navMeshAgent.SetDestination(destination);

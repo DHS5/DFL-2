@@ -16,8 +16,8 @@ public class TutorialPopup : MonoBehaviour
 
 
     // UI Components 
-    private TextMeshProUGUI text;
-    private Button okButton;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Button okButton;
 
     protected bool active = false;
 
@@ -26,9 +26,6 @@ public class TutorialPopup : MonoBehaviour
     private void Awake()
     {
         main = FindObjectOfType<MainManager>();
-
-        text = GetComponentInChildren<TextMeshProUGUI>();
-        okButton = text.gameObject.GetComponentInChildren<Button>();
     }
 
     private void Start()
