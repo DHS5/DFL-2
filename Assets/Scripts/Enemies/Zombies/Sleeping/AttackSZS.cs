@@ -18,56 +18,7 @@ public class AttackSZS : SleepingZState
 
         animator.SetTrigger("Attack");
 
-        float distP;
-
-        float speedC = enemy.playerSpeed / agent.speed;
-
-        float A = 1 - (1 / (speedC * speedC));
-
-        float B = - Mathf.Cos(Vector3.Angle(-enemy.toPlayerDirection, enemy.playerVelocity) * Mathf.Deg2Rad) * 2 * enemy.rawDistance;
-
-        float C = enemy.rawDistance * enemy.rawDistance;
-
-        float delta = (B * B) - (4 * A * C);
-
-        if (A == 0)
-        {
-            distP = C / -B;
-            if (distP < 0)
-                distP = att.anticipation;
-        }
-
-        else if (delta > 0)
-        {
-            distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
-
-            if (distP < 0)
-            {
-                Debug.Log("dist < 0");
-                
-                distP = (-B + Mathf.Sqrt(delta)) / (2 * A);
-            }
-        }
-
-        else if (delta == 0)
-        {
-            Debug.Log("Delta = 0");
-
-            distP = -B / (2 * A);
-        }
-
-        else
-        {
-            Debug.Log("Delta < 0");
-
-            distP = 0;
-        }
-
-        enemy.destination = enemy.playerPosition + enemy.playerVelocity * distP;
-        Vector3 destinationDir = (enemy.destination - enemy.transform.position).normalized;
-        enemy.destination += destinationDir * att.anticipation;
-
-        agent.velocity = destinationDir * agent.speed;
+        Attack();
     }
 
     public override void Update()
@@ -86,5 +37,59 @@ public class AttackSZS : SleepingZState
         base.Exit();
 
         animator.ResetTrigger("Attack");
+    }
+
+    private void Attack()
+    {
+        float distP;
+
+        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / agent.speed;
+
+        float A = 1 - (1 / (speedC * speedC));
+
+        float B = -Mathf.Cos(Vector3.Angle(-enemy.toPlayerDirection, enemy.playerVelocity) * Mathf.Deg2Rad) * 2 * enemy.rawDistance;
+
+        float C = enemy.rawDistance * enemy.rawDistance;
+
+        float delta = (B * B) - (4 * A * C);
+
+        if (A == 0)
+        {
+            distP = C / -B;
+            if (distP < 0 || B == 0)
+                distP = att.anticipation;
+        }
+
+        else if (delta > 0)
+        {
+            distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
+
+            if (distP < 0)
+            {
+                distP = Mathf.Abs(-B + Mathf.Sqrt(delta)) / (2 * A);
+            }
+        }
+
+        else if (delta == 0)
+        {
+            Debug.Log("delta = 0");
+
+            distP = -B / (2 * A);
+        }
+
+        else
+        {
+            Debug.Log("delta < 0");
+
+            distP = att.anticipation;
+        }
+
+        enemy.destination = enemy.playerPosition + distP * enemy.playerVelocity;
+
+        enemy.destination += DestinationDir * att.anticipation;
+
+        agent.velocity = DestinationDir * agent.speed;
+
+        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 }

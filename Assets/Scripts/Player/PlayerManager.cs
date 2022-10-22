@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public Player player;
 
 
+    private bool flashlight = false;
     
     // ### Properties ###
     public float HeadAngle
@@ -74,6 +75,18 @@ public class PlayerManager : MonoBehaviour
         set { main.DataManager.gameplayData.tpCameraPos = value; }
     }
 
+    public bool FlashlightActive
+    {
+        get { return flashlight; }
+        set 
+        { 
+            flashlight = value;
+            player.fPPlayer.flashlight.gameObject.SetActive(value);
+            player.fPPlayer.flashlight.difficulty = main.GameManager.gameData.gameDifficulty;
+            player.tPPlayer.flashlight.gameObject.SetActive(value);
+            player.tPPlayer.flashlight.difficulty = main.GameManager.gameData.gameDifficulty;
+        }
+    }
 
 
     private void Awake()
@@ -96,6 +109,8 @@ public class PlayerManager : MonoBehaviour
 
 
         ViewType = main.DataManager.gameplayData.viewType;
+        FlashlightActive = main.GameManager.gameData.gameMode == GameMode.ZOMBIE;
+
     }
 
     public void PositionPlayer()

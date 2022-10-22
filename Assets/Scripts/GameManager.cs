@@ -226,6 +226,7 @@ public class GameManager : MonoBehaviour
         {
             main.PlayerManager.PreparePlayer();
             main.EnvironmentManager.StartEnvironment(); // Environment
+            main.GameUIManager.SetBackview(main.DataManager.gameplayData.backview);
         }
         else main.EnvironmentManager.GenerateEnvironment();
         main.FieldManager.GenerateField(); // Field

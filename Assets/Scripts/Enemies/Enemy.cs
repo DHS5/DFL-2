@@ -165,6 +165,8 @@ public abstract class Enemy : MonoBehaviour
         gameOver = true;
         animator.SetTrigger("GameOver");
         navMeshAgent.isStopped = true;
+
+        currentState.GameOver();
     }
 
     public virtual void Trucked(Collision collision)

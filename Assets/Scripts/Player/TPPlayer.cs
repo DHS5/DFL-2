@@ -20,6 +20,9 @@ public class TPPlayer : MonoBehaviour
     [Tooltip("Game Object of the football")]
     public GameObject football;
 
+    [Tooltip("Game Object of the flashlight")]
+    public Flashlight flashlight;
+
     [Tooltip("Third person renderer")]
     public SkinnedMeshRenderer tpRenderer;
 

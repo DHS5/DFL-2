@@ -176,9 +176,16 @@ public abstract class PlayerState
         }
     }
 
+    public void Flashlight(bool state)
+    {
+        SetLayer("Flashlight", state ? 1 : 0);
+        player.playerManager.FlashlightActive = state;
+    }
+
     public void SetWeapon(bool state, bool bigWeapon)
     {
         SetLayer(bigWeapon ? "BigWeapon Layer" : "SmallWeapon Layer", state ? 1 : 0);
+        Flashlight(!(bigWeapon & state));
     }
 
     public void Shoot(bool fireArm)

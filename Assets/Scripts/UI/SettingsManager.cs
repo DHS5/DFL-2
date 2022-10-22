@@ -40,6 +40,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Slider headAngleSlider;
     [SerializeField] private Slider viewTypeSlider;
     [SerializeField] private Toggle goalpostToggle;
+    [SerializeField] private Toggle backviewToggle;
 
     [SerializeField] private Slider soundVolumeSlider;
     [SerializeField] private Toggle soundOnToggle;
@@ -77,7 +78,11 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.viewType = (ViewType) value;
-            if (main != null) main.PlayerManager.ViewType = (ViewType) value;
+            if (main != null)
+            {
+                main.PlayerManager.ViewType = (ViewType)value;
+                main.GameUIManager.SetBackview(DataManager.gameplayData.backview);
+            }
 
 
             if (value == 0)
@@ -85,12 +90,14 @@ public class SettingsManager : MonoBehaviour
                 sensitivitySlider.interactable = true;
                 smoothRotationSlider.interactable = true;
                 headAngleSlider.interactable = true;
+                backviewToggle.interactable = false;
             }
             else if (value == 1)
             {
                 sensitivitySlider.interactable = false;
                 smoothRotationSlider.interactable = false;
                 headAngleSlider.interactable = false;
+                backviewToggle.interactable = true;
             }
         }
     }
@@ -98,6 +105,14 @@ public class SettingsManager : MonoBehaviour
     public bool Goalpost
     {
         set { DataManager.gameplayData.goalpost = value; }
+    }
+    public bool Backview
+    {
+        set 
+        { 
+            DataManager.gameplayData.backview = value;
+            if (main != null) main.GameUIManager.SetBackview(value);
+        }
     }
 
     public bool InfoButtonsOn
@@ -183,6 +198,7 @@ public class SettingsManager : MonoBehaviour
         headAngleSlider.value = data.headAngle;
         viewTypeSlider.value = (float) data.viewType;
         goalpostToggle.isOn = data.goalpost;
+        backviewToggle.isOn = data.backview;
 
         if (data.viewType == 0)
         {

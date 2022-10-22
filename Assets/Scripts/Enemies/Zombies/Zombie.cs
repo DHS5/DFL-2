@@ -37,6 +37,8 @@ public class Zombie : Enemy
 
     public virtual void Dead()
     {
+       currentState.GameOver();
+
         dead = true;
         navMeshAgent.isStopped = true;
 

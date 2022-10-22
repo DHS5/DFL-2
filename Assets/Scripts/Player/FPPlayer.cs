@@ -16,6 +16,9 @@ public class FPPlayer : MonoBehaviour
 
     [Tooltip("Game Object of the football")]
     public GameObject football;
+    
+    [Tooltip("Game Object of the flashlight")]
+    public Flashlight flashlight;
 
     [Tooltip("First person renderer")]
     public SkinnedMeshRenderer fpRenderer;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL, TIRED, READY, TRUCKED }
+public enum EState { WAIT, POSITIONNING, INTERCEPT, CHASE, ATTACK, FALL, TIRED, READY, TRUCKED, GAMEOVER }
 
 
 public abstract class EnemyState
@@ -77,7 +77,13 @@ public abstract class EnemyState
         return this;
     }
 
-    
+    public EnemyState GameOver()
+    {
+        nextState = new GameOverES(enemy, agent, animator);
+        stage = Event.EXIT;
+        return Process();
+    }
+
     public EnemyState Trucked(Collision collision)
     {
         nextState = new TruckedES(enemy, agent, animator, collision);

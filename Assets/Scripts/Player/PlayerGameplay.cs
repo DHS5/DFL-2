@@ -112,7 +112,7 @@ public class PlayerGameplay : MonoBehaviour
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
             {
-                if (collision.GetContact(0).point.z > transform.position.z)
+                if (collision.gameObject.transform.position.z > transform.position.z)
                     collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision);
                 else
                     Hurt(collision);

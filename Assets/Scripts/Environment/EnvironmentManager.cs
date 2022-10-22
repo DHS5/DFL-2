@@ -100,6 +100,7 @@ public class EnvironmentManager : MonoBehaviour
             envStyleNumber = EnvironmentStyle.ZOMBIE;
             RenderSettings.ambientIntensity = zombieLightIntensity;
             RenderSettings.fogColor = zombieFogColor;
+            RenderSettings.reflectionIntensity = 0;
         }
 
         // Generates the environment

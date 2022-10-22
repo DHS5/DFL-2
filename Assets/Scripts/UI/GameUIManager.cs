@@ -40,6 +40,9 @@ public class GameUIManager : MonoBehaviour
     [Tooltip("Resume game (3 2 1) text")]
     [SerializeField] private TextMeshProUGUI resumeGameText;
 
+    [Tooltip("Back view raw image container")]
+    [SerializeField] private GameObject backviewObject;
+
 
     [Header("Bonus & sprint & jump")]
     [Tooltip("UI components of the acceleration bar")]
@@ -145,7 +148,10 @@ public class GameUIManager : MonoBehaviour
     }
 
 
-
+    public void SetBackview(bool state)
+    {
+        backviewObject.SetActive(state & main.DataManager.gameplayData.viewType == ViewType.TPS);
+    }
 
 
     /// <summary>
