@@ -76,6 +76,8 @@ public class PlayerGameplay : MonoBehaviour
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), spawnPos.y, spawnPos.z);
 
             player.controller.CurrentState.TD(false);
+
+            player.playerManager.FootballActive = false;
         }
 
         // When the player accounter a field limit
@@ -93,6 +95,11 @@ public class PlayerGameplay : MonoBehaviour
                 player.controller.CurrentState.SetRandomCelebration();
             }
             else player.controller.CurrentState.TD(true);
+        }
+
+        if (other.gameObject.CompareTag("FinalObjectif"))
+        {
+            player.controller.CurrentState.Catch();
         }
     }
 

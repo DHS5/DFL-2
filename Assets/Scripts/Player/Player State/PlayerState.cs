@@ -40,6 +40,7 @@ public abstract class PlayerState
 
     private Coroutine celebrationCR;
 
+    private bool catched = false;
 
     protected bool IsRaining
     {
@@ -174,6 +175,41 @@ public abstract class PlayerState
         {
             a.SetLayerWeight(a.GetLayerIndex(name), weight);
         }
+    }
+
+    public void Catch()
+    {
+        if (!catched) player.StartCoroutine(CatchCR(0.5f));
+        catched = true;
+    }
+    private IEnumerator CatchCR(float time)
+    {
+        SetTrigger("Catch");
+        float weight = 0, sample = 50;
+        for (int i = 0; i < sample; i++)
+        {
+            weight = Mathf.Lerp(weight, 1, 0.2f);
+            SetLayer("Catch", weight);
+            yield return new WaitForSeconds(time / sample);
+        }
+        SetLayer("Catch", 1);
+        SetTrigger("BallCatch");
+        player.playerManager.FootballActive = true;
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(time * 3/2);
+        //for (int i = 0; i < sample; i++)
+        //{
+        //    weight -= 1 / sample;
+        //    Debug.Log(i + "//" + weight);
+        //    SetLayer("Catch", weight);
+        //    yield return new WaitForSeconds(time / (2 * sample));
+        //}
+        SetLayer("Catch", 0);
+        ResetTrigger("Catch");
+        ResetTrigger("BallCatch");
+        Time.timeScale = 1f;
+
+        catched = false;
     }
 
     public void Flashlight(bool state)

@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
 
 
     private bool flashlight = false;
+    private bool objectifOpt = false;
     
     // ### Properties ###
     public float HeadAngle
@@ -87,6 +88,15 @@ public class PlayerManager : MonoBehaviour
             player.tPPlayer.flashlight.difficulty = main.GameManager.gameData.gameDifficulty;
         }
     }
+    public bool FootballActive
+    {
+        set
+        {
+            if (!value && !objectifOpt) return;
+            player.fPPlayer.football.SetActive(value);
+            player.tPPlayer.football.SetActive(value);
+        }
+    }
 
 
     private void Awake()
@@ -110,7 +120,8 @@ public class PlayerManager : MonoBehaviour
 
         ViewType = main.DataManager.gameplayData.viewType;
         FlashlightActive = main.GameManager.gameData.gameMode == GameMode.ZOMBIE;
-
+        objectifOpt = main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF);
+        FootballActive = !objectifOpt;
     }
 
     public void PositionPlayer()
