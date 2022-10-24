@@ -193,9 +193,7 @@ public abstract class PlayerState
             yield return new WaitForSeconds(time / sample);
         }
         SetLayer("Catch", 1);
-        SetTrigger("BallCatch");
         player.playerManager.FootballActive = true;
-        Time.timeScale = 0.1f;
         yield return new WaitForSeconds(time * 3/2);
         //for (int i = 0; i < sample; i++)
         //{
@@ -206,8 +204,6 @@ public abstract class PlayerState
         //}
         SetLayer("Catch", 0);
         ResetTrigger("Catch");
-        ResetTrigger("BallCatch");
-        Time.timeScale = 1f;
 
         catched = false;
     }
