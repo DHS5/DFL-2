@@ -5,25 +5,27 @@ using UnityEngine;
 public class SiderunPS : PlayerState
 {
     private bool anim;
+    private bool canFeint;
 
-    public SiderunPS(Player _player, float _side, bool _anim) : base(_player)
+    public SiderunPS(Player _player, float _side, bool _anim, bool _canFeint) : base(_player)
     {
         name = PState.SIDERUN;
 
         startSide = _side;
         anim = _anim;
+        canFeint = _canFeint;
     }
 
 
     public override void Enter()
     {
         SetFloat("Dir", startSide);
-        if (anim)
+        if (canFeint)
         {
             SetTrigger("Side");
             animTime = UD.siderunTime;
         }
-        else SetTrigger("Run");
+        else if (anim) SetTrigger("Run");
 
         controller.Speed = att.NormalSpeed;
         controller.SideSpeed = att.NormalSideSpeed * side;
@@ -52,7 +54,6 @@ public class SiderunPS : PlayerState
         {
             if (nextState == null)
             {
-                
                 // Sprint
                 if (acc > 0 && controller.CanAccelerate)
                 {
@@ -62,7 +63,7 @@ public class SiderunPS : PlayerState
                 // Slowsiderun
                 else if (acc < 0 && side * startSide > 0)
                 {
-                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
+                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side), false);
                     stage = Event.EXIT;
                 }
                 // Slow
@@ -74,19 +75,19 @@ public class SiderunPS : PlayerState
                 // Other side
                 else if (side * startSide < 0)
                 {
-                    nextState = new SiderunPS(player, -startSide, false);
+                    nextState = new SiderunPS(player, -startSide, false, false);
                     stage = Event.EXIT;
                 }
                 // Run
                 else if (side == 0)
                 {
-                    nextState = new RunPS(player);
+                    nextState = new RunPS(player, false);
                     stage = Event.EXIT;
                 }
             }
             else stage = Event.EXIT;
         }
-        else if (att.CanFeint && anim && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
+        else if (att.CanFeint && canFeint && Input.GetAxisRaw("Horizontal") * startSide < 0 && acc == 0)
         {
             nextState = new FeintPS(player, -startSide);
             SetFloat("Dir", -startSide);

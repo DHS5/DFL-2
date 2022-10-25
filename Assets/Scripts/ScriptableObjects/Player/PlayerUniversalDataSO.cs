@@ -8,6 +8,7 @@ public class PlayerUniversalDataSO : ScriptableObject
 {
     [Header("Animation's time")]
     public float siderunTime;
+    public float siderunDelay;
     public float jukeTime;
     public float jukeDelay;
     public float feintTime;

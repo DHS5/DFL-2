@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerRescale();
 
-        CurrentState = new RunPS(player);
+        CurrentState = new RunPS(player, true);
         CurrentState.Flashlight(player.playerManager.FlashlightActive);
 
         CanAccelerate = true;

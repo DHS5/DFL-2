@@ -306,7 +306,7 @@ public class LoginManager : MonoBehaviour
                             State = ConnectionState.CONNECTED;
 
                             if (reset) main.DataManager.ResetDatas();
-                            main.DataManager.SaveDatas();
+                            main.DataManager.SaveDatas(reset);
                         }
 
                         // Set nickname to be public UID if nothing was provided
@@ -321,8 +321,7 @@ public class LoginManager : MonoBehaviour
                         {
                             if (!response.success)
                             {
-                                Debug.Log("Set player name error");
-                                return;
+                                Result("Account created successfully\nPlayer name error");
                             }
                             else
                             {

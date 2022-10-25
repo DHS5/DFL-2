@@ -387,7 +387,7 @@ public class GameManager : MonoBehaviour
         main.MissionManager.CompleteMissions(gameData, waveNumber);
 
         // # Data #
-        main.DataManager.SaveDatas();
+        main.DataManager.SaveDatas(false);
 
         // # UI #
         if (gameData.gameMode == GameMode.DRILL && gameData.gameDrill == GameDrill.PARKOUR) main.GameUIManager.Lose();
@@ -431,7 +431,7 @@ public class GameManager : MonoBehaviour
         main.ParkourManager.Win();
 
         // # Data #
-        main.DataManager.SaveDatas();
+        main.DataManager.SaveDatas(false);
 
         // # UI #
         main.GameUIManager.Win();

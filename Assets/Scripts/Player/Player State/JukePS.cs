@@ -53,12 +53,12 @@ public class JukePS : PlayerState
                 // SlowSiderun
                 else if (acc < 0 && side * startSide > 0)
                 {
-                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
+                    nextState = new SlowsiderunPS(player, side / Mathf.Abs(side), true);
                 }
                 // Siderun
                 else if (acc == 0 && side * startSide > 0)
                 {
-                    nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
+                    nextState = new SiderunPS(player, side / Mathf.Abs(side), true, false);
                 }
                 // Slowrun
                 else if (acc < 0)
@@ -66,7 +66,7 @@ public class JukePS : PlayerState
                     nextState = new SlowrunPS(player);
                 }
                 // Run
-                else nextState = new RunPS(player);
+                else nextState = new RunPS(player, true);
             }
             stage = Event.EXIT;
         }

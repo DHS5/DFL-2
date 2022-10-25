@@ -355,16 +355,22 @@ public class DataManager : MonoBehaviour
 
     // # SAVE #
 
-    public void SaveDatas()
+    public void SaveDatas(bool reset)
     {
-        StartCoroutine(SavePlayerData());
+        StartCoroutine(SavePlayerData(reset));
     }
 
-    private IEnumerator SavePlayerData()
+    private IEnumerator SavePlayerData(bool reload)
     {
         SaveOnDisk();
 
         yield return StartCoroutine(SaveOnlineCR());
+
+        if (reload)
+        {
+            reloadAll = true;
+            SceneManager.LoadScene((int)SceneNumber.MENU);
+        }
 
         //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
@@ -423,7 +429,7 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator Quit()
     {
-        yield return StartCoroutine(SavePlayerData());
+        yield return StartCoroutine(SavePlayerData(false));
 
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();

@@ -35,16 +35,16 @@ public class SlidePS : PlayerState
                 nextState = new SprintPS(player);
             // Siderun
             else if (acc == 0 && side != 0)
-                nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), true, true);
             // Slowsiderun
             else if (acc < 0 && side != 0)
-                nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
+                nextState = new SlowsiderunPS(player, side / Mathf.Abs(side), true);
             // Slow
             else if (acc < 0)
                 nextState = new SlowrunPS(player);
             // Run
             else
-                nextState = new RunPS(player);
+                nextState = new RunPS(player, true);
 
             stage = Event.EXIT;
         }

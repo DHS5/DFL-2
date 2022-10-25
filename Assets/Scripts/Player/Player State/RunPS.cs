@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class RunPS : PlayerState
 {
-    public RunPS(Player _player) : base(_player)
+    private bool anim;
+    public RunPS(Player _player, bool _anim) : base(_player)
     {
         name = PState.RUN;
+
+        anim = _anim;
     }
 
     public override void Enter()
     {
-        SetTrigger("Run");
+        if (anim) SetTrigger("Run");
         SetFloat("Dir", 0f);
 
         controller.Speed = att.NormalSpeed;
@@ -48,7 +51,7 @@ public class RunPS : PlayerState
         // Siderun
         else if (side != 0)
         {
-            nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), false, true);// Time.time >= startTime + UD.siderunDelay);
             stage = Event.EXIT;
         }
     }

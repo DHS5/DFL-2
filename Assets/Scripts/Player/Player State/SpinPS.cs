@@ -51,10 +51,10 @@ public class SpinPS : PlayerState
             // Siderun
             else if (side != 0)
             {
-                nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), true, false);
             }
             // Run
-            else nextState = new RunPS(player);
+            else nextState = new RunPS(player, true);
 
             stage = Event.EXIT;
         }

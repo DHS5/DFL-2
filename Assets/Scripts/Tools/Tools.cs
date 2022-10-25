@@ -53,7 +53,7 @@ public class Tools : MonoBehaviour
     {
         DataManager dataManager = DataManager.InstanceDataManager;
         if (dataManager != null)
-            dataManager.SaveDatas();
+            dataManager.SaveDatas(false);
     }
 
 

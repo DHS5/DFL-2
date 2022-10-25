@@ -56,13 +56,13 @@ public class SlowrunPS : PlayerState
         // Run
         else if (acc == 0)
         {
-            nextState = new RunPS(player);
+            nextState = new RunPS(player, true);
             stage = Event.EXIT;
         }
         // Slowsiderun
         else if (!att.CanJuke && side != 0)
         {
-            nextState = new SlowsiderunPS(player, side / Mathf.Abs(side));
+            nextState = new SlowsiderunPS(player, side / Mathf.Abs(side), true);
             stage = Event.EXIT;
         }
     }

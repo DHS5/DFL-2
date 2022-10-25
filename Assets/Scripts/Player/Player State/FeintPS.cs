@@ -25,7 +25,9 @@ public class FeintPS : PlayerState
 
     public override void Update()
     {
-        base.Update();        
+        base.Update();
+
+        PlayerOrientation();
 
 
         if (Time.time >= startTime + animTime)
@@ -51,11 +53,11 @@ public class FeintPS : PlayerState
             // Siderun
             else if (side != 0 && side * startSide > 0)
             {
-                nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side), true, false);
                 stage = Event.EXIT;
             }
             // Run
-            else nextState = new RunPS(player);
+            else nextState = new RunPS(player, true);
 
             stage = Event.EXIT;
         }

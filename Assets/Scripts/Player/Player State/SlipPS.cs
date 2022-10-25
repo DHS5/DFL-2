@@ -29,7 +29,7 @@ public class SlipPS : PlayerState
 
         if (Time.time >= startTime + animTime)
         {
-            nextState = new RunPS(player);
+            nextState = new RunPS(player, true);
             stage = Event.EXIT;
         }
     }

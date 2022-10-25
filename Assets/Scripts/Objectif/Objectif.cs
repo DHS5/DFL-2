@@ -16,7 +16,7 @@ public class Objectif : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && !done)
         {
             audioSource.Play();
-            Invoke(nameof(DestroyObj), audioSource.clip.length);
+            DestroyObj();
             done = true;
         }
     }

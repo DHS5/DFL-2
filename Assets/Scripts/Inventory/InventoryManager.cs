@@ -101,7 +101,7 @@ public class InventoryManager : MonoBehaviour
         }
         main.DataManager.inventoryData.parkours = inv;
 
-        main.DataManager.SaveDatas();
+        main.DataManager.SaveDatas(false);
     }
 
 

@@ -195,13 +195,6 @@ public abstract class PlayerState
         SetLayer("Catch", 1);
         player.playerManager.FootballActive = true;
         yield return new WaitForSeconds(time * 3/2);
-        //for (int i = 0; i < sample; i++)
-        //{
-        //    weight -= 1 / sample;
-        //    Debug.Log(i + "//" + weight);
-        //    SetLayer("Catch", weight);
-        //    yield return new WaitForSeconds(time / (2 * sample));
-        //}
         SetLayer("Catch", 0);
         ResetTrigger("Catch");
 

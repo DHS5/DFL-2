@@ -65,6 +65,8 @@ public class FieldManager : MonoBehaviour
 
         // ## Actualization of the Nav Mesh
         surface.BuildNavMesh();
+
+        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) stadium.SwitchLightsOff();
     }
 
     /// <summary>

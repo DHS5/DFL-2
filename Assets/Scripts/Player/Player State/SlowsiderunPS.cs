@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class SlowsiderunPS : PlayerState
 {
-    public SlowsiderunPS(Player _player, float _side) : base(_player)
+    private bool anim;
+    public SlowsiderunPS(Player _player, float _side, bool _anim) : base(_player)
     {
         name = PState.SLOWSIDERUN;
 
         startSide = _side;
+        anim = _anim;
     }
 
     public override void Enter()
     {
-        SetTrigger("Run");
+        if (anim) SetTrigger("Run");
         
         controller.Speed = att.NormalSpeed;
 
@@ -57,13 +59,13 @@ public class SlowsiderunPS : PlayerState
         // Siderun
         else if (acc == 0 && side != 0)
         {
-            nextState = new SiderunPS(player, side / Mathf.Abs(side), false);
+            nextState = new SiderunPS(player, side / Mathf.Abs(side), false, false);
             stage = Event.EXIT;
         }
         // Run
         else if (acc == 0)
         {
-            nextState = new RunPS(player);
+            nextState = new RunPS(player, false);
             stage = Event.EXIT;
         }
     }

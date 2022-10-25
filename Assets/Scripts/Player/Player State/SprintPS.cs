@@ -77,13 +77,13 @@ public class SprintPS : PlayerState
             // Run
             if ((acc <= 0 && side == 0) || (!controller.CanAccelerate && side == 0))
             {
-                nextState = new RunPS(player);
+                nextState = new RunPS(player, true);
                 stage = Event.EXIT;
             }
             // Siderun
             else if ((acc <= 0 && side != 0) || (!controller.CanAccelerate && side != 0))
             {
-                nextState = new SiderunPS(player, side / Mathf.Abs(side), true);
+                nextState = new SiderunPS(player, side / Mathf.Abs(side),true, true);
                 stage = Event.EXIT;
             }
         }

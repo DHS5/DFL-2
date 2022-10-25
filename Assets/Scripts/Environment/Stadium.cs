@@ -11,6 +11,10 @@ public class Stadium : MonoBehaviour
     public AudioSource[] ouuhAS;
     public AudioSource[] boohAS;
 
+    [Header("Lights")]
+    [SerializeField] private GameObject lights;
+    [SerializeField] private GameObject lightsToSwitchOff;
+
     public GameObject SpawnPosition
     {
         get
@@ -32,5 +36,10 @@ public class Stadium : MonoBehaviour
     public void Rain()
     {
         rain.gameObject.SetActive(true);
+    }
+
+    public void SwitchLightsOff()
+    {
+        if (lightsToSwitchOff != null) lightsToSwitchOff.SetActive(false);
     }
 }
