@@ -54,12 +54,14 @@ MonoBehaviour:
   bleachersAS: []
   ouuhAS: []
   boohAS: []
+  lights: {fileID: 0}
+  lightsToSwitchOff: {fileID: 0}
   spawnPositions:
   - {fileID: 2320267776028078408}
   stadiumCamera: {fileID: 7503380079494124241}
-  enemyMaterial: {fileID: 0}
+  enemyMaterial: {fileID: 2100000, guid: 445b20343ff47904fab43cc125d190f3, type: 2}
   fogColor: {r: 0.6415094, g: 0.50221926, b: 0.2444998, a: 0}
-  coinsPercentage: 1.6
+  coinsPercentage: 1.75
   rain: {fileID: 7659045526519008043}
 --- !u!1 &2320267776028078408
 GameObject:

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public enum ParkourEnum { NULL = 0, MEDIUM = 1 }
+public enum ParkourEnum { NULL = 0, FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH }
 
 [CreateAssetMenu(fileName = "ParkourCard", menuName = "ScriptableObjects/Card/ParkourCard", order = 1)]
 public class ParkourCardSO : InventoryCardSO
