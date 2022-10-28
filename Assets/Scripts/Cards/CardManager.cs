@@ -164,6 +164,30 @@ public class CardManager : MonoBehaviour
             }
         }
     }
+    private void GetParkourCard(List<ParkourCardSO> cardSOs, GameObject prefab, ref List<ParkourCard> cards, GameObject container, int index)
+    {
+        DestroyCards(container);
+        cards.Clear();
+
+        int i = 0;
+        foreach (ParkourCardSO cardSO in cardSOs)
+        {
+            object obj = cardSO.cardObject;
+            if (main.InventoryManager.IsInInventory(obj))
+            {
+                ParkourCard card = Instantiate(prefab, container.transform).GetComponent<ParkourCard>();
+                card.cardSO = cardSO;
+                card.GetIndex(i);
+                if (i == index)
+                {
+                    card.cardSO.SetActive();
+                    card.On();
+                }
+                cards.Add(card);
+                i++;
+            }
+        }
+    }
 
     public void GetCards()
     {
@@ -186,7 +210,7 @@ public class CardManager : MonoBehaviour
         ActuStadium();
 
         // Parkour cards
-        GetCard(DataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex);
+        GetParkourCard(DataManager.cardsContainer.parkourCards, parkourCardPrefab, ref parkourCards, parkourCContainer, ParkourIndex);
     }
 
 
