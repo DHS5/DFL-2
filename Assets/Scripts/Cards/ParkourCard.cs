@@ -14,8 +14,6 @@ public class ParkourCard : ImageCard
 
     [SerializeField] private Slider difficultyGauge;
 
-    private int index;
-
 
     public ParkourCardSO parkourCardSO { get { return cardSO as ParkourCardSO; } }
 
@@ -34,11 +32,16 @@ public class ParkourCard : ImageCard
     }
     public void SetData()
     {
-        DataManager.InstanceDataManager.playerPrefs.parkourIndex = index;
-        DataManager.InstanceDataManager.gameData.parkour = parkourCardSO.prefab;
+        parkourCardSO.SetActive();
     }
-    public void GetIndex(int _index)
+
+    public void GetToggleGroup(ToggleGroup group)
     {
-        index = _index;
+        toggle.group = group;
+    }
+
+    public void Lock()
+    {
+        toggle.interactable = false;
     }
 }

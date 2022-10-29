@@ -60,6 +60,7 @@ public class ParkourManager : MonoBehaviour
         List<int> parkours = main.DataManager.inventoryData.parkours.ToList();
         parkours.Add((int)Parkour.ParkourNum + 1);
         main.DataManager.inventoryData.parkours = parkours.ToArray();
+        //main.DataManager.playerPrefs.parkourIndex++;
     }
 
     public static bool Won(int parkourNum)

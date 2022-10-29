@@ -5,10 +5,12 @@ using UnityEngine;
 public class ThirdPersonCameraController : MonoBehaviour
 {
     [Tooltip("Player script")]
-    [HideInInspector] public Player player;
+    public Player player;
 
-    [Tooltip("Third person camera")]
-    private Camera tpCamera;
+    [Tooltip("Third person cameras")]
+    [SerializeField] private Camera tpCamera;
+    [SerializeField] private Camera rCamera;
+    [SerializeField] private Camera lCamera;
 
     [Tooltip("Cursor Manager")]
     [HideInInspector] public CursorManager cursor;
@@ -24,16 +26,16 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     private void Start()
     {
-        // Gets the player's script
-        player = GetComponentInParent<Player>();
-
-        // Initializes the camera
-        tpCamera = GetComponent<Camera>();
-
         // Gets the Cursor Manager
         cursor = FindObjectOfType<CursorManager>();
 
         tpCamera.transform.localPosition = cameraPositions[CameraPos];
+    }
+
+    private void Update()
+    {
+        rCamera.gameObject.SetActive(Input.GetKey(KeyCode.B));
+        lCamera.gameObject.SetActive(Input.GetKey(KeyCode.N));
     }
 
     private void LateUpdate()

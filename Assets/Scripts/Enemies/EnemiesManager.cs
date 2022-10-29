@@ -164,7 +164,6 @@ public class EnemiesManager : MonoBehaviour
         enemy.GetAttribute(defAtt);
 
         // Gives the enemy his body and a semi-random size
-        enemy.enemy = enemy.gameObject;
         if (audios != null && audios.Length > 0)
         {
             enemy.audioSource.clip = audios[Random.Range(0, audios.Length)];

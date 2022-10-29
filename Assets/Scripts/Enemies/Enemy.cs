@@ -8,15 +8,12 @@ using UnityEngine.AI;
 /// </summary>
 public abstract class Enemy : MonoBehaviour
 {
-    [Tooltip("Game Object of the enemy")]
-    [HideInInspector] public GameObject enemy;
-
     [Tooltip("Nav Mesh Agent of the enemy")]
-    [HideInInspector] public NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
 
-    [HideInInspector] public AudioSource audioSource;
+    public AudioSource audioSource;
 
-    protected Animator animator;
+    [SerializeField] protected Animator animator;
 
     protected EnemyState currentState;
 
@@ -73,10 +70,6 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        audioSource = GetComponent<AudioSource>();
-        animator = GetComponentInChildren<Animator>();
-
         player = FindObjectOfType<Player>();
         playerG = player.gameplay;
         playerC = player.controller;
@@ -154,8 +147,11 @@ public abstract class Enemy : MonoBehaviour
             zDistance = transform.position.z - playerPosition.z;
             // Find if the player is jumping
             playerOnGround = player.controller.OnGround;
-
+            // Gets whether the player is on the field
             playerOnField = playerG.onField;
+
+
+            audioSource.enabled = rawDistance < 15;
         }
     }
 

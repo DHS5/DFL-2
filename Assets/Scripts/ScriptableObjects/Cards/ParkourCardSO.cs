@@ -33,6 +33,7 @@ public class ParkourCardSO : InventoryCardSO
 
     public override void SetActive()
     {
+        DataManager.InstanceDataManager.playerPrefs.parkourIndex = (int) parkour - 1;
         DataManager.InstanceDataManager.gameData.parkour = prefab;
     }
 }

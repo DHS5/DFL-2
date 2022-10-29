@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CardManager : MonoBehaviour
@@ -39,7 +40,7 @@ public class CardManager : MonoBehaviour
 
 
     [Header("Parkour Choice Screen")]
-    [SerializeField] private GameObject parkourCContainer;
+    [SerializeField] private ToggleGroup parkourCContainer;
     [SerializeField] private GameObject parkourCardPrefab;
     private List<ParkourCard> parkourCards = new();
 
@@ -138,12 +139,6 @@ public class CardManager : MonoBehaviour
                 card.cardSO = cardSO;
                 if (i != index) card.gameObject.SetActive(false);
                 else card.cardSO.SetActive();
-
-                if (card as ParkourCard != null)
-                {
-                    (card as ParkourCard).GetIndex(i);
-                    if (i == index) (card as ParkourCard).On();
-                }
                 cards.Add(card);
                 i++;
             }
@@ -164,20 +159,21 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-    private void GetParkourCard(List<ParkourCardSO> cardSOs, GameObject prefab, ref List<ParkourCard> cards, GameObject container, int index)
+    private void GetParkourCard(List<ParkourCardSO> cardSOs, GameObject prefab, ref List<ParkourCard> cards, ToggleGroup container, int index)
     {
-        DestroyCards(container);
+        DestroyCards(container.gameObject);
         cards.Clear();
 
         int i = 0;
         foreach (ParkourCardSO cardSO in cardSOs)
         {
+            ParkourCard card = Instantiate(prefab, container.transform).GetComponent<ParkourCard>();
+            card.cardSO = cardSO;
+            card.GetToggleGroup(container);
+
             object obj = cardSO.cardObject;
             if (main.InventoryManager.IsInInventory(obj))
             {
-                ParkourCard card = Instantiate(prefab, container.transform).GetComponent<ParkourCard>();
-                card.cardSO = cardSO;
-                card.GetIndex(i);
                 if (i == index)
                 {
                     card.cardSO.SetActive();
@@ -186,6 +182,7 @@ public class CardManager : MonoBehaviour
                 cards.Add(card);
                 i++;
             }
+            else card.Lock();
         }
     }
 
