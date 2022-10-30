@@ -132,7 +132,6 @@ public class PlayerManager : MonoBehaviour
     public void StartPlayer()
     {
         player.gameplay.freeze = false; // Unfreezes the player
-        //fpsCamera.LockCursor(); // Locks the cursor
 
         player.fPPlayer.animator.enabled = true;
         player.tPPlayer.animator.enabled = true;
@@ -160,6 +159,16 @@ public class PlayerManager : MonoBehaviour
         main.GameManager.Win();
 
         player.gameplay.freeze = true; // Player freezes
+    }
+
+    public void Touchdown()
+    {
+        if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE && main.GameManager.gameData.gameMode != GameMode.DRILL)
+        {
+            player.controller.CurrentState.TD(true);
+
+            main.GameAudioManager.TouchdownCelebration();
+        }
     }
 
 

@@ -5,11 +5,7 @@ using UnityEngine;
 public class Stadium : MonoBehaviour
 {
     [Header("Stadium's audio sources")]
-    public AudioSource[] entryAS;
-    public AudioSource[] exitAS;
-    public AudioSource[] bleachersAS;
-    public AudioSource[] ouuhAS;
-    public AudioSource[] boohAS;
+    [SerializeField] private AudioSource[] bleachersAS;
 
     [Header("Lights")]
     [SerializeField] private GameObject lights;
@@ -41,5 +37,17 @@ public class Stadium : MonoBehaviour
     public void SwitchLightsOff()
     {
         if (lightsToSwitchOff != null) lightsToSwitchOff.SetActive(false);
+    }
+
+    public void SetBleachersSound(AudioClip clip)
+    {
+        foreach (AudioSource a in bleachersAS)
+            a.clip = clip;
+    }
+
+    public void DeactivateBleachersSound()
+    {
+        foreach (AudioSource a in bleachersAS)
+            DestroyImmediate(a);
     }
 }

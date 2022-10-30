@@ -20,6 +20,10 @@ public class FieldManager : MonoBehaviour
     [Header("Training stadium (1v1)")]
     [SerializeField] private GameObject trainingStadium;
 
+    [Header("Stadiums bleacher's sounds")]
+    [SerializeField] private AudioClip[] backgroundAudios;
+
+
 
     [Tooltip("Current stadium game object")]
     private GameObject stadiumObject;
@@ -66,6 +70,8 @@ public class FieldManager : MonoBehaviour
         // ## Actualization of the Nav Mesh
         surface.BuildNavMesh();
 
+
+        stadium.SetBleachersSound(backgroundAudios[Random.Range(0, backgroundAudios.Length)]);
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) stadium.SwitchLightsOff();
     }
 

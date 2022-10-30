@@ -94,7 +94,11 @@ public class PlayerGameplay : MonoBehaviour
                 player.gameManager.EnterField();
                 player.controller.CurrentState.SetRandomCelebration();
             }
-            else player.controller.CurrentState.TD(true);
+            // TD
+            else
+            {
+                player.playerManager.Touchdown();
+            }
         }
 
         if (other.gameObject.CompareTag("FinalObjectif"))

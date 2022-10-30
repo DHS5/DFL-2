@@ -151,7 +151,7 @@ public abstract class Enemy : MonoBehaviour
             playerOnField = playerG.onField;
 
 
-            audioSource.enabled = rawDistance < 15;
+            if (audioSource != null) audioSource.enabled = rawDistance < 15;
         }
     }
 

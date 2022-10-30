@@ -87,7 +87,9 @@ public class EnemiesManager : MonoBehaviour
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i] != null)
+            {
                 enemies[i].GameOver();
+            }
         }
     }
 

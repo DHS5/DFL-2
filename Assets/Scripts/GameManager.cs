@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour
         set
         {
             if (transitionning) return;
+            if (GameOver)
+            {
+                main.SettingsManager.SetScreen(ScreenNumber.SETTINGS, !value);
+                return;
+            }
             if (value == false && gameOn == true)
             {
                 gameOn = false;
@@ -147,7 +152,7 @@ public class GameManager : MonoBehaviour
 
         PrepareGame(true);
 
-        LaunchGame(false);
+        LaunchGame();
 
         Physics.IgnoreLayerCollision(7, 8);
         Physics.IgnoreLayerCollision(8, 9);
@@ -269,26 +274,20 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Launches the game by activating the player, the enemies, the atackers...
     /// </summary>
-    /// <param name="pause">If true resumes the game after a pause, if false launches a new wave</param>
-    private void LaunchGame(bool pause)
+    private void LaunchGame()
     {
         gameOn = true;
 
         Time.timeScale = 1.0f;
 
         main.PlayerManager.StartPlayer();
-        if (!pause) main.EnemiesManager.BeginChase();
-        else main.EnemiesManager.ResumeEnemies();
+        main.EnemiesManager.BeginChase();
 
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
         {
-            if (!pause) main.TeamManager.BeginProtection();
-            else main.TeamManager.ResumeAttackers();
+            main.TeamManager.BeginProtection();
         }
-
-        // # Audio #
-        main.GameAudioManager.GenerateAudio();
     }
 
     public void EnterField()
@@ -317,7 +316,7 @@ public class GameManager : MonoBehaviour
 
 
         // # Audio #
-        if (main.DataManager.audioData.soundOn) main.GameAudioManager.MuteSound(true);
+        main.GameAudioManager.Pause(true);
     }
 
     /// <summary>
@@ -331,6 +330,9 @@ public class GameManager : MonoBehaviour
         main.CursorManager.LockCursor();
         
         main.SettingsManager.SetScreen(ScreenNumber.ALL, false);
+
+        // # Audio #
+        main.GameAudioManager.Pause(false);
 
         StartCoroutine(UnpauseCR(0.5f));
     }
@@ -399,7 +401,10 @@ public class GameManager : MonoBehaviour
             main.GameUIManager.ActuKills(main.WeaponsManager.numberOfKill);
             main.WeaponsManager.GameOver();
         }
-            
+
+        // # Audios #
+        main.GameAudioManager.GetSoundSources();
+        main.GameAudioManager.Lose();
 
         // Call the Ouuuuuh with the game audio manager (currently in field manager)
 
@@ -420,6 +425,9 @@ public class GameManager : MonoBehaviour
         }
 
         // Call the Booouuh with the game audio manager
+
+        // # Audios #
+        main.GameAudioManager.GetSoundSources();
     }
 
 
@@ -438,6 +446,9 @@ public class GameManager : MonoBehaviour
 
         // # Cursor #
         main.CursorManager.UnlockCursor();
+
+        // # Audios #
+        main.GameAudioManager.Win();
     }
 
 
@@ -453,7 +464,7 @@ public class GameManager : MonoBehaviour
 
         PrepareGame(false);
 
-        LaunchGame(false);
+        LaunchGame();
     }
 
 

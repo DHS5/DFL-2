@@ -126,8 +126,24 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    public bool SoundOn { set { DataManager.audioData.soundOn = value; } }
-    public float SoundVolume { set { DataManager.audioData.soundVolume = value; } }
+    public bool SoundOn 
+    { 
+        set 
+        { 
+            DataManager.audioData.soundOn = value;
+
+            if (main != null) main.GameAudioManager.SoundOn = value;
+        } 
+    }
+    public float SoundVolume 
+    { 
+        set 
+        { 
+            DataManager.audioData.soundVolume = value;
+
+            if (main != null) main.GameAudioManager.SoundVolume = value;
+        } 
+    }
 
 
     /// <summary>

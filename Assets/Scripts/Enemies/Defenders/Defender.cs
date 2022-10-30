@@ -45,4 +45,11 @@ public class Defender : Enemy
             Invoke(nameof(ChasePlayer), Attribute.reactivity);
         }
     }
+
+    public override void GameOver()
+    {
+        base.GameOver();
+
+        DestroyImmediate(audioSource);
+    }
 }

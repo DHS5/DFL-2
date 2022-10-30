@@ -6,31 +6,92 @@ public class GameAudioManager : MonoBehaviour
 {
     [Tooltip("Main Manager")]
     private MainManager main;
+    
+    private AudioSource[] audioSources;
+    private AudioSource[] soundSources;
 
-    private DataManager dataManager;
-    
-    
+    [Header("Sounds bank")]
+    [SerializeField] private AudioClip[] playerEntryClips;
+    [SerializeField] private AudioClip[] touchdownCelebrationClips;
+    [SerializeField] private AudioClip[] bigplayReactionClips;
+    [SerializeField] private AudioClip[] surpriseClips;
+    [SerializeField] private AudioClip[] bouhClips;
+    [SerializeField] private AudioClip[] winClips;
+
+    [Header("Audio source")]
+    [SerializeField] private AudioSource audioSource;
+
+
+
+    private bool crowdSound = true;
+
+    // ### Properties ###
+
+    public float SoundVolume
+    {
+        set
+        {
+            foreach (AudioSource a in soundSources)
+            {
+                a.volume = value;
+            }
+        }
+    }
+    public bool SoundOn
+    {
+        get { return main.DataManager.audioData.soundOn; }
+        set { MuteSound(!value); }
+    }
+
+
     private void Awake()
     {
         main = GetComponent<MainManager>();
-        dataManager = DataManager.InstanceDataManager;
     }
 
 
     // ### Functions ###
 
+    public void Pause(bool state)
+    {
+        if (state) GetSoundSources();
+
+        MuteSound(state || !SoundOn);
+    }
+
+
+    public void GetSoundSources()
+    {
+        audioSources = FindObjectsOfType<AudioSource>();
+
+        List<AudioSource> list = new List<AudioSource>();
+        foreach (AudioSource source in audioSources)
+        {
+            if (!source.CompareTag("MusicSource"))
+                list.Add(source);
+        }
+        soundSources = list.ToArray();
+    }
 
     public void GenerateAudio()
     {
-        if (dataManager.audioData.soundOn)
+        GetSoundSources();
+
+        // here case by case
+        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE || (main.GameManager.gameData.gameMode == GameMode.DRILL && main.GameManager.gameData.gameDrill != GameDrill.PARKOUR))
+        {
+            crowdSound = false;
+            main.FieldManager.stadium.DeactivateBleachersSound();
+        }
+        else
+        {
+            PlayerEntry();
+        }
+
+        AudioData data = main.DataManager.audioData;
+        if (data.soundOn)
         {
             MuteSound(false);
-
-            if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE || main.GameManager.gameData.gameMode == GameMode.DRILL)
-            {
-                StopAmbianceAudios();
-            }
-
             ActuSoundVolume();
         }
         else
@@ -46,12 +107,9 @@ public class GameAudioManager : MonoBehaviour
     /// </summary>
     private void ActuSoundVolume()
     {
-        foreach (AudioSource a in FindObjectsOfType<AudioSource>())
+        foreach (AudioSource a in soundSources)
         {
-            if (!a.CompareTag("MusicSource"))
-            {
-                a.volume = dataManager.audioData.soundVolume;
-            }
+            a.volume = main.DataManager.audioData.soundVolume;
         }
     }
 
@@ -61,39 +119,53 @@ public class GameAudioManager : MonoBehaviour
     /// <param name="tmp"></param>
     public void MuteSound(bool tmp)
     {
-        foreach (AudioSource a in FindObjectsOfType<AudioSource>())
+        foreach (AudioSource a in soundSources)
         {
-            if (!a.CompareTag("MusicSource"))
-            {
-                a.mute = tmp;
-            }
+            a.mute = tmp;
         }
     }
 
-
-    public void BoohAudio()
+    public void Lose()
     {
-        foreach (AudioSource a in main.FieldManager.stadium.boohAS)
+        if (crowdSound)
         {
-            a.gameObject.SetActive(true);
+            OuuhAudio();
+            Invoke(nameof(BouhAudio), audioSource.clip.length);
         }
     }
 
-    public void OuuhAudio()
+    private void BouhAudio()
     {
-        foreach (AudioSource a in main.FieldManager.stadium.ouuhAS)
+        audioSource.clip = bouhClips[Random.Range(0, bouhClips.Length)];
+        audioSource.Play();
+    }
+
+    private void OuuhAudio()
+    {
+        audioSource.clip = surpriseClips[Random.Range(0, surpriseClips.Length)];
+        audioSource.Play();
+    }
+
+    public void PlayerEntry()
+    {
+        if (crowdSound)
         {
-            a.gameObject.SetActive(true);
+            audioSource.clip = playerEntryClips[Random.Range(0, playerEntryClips.Length)];
+            audioSource.Play();
+        }
+    }
+    public void TouchdownCelebration()
+    {
+        if (crowdSound)
+        {
+            audioSource.clip = touchdownCelebrationClips[Random.Range(0, touchdownCelebrationClips.Length)];
+            audioSource.Play();
         }
     }
 
-    public void StopAmbianceAudios()
+    public void Win()
     {
-        foreach (AudioSource a in main.FieldManager.stadium.entryAS)
-            a.gameObject.SetActive(false);
-        foreach (AudioSource a in main.FieldManager.stadium.exitAS)
-            a.gameObject.SetActive(false);
-        foreach (AudioSource a in main.FieldManager.stadium.bleachersAS)
-            a.gameObject.SetActive(false);
+        audioSource.clip = winClips[Random.Range(0, winClips.Length)];
+        audioSource.Play();
     }
 }
