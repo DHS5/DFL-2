@@ -6,6 +6,8 @@ public class Stadium : MonoBehaviour
 {
     [Header("Stadium's audio sources")]
     [SerializeField] private AudioSource[] bleachersAS;
+    [SerializeField] private AudioClip bleachersClip;
+    public bool crowd;
 
     [Header("Lights")]
     [SerializeField] private GameObject lights;
@@ -29,6 +31,15 @@ public class Stadium : MonoBehaviour
     [SerializeField] private ParticleSystem rain;
 
 
+    // ### Functions ###
+
+    private void Start()
+    {
+        SetBleachersSound(bleachersClip);
+        StartBleachersSound();
+    }
+
+
     public void Rain()
     {
         rain.gameObject.SetActive(true);
@@ -39,15 +50,20 @@ public class Stadium : MonoBehaviour
         if (lightsToSwitchOff != null) lightsToSwitchOff.SetActive(false);
     }
 
-    public void SetBleachersSound(AudioClip clip)
+    private void SetBleachersSound(AudioClip clip)
     {
         foreach (AudioSource a in bleachersAS)
             a.clip = clip;
     }
-
-    public void DeactivateBleachersSound()
+    public void StartBleachersSound()
     {
         foreach (AudioSource a in bleachersAS)
-            DestroyImmediate(a);
+            a.Play();
+    }
+
+    public void MuteBleachersSound()
+    {
+        foreach (AudioSource a in bleachersAS)
+            a.enabled = false;
     }
 }

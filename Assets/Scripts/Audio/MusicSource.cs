@@ -7,10 +7,10 @@ public class MusicSource : MonoBehaviour
 {
     public static MusicSource InstanceMusicSource { get; private set; }
 
-    private DataManager dataManager;
+    [SerializeField] private DataManager dataManager;
 
 
-    [HideInInspector] public AudioSource audioSource;
+    public AudioSource audioSource;
 
     [Header("Music's list")]
     [Tooltip("Music's list")]
@@ -93,8 +93,7 @@ public class MusicSource : MonoBehaviour
         InstanceMusicSource = this;
         DontDestroyOnLoad(gameObject);
 
-        audioSource = GetComponent<AudioSource>();
-        dataManager = FindObjectOfType<DataManager>();
+        audioSource.ignoreListenerPause = true;
     }
 
     private void Start()

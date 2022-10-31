@@ -14,6 +14,7 @@ public class Tools : MonoBehaviour
     /// <param name="scene">Scene number</param>
     public static void LoadScene(int scene)
     {
+        AudioListener.pause = false;
         SaveData();
 
         if (SceneManager.GetActiveScene().buildIndex != scene)

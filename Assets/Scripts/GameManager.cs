@@ -292,6 +292,7 @@ public class GameManager : MonoBehaviour
 
     public void EnterField()
     {
+        //main.FieldManager.stadium.StartBleachersSound();
         // # Modes #
         if (gameData.gameMode == GameMode.TEAM)
         {

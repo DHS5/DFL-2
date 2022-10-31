@@ -50,6 +50,6 @@ public class Defender : Enemy
     {
         base.GameOver();
 
-        DestroyImmediate(audioSource);
+        audioSource.mute = true;
     }
 }

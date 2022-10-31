@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -46,6 +47,9 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Toggle soundOnToggle;
 
     [SerializeField] private Toggle infoButtonsToggle;
+
+    [Header("Audio mixer")]
+    [SerializeField] private AudioMixer audioMixer;
 
     // ### Properties ###
     public float HeadAngle
@@ -133,15 +137,18 @@ public class SettingsManager : MonoBehaviour
             DataManager.audioData.soundOn = value;
 
             if (main != null) main.GameAudioManager.SoundOn = value;
+            else audioMixer.SetFloat("Volume", value ? SoundVolume : -80);
         } 
     }
     public float SoundVolume 
     { 
+        get { return DataManager.audioData.soundVolume; }
         set 
         { 
             DataManager.audioData.soundVolume = value;
 
             if (main != null) main.GameAudioManager.SoundVolume = value;
+            else audioMixer.SetFloat("Volume", Mathf.Log10(value) * 20);
         } 
     }
 

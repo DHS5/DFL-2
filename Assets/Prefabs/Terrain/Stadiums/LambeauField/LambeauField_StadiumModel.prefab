@@ -96,9 +96,10 @@ GameObject:
   - component: {fileID: 7498989067752790226}
   - component: {fileID: 8436943827895663342}
   - component: {fileID: 6421792051151603843}
+  - component: {fileID: 2772605094034242694}
   m_Layer: 0
   m_Name: Stadium
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,6 +170,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2772605094034242694
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322285631491783384}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5632017354227340855, guid: 80df2db5dd05fcc4688b4856b4a705a4, type: 3}
 --- !u!1 &3460100636071488545
 GameObject:
   m_ObjectHideFlags: 0

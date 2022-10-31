@@ -20,7 +20,6 @@ public class Leaderboard : MonoBehaviour
 
     public void Add(LeaderboardItem item)
     {
-        Debug.Log(item + "//" + leaderboardRowPrefab + "//" + container);
         LeaderboardRow newRow = Instantiate(leaderboardRowPrefab, container.transform).GetComponent<LeaderboardRow>();
         newRow.Item = item;
         newRow.transform.SetSiblingIndex(item.rank - 1);

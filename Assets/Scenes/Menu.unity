@@ -20065,6 +20065,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5245306273603643918, guid: a7184751268082548a1f2281aab11957,
         type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245306273603643918, guid: a7184751268082548a1f2281aab11957,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -51450,6 +51455,7 @@ MonoBehaviour:
   soundVolumeSlider: {fileID: 456076352}
   soundOnToggle: {fileID: 1680994195}
   infoButtonsToggle: {fileID: 1295931047}
+  audioMixer: {fileID: 24100000, guid: 4deab6aee09823347b3a8966547cbde6, type: 2}
 --- !u!1 &1113500234
 GameObject:
   m_ObjectHideFlags: 0
@@ -80510,6 +80516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e3812908b726143a3444ca86b12364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataManager: {fileID: 845207700}
   audioSource: {fileID: 1802871983}
   musics:
   - {fileID: 8300000, guid: a2ab8c822074bdb49bd8425c4e3c1576, type: 3}
@@ -83371,15 +83378,45 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 349653231998048097, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608489078817081827, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2885932593442079665, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3461662385657741249, guid: a36cecb9dd830af46a58ce1dba4ee309,
         type: 3}
       propertyPath: m_Name
       value: LevisStadium_F&S
       objectReference: {fileID: 0}
+    - target: {fileID: 6453608747630171145, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574897174032655271, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8100414230115850834, guid: a36cecb9dd830af46a58ce1dba4ee309,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472100788292938315, guid: a36cecb9dd830af46a58ce1dba4ee309,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8586209492148000669, guid: a36cecb9dd830af46a58ce1dba4ee309,
         type: 3}

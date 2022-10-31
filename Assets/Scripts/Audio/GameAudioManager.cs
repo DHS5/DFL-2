@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameAudioManager : MonoBehaviour
 {
@@ -18,9 +19,12 @@ public class GameAudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] bouhClips;
     [SerializeField] private AudioClip[] winClips;
 
-    [Header("Audio source")]
-    [SerializeField] private AudioSource audioSource;
 
+    [Header("Audio mixer group")]
+    [SerializeField] private AudioMixer audioMixer;
+
+
+    private AudioSource[] playerAudioSources;
 
 
     private bool crowdSound = true;
@@ -29,18 +33,16 @@ public class GameAudioManager : MonoBehaviour
 
     public float SoundVolume
     {
+        get { return Mathf.Log10(main.DataManager.audioData.soundVolume) * 20; }
         set
         {
-            foreach (AudioSource a in soundSources)
-            {
-                a.volume = value;
-            }
+            audioMixer.SetFloat("Volume", Mathf.Log10(value) * 20);
         }
     }
     public bool SoundOn
     {
         get { return main.DataManager.audioData.soundOn; }
-        set { MuteSound(!value); }
+        set { audioMixer.SetFloat("Volume", value ? SoundVolume : -80); }
     }
 
 
@@ -50,13 +52,14 @@ public class GameAudioManager : MonoBehaviour
     }
 
 
+
     // ### Functions ###
 
     public void Pause(bool state)
     {
         if (state) GetSoundSources();
 
-        MuteSound(state || !SoundOn);
+        PauseSound(state || !SoundOn);
     }
 
 
@@ -81,11 +84,12 @@ public class GameAudioManager : MonoBehaviour
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE || (main.GameManager.gameData.gameMode == GameMode.DRILL && main.GameManager.gameData.gameDrill != GameDrill.PARKOUR))
         {
             crowdSound = false;
-            main.FieldManager.stadium.DeactivateBleachersSound();
+            main.FieldManager.stadium.MuteBleachersSound();
         }
         else
         {
-            PlayerEntry();
+            crowdSound = main.FieldManager.stadium.crowd;
+            if (crowdSound) PlayerEntry();
         }
 
         AudioData data = main.DataManager.audioData;
@@ -107,10 +111,7 @@ public class GameAudioManager : MonoBehaviour
     /// </summary>
     private void ActuSoundVolume()
     {
-        foreach (AudioSource a in soundSources)
-        {
-            a.volume = main.DataManager.audioData.soundVolume;
-        }
+        SoundVolume = main.DataManager.audioData.soundVolume;
     }
 
     /// <summary>
@@ -124,48 +125,65 @@ public class GameAudioManager : MonoBehaviour
             a.mute = tmp;
         }
     }
+    public void PauseSound(bool state)
+    {
+        AudioListener.pause = state;
+    }
 
     public void Lose()
     {
         if (crowdSound)
         {
+            main.FieldManager.stadium.MuteBleachersSound();
             OuuhAudio();
-            Invoke(nameof(BouhAudio), audioSource.clip.length);
+            Invoke(nameof(BouhAudio), playerAudioSources[0].clip.length - 1.5f);
         }
     }
 
     private void BouhAudio()
     {
-        audioSource.clip = bouhClips[Random.Range(0, bouhClips.Length)];
-        audioSource.Play();
+        PlayOneShot(bouhClips[Random.Range(0, bouhClips.Length)]);
     }
 
     private void OuuhAudio()
     {
-        audioSource.clip = surpriseClips[Random.Range(0, surpriseClips.Length)];
-        audioSource.Play();
+        PlayClip(surpriseClips[Random.Range(0, surpriseClips.Length)]);
     }
 
     public void PlayerEntry()
     {
+        playerAudioSources = main.PlayerManager.player.crowdAudioSources;
         if (crowdSound)
         {
-            audioSource.clip = playerEntryClips[Random.Range(0, playerEntryClips.Length)];
-            audioSource.Play();
+            PlayClip(playerEntryClips[Random.Range(0, playerEntryClips.Length)]);
         }
     }
     public void TouchdownCelebration()
     {
         if (crowdSound)
         {
-            audioSource.clip = touchdownCelebrationClips[Random.Range(0, touchdownCelebrationClips.Length)];
-            audioSource.Play();
+            PlayClip(touchdownCelebrationClips[Random.Range(0, touchdownCelebrationClips.Length)]);
         }
     }
 
     public void Win()
     {
-        audioSource.clip = winClips[Random.Range(0, winClips.Length)];
-        audioSource.Play();
+        PlayClip(winClips[Random.Range(0, winClips.Length)]);
+    }
+
+    private void PlayClip(AudioClip clip)
+    {
+        foreach (AudioSource a in playerAudioSources)
+        {
+            a.clip = clip;
+            a.Play();
+        }
+    }
+    private void PlayOneShot(AudioClip clip)
+    {
+        foreach (AudioSource a in playerAudioSources)
+        {
+            a.PlayOneShot(clip);
+        }
     }
 }

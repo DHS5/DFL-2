@@ -10,13 +10,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerManager playerManager;
 
     [Tooltip("Player controller")]
-    [HideInInspector] public PlayerController controller;
+    public PlayerController controller;
     [Tooltip("Player gameplay")]
-    [HideInInspector] public PlayerGameplay gameplay;
+    public PlayerGameplay gameplay;
     [Tooltip("Player effects")]
-    [HideInInspector] public PlayerEffects effects;
+    public PlayerEffects effects;
 
-    [HideInInspector] public AudioSource audioSource;
+    public AudioSource audioSource;
 
     [HideInInspector] public GameObject activeBody;
 
@@ -24,30 +24,19 @@ public class Player : MonoBehaviour
 
     [Header("First person player")]
     [Tooltip("First person player")]
-    [HideInInspector] public FPPlayer fPPlayer;
+    public FPPlayer fPPlayer;
 
 
 
     [Header("Third Person player")]
     [Tooltip("Third person player")]
-    [HideInInspector] public TPPlayer tPPlayer;
+    public TPPlayer tPPlayer;
 
 
+    [Header("Audio Sources")]
+    public AudioSource[] crowdAudioSources;
 
-    private void Awake()
-    {
-        controller = GetComponent<PlayerController>();
 
-        gameplay = GetComponent<PlayerGameplay>();
-
-        effects = GetComponent<PlayerEffects>();
-
-        fPPlayer = GetComponentInChildren<FPPlayer>();
-
-        tPPlayer = GetComponentInChildren<TPPlayer>();
-
-        audioSource = GetComponent<AudioSource>();
-    }
 
     public void CreatePlayer(PlayerInfo player)
     {

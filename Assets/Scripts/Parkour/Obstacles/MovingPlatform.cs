@@ -12,13 +12,11 @@ public class MovingPlatform : MonoBehaviour
 
     private Vector3 middlePos;
 
-    private bool ascending;
+    public bool ascending;
 
     private void Start()
     {
         middlePos = transform.position;
-
-        ascending = true;
     }
 
     void LateUpdate()
