@@ -14,16 +14,22 @@ public class ParkourCard : ImageCard
 
     [SerializeField] private Slider difficultyGauge;
 
+    [Space]
+    [SerializeField] private GameObject lockGO;
+
 
     public ParkourCardSO parkourCardSO { get { return cardSO as ParkourCardSO; } }
 
 
     protected override void Start()
     {
+        titleText.text = parkourCardSO.Title;
         image.sprite = cardSO.mainSprite;
-        firstRewardText.text = parkourCardSO.reward.ToString();
-        thenText.text = parkourCardSO.baseReward.ToString();
-        difficultyGauge.value = parkourCardSO.difficulty;
+        firstRewardText.text = parkourCardSO.Reward.ToString();
+        thenText.text = parkourCardSO.BaseReward.ToString();
+        difficultyGauge.value = parkourCardSO.Difficulty;
+
+        if (parkourCardSO.locked) Lock();
     }
 
     public void On()
@@ -43,5 +49,6 @@ public class ParkourCard : ImageCard
     public void Lock()
     {
         toggle.interactable = false;
+        lockGO.SetActive(true);
     }
 }

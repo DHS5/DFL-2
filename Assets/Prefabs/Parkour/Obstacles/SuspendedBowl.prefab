@@ -142,9 +142,8 @@ GameObject:
   - component: {fileID: 6467760225476182593}
   - component: {fileID: 5014048579664340418}
   - component: {fileID: 8765601433606730205}
-  - component: {fileID: 5682565733306052648}
   - component: {fileID: 6425327913644408592}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -216,20 +215,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5682565733306052648
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6905666109075721009}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4711208715938537054, guid: 2f982760e3c3d094593c46ddccb2120b, type: 3}
 --- !u!135 &6425327913644408592
 SphereCollider:
   m_ObjectHideFlags: 0

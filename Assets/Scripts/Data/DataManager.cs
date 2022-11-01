@@ -109,7 +109,7 @@ public struct GameData
     public DefenderAttributesSO enemy;
     public AttackerAttributesSO[] team;
     public GameObject stadium;
-    public Parkour parkour;
+    public int parkour;
     public List<GameObject> weapons;
 }
 

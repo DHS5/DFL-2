@@ -12,11 +12,7 @@ GameObject:
   - component: {fileID: 4064210074795532044}
   - component: {fileID: 2270393441195174854}
   - component: {fileID: 5749075661347532361}
-  - component: {fileID: -1567736197779751949}
-  - component: {fileID: 5228900446391747044}
-  - component: {fileID: -4323326122947065425}
-  - component: {fileID: -1060188117311037317}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trampoline
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -99,57 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 0.2, z: 3}
+  m_Size: {x: 3.5, y: 0.2, z: 3.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &-1567736197779751949
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325089022936287763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5668256, y: 0.6, z: 4}
-  m_Center: {x: -1.7165872, y: 0, z: 0}
---- !u!65 &5228900446391747044
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325089022936287763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.54901814, y: 0.6, z: 4}
-  m_Center: {x: 1.7254909, y: 0, z: 0}
---- !u!65 &-4323326122947065425
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325089022936287763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 4, y: 0.6, z: 0.58682704}
-  m_Center: {x: 0, y: 0, z: -1.7065865}
---- !u!65 &-1060188117311037317
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325089022936287763}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 4, y: 0.6, z: 0.5617368}
-  m_Center: {x: 0, y: 0, z: 1.7191316}

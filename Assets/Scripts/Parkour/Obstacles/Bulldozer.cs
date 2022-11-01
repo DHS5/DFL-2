@@ -19,6 +19,7 @@ public class Bulldozer : MonoBehaviour
     private float startHeight;
     private int right;
     float rotSpeed;
+    private float margin = 0;
 
     private void Start()
     {
@@ -28,7 +29,12 @@ public class Bulldozer : MonoBehaviour
 
     void LateUpdate()
     {
-        if (bowl.transform.position.y >= startHeight + range) right = -right;
+        if (bowl.transform.position.y >= startHeight + range + margin)
+        {
+            right = -right;
+            margin = 1;
+        }
+        else margin = 0;
 
         rotSpeed = right * rotationSpeed * Time.deltaTime;
 

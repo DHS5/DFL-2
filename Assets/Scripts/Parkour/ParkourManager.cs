@@ -12,9 +12,16 @@ public class ParkourManager : MonoBehaviour
 
     public Parkour Parkour { get; private set; }
 
+    [Header("Parkours")]
+    [SerializeField] private Parkour[] parkours;
 
     [SerializeField] private PlayerInfo parkourPlayer;
     [SerializeField] private GameObject parkourStadium;
+
+
+    [Header("UI components")]
+    [SerializeField] private GameObject nextButton;
+    [SerializeField] private GameObject congratulationsText;
 
 
     private void Awake()
@@ -39,8 +46,12 @@ public class ParkourManager : MonoBehaviour
     public void GenerateParkour()
     {
         Vector3 position = main.FieldManager.field.enterZone.transform.position;
+        int parkourNumber = main.GameManager.gameData.parkour;
 
-        Parkour = Instantiate(main.GameManager.gameData.parkour.gameObject, position, Quaternion.identity).GetComponent<Parkour>();
+        Parkour = Instantiate(parkours[parkourNumber].gameObject, position, Quaternion.identity).GetComponent<Parkour>();
+
+        nextButton.SetActive(parkourNumber != parkours.Length - 1);
+        congratulationsText.SetActive(parkourNumber == parkours.Length - 1);
     }
 
     public void Win()
@@ -55,12 +66,17 @@ public class ParkourManager : MonoBehaviour
         }
     }
 
+    public void Next()
+    {
+        main.DataManager.playerPrefs.parkourIndex++;
+        main.DataManager.gameData.parkour++;
+    }
+
     private void UnlockNextParkour()
     {
         List<int> parkours = main.DataManager.inventoryData.parkours.ToList();
         parkours.Add((int)Parkour.ParkourNum + 1);
         main.DataManager.inventoryData.parkours = parkours.ToArray();
-        //main.DataManager.playerPrefs.parkourIndex++;
     }
 
     public static bool Won(int parkourNum)

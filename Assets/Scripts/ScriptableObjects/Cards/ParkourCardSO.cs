@@ -10,30 +10,20 @@ public enum ParkourEnum { NULL = 0, FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, 
 public class ParkourCardSO : InventoryCardSO
 {
     [Header("Parkour card specifics")]
-    public ParkourEnum parkour;
+    
     public Parkour prefab;
-    public override object cardObject { get { return parkour; } }
-    [Space]
-    [Range(0, 10)] public int difficulty;
-    public int reward;
-    public int baseReward;
+    public override object cardObject { get { return Parkour; } }
+    public ParkourEnum Parkour { get { return prefab.ParkourNum; } }
+    public int Difficulty { get { return prefab.Difficulty; } }
+    public int Reward { get { return prefab.Reward; } }
+    public int BaseReward { get { return prefab.BaseReward; } }
 
-
-    private void OnValidate()
-    {
-        if (prefab != null)
-        {
-            parkour = prefab.ParkourNum;
-            difficulty = prefab.Difficulty;
-            reward = prefab.Reward;
-            baseReward = prefab.BaseReward;
-        }
-    }
+    public bool locked;
 
 
     public override void SetActive()
     {
-        DataManager.InstanceDataManager.playerPrefs.parkourIndex = (int) parkour - 1;
-        DataManager.InstanceDataManager.gameData.parkour = prefab;
+        DataManager.InstanceDataManager.playerPrefs.parkourIndex = (int) Parkour - 1;
+        DataManager.InstanceDataManager.gameData.parkour = (int) Parkour - 1;
     }
 }

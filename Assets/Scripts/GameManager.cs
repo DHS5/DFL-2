@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
 
         Physics.IgnoreLayerCollision(7, 8);
         Physics.IgnoreLayerCollision(8, 9);
+        Physics.IgnoreLayerCollision(10, 12); //Ground
     }
 
 
