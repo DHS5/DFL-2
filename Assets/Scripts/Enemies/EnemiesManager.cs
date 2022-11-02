@@ -129,6 +129,9 @@ public class EnemiesManager : MonoBehaviour
             case GameMode.DRILL:
                 DrillWave();
                 break;
+            case GameMode.TUTORIAL:
+                if (main.GameManager.gameData.gameDrill == GameDrill.ONEVONE) { DrillWave(); }
+                break;
             default:
                 Debug.Log("No mode");
                 break;

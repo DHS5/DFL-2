@@ -65,7 +65,6 @@ public class CursorManager : MonoBehaviour
 
     public static void ForceUnlockCursor()
     {
-        Debug.Log("unlock");
         // Unlock the cursor in the middle of the screen
         Cursor.lockState = CursorLockMode.None;
 

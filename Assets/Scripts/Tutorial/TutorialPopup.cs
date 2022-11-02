@@ -30,6 +30,7 @@ public class TutorialPopup : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(gameObject.name);
         text.text = contentText;
         okButton.gameObject.SetActive(showOkButton);
 

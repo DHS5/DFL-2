@@ -17,10 +17,11 @@ public class TutorialManager : MonoBehaviour
         dataManager = FindObjectOfType<DataManager>();
 
         activeTuto = tutorials[dataManager.gameData.tutoNumber];
-        activeTuto.gameObject.SetActive(true);
 
         if (dataManager.gameData.gameMode == GameMode.TUTORIAL)
         {
+            activeTuto.gameObject.SetActive(true);
+
             dataManager.gameData = activeTuto.gameData;
 
             main.GameUIManager.SetScreen(GameScreen.TUTO, true);
