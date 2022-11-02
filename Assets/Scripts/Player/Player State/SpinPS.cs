@@ -16,6 +16,8 @@ public class SpinPS : PlayerState
         SetTrigger("Spin");
         SetFloat("Dir", startSide);
 
+        player.effects.AudioPlayerEffort(true);
+
         animTime = UD.spinTime;
 
         controller.Speed = att.SpinSpeed;

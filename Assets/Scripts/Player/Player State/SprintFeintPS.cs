@@ -14,6 +14,8 @@ public class SprintFeintPS : PlayerState
     {
         SetTrigger("SprintFeint");
 
+        player.effects.AudioPlayerEffort(true);
+
         controller.Speed = att.SprintFeintSpeed;
         controller.SideSpeed = Vector3.Dot(controller.Velocity.normalized * att.SprintFeintSpeed, Vector3.right);
 

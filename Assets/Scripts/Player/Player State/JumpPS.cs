@@ -15,6 +15,8 @@ public class JumpPS : PlayerState
         SetTrigger("Jump");
         SetFloat("HangTime", 1 / controller.Jump(att.JumpCost, 0));
 
+        player.effects.AudioPlayerEffort(false);
+
         player.playerManager.JumpUIAnimation(att.JumpCost);
         
         base.Enter();

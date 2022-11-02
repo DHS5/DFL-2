@@ -7,6 +7,8 @@ public class GameAudioManager : MonoBehaviour
 {
     [Tooltip("Main Manager")]
     private MainManager main;
+
+    [SerializeField] private AudioSource ambianceAudioSource;
     
     private AudioSource[] audioSources;
     private AudioSource[] soundSources;
@@ -18,6 +20,7 @@ public class GameAudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] surpriseClips;
     [SerializeField] private AudioClip[] bouhClips;
     [SerializeField] private AudioClip[] winClips;
+    [SerializeField] private AudioClip[] zombieAmbianceClips;
 
 
     [Header("Audio mixer group")]
@@ -85,6 +88,11 @@ public class GameAudioManager : MonoBehaviour
         {
             crowdSound = false;
             main.FieldManager.stadium.MuteBleachersSound();
+            if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE)
+            {
+                ambianceAudioSource.clip = zombieAmbianceClips[Random.Range(0, zombieAmbianceClips.Length)];
+                ambianceAudioSource.Play();
+            }
         }
         else
         {

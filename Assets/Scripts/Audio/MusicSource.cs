@@ -49,8 +49,8 @@ public class MusicSource : MonoBehaviour
         get { return musicOnToggle.isOn; }
         set
         {
-            if (value == true && !MusicOn) audioSource.UnPause();
-            else if (value == false && MusicOn) audioSource.Pause();
+            if (value) audioSource.UnPause();
+            else if (!value) audioSource.Pause();
 
             dataManager.audioData.musicOn = value;
         }

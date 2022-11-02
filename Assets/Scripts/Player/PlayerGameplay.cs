@@ -131,14 +131,7 @@ public class PlayerGameplay : MonoBehaviour
 
             // When the player collides with an obstacle --> game over
             if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
-            {
-                AudioSource a = collision.gameObject.GetComponent<AudioSource>();
-                if (a != null)
-                {
-                    a.Play();
-                    a.volume = 1f;
-                }
-                
+            {                
                 Hurt(collision);
                 Debug.Log("Hurt by obstacle");
             }
@@ -165,7 +158,7 @@ public class PlayerGameplay : MonoBehaviour
 
     private void Hurt(Collision collision)
     {
-        player.audioSource.Play();
+        player.effects.AudioPlayerHurt();
 
         lifeNumber--;
         if (lifeNumber > 0)
@@ -195,6 +188,7 @@ public class PlayerGameplay : MonoBehaviour
         player.activeBody.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
         player.controller.PlayerRigidbody.AddForce(-impact, ForceMode.Impulse);
 
+        player.effects.DisableBreathAudio();
         player.playerManager.DeadPlayer();
     }
 
@@ -211,6 +205,8 @@ public class PlayerGameplay : MonoBehaviour
     
     public void Lose()
     {
+        player.effects.AudioPlayerLose();
+
         player.controller.CurrentState.Lose();
 
         player.playerManager.DeadPlayer();

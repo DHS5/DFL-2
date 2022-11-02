@@ -13,6 +13,8 @@ public class JukePS : PlayerState
 
     public override void Enter()
     {
+        player.effects.AudioPlayerEffort(false);
+
         SetTrigger("Juke");
         SetFloat("Dir", startSide);
         animTime = UD.jukeTime;

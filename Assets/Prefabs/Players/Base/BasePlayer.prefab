@@ -1118,7 +1118,6 @@ GameObject:
   - component: {fileID: 7293251840852412852}
   - component: {fileID: 7604554640381920521}
   - component: {fileID: 5668633831088597005}
-  - component: {fileID: 108151659059634804}
   - component: {fileID: 3821661454821037754}
   - component: {fileID: 4633199301437347605}
   m_Layer: 8
@@ -1170,7 +1169,6 @@ MonoBehaviour:
   controller: {fileID: 7026117710288468866}
   gameplay: {fileID: 8377949557072255369}
   effects: {fileID: 7293251840852412852}
-  audioSource: {fileID: 3821661454821037754}
   activeBody: {fileID: 0}
   fPPlayer: {fileID: 3748620080891329571}
   tPPlayer: {fileID: 3125043261515600451}
@@ -1224,6 +1222,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6345e058217d3d04ebe1c5d1efeebdad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 3821661454821037754}
+  hurtClips:
+  - {fileID: 8300000, guid: 0aadd833bb2d5c6459071cec3b57b6fc, type: 3}
+  - {fileID: 8300000, guid: bab2beee4e54b6b4884ba37eee560014, type: 3}
+  - {fileID: 8300000, guid: 81735d68355a6ae42ae2ffe7399efc81, type: 3}
+  - {fileID: 8300000, guid: 6f7dc650346a95743b7ca91ca97867a8, type: 3}
+  - {fileID: 8300000, guid: 5583e9c9a0afdf0408f9d0946666f85a, type: 3}
+  - {fileID: 8300000, guid: 572fe06c861000149bc4b51cc1fdb09d, type: 3}
+  - {fileID: 8300000, guid: 88b91714a2e2cbb428f61e18ca4d39d8, type: 3}
+  - {fileID: 8300000, guid: 80cc6816623c9a04580970e36613d8c4, type: 3}
+  - {fileID: 8300000, guid: cad57fcf83264a4489ae5c41b55e7a8b, type: 3}
+  - {fileID: 8300000, guid: 132005c60d8148440b6f375a773d8f8e, type: 3}
+  - {fileID: 8300000, guid: 36104c8b981b4a349a1948b61c9e8a20, type: 3}
+  - {fileID: 8300000, guid: 14a883f5f8241cc4ca1f35fe54fef1d2, type: 3}
+  - {fileID: 8300000, guid: c39ba448713aff147bdc2b9b4126b1d8, type: 3}
+  - {fileID: 8300000, guid: 9ef3f6cb1b48c67419812b50793d9da6, type: 3}
+  - {fileID: 8300000, guid: f0b29d3032f31c74dbf99cffe3d221f4, type: 3}
+  - {fileID: 8300000, guid: fa81634d0cd91904e9f923e93ca14e4d, type: 3}
+  - {fileID: 8300000, guid: 2dbc6219b3c1c4346b1f40dfd61da974, type: 3}
+  loseClips:
+  - {fileID: 8300000, guid: 9ac9e455e130968459fc7ff35a33428c, type: 3}
+  - {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
+  - {fileID: 8300000, guid: 750dad2c35d71a44fb6d408b4d245bf8, type: 3}
+  dieClips:
+  - {fileID: 8300000, guid: d30c820ff550c794a86e903ad647e4ee, type: 3}
+  - {fileID: 8300000, guid: e09d8c9e8cc14e348bd235dfcbd09f0a, type: 3}
+  - {fileID: 8300000, guid: cb7c6186be463124d898b380bf56317c, type: 3}
+  - {fileID: 8300000, guid: 8698e45711dc13547ada232e1d3ea399, type: 3}
+  effortClips:
+  - {fileID: 8300000, guid: 6fadb0ebdfee1cd4d830b8e7ba78b5c9, type: 3}
+  - {fileID: 8300000, guid: fad83423a6f3f9c4a8c27221eb589ecb, type: 3}
+  - {fileID: 8300000, guid: eb90713e732c5fa42a43fa8ea525c98b, type: 3}
+  softEffortClips:
+  - {fileID: 8300000, guid: d9730fee5263bea48b6e0383f6bcdc27, type: 3}
+  - {fileID: 8300000, guid: 245459f18a1d32146b20c726c4770286, type: 3}
+  - {fileID: 8300000, guid: 942f547ab66c63944be15a5e4fcbcb58, type: 3}
+  - {fileID: 8300000, guid: 49e02352bd9e3e245b55a1d82d6b01cf, type: 3}
+  playerBreathAudioSource: {fileID: 2657299363432295792}
   accVolume: {fileID: 2587239365259458824}
   bonusVolume: {fileID: 1849279487601585796}
   slowmoVolume: {fileID: 2926133011404598247}
@@ -1259,14 +1295,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.98, z: 0}
---- !u!81 &108151659059634804
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812354164878341571}
-  m_Enabled: 1
 --- !u!82 &3821661454821037754
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1279,14 +1307,14 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5220909684905951906, guid: 4deab6aee09823347b3a8966547cbde6,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1732,6 +1760,12 @@ PrefabInstance:
 --- !u!4 &1092868041752236666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6846411638236488873, guid: 99e8dcd95bd01a545b66b460c3c87731,
+    type: 3}
+  m_PrefabInstance: {fileID: 5776414825750689491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2657299363432295792 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8415377349224930211, guid: 99e8dcd95bd01a545b66b460c3c87731,
     type: 3}
   m_PrefabInstance: {fileID: 5776414825750689491}
   m_PrefabAsset: {fileID: 0}

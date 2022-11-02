@@ -13,6 +13,8 @@ public class SlipPS : PlayerState
     {
         base.Enter();
 
+        player.effects.AudioPlayerEffort(false);
+
         animTime = UD.slipTime;
 
         SetTrigger("Slip");

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Zombie : Enemy
 {
+    [SerializeField] private AudioClip zombieDeadClip;
+
     public ZombieAttributesSO Attribute { get; private set; }
 
     [HideInInspector] public bool dead;
@@ -37,7 +39,10 @@ public class Zombie : Enemy
 
     public virtual void Dead()
     {
-       currentState.GameOver();
+        currentState.GameOver();
+
+        audioSource.Stop();
+        audioSource.PlayOneShot(zombieDeadClip);
 
         dead = true;
         navMeshAgent.isStopped = true;

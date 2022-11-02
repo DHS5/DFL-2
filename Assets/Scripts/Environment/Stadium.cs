@@ -58,7 +58,7 @@ public class Stadium : MonoBehaviour
     public void StartBleachersSound()
     {
         foreach (AudioSource a in bleachersAS)
-            a.Play();
+            if (a.enabled) a.Play();
     }
 
     public void MuteBleachersSound()

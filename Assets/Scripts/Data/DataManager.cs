@@ -20,6 +20,10 @@ public struct AudioData
     public int musicNumber;
 
     public bool loopOn;
+
+    public float playerVolume;
+    public float ambianceVolume;
+    public float enemiesVolume;
 }
 
 
@@ -199,6 +203,8 @@ public class DataManager : MonoBehaviour
             else InstanceDataManager.StartCoroutine(InstanceDataManager.LoadMenuManagers());
 
             if (InstanceDataManager.gameData.gameMode == GameMode.TUTORIAL) InstanceDataManager.InitGameData();
+            else if (InstanceDataManager.gameData.gameMode == GameMode.DRILL && InstanceDataManager.gameData.gameDrill == GameDrill.PARKOUR)
+                InstanceDataManager.gameData.gameWeather = GameWeather.SUN;
 
             return;
         }

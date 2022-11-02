@@ -15,6 +15,8 @@ public class FlipPS : PlayerState
         SetTrigger("Flip");
         SetFloat("HangTime", 1 / controller.Jump(att.FlipCost, att.FlipHeight));
 
+        player.effects.AudioPlayerEffort(false);
+
         controller.Speed = att.FlipSpeed;
 
         player.playerManager.JumpUIAnimation(att.FlipCost);

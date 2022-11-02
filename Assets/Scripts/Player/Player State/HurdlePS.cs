@@ -15,6 +15,8 @@ public class HurdlePS : PlayerState
         SetTrigger("Hurdle");
         SetFloat("HangTime", 1 / controller.Jump(att.HurdleCost, att.HurdleHeight));
 
+        player.effects.AudioPlayerEffort(false);
+
         player.playerManager.JumpUIAnimation(att.HurdleCost);
         
         base.Enter();

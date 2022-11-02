@@ -42,10 +42,13 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Slider viewTypeSlider;
     [SerializeField] private Toggle goalpostToggle;
     [SerializeField] private Toggle backviewToggle;
-
+    [Space]
     [SerializeField] private Slider soundVolumeSlider;
     [SerializeField] private Toggle soundOnToggle;
-
+    [SerializeField] private Slider playerVolumeSlider;
+    [SerializeField] private Slider ambianceVolumeSlider;
+    [SerializeField] private Slider enemiesVolumeSlider;
+    [Space]
     [SerializeField] private Toggle infoButtonsToggle;
 
     [Header("Audio mixer")]
@@ -152,6 +155,31 @@ public class SettingsManager : MonoBehaviour
         } 
     }
 
+    public float PlayerVolume
+    {
+        set
+        {
+            DataManager.audioData.playerVolume = value;
+            audioMixer.SetFloat("PlayerVolume", Mathf.Log10(value) * 20);
+        }
+    }
+    public float AmbianceVolume
+    {
+        set
+        {
+            DataManager.audioData.ambianceVolume = value;
+            audioMixer.SetFloat("AmbianceVolume", Mathf.Log10(value) * 20);
+        }
+    }
+    public float EnemiesVolume
+    {
+        set
+        {
+            DataManager.audioData.enemiesVolume = value;
+            audioMixer.SetFloat("EnemiesVolume", Mathf.Log10(value) * 20);
+        }
+    }
+
 
     /// <summary>
     /// Gets the Singleton Instance
@@ -239,11 +267,12 @@ public class SettingsManager : MonoBehaviour
 
     private void LoadAudioData(AudioData data)
     {
-        //SoundOn = data.soundOn;
-        //SoundVolume = data.soundVolume;
-
         soundOnToggle.isOn = data.soundOn;
         soundVolumeSlider.value = data.soundVolume;
+
+        playerVolumeSlider.value = data.playerVolume;
+        ambianceVolumeSlider.value = data.ambianceVolume;
+        enemiesVolumeSlider.value = data.enemiesVolume;
     }
 
     private void LoadPlayerPrefs(PlayerPrefs prefs)

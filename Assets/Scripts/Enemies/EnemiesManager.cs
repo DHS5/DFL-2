@@ -280,7 +280,7 @@ public class EnemiesManager : MonoBehaviour
 
 
         // Spawn on the whole field
-        for (int i = 0; i < 50 + (3 + (int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
+        for (int i = 0; i < 40 + ((int) main.GameManager.gameData.gameDifficulty) * (main.GameManager.WaveNumber + (int)main.GameManager.gameData.gameDifficulty) ; i++)
         {
             r = Random.Range(1, sleepingZProportion + 1);
             ZombieAttributesSO enemy;

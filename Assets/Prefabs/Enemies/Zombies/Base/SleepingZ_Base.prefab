@@ -64,6 +64,7 @@ MonoBehaviour:
   playerOnGround: 0
   playerOnField: 0
   destination: {x: 0, y: 0, z: 0}
+  zombieDeadClip: {fileID: 8300000, guid: 1d92c5ac0e056b045b4461b147f95be5, type: 3}
   dead: 0
 --- !u!195 &-4440146919855297277
 NavMeshAgent:
@@ -100,7 +101,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -108,7 +109,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 7.5
+  MinDistance: 3
   MaxDistance: 25
   Pan2D: 0
   rolloffMode: 2
@@ -119,28 +120,37 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.3
+      time: 0.12
       value: 1
-      inSlope: -3.3346713
-      outSlope: -3.3346713
+      inSlope: -8.336666
+      outSlope: -8.336666
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.48896182
-      value: 0.23635864
-      inSlope: -1.1746379
-      outSlope: -1.1746379
+      time: 0.24
+      value: 0.5
+      inSlope: -2.0841665
+      outSlope: -2.0841665
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.29984915
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.46765563
+      value: 0.19544983
+      inSlope: -0.52104163
+      outSlope: -0.52104163
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.30011982
-      outSlope: -0.30011982
+      inSlope: -0.12004785
+      outSlope: -0.12004785
       tangentMode: 0
       weightedMode: 0
       inWeight: 0

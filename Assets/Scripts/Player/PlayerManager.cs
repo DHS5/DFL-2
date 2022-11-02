@@ -152,6 +152,9 @@ public class PlayerManager : MonoBehaviour
         player.gameplay.freeze = true; // Player freezes
 
         player.effects.Rain(false, 0); // Stops eventual rain
+
+        if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE)
+            player.effects.AudioPlayerDie();
     }
 
     public void WinPlayer()

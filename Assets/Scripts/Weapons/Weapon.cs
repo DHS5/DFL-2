@@ -19,8 +19,11 @@ public class Weapon : MonoBehaviour
     private EnemiesManager enemiesManager;
 
     private CursorManager cursor;
-    
-    
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shotClip;
+
+    [Header("Weapon infos")]
     [Tooltip("Distance max at which the player can shoot a zombie")]
     [SerializeField] private float range; public float Range { get { return range; } }
 
@@ -38,8 +41,6 @@ public class Weapon : MonoBehaviour
 
     public bool fireArm;
     public bool bigWeapon;
-
-    private AudioSource audioSource;
 
     [Tooltip("Sprite of the weapon's ammunition")]
     public Sprite weaponSprite;
@@ -67,12 +68,6 @@ public class Weapon : MonoBehaviour
     }
 
 
-
-    private void Awake()
-    {
-        //audioSource = GetComponent<AudioSource>();
-        //audioSource.clip = audioClip;
-    }
 
     private void Start()
     {
@@ -132,7 +127,7 @@ public class Weapon : MonoBehaviour
         canShoot = false;
         ammunition--;
         player.controller.CurrentState.Shoot(fireArm);
-        //audioSource.Play();
+        audioSource.PlayOneShot(shotClip);
 
         // Enemy kill
         do

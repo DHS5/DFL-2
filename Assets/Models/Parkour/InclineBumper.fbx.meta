@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 56b30a8dc694c8240bfeb2d1d7d41fc5
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: BumperMaterial
     second: {fileID: 2100000, guid: 67c669ac8815aa144bb2cab673b5db57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PoleTexture
+    second: {fileID: 2100000, guid: 0e37e7021ae10d3409e9aa7c2a2335bf, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -104,6 +109,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

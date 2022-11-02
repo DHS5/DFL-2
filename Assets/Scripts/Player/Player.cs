@@ -16,8 +16,6 @@ public class Player : MonoBehaviour
     [Tooltip("Player effects")]
     public PlayerEffects effects;
 
-    public AudioSource audioSource;
-
     [HideInInspector] public GameObject activeBody;
 
 

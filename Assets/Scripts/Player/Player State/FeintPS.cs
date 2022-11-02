@@ -13,6 +13,8 @@ public class FeintPS : PlayerState
 
     public override void Enter()
     {
+        player.effects.AudioPlayerEffort(true);
+
         animTime = UD.feintTime;
 
         controller.Speed = att.FeintSpeed;

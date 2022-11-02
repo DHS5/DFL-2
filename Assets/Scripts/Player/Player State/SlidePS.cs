@@ -14,6 +14,8 @@ public class SlidePS : PlayerState
     {
         SetTrigger("Slide");
 
+        player.effects.AudioPlayerEffort(true);
+
         controller.Slide();
         controller.Speed = att.SlideSpeed;
         controller.SideSpeed = Vector3.Dot(controller.Velocity.normalized * att.SlideSpeed, Vector3.right);

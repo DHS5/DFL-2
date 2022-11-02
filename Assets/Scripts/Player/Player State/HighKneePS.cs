@@ -15,6 +15,8 @@ public class HighKneePS : PlayerState
         SetTrigger("HighKnee");
         player.gameplay.isHighKneeing = true;
 
+        player.effects.AudioPlayerEffort(false);
+
         SetFloat("HangTime", 1 / controller.Jump(att.HighKneeCost, att.HighKneeHeight));
 
         player.playerManager.JumpUIAnimation(att.HighKneeCost);
