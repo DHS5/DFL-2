@@ -9,8 +9,6 @@ public abstract class DefenderAttributesSO : EnemyAttributesSO
     public enum DefenderType { WINGMAN, LINEMAN, CORNERBACK, LINEBACKER, SAFETY, TACKLE };
 
     [Header("Defenders attributes")]
-    public string enemyName;
-    [Space]
     [Header("Defender behaviour parameters")]
     [Tooltip("Pourcentage of perfection of the trajectory")]
     [Range(0, 1)] public float intelligence;

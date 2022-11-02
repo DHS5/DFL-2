@@ -8,18 +8,11 @@ public class EnemyCardSO : CardSO
     [Header("Enemy card specifics")]
     public DefenderAttributesSO attribute;
 
-    public GameDifficulty difficulty;
     public string position;
 
     [Header("Locker room attributes")]
     public Mesh mesh;
     public Avatar avatar;
-
-    private void OnValidate()
-    {
-        if (attribute != null)
-            Title = attribute.enemyName;
-    }
 
     public override void SetActive()
     {

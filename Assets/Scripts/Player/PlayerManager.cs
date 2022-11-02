@@ -50,6 +50,7 @@ public class PlayerManager : MonoBehaviour
                 player.tPPlayer.tpsCamera.enabled = false;
 
                 player.activeBody = player.fPPlayer.gameObject;
+                player.controller.CurrentState?.Flashlight(FlashlightActive);
             }
             else if (value == ViewType.TPS)
             {
@@ -60,6 +61,7 @@ public class PlayerManager : MonoBehaviour
                 player.fPPlayer.fpsCamera.enabled = false;
 
                 player.activeBody = player.tPPlayer.gameObject;
+                player.controller.CurrentState?.Flashlight(FlashlightActive);
             }
 
             main.GameManager.ViewChange();
