@@ -1371,6 +1371,18 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
+    m_Name: TD
+    m_StateMachine: {fileID: 1212152673274261987}
+    m_Mask: {fileID: 31900000, guid: 105f4e0a19d140641a1571507df692fc, type: 2}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
     m_Name: BigWeapon Layer
     m_StateMachine: {fileID: 5060773135333976281}
     m_Mask: {fileID: 31900000, guid: ee5f7aadb2c844a48a8d32490bf34bba, type: 2}
@@ -1398,34 +1410,10 @@ AnimatorController:
       m_Motion: {fileID: 7400000, guid: 8f9477c42712b3a46a8951f0b6e92d65, type: 2}
     m_Behaviours: []
     m_BlendingMode: 0
-    m_SyncedLayerIndex: 1
+    m_SyncedLayerIndex: 2
     m_DefaultWeight: 0
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 1
-    m_Controller: {fileID: 9100000}
-  - serializedVersion: 5
-    m_Name: TD
-    m_StateMachine: {fileID: 1212152673274261987}
-    m_Mask: {fileID: 31900000, guid: 105f4e0a19d140641a1571507df692fc, type: 2}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 9100000}
-  - serializedVersion: 5
-    m_Name: Dead
-    m_StateMachine: {fileID: -5105604738773065524}
-    m_Mask: {fileID: 0}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
     m_Name: Flashlight
@@ -1443,6 +1431,18 @@ AnimatorController:
     m_Name: Catch
     m_StateMachine: {fileID: 2114454570197529322}
     m_Mask: {fileID: 31900000, guid: 4e9be5febcf49e746823b2e6e95515d2, type: 2}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
+    m_Name: Dead
+    m_StateMachine: {fileID: -5105604738773065524}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

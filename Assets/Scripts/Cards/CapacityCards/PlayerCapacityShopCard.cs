@@ -71,6 +71,36 @@ public class PlayerCapacityShopCard : MonoBehaviour
     {
         ApplyInfos(info);
     }
+
+    public void ApplyInfos(PlayerAttributesSO p)
+    {
+        info.speedInfo.value = p.NormalSpeed;
+        info.sideSpeedInfo.value = p.NormalSideSpeed;
+        info.sprintInfo.value = p.AccelerationM;
+        info.staminaInfo.value = p.accelerationTime / p.accelerationRestTime;
+        info.slowInfo.value = p.SlowM;
+        info.shiftInfo.value = p.SlowSideSpeed;
+        info.jumpHeightInfo.value = p.JumpHeight;
+        info.jumpStaminaInfo.value = p.JumpStamina / (p.JumpRechargeTime * p.JumpCost);
+
+        info.dirSensitivityInfo.value = p.DirSensitivity;
+        info.dirGravityInfo.value = p.DirGravity;
+        info.accSensitivityInfo.value = p.AccSensitivity;
+        info.accGravityInfo.value = p.AccGravity;
+
+        info.canJuke = p.CanJuke;
+        info.canFeint = p.CanFeint;
+        info.canSpin = p.CanSpin;
+        info.canJukeSpin = p.CanJukeSpin;
+        info.canSlide = p.CanSlide;
+        info.canFlip = p.CanFlip;
+        info.canTruck = p.CanTruck;
+        info.canHighKnee = p.CanHighKnee;
+        info.canSprintFeint = p.CanSprintFeint;
+        info.canHurdle = p.CanHurdle;
+
+        ApplyInfos();
+    }
 }
 
 [System.Serializable]

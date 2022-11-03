@@ -161,6 +161,7 @@ public abstract class Enemy : MonoBehaviour
         gameOver = true;
         animator.SetTrigger("GameOver");
         navMeshAgent.isStopped = true;
+        navMeshAgent.ResetPath();
 
         currentState.GameOver();
     }

@@ -75,16 +75,16 @@ public class WeaponsManager : MonoBehaviour
         main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
     }
 
-    public void ViewChange()
-    {
-        if (currentWeapon != null)
-        {
-            Weapon newWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
-            newWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, main.CursorManager, currentWeapon.WeaponInfo);
-            currentWeapon = newWeapon;
-            main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
-        }
-    }
+    //public void ViewChange()
+    //{
+    //    if (currentWeapon != null)
+    //    {
+    //        Weapon newWeapon = (main.PlayerManager.ViewType == ViewType.FPS) ? fpWeapon : tpWeapon;
+    //        newWeapon.Getter(this, main.PlayerManager.player, main.EnemiesManager, main.CursorManager, currentWeapon.WeaponInfo);
+    //        currentWeapon = newWeapon;
+    //        main.PlayerManager.player.controller.CurrentState.SetWeapon(true, currentWeapon.bigWeapon);
+    //    }
+    //}
 
 
     public void GameOver()

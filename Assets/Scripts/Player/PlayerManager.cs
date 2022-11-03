@@ -45,26 +45,24 @@ public class PlayerManager : MonoBehaviour
             {
                 player.fPPlayer.gameObject.SetActive(true);
                 player.tPPlayer.gameObject.SetActive(false);
-
+            
                 player.fPPlayer.fpsCamera.enabled = true;
                 player.tPPlayer.tpsCamera.enabled = false;
-
+            
                 player.activeBody = player.fPPlayer.gameObject;
-                player.controller.CurrentState?.Flashlight(FlashlightActive);
             }
             else if (value == ViewType.TPS)
             {
                 player.tPPlayer.gameObject.SetActive(true);
                 player.fPPlayer.gameObject.SetActive(false);
-
+            
                 player.tPPlayer.tpsCamera.enabled = true;
                 player.fPPlayer.fpsCamera.enabled = false;
-
+            
                 player.activeBody = player.tPPlayer.gameObject;
-                player.controller.CurrentState?.Flashlight(FlashlightActive);
             }
-
-            main.GameManager.ViewChange();
+            
+            //main.GameManager.ViewChange();
         }
     }
     public int FpCameraPos

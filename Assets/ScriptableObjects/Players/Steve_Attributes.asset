@@ -28,8 +28,12 @@ MonoBehaviour:
   slowSideSpeed: 8
   jumpHeight: 1.5
   flipHeight: 0
+  hurdleHeight: 0
+  highKneeHeight: 0
   jumpCost: 1
   flipCost: 0
+  hurdleCost: 0
+  highKneeCost: 0
   jumpStamina: 2
   jumpRechargeTime: 12
   canJuke: 0
@@ -38,7 +42,10 @@ MonoBehaviour:
   canFeint: 0
   canSlide: 0
   canFlip: 0
+  canHurdle: 0
   canTruck: 0
+  canHighKnee: 0
+  canSprintFeint: 0
   jukeSideSpeed: 0
   jukeSpeed: 0
   spinSideSpeed: 0
@@ -47,4 +54,5 @@ MonoBehaviour:
   feintSpeed: 0
   slideSpeed: 0
   flipSpeed: 0
+  sprintFeintSpeed: 0
   teamMaterial: {fileID: 2100000, guid: 79db41ce460ec0a4eaee34426bc39e7a, type: 2}

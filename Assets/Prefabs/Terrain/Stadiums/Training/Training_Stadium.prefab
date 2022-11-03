@@ -263,16 +263,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f355ef59970eed24ba797e01b170b07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entryAS: []
-  exitAS: []
   bleachersAS: []
-  ouuhAS: []
-  boohAS: []
+  bleachersClip: {fileID: 0}
+  crowd: 0
+  lights: {fileID: 0}
+  lightsToSwitchOff: {fileID: 0}
   spawnPositions:
   - {fileID: 4019640539279509201}
   stadiumCamera: {fileID: 6950362235394108994}
   enemyMaterial: {fileID: 2100000, guid: 6d56eecd587840b4b881be29491f165e, type: 2}
   fogColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+  coinsPercentage: 0
   rain: {fileID: 5387104066936626853}
 --- !u!1 &4019640539279509201
 GameObject:
@@ -516,7 +517,7 @@ Camera:
   field of view: 80
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

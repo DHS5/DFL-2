@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class AttackTDS : TackleState
 {
     readonly float animTime = 0.7f;
+    readonly float choiceRadius = 2.5f;
+    readonly float margin = 1f;
 
     [Tooltip("- if left / + if right")]
     private float side;
@@ -19,20 +21,27 @@ public class AttackTDS : TackleState
     {
         base.Enter();
 
-        side = enemy.playerVelocity.x;
-        if (side == 0) side = enemy.playerPosition.x - enemy.transform.position.x;
+        float xPos = enemy.playerPosition.x - enemy.transform.position.x;
+        float xVel = enemy.playerVelocity.x;
+        if (Mathf.Abs(xPos) <= choiceRadius) side = xVel;
+        else side = xPos;
 
-        side /= Mathf.Abs(side);
+        float dist = Mathf.Min(Mathf.Abs(xPos + xVel * (att.readyDist / enemy.playerVelocity.z)) + margin, att.attackReach);
 
-        animator.SetFloat("Side", side);
+        if (side != 0) side /= Mathf.Abs(side);
+
+        animator.SetInteger("Side", (int) side);
         animator.SetTrigger(enemy.playerOnGround ? "Attack" : "Jump");
 
-        agent.isStopped = false;
-        agent.updateRotation = false;
+        agent.isStopped = (side == 0);
+        agent.updateRotation = (side == 0);
         agent.speed = att.attackSpeed;
 
-        enemy.destination = enemy.transform.position - att.attackReach * side * enemy.transform.right;
-        agent.velocity = DestinationDir * att.attackSpeed;
+        if (side != 0)
+        {
+            enemy.destination = enemy.transform.position - dist * side * enemy.transform.right;
+            agent.velocity = DestinationDir * att.attackSpeed;
+        }
     }
 
     public override void Update()

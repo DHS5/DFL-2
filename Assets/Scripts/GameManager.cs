@@ -473,11 +473,11 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void ViewChange()
-    {
-        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
-            main.WeaponsManager.ViewChange();
-    }
+    //public void ViewChange()
+    //{
+    //    if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+    //        main.WeaponsManager.ViewChange();
+    //}
 
 
 

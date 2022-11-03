@@ -9,7 +9,7 @@ public class ChaseLBDS : LinebackerState
     {
         name = EState.CHASE;
 
-        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + enemy.xDistance * att.intelligence);
+        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + Mathf.Abs(enemy.xDistance) * att.intelligence);
     }
 
     public override void Enter()
@@ -25,7 +25,7 @@ public class ChaseLBDS : LinebackerState
     {
         base.Update();
 
-        enemy.destination = enemy.playerPosition + PlayerDir * (att.anticipation + enemy.xDistance * att.intelligence);
+        enemy.destination = enemy.playerPosition + PlayerDir * ((enemy.toPlayerAngle < 90 ? att.anticipation : 0) + Mathf.Abs(enemy.xDistance) * att.intelligence);
 
         // Attack
         if (CanAttack())

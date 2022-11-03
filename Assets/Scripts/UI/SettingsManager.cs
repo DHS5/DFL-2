@@ -85,12 +85,6 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.viewType = (ViewType) value;
-            if (main != null)
-            {
-                main.PlayerManager.ViewType = (ViewType)value;
-                main.GameUIManager.SetBackview(DataManager.gameplayData.backview);
-            }
-
 
             if (value == 0)
             {

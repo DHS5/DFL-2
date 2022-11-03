@@ -9,4 +9,12 @@ public class GameOverES : EnemyState
     {
         name = EState.GAMEOVER;
     }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        agent.isStopped = true;
+        agent.ResetPath();
+    }
 }
