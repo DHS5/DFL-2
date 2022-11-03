@@ -161,6 +161,7 @@ public class GameUIManager : MonoBehaviour
     public void GameOver()
     {
         SetScreen(GameScreen.GAME, false);
+        SetScreen(GameScreen.TUTO, false);
         SetScreen(GameScreen.RESTART, true);
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE)
         {

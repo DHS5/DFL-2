@@ -10,7 +10,7 @@ public enum PlayerEnum
     CMC, HOP, KELCE, DK, TAYLOR, KEENAN, DIGZ, NAJEE, EVANS, McLAW, CHUBB, MOSTERT, PITTS, COOKS, HUNTER, ENGRAM, FIELDS, RUSSEL, SAUCE, MEYERS
 }
 
-public enum PlayerClass { ROOKIE, STAR, ALLPRO, ICON, LEGEND }
+public enum PlayerClass { ROOKIE, PRO, STAR, ALLPRO, MVP, ICON, LEGEND }
 
 
 [CreateAssetMenu(fileName = "PlayerCard", menuName = "ScriptableObjects/Card/PlayerCard", order = 1)]

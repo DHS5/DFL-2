@@ -170,7 +170,14 @@ public class GameAudioManager : MonoBehaviour
     {
         if (crowdSound)
         {
-            PlayClip(touchdownCelebrationClips[Random.Range(0, touchdownCelebrationClips.Length)]);
+            PlayOneShot(touchdownCelebrationClips[Random.Range(0, touchdownCelebrationClips.Length)]);
+        }
+    }
+    public void BigplayReaction()
+    {
+        if (crowdSound)
+        {
+            PlayOneShot(bigplayReactionClips[Random.Range(0, bigplayReactionClips.Length)]);
         }
     }
 

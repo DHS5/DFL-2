@@ -373,6 +373,8 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GameOverCR()
     {
+        Time.timeScale = 1.0f; // Security
+
         if (gameData.gameMode != GameMode.DRILL && gameData.gameMode != GameMode.TUTORIAL)
         {
             // # Leaderboard #

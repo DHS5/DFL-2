@@ -23,10 +23,6 @@ public class ObjectifManager : MonoBehaviour
     private Player player;
 
 
-    [Tooltip("Zones of the field on which to place the objectives")]
-    private GameObject[] zones = new GameObject[3];
-
-
     // ### Properties ###
     private Objectif CurrentObjectif
     {

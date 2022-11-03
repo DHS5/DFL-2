@@ -123,6 +123,7 @@ public abstract class PlayerState
         {
             player.StartCoroutine(SlowmoCR(time));
             player.effects.SlowMoVolume(time+0.5f);
+            player.playerManager.PlayerBigplay();
         }
     }
     private IEnumerator SlowmoCR(float time)

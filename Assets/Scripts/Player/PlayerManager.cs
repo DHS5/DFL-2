@@ -176,6 +176,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void PlayerBigplay()
+    {
+        main.GameAudioManager.BigplayReaction();
+    }
+
 
     // UI functions
 

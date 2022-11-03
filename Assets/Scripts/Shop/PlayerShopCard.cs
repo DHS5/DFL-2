@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerShopCard : ShopCard
 {
@@ -11,6 +12,11 @@ public class PlayerShopCard : ShopCard
     [Header("Locker Room of the Players")]
     public LockerRoom lockerRoom;
 
+    [Header("Player class")]
+    [SerializeField] private Image cardBackground;
+    [SerializeField] private TextMeshProUGUI classText;
+    public PlayerCardsColorsSO cardColors;
+
 
     [HideInInspector] public PlayerCardSO playerCardSO;
 
@@ -19,6 +25,10 @@ public class PlayerShopCard : ShopCard
         base.GenerateCard(_cardSO, _shopButton, _buyable, _enoughMoney);
 
         playerCardSO = cardSO as PlayerCardSO;
+
+        cardBackground.color = cardColors.colors[(int)playerCardSO.playerClass];
+        classText.color = cardColors.colors[(int)playerCardSO.playerClass];
+        classText.text = playerCardSO.playerClass.ToString();
 
         PlayerAttributesSO p = playerCardSO.playerInfo.attributes;
         
