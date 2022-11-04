@@ -15,6 +15,10 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] protected Animator animator;
 
+    [SerializeField] private Renderer enemyRenderer;
+
+    [HideInInspector] public GameObject body;
+
     protected EnemyState currentState;
 
 
@@ -74,7 +78,9 @@ public abstract class Enemy : MonoBehaviour
         playerG = player.gameplay;
         playerC = player.controller;
 
-        FindObjectOfType<Renderer>().material = MainManager.InstanceMainManager.FieldManager.stadium.enemyMaterial;
+        enemyRenderer.material = MainManager.InstanceMainManager.FieldManager.stadium.enemyMaterial;
+
+        body = animator.gameObject;
     }
 
 

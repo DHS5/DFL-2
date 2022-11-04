@@ -50,6 +50,8 @@ MonoBehaviour:
   navMeshAgent: {fileID: 7651300137482894776}
   audioSource: {fileID: -4817809452399355391}
   animator: {fileID: 1574462598445642129}
+  enemyRenderer: {fileID: 8145809186698157959}
+  body: {fileID: 0}
   player: {fileID: 0}
   playerPosition: {x: 0, y: 0, z: 0}
   playerLookDirection: {x: 0, y: 0, z: 0}
@@ -271,6 +273,12 @@ Animator:
 --- !u!4 &4844098246655634411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6551873410029386980, guid: 76faf79c69fc7bb48970f915266e9410,
+    type: 3}
+  m_PrefabInstance: {fileID: 1861499125332219663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8145809186698157959 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7556729955789392008, guid: 76faf79c69fc7bb48970f915266e9410,
     type: 3}
   m_PrefabInstance: {fileID: 1861499125332219663}
   m_PrefabAsset: {fileID: 0}

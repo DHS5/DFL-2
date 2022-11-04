@@ -14,7 +14,7 @@ public class Tackle : Defender
 
         Att = att as TackleAttributesSO;
 
-        precision = Random.Range(0, Att.precision * Att.intelligence);
+        precision = Random.Range(Att.precision / 2, Att.precision);
 
         currentState = new WaitTDS(this, navMeshAgent, animator);
     }

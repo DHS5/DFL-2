@@ -159,7 +159,7 @@ public class EnemiesManager : MonoBehaviour
     /// <param name="xScale">X scale of the zone</param>
     /// <param name="zScale">Z scale of the zone</param>
     /// <param name="sizeMultiplier">Size multiplier with which create the enemy</param>
-    private void CreateEnemy<T>(T defAtt, Vector3 pos, AudioClip[] audios) where T : EnemyAttributesSO
+    private void CreateEnemy<T>(T defAtt, Vector3 pos, AudioClip[] audios, string name) where T : EnemyAttributesSO
     {        
         // Game Object of the enemy
         Enemy enemy;
@@ -167,6 +167,7 @@ public class EnemiesManager : MonoBehaviour
         // Instantiate the new enemy
         enemy = Instantiate(basePrefabs[defAtt.Type], pos, enemyRot).GetComponent<Enemy>();
         enemy.GetAttribute(defAtt);
+        enemy.name = name;
 
         // Gives the enemy his body and a semi-random size
         if (audios != null && audios.Length > 0)
@@ -237,7 +238,7 @@ public class EnemiesManager : MonoBehaviour
         // 5 Linemen in the center
         for (int i = 0; i < 5; i++)
         {
-            CreateEnemy(GetRandomEnemy(linemanPrefabs, linemanArray, linemanSize), GetRandomPos(center, xScale, zScale), defenderAudios);
+            CreateEnemy(GetRandomEnemy(linemanPrefabs, linemanArray, linemanSize), GetRandomPos(center, xScale, zScale), defenderAudios, "lineman " + i);
         }
 
         // Spawn in the left zone
@@ -247,7 +248,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the left
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(left, xScale, zScale), defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(left, xScale, zScale), defenderAudios, "wingman L" + i);
         }
 
         // Spawn in the right zone
@@ -257,7 +258,7 @@ public class EnemiesManager : MonoBehaviour
         // 3 Wingmen on the right
         for (int i = 0; i < 3; i++)
         {
-            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(right, xScale, zScale),  defenderAudios);
+            CreateEnemy(GetRandomEnemy(wingmanPrefabs, wingmanArray, wingmanSize), GetRandomPos(right, xScale, zScale),  defenderAudios, "wingman R" + i);
         }
 
     }
@@ -291,7 +292,7 @@ public class EnemiesManager : MonoBehaviour
             else if (r == 2) enemy = GetRandomEnemy(bigZPrefabs, bigArray, bigSize);
             else enemy = GetRandomEnemy(classicZPrefabs, classicArray, classicSize);
 
-            CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), zombieAudios);
+            CreateEnemy(enemy, GetRandomPos(field, xScale, zScale), zombieAudios, "zombie " + i);
         }
     }
 
@@ -306,7 +307,7 @@ public class EnemiesManager : MonoBehaviour
             int diff = (int)main.GameManager.gameData.gameDifficulty;
             DefenderAttributesSO def = main.DataManager.cardsContainer.enemyCards.GetCardsByIndex(diff)[main.DataManager.playerPrefs.enemyIndex[diff]].attribute;
 
-            CreateEnemy(def, main.FieldManager.field.OneVOneEnemyPos, defenderAudios);
+            CreateEnemy(def, main.FieldManager.field.OneVOneEnemyPos, defenderAudios, "enemy");
         }
     }
 }

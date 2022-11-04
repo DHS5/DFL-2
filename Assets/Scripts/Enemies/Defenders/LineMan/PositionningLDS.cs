@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PositionningLDS : LineManState
 {
     private float preciseXDistance;
+    private bool arriveInPrecision = true;
 
     public PositionningLDS(LineMan _enemy, NavMeshAgent _agent, Animator _animator) : base(_enemy, _agent, _animator)
     {
@@ -19,22 +20,41 @@ public class PositionningLDS : LineManState
 
         
         preciseXDistance = Mathf.Abs(enemy.transform.position.x - (enemy.playerPosition + att.positioningRatio * enemy.zDistance * PlayerDir).x);
-
+        
         if (preciseXDistance > enemy.precision)
         {
+            arriveInPrecision = true;
+            agent.speed = att.speed;
+            agent.angularSpeed = att.rotationSpeed;
             animator.SetTrigger("Run");
             animator.ResetTrigger("Wait");
-            agent.updateRotation = true;
+            animator.ResetTrigger("Walk");
+            agent.isStopped = false;
             enemy.destination = enemy.playerPosition + (Mathf.Clamp(enemy.zDistance / att.waitDist, 0, Mathf.Max(0, 1 - att.positioningRatio)) + Mathf.Max(Mathf.Abs(enemy.xDistance / enemy.zDistance), att.positioningRatio)) * enemy.zDistance * PlayerDir;
+        }
+        else if (preciseXDistance <= enemy.precision && enemy.toPlayerAngle > 5)
+        {
+            if (arriveInPrecision)
+            {
+                agent.velocity = agent.velocity.normalized * enemy.precision;
+                arriveInPrecision = false;
+                animator.ResetTrigger("Run");
+                animator.ResetTrigger("Wait");
+                animator.SetTrigger("Walk");
+            }
+            agent.isStopped = false;
+            agent.speed = enemy.precision;
+            agent.angularSpeed = att.rotationSpeed * 20;
+            enemy.destination = enemy.playerPosition;
         }
         else
         {
+            arriveInPrecision = true;
             animator.ResetTrigger("Run");
+            animator.ResetTrigger("Walk");
             animator.SetTrigger("Wait");
-            enemy.destination = enemy.transform.position;
-            agent.updateRotation = false;
-            enemy.transform.rotation =
-                Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(enemy.toPlayerDirection), att.rotationSpeed * Time.deltaTime);
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
 
         if (enemy.zDistance < att.positionningDist)
@@ -56,7 +76,7 @@ public class PositionningLDS : LineManState
 
         animator.ResetTrigger("Run");
         animator.ResetTrigger("Wait");
-
-        agent.updateRotation = true;
+        animator.ResetTrigger("Walk");
+        agent.isStopped = false;
     }
 }

@@ -14,7 +14,7 @@ public class LineMan : Defender
 
         Att = att as LinemanAttributesSO;
 
-        precision = Random.Range(0, Att.precision * Att.intelligence);
+        precision = Random.Range(Att.precision / 2, Att.precision);
 
         currentState = new WaitLDS(this, navMeshAgent, animator);
     }
