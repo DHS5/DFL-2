@@ -14,7 +14,7 @@ public class LineBacker : Defender
 
         Att = att as LinebackerAttributesSO;
 
-        precision = Random.Range(0, Att.precision * Att.intelligence);
+        precision = Random.Range(Att.precision / 2, Att.precision);
 
         currentState = new WaitLBDS(this, navMeshAgent, animator);
     }

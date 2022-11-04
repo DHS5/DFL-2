@@ -45,6 +45,12 @@ public class SpinPS : PlayerState
             {
                 nextState = new SprintPS(player);
             }
+            // Slowsiderun
+            else if (acc < 0 && side != 0 && side * startSide > 0)
+            {
+                nextState = new SlowsiderunPS(player, side / Mathf.Abs(side), true);
+                stage = Event.EXIT;
+            }
             // Slowrun
             else if (acc < 0)
             {
