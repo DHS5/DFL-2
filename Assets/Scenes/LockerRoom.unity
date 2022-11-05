@@ -218,7 +218,7 @@ PrefabInstance:
     - target: {fileID: 3411937865306223897, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3578217381304039826, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
@@ -244,7 +244,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerCard
       value: 
-      objectReference: {fileID: 11400000, guid: 8b1281aed35144e4ebad24b7e1f893bf,
+      objectReference: {fileID: 11400000, guid: d8188f57b7fd9a942970b5466eb4d7aa,
         type: 2}
     - target: {fileID: 8145083368213091151, guid: a4464cebbe14fe74e82edee324ef5719,
         type: 3}
@@ -275,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1465735292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +439,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TeamLockerRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 9118527679361476029, guid: cbf61c159b8a96f419cd5ed1705e5283,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf61c159b8a96f419cd5ed1705e5283, type: 3}
 --- !u!1001 &7364119489391377321
@@ -516,7 +521,7 @@ PrefabInstance:
     - target: {fileID: 7706769989239382337, guid: a37eba8f97d9f864e9441b025d8b23ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37eba8f97d9f864e9441b025d8b23ca, type: 3}
