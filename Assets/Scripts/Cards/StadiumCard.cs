@@ -10,11 +10,13 @@ public class StadiumCard : ImageCard
 
     [SerializeField] private TextMeshProUGUI percentageText;
 
-    protected override void Start()
+
+    public void ApplyStadiumInfos(StadiumCardSO card)
     {
-        base.Start();
+        cardSO = card;
 
         image.sprite = stadiumCardSO.shopSprite;
         percentageText.text = (stadiumCardSO.coinsPercentage - 1) * 100 + "%";
+        titleText.text = stadiumCardSO.Title;
     }
 }

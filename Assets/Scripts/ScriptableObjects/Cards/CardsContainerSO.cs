@@ -54,8 +54,6 @@ public class TeamCardsContainer
         foreach (LSideAttackerCardSO a in lSideAttackers) if ((int) a.attacker == index) return a;
         foreach (RSideAttackerCardSO a in rSideAttackers) if ((int) a.attacker == index) return a;
         foreach (BackAttackerCardSO a in backAttackers) if ((int) a.attacker == index) return a;
-
-        Debug.Log("return null for : " + index);
         return null;
     }
 

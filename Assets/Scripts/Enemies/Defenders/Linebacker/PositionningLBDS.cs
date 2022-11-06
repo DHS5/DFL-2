@@ -16,7 +16,7 @@ public class PositionningLBDS : LinebackerState
         base.Update();
 
 
-        if (enemy.xDistance > enemy.precision)
+        if (enemy.xDistance > enemy.precision || enemy.xSignedDist * enemy.sideOrientation < 0)
         {
             arriveInPrecision = true;
             agent.speed = att.speed;
@@ -31,8 +31,7 @@ public class PositionningLBDS : LinebackerState
         {
             if (arriveInPrecision)
             {
-                //agent.velocity = agent.velocity.normalized * enemy.precision;
-                agent.velocity = Vector3.zero;
+                agent.velocity = agent.velocity.normalized * enemy.precision;
                 arriveInPrecision = false;
                 animator.ResetTrigger("Run");
                 animator.ResetTrigger("Wait");

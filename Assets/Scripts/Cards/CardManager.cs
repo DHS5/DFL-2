@@ -19,9 +19,8 @@ public class CardManager : MonoBehaviour
     private List<PlayerCardSO> playerCards = new();
     [SerializeField] private LockerRoom lockerRoom;
     [Space]
-    [SerializeField] private GameObject stadiumCContainer;
-    [SerializeField] private GameObject stadiumCardPrefab;
-    private List<StadiumCard> stadiumCards = new();
+    [SerializeField] private StadiumCard stadiumCard;
+    private List<StadiumCardSO> stadiumCards = new();
 
 
     [Header("Enemy Choice Screen")]
@@ -65,7 +64,7 @@ public class CardManager : MonoBehaviour
     }
     public StadiumCardSO CurrentStadiumCard
     {
-        get { return stadiumCards[StadiumIndex].stadiumCardSO; }
+        get { return stadiumCards[StadiumIndex]; }
     }
 
     public int[] EnemyIndex
@@ -154,8 +153,19 @@ public class CardManager : MonoBehaviour
             object obj = cardSO as InventoryCardSO != null ? (cardSO as InventoryCardSO).cardObject : null;
             if (main.InventoryManager.IsInInventory(obj))
             {
-                cards.Add(cardSO);
-                i++;
+                if (cardSO as ShopCardSO != null)
+                {
+                    if (!(cardSO as ShopCardSO).locked)
+                    {
+                        cards.Add(cardSO);
+                        i++;
+                    }
+                }
+                else
+                {
+                    cards.Add(cardSO);
+                    i++;
+                }
             }
         }
     }
@@ -203,7 +213,7 @@ public class CardManager : MonoBehaviour
         ActuAttacker();
 
         // Stadium cards
-        GetCard(DataManager.cardsContainer.stadiumCards, stadiumCardPrefab, ref stadiumCards, stadiumCContainer, StadiumIndex);
+        GetCard(DataManager.cardsContainer.stadiumCards, ref stadiumCards, StadiumIndex);
         ActuStadium();
 
         // Parkour cards
@@ -289,15 +299,16 @@ public class CardManager : MonoBehaviour
     {
         DataManager.gameData.stadium = CurrentStadiumCard.prefab;
         enemyLockerRoom.ApplyEnemyMaterial(CurrentStadiumCard.enemyMaterial);
+        stadiumCard.ApplyStadiumInfos(CurrentStadiumCard);
     }
     public void NextCardStadium() 
     { 
-        StadiumIndex = NextCard(stadiumCards, StadiumIndex);
+        StadiumIndex = Next(StadiumIndex, stadiumCards.Count - 1, true);
         ActuStadium();
     }
     public void PrevCardStadium() 
     { 
-        StadiumIndex = PrevCard(stadiumCards, StadiumIndex);
+        StadiumIndex = Prev(StadiumIndex, stadiumCards.Count - 1, true);
         ActuStadium();
     }
 

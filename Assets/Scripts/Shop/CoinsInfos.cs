@@ -23,6 +23,8 @@ public class CoinsInfos : MonoBehaviour
         else if (data.gameMode == GameMode.DRILL || data.gameMode == GameMode.TUTORIAL)
             ApplyCoinsResultTuto();
 
+        wave = Mathf.Min(wave, 6);
+
         scoreText.text = "Score : " + score * 2;
         waveText.text = "Wave : " + 100 * (wave * wave);
         optionsText.text = "Options multiplier : " + OptionsMultiplier(data);

@@ -48,8 +48,12 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public Vector3 toPlayerDirection;
     [Tooltip("Angle between the enemy and the player")]
     [HideInInspector] public float toPlayerAngle;
+    [Tooltip("Orientation of the enemy (- player's left / + player's right)")]
+    [HideInInspector] public float sideOrientation;
     [Tooltip("Distance between the enemy and the player")]
     [HideInInspector] public float rawDistance;
+    [Tooltip("Signed distance between the enemy and the player on the X-Axis only (- --> player on left / + player on right)")]
+    [HideInInspector] public float xSignedDist;
     [Tooltip("Distance between the enemy and the player on the X-Axis only")]
     [HideInInspector] public float xDistance;
     [Tooltip("Distance between the enemy and the player on the Z-Axis only")]
@@ -145,10 +149,13 @@ public abstract class Enemy : MonoBehaviour
             toPlayerDirection = (playerPosition - transform.position).normalized;
             // Gets the angle between the enemy's and the player's directions
             toPlayerAngle = Vector3.Angle(transform.forward, toPlayerDirection);
+            // Gets the orientation
+            sideOrientation = (transform.position + transform.forward).x - transform.position.x;
             // Gets the distance between the player and the enemy
             rawDistance = Vector3.Distance(playerPosition, transform.position);
             // Gets the distance between the player and the enemy on the Z-Axis
-            xDistance = Mathf.Abs(transform.position.x - playerPosition.x);
+            xSignedDist = playerPosition.x - transform.position.x ;
+            xDistance = Mathf.Abs(xSignedDist);
             // Gets the distance between the player and the enemy on the Z-Axis
             zDistance = transform.position.z - playerPosition.z;
             // Find if the player is jumping

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e894e78248112a43845d544fbbb3187, type: 3}
+  m_Name: Deebo_PlayerCard
+  m_EditorClassIdentifier: 
+  Title: Deebo
+  mainSprite: {fileID: 21300000, guid: 7ade0e32f31cf834982ded0a1d9d9429, type: 3}
+  price: 1200000
+  shopSprite: {fileID: 0}
+  locked: 1
+  player: 40
+  playerInfo:
+    avatar: {fileID: 9000000, guid: a7a5d480674735345bdd1a36a701c505, type: 2}
+    mesh: {fileID: 4300000, guid: a69b54ca6100ee440b2c14b232172462, type: 2}
+    materials:
+    - {fileID: 2100000, guid: 66864984e4693db41a3b022fce4c82c3, type: 2}
+    - {fileID: 2100000, guid: 9e1ab749b2442b0488e9691920095935, type: 2}
+    attributes: {fileID: 11400000, guid: e0859599529d7164fba92ccd3b31e078, type: 2}
+  playerClass: 3
+  physical: 7
+  handling: 6
+  skills: 5
+  playerPause: 20
+  footballActive: 0

@@ -32,7 +32,7 @@ public class AttackLDS : LineManState
         
         agent.velocity = DestinationDir * att.attackSpeed;
 
-        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
+        //enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 
     public override void Update()

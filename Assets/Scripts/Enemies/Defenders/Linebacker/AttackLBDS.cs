@@ -62,7 +62,7 @@ public class AttackLBDS : LinebackerState
     {
         float distP;
 
-        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / agent.speed;
+        float speedC = (enemy.playerSpeed != 0 ? enemy.playerSpeed : 0.1f) / att.attackSpeed;
 
         float A = 1 - (1 / (speedC * speedC));
 
@@ -117,6 +117,6 @@ public class AttackLBDS : LinebackerState
 
         agent.velocity = DestinationDir * att.attackSpeed;
 
-        enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
+        //enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 }

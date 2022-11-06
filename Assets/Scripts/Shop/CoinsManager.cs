@@ -8,6 +8,8 @@ public static class CoinsManager
     {
         int coins = 0;
 
+        wave = Mathf.Min(wave, 6);
+
         if (data.gameMode != GameMode.DRILL && data.gameMode != GameMode.TUTORIAL)
         {
             coins = score * 2 + 100 * (wave * wave);

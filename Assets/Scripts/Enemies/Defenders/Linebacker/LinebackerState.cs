@@ -22,7 +22,7 @@ public class LinebackerState : EnemyState
     {
         if (enemy.rawDistance > att.attackDist || enemy.toPlayerAngle > att.attackAngle) return false;
 
-        float speedC = enemy.playerSpeed / agent.speed;
+        float speedC = enemy.playerSpeed / att.attackSpeed;
 
         float A = 1 - (1 / (speedC * speedC));
 
