@@ -15,7 +15,7 @@ public class StadiumCard : ImageCard
     {
         cardSO = card;
 
-        image.sprite = stadiumCardSO.shopSprite;
+        image.sprite = stadiumCardSO.mainSprite;
         percentageText.text = (stadiumCardSO.coinsPercentage - 1) * 100 + "%";
         titleText.text = stadiumCardSO.Title;
     }

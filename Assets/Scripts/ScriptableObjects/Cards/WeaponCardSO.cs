@@ -23,8 +23,5 @@ public class WeaponCardSO : ShopCardSO
     {
         if (prefab != null)
             bulletSprite = prefab.GetComponent<Weapon>().weaponSprite;
-
-        if (shopSprite != null)
-            mainSprite = shopSprite;
     }
 }

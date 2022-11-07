@@ -23,9 +23,9 @@ public class TutoUIManager : MonoBehaviour
     {
         get { return tutoDropdown.value; }
         set 
-        { 
-            videoPlayer.clip = tutoVideos[value];
+        {
             main.DataManager.gameData.tutoNumber = value;
+            videoPlayer.clip = tutoVideos[value];
         }
     }
 
