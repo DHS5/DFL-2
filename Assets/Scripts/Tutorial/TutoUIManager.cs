@@ -25,7 +25,8 @@ public class TutoUIManager : MonoBehaviour
         set 
         {
             main.DataManager.gameData.tutoNumber = value;
-            videoPlayer.clip = tutoVideos[value];
+            if (tutoVideos != null && value < tutoVideos.Length)
+                videoPlayer.clip = tutoVideos[value];
         }
     }
 

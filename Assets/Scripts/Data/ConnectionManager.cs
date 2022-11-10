@@ -31,7 +31,7 @@ public static class ConnectionManager
     public static bool InternetConnected
     {
         get { return internetConnected; }
-        private set { internetConnected = value; }
+        private set { internetConnected = value && Application.platform == RuntimePlatform.WebGLPlayer; }
     }
     public static bool SessionConnected
     {
@@ -45,6 +45,7 @@ public static class ConnectionManager
 
     public static IEnumerator CheckInternetConnection()
     {
+        Debug.Log("check internet");
         UnityWebRequest request = new UnityWebRequest("http://google.com");
         yield return request.SendWebRequest();
 
@@ -61,6 +62,15 @@ public static class ConnectionManager
         {
             InternetConnected = false;
             ConnectionState = ConnectionState.NO_CONNECTION;
+        }
+    }
+
+    public static void ForceInternetConnected()
+    {
+        InternetConnected = true;
+        if (!sessionConnected)
+        {
+            ConnectionState = ConnectionState.NO_SESSION;
         }
     }
 }

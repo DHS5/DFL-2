@@ -35,7 +35,7 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private Button disconnectButton;
     [SerializeField] private Button restoreOnlineSaveButton;
     [SerializeField] private GameObject restoreOnlineSaveVerifBackground;
-    
+
 
     [Header("Login Screen")]
     [SerializeField] private TMP_InputField loginEmailIF;
@@ -99,7 +99,16 @@ public class LoginManager : MonoBehaviour
 
     public void CheckInternetConnection()
     {
-        StartCoroutine(CheckInternetConnectionCR());
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Debug.Log("webgl");
+            ConnectionManager.ForceInternetConnected();
+        }
+        else
+        {
+            Debug.Log("no webgl");
+            StartCoroutine(CheckInternetConnectionCR());
+        }
     }
     private IEnumerator CheckInternetConnectionCR()
     {
@@ -137,7 +146,8 @@ public class LoginManager : MonoBehaviour
 
     private IEnumerator AutoLogin()
     {
-        yield return StartCoroutine(CheckInternetConnectionCR());
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+            yield return StartCoroutine(CheckInternetConnectionCR());
 
         Wait(true);
 
