@@ -13,6 +13,9 @@ public class Stadium : MonoBehaviour
     [SerializeField] private GameObject lights;
     [SerializeField] private GameObject lightsToSwitchOff;
 
+    [Space, Space]
+    [SerializeField] private GameObject nextWaveObject;
+
     public GameObject SpawnPosition
     {
         get
@@ -65,5 +68,10 @@ public class Stadium : MonoBehaviour
     {
         foreach (AudioSource a in bleachersAS)
             a.enabled = false;
+    }
+
+    public void ActivateNextWave()
+    {
+        nextWaveObject.SetActive(true);
     }
 }

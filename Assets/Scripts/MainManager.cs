@@ -13,28 +13,44 @@ public class MainManager : MonoBehaviour
 
     // Game scene managers
     // Essentials
-    [HideInInspector] public GameManager GameManager { get; private set; }
-    [HideInInspector] public PlayerManager PlayerManager { get; private set; }
-    [HideInInspector] public CursorManager CursorManager { get; private set; }
-    [HideInInspector] public FieldManager FieldManager { get; private set; }
-    [HideInInspector] public EnvironmentManager EnvironmentManager { get; private set; }
-    [HideInInspector] public GameUIManager GameUIManager { get; private set; }
-    [HideInInspector] public GameAudioManager GameAudioManager { get; private set; }
-    [HideInInspector] public EnemiesManager EnemiesManager { get; private set; }
-    [HideInInspector] public MissionManager MissionManager { get; private set; }
+    public GameManager GameManager { get { return gameManager; } }
+    public GameManager gameManager;
+    public PlayerManager PlayerManager { get { return playerManager; } }
+    public PlayerManager playerManager;
+    public CursorManager CursorManager { get { return cursorManager; } }
+    public CursorManager cursorManager;
+    public FieldManager FieldManager { get { return fieldManager; } }
+    public FieldManager fieldManager;
+    public EnvironmentManager EnvironmentManager { get { return environmentManager; } }
+    public EnvironmentManager environmentManager;
+    public GameUIManager GameUIManager { get { return gameUIManager; } }
+    public GameUIManager gameUIManager;
+    public GameAudioManager GameAudioManager { get { return gameAudioManager; } }
+    public GameAudioManager gameAudioManager;
+    public EnemiesManager EnemiesManager { get { return enemiesManager; } }
+    public EnemiesManager enemiesManager;
+    public MissionManager MissionManager { get { return missionManager; } }
+    public MissionManager missionManager;
 
     // Modes
-    [HideInInspector] public TeamManager TeamManager { get; private set; }
-    [HideInInspector] public TutorialManager TutoManager { get; private set; }
+    public TeamManager TeamManager { get { return teamManager; } }
+    public TeamManager teamManager;
+    public TutorialManager TutoManager { get { return tutoManager; } }
+    public TutorialManager tutoManager;
 
     // Options
-    [HideInInspector] public ObjectifManager ObjectifManager { get; private set; }
-    [HideInInspector] public ObstacleManager ObstacleManager { get; private set; }
-    [HideInInspector] public BonusManager BonusManager { get; private set; }
-    [HideInInspector] public WeaponsManager WeaponsManager { get; private set; }
+    public ObjectifManager ObjectifManager { get { return objectifManager; } }
+    public ObjectifManager objectifManager;
+    public ObstacleManager ObstacleManager { get { return obstacleManager; } }
+    public ObstacleManager obstacleManager;
+    public BonusManager BonusManager { get { return bonusManager; } }
+    public BonusManager bonusManager;
+    public WeaponsManager WeaponsManager { get { return weaponsManager; } }
+    public WeaponsManager weaponsManager;
 
     // Drills
-    [HideInInspector] public ParkourManager ParkourManager { get; private set; }
+    public ParkourManager ParkourManager { get { return parkourManager; } }
+    public ParkourManager parkourManager;
 
 
     private void Awake()
@@ -46,38 +62,18 @@ public class MainManager : MonoBehaviour
         SettingsManager = SettingsManager.Instance;
 
         // # Game scene managers
-        // Essentials
-        GameManager = GetComponent<GameManager>();
-        PlayerManager = GetComponent<PlayerManager>();
-        CursorManager = GetComponent<CursorManager>();
-        FieldManager = GetComponent<FieldManager>();
-        EnvironmentManager = GetComponent<EnvironmentManager>();
-        GameUIManager = GetComponent<GameUIManager>();
-        GameAudioManager = GetComponent<GameAudioManager>();
-        EnemiesManager = GetComponent<EnemiesManager>();
-        MissionManager = GetComponent<MissionManager>();
 
         // Modes
-        TeamManager = GetComponent<TeamManager>();
         if (DataManager.gameData.gameMode != GameMode.TEAM) TeamManager.enabled = false;
-        TutoManager = GetComponent<TutorialManager>();
         if (DataManager.gameData.gameMode != GameMode.TUTORIAL) TutoManager.enabled = false;
 
         // Options
-        ObjectifManager = GetComponent<ObjectifManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.OBJECTIF) && !(DataManager.gameData.gameDrill == GameDrill.OBJECTIF)) ObjectifManager.enabled = false;
-        ObstacleManager = GetComponent<ObstacleManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.OBSTACLE)) ObstacleManager.enabled = false;
-        BonusManager = GetComponent<BonusManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.BONUS)) BonusManager.enabled = false;
-        WeaponsManager = GetComponent<WeaponsManager>();
         if (!DataManager.gameData.gameOptions.Contains(GameOption.WEAPONS)) WeaponsManager.enabled = false;
 
         // Drills
-        ParkourManager = GetComponent<ParkourManager>();
         if (DataManager.gameData.gameMode != GameMode.DRILL || DataManager.gameData.gameDrill != GameDrill.PARKOUR) ParkourManager.enabled = false;
-
-
-        SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
     }
 }

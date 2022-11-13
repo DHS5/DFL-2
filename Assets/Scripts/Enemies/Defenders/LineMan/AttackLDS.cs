@@ -25,7 +25,6 @@ public class AttackLDS : LineManState
         if (ToDestinationAngle > att.attackAngle)
         {
             enemy.destination = enemy.playerPosition;
-            Debug.Log("straight to it");
         }
 
         enemy.destination += 5 * DestinationDir;

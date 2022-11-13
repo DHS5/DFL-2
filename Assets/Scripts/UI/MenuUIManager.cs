@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MenuUIManager : MonoBehaviour
 {
-    private MenuMainManager main;
+    [SerializeField] private MenuMainManager main;
 
     private DataManager DataManager
     {
@@ -55,15 +55,8 @@ public class MenuUIManager : MonoBehaviour
 
     // ### Functions ###
 
-    private void Awake()
-    {
-        main = GetComponent<MenuMainManager>();
-    }
-
     private void Start()
     {
-        main.SettingsManager.GetManagers();
-
         ActuGameData(DataManager.gameData);
     }
 

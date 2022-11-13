@@ -79,7 +79,8 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1,
       type: 2}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - WebGL
   - serializedVersion: 2
     name: High Fidelity
     pixelLightCount: 2
@@ -116,7 +117,8 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0,
       type: 2}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - WebGL
   m_PerPlatformDefaultQuality:
     Android: 1
     CloudRendering: 2
@@ -126,7 +128,7 @@ QualitySettings:
     Server: 0
     Stadia: 2
     Standalone: 2
-    WebGL: 1
+    WebGL: 0
     Windows Store Apps: 2
     XboxOne: 2
     iPhone: 1

@@ -13,15 +13,24 @@ public class MenuMainManager : MonoBehaviour
     public MusicSource MusicSource { get; private set; }
 
     // Menu scene managers
-    public MenuUIManager MenuUIManager { get; private set; }
-    public LeaderboardManager LeaderboardManager { get; private set; }
-    public StatsManager StatsManager { get; private set; }
-    public ShopManager ShopManager { get; private set; }
-    public InventoryManager InventoryManager { get; private set; }
-    public ProgressionManager ProgressionManager { get; private set; }
-    public LoginManager LoginManager { get; private set; }
-    public CardManager CardManager { get; private set; }
-    public TutoUIManager TutoUIManager { get; private set; }
+    public MenuUIManager MenuUIManager { get { return menuUIManager; } }
+    public MenuUIManager menuUIManager;
+    public LeaderboardManager LeaderboardManager { get { return leaderboardManager; } }
+    public LeaderboardManager leaderboardManager;
+    public StatsManager StatsManager { get { return statsManager; } }
+    public StatsManager statsManager;
+    public ShopManager ShopManager { get { return shopManager; } }
+    public ShopManager shopManager;
+    public InventoryManager InventoryManager { get { return inventoryManager; } }
+    public InventoryManager inventoryManager;
+    public ProgressionManager ProgressionManager { get { return progressionManager; } }
+    public ProgressionManager progressionManager;
+    public LoginManager LoginManager { get { return loginManager; } }
+    public LoginManager loginManager;
+    public CardManager CardManager { get { return cardManager; } }
+    public CardManager cardManager;
+    public TutoUIManager TutoUIManager { get { return tutoUIManager; } }
+    public TutoUIManager tutoUIManager;
 
 
     [HideInInspector] public bool awake = false;
@@ -35,19 +44,6 @@ public class MenuMainManager : MonoBehaviour
         DataManager = FindObjectOfType<DataManager>();
         SettingsManager = FindObjectOfType<SettingsManager>();
         MusicSource = FindObjectOfType<MusicSource>();
-
-        // # Game scene managers
-        MenuUIManager = GetComponent<MenuUIManager>();
-        LeaderboardManager = GetComponent<LeaderboardManager>();
-        StatsManager = GetComponent<StatsManager>();
-        ShopManager = GetComponent<ShopManager>();
-        InventoryManager = GetComponent<InventoryManager>();
-        ProgressionManager = GetComponent<ProgressionManager>();
-        LoginManager = GetComponent<LoginManager>();
-        CardManager = GetComponent<CardManager>();
-        TutoUIManager = GetComponent<TutoUIManager>();
-
-        SettingsManager.GetManagers(); // Makes the settings manager get the useful managers
 
         awake = true;
     }

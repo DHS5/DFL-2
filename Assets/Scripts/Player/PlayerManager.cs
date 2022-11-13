@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [Tooltip("Main Manager")]
-    private MainManager main;
+    [SerializeField] private MainManager main;
 
 
     
@@ -48,6 +48,7 @@ public class PlayerManager : MonoBehaviour
             
                 player.fPPlayer.fpsCamera.enabled = true;
                 player.tPPlayer.tpsCamera.enabled = false;
+                player.tPPlayer.tPCamera.gameObject.SetActive(false);
             
                 player.activeBody = player.fPPlayer.gameObject;
             }
@@ -57,12 +58,11 @@ public class PlayerManager : MonoBehaviour
                 player.fPPlayer.gameObject.SetActive(false);
             
                 player.tPPlayer.tpsCamera.enabled = true;
+                player.tPPlayer.tPCamera.gameObject.SetActive(true);
                 player.fPPlayer.fpsCamera.enabled = false;
             
                 player.activeBody = player.tPPlayer.gameObject;
             }
-            
-            //main.GameManager.ViewChange();
         }
     }
     public int FpCameraPos
@@ -98,11 +98,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
-    private void Awake()
-    {
-        main = GetComponent<MainManager>();
-    }
 
 
     // ### Functions ###

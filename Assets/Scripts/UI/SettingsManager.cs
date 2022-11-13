@@ -55,12 +55,33 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
 
     // ### Properties ###
+
+    private MainManager Main
+    {
+        get 
+        { 
+            if (main == null) main = FindObjectOfType<MainManager>();
+            return main;
+        }
+    }
+    private MenuMainManager MainMenu
+    {
+        get 
+        { 
+            if (menuMain == null) menuMain = FindObjectOfType<MenuMainManager>();
+            return menuMain;
+        }
+    }
+
+
+
+
     public float HeadAngle
     {
         set 
         {
             DataManager.gameplayData.headAngle = value;
-            if (main != null) main.PlayerManager.HeadAngle = value;
+            if (Main != null) Main.PlayerManager.HeadAngle = value;
         }
     }
     public float YMouseSensitivity
@@ -68,7 +89,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.yms = value;
-            if (main != null) main.PlayerManager.YMouseSensitivity = value;
+            if (Main != null) Main.PlayerManager.YMouseSensitivity = value;
         }
     }
     public float YSmoothRotation
@@ -76,7 +97,7 @@ public class SettingsManager : MonoBehaviour
         set 
         {
             DataManager.gameplayData.ysr = value;
-            if (main != null) main.PlayerManager.YSmoothRotation = value;
+            if (Main != null) Main.PlayerManager.YSmoothRotation = value;
         }
     }
 
@@ -86,20 +107,7 @@ public class SettingsManager : MonoBehaviour
         {
             DataManager.gameplayData.viewType = (ViewType) value;
 
-            if (value == 0)
-            {
-                sensitivitySlider.interactable = true;
-                smoothRotationSlider.interactable = true;
-                headAngleSlider.interactable = true;
-                backviewToggle.interactable = false;
-            }
-            else if (value == 1)
-            {
-                sensitivitySlider.interactable = false;
-                smoothRotationSlider.interactable = false;
-                headAngleSlider.interactable = false;
-                backviewToggle.interactable = true;
-            }
+            SetViewTypeUI((int) value);
         }
     }
 
@@ -112,7 +120,7 @@ public class SettingsManager : MonoBehaviour
         set 
         { 
             DataManager.gameplayData.backview = value;
-            if (main != null) main.GameUIManager.SetBackview(value);
+            if (Main != null) Main.GameUIManager.SetBackview(value);
         }
     }
 
@@ -133,7 +141,7 @@ public class SettingsManager : MonoBehaviour
         { 
             DataManager.audioData.soundOn = value;
 
-            if (main != null) main.GameAudioManager.SoundOn = value;
+            if (Main != null) Main.GameAudioManager.SoundOn = value;
             else audioMixer.SetFloat("Volume", value ? SoundVolume : -80);
         } 
     }
@@ -144,7 +152,7 @@ public class SettingsManager : MonoBehaviour
         { 
             DataManager.audioData.soundVolume = value;
 
-            if (main != null) main.GameAudioManager.SoundVolume = value;
+            if (Main != null) Main.GameAudioManager.SoundVolume = value;
             else audioMixer.SetFloat("Volume", Mathf.Log10(value) * 20);
         } 
     }
@@ -196,8 +204,6 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        GetManagers();
-
         SetEventSystem(true);
     }
 
@@ -216,26 +222,6 @@ public class SettingsManager : MonoBehaviour
     }
 
 
-
-    /// <summary>
-    /// Gets the managers of the current scene
-    /// </summary>
-    public void GetManagers()
-    {
-        int scene = SceneManager.GetActiveScene().buildIndex; // Finds the current scene number
-
-        if (scene == 0)
-        {
-            menuMain = FindObjectOfType<MenuMainManager>();
-        }
-        else if (scene == 1)
-        {
-            main = FindObjectOfType<MainManager>();
-            if (main == null)
-                Debug.Assert(false, "Didn't find the main manager");
-        }
-    }
-
     private void LoadGameplayData(GameplayData data)
     {
         sensitivitySlider.value = data.yms;
@@ -245,17 +231,24 @@ public class SettingsManager : MonoBehaviour
         goalpostToggle.isOn = data.goalpost;
         backviewToggle.isOn = data.backview;
 
-        if (data.viewType == 0)
+        SetViewTypeUI((int) data.viewType);
+    }
+
+    private void SetViewTypeUI(int value)
+    {
+        if (value == 0)
         {
             sensitivitySlider.interactable = true;
             smoothRotationSlider.interactable = true;
             headAngleSlider.interactable = true;
+            backviewToggle.interactable = false;
         }
-        else if ((int) data.viewType == 1)
+        else if (value == 1)
         {
             sensitivitySlider.interactable = false;
             smoothRotationSlider.interactable = false;
             headAngleSlider.interactable = false;
+            backviewToggle.interactable = true;
         }
     }
 
@@ -281,16 +274,16 @@ public class SettingsManager : MonoBehaviour
     // ## Game Scene
     public void PauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME && !main.GameManager.GameOver)
+        if (SceneManager.GetActiveScene().buildIndex == (int) SceneNumber.GAME && !Main.GameManager.GameOver)
         {
-            main.GameManager.PauseGame();
+            Main.GameManager.PauseGame();
         }
     }
     public void UnpauseGame()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME && !main.GameManager.GameOver)
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneNumber.GAME && !Main.GameManager.GameOver)
         {
-            main.GameManager.UnpauseGame();
+            Main.GameManager.UnpauseGame();
         }
     }
 

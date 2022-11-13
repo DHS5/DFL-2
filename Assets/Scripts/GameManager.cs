@@ -218,7 +218,6 @@ public class GameManager : MonoBehaviour
         }
 
         main.EnemiesManager.SuppEnemies(); // Destroys all the enemies
-        main.FieldManager.DestroyField(); // Destroys the former field
     }
 
     /// <summary>
@@ -230,14 +229,18 @@ public class GameManager : MonoBehaviour
         // # Essential #
         if (start)
         {
-            main.PlayerManager.PreparePlayer();
+            main.PlayerManager.PreparePlayer(); // Player
             main.EnvironmentManager.StartEnvironment(); // Environment
-            main.GameUIManager.SetBackview(main.DataManager.gameplayData.backview);
+            main.GameUIManager.SetBackview(main.DataManager.gameplayData.backview); // UI
+            main.FieldManager.GenerateField(); // Field
+            main.PlayerManager.PositionPlayer();
         }
-        else main.EnvironmentManager.GenerateEnvironment();
-        main.FieldManager.GenerateField(); // Field
+        else
+        {
+            main.EnvironmentManager.GenerateEnvironment(); // Environment
+            main.fieldManager.ActuField(); ; // Field
+        }
         main.EnemiesManager.EnemyWave(); // Enemies
-        if (start) main.PlayerManager.PositionPlayer();
 
 
         // # Modes #
@@ -269,7 +272,7 @@ public class GameManager : MonoBehaviour
             main.ParkourManager.GenerateParkour();
 
 
-        main.GameAudioManager.GenerateAudio(); // Actualize the audio volume etc...
+        main.GameAudioManager.GenerateAudio(); // Audio
     }
 
     /// <summary>

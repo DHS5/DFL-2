@@ -9,7 +9,7 @@ using UnityEngine.AI;
 public class FieldManager : MonoBehaviour
 {
     [Tooltip("Main Manager")]
-    private MainManager main;
+    [SerializeField] private MainManager main;
 
 
     [Header("Nav Mesh Surface")]
@@ -29,18 +29,6 @@ public class FieldManager : MonoBehaviour
     public Stadium stadium { get; private set; }
 
 
-    [Tooltip("Vector 3 containing the position of the actual field")]
-    private Vector3 fieldPosition = new Vector3(0, 0, -289);
-    [Tooltip("Vector 3 giving the distance between the position of 2 fields")]
-    private Vector3 fieldDistance = new Vector3(0,0,289);
-
-
-
-
-    private void Awake()
-    {
-        main = GetComponent<MainManager>();
-    }
 
 
     // ### Functions ###
@@ -50,13 +38,10 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     public void GenerateField()
     {
-        // Actualizes the public field position
-        fieldPosition += fieldDistance;
-
         // ### Creation of the field and the stadium
         // ## Instantiation of the prefabs
         bool isOneVOne = main.GameManager.gameData.gameMode == GameMode.DRILL && main.GameManager.gameData.gameDrill == GameDrill.ONEVONE;
-        stadiumObject = Instantiate(isOneVOne ? trainingStadium : main.GameManager.gameData.stadium, fieldPosition, Quaternion.identity);
+        stadiumObject = Instantiate(isOneVOne ? trainingStadium : main.GameManager.gameData.stadium, Vector3.zero, Quaternion.identity);
 
         field = stadiumObject.GetComponentInChildren<Field>();
         stadium = stadiumObject.GetComponentInChildren<Stadium>();
@@ -68,6 +53,11 @@ public class FieldManager : MonoBehaviour
         surface.BuildNavMesh();
 
         if (main.GameManager.gameData.gameMode == GameMode.ZOMBIE) stadium.SwitchLightsOff();
+    }
+
+    public void ActuField()
+    {
+        field.ActivateFieldLimits();
     }
 
     /// <summary>
@@ -87,12 +77,5 @@ public class FieldManager : MonoBehaviour
     {
         // Activates the stadium camera
         stadium.stadiumCamera.gameObject.SetActive(true);
-        // Activates the lose audios
-        //if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-        //    stadium.OuuhAudio();
-        //stadium.StopAmbianceAudios();
-        //// Calls the booh audios
-        //if (main.GameManager.gameData.gameMode != GameMode.ZOMBIE)
-        //    stadium.BoohAudio();
     }
 }

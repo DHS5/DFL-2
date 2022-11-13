@@ -23,8 +23,6 @@ public class WaitLDS : LineManState
 
         enemy.destination = enemy.transform.position;
 
-        enemy.transform.LookAt(enemy.player.transform);
-
 
         if (enemy.playerOnField && enemy.zDistance < att.waitDist)
         {

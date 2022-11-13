@@ -89,7 +89,7 @@ public class LeaderboardManager : MonoBehaviour
             {
                 if (response.success)
                 {
-                    Debug.Log("Successfully submitted");
+                    //Debug.Log("Successfully submitted");
                     //LoadLeaderboard(GameTypeToLeaderboardIndex(gameData), false);
                 }
                 else Debug.Log("Failed to submit");
@@ -144,7 +144,7 @@ public class LeaderboardManager : MonoBehaviour
                 }
 
                 LoadPersonnalHighscore();
-                Debug.Log("Successfully loaded");
+                //Debug.Log("Successfully loaded");
             }
             else Debug.Log("Failed to load");
 

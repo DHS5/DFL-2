@@ -72,14 +72,14 @@ public class AttackSZS : SleepingZState
 
         else if (delta == 0)
         {
-            Debug.Log("delta = 0");
+            //Debug.Log("delta = 0");
 
             distP = -B / (2 * A);
         }
 
         else
         {
-            Debug.Log("delta < 0");
+            //Debug.Log("delta < 0");
 
             distP = att.anticipation;
         }

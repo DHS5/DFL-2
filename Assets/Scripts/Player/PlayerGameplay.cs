@@ -37,6 +37,7 @@ public class PlayerGameplay : MonoBehaviour
     readonly private float impactMin = 15;
     readonly private float impactMax = 30;
 
+    private Vector3 spawnPos;
 
     // ### Properties ###
 
@@ -68,12 +69,12 @@ public class PlayerGameplay : MonoBehaviour
             // Deactivates the trigger (prevent from triggering several times)
             other.gameObject.SetActive(false);
 
+            // Goes to the next field
+            spawnPos = player.fieldManager.stadium.SpawnPosition.transform.position;
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), spawnPos.y, spawnPos.z);
+
             // Calls the next wave
             player.gameManager.NextWave();
-
-            // Goes to the next field
-            Vector3 spawnPos = player.fieldManager.stadium.SpawnPosition.transform.position;
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, spawnPos.x - tunnelWidth, spawnPos.x + tunnelWidth), spawnPos.y, spawnPos.z);
 
             player.controller.CurrentState.TD(false);
 
@@ -85,6 +86,7 @@ public class PlayerGameplay : MonoBehaviour
         {
             // Deactivates the trigger (prevent from triggering several times)
             other.gameObject.SetActive(false);
+            player.fieldManager.stadium.ActivateNextWave();
 
             // Changes the onField state of the player
             onField = !onField;
@@ -118,7 +120,7 @@ public class PlayerGameplay : MonoBehaviour
             // When the player collides with an enemy --> game over
             if (collision.gameObject.CompareTag("Enemy") && Catchable)
             {
-                Debug.Log("Hurt by enemy ");
+                //Debug.Log("Hurt by enemy ");
                 Hurt(collision);
             }
             if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
@@ -133,25 +135,25 @@ public class PlayerGameplay : MonoBehaviour
             if (collision.gameObject.CompareTag("Obstacle") && !isInvincible)
             {                
                 Hurt(collision);
-                Debug.Log("Hurt by obstacle");
+                //Debug.Log("Hurt by obstacle");
             }
 
             if (collision.gameObject.CompareTag("StadiumLimit"))
             {
                 Dead(collision);
-                Debug.Log("OutOfBounds");
+                //Debug.Log("OutOfBounds");
             }
 
             if (collision.gameObject.CompareTag("OutOfBounds"))
             {
                 Lose();
-                Debug.Log("OutOfBounds");
+                //Debug.Log("OutOfBounds");
             }
 
             if (collision.gameObject.CompareTag("Buzzer"))
             {
                 Win();
-                Debug.Log("Win");
+                //Debug.Log("Win");
             }
         }
     }

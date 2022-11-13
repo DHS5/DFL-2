@@ -39,6 +39,8 @@ public class Field : MonoBehaviour
     [SerializeField] private Volume ambianceGlobalVolume;
     [SerializeField] private VolumeProfile ambianceProfile;
     [SerializeField] private VolumeProfile zombieProfile;
+    [Space, Space]
+    [SerializeField] GameObject[] fieldLimits;
 
 
     [Header("Zones of the field")]
@@ -93,6 +95,11 @@ public class Field : MonoBehaviour
     }
     public void CreateField() { CreateField(null); }
 
+    public void ActivateFieldLimits()
+    {
+        fieldLimits[0].SetActive(true);
+        fieldLimits[1].SetActive(true);
+    }
 
     private void OnValidate()
     {

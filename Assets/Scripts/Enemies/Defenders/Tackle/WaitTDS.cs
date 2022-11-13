@@ -23,8 +23,6 @@ public class WaitTDS : TackleState
 
         agent.isStopped = true;
 
-        enemy.transform.LookAt(enemy.player.transform);
-
 
         if (enemy.playerOnField && enemy.zDistance < att.waitDist)
         {

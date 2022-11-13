@@ -4195,6 +4195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd82323d7e5d4a458d0a6fc6c0daa4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 675627205}
   playerBasePrefab: {fileID: 8812354164878341571, guid: fca79a4b7dd98bf4d91cb63cf6322af6,
     type: 3}
   playerObject: {fileID: 0}
@@ -4242,6 +4243,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6edb8284135aa245889cf2392f37057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 675627204}
+  playerManager: {fileID: 675627203}
+  cursorManager: {fileID: 675627217}
+  fieldManager: {fileID: 675627208}
+  environmentManager: {fileID: 675627207}
+  gameUIManager: {fileID: 675627210}
+  gameAudioManager: {fileID: 675627209}
+  enemiesManager: {fileID: 675627211}
+  missionManager: {fileID: 675627220}
+  teamManager: {fileID: 675627212}
+  tutoManager: {fileID: 675627216}
+  objectifManager: {fileID: 675627215}
+  obstacleManager: {fileID: 675627214}
+  bonusManager: {fileID: 675627213}
+  weaponsManager: {fileID: 675627218}
+  parkourManager: {fileID: 675627219}
 --- !u!4 &675627206
 Transform:
   m_ObjectHideFlags: 0
@@ -4319,6 +4336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c664272bd882d1419a0812368fb2cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 675627205}
   surface: {fileID: 1150082292}
   trainingStadium: {fileID: 4670575887532053240, guid: 5d2faf33d37913148be74e4a62d5374f,
     type: 3}

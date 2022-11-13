@@ -146,7 +146,9 @@ public class LoginManager : MonoBehaviour
 
     private IEnumerator AutoLogin()
     {
-        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            ConnectionManager.ForceInternetConnected();
+        else
             yield return StartCoroutine(CheckInternetConnectionCR());
 
         Wait(true);
@@ -171,7 +173,7 @@ public class LoginManager : MonoBehaviour
                             {
                                 ConnectionManager.playerInfo.id = response.player_id;
 
-                                Debug.Log("Session started successfully");
+                                //Debug.Log("Session started successfully");
                                 LootLockerSDKManager.GetPlayerName((response) =>
                                 {
                                     if (response.success)
@@ -235,6 +237,8 @@ public class LoginManager : MonoBehaviour
                         ConnectionManager.playerInfo.id = response.player_id;
                         ConnectionManager.playerInfo.email = email;
 
+                        if (restore) main.DataManager.RestoreOnlineData();
+
                         Result("You are now connected !");
                         LootLockerSDKManager.GetPlayerName((response) =>
                         {
@@ -243,8 +247,6 @@ public class LoginManager : MonoBehaviour
                                 ConnectionManager.playerInfo.pseudo = response.name;
                             }
                             State = ConnectionState.CONNECTED;
-
-                            if (restore) main.DataManager.RestoreOnlineData();
                         });
                     }
                 });
@@ -366,6 +368,12 @@ public class LoginManager : MonoBehaviour
                 Wait(false);
             }
         });
+    }
+
+    public void ResetDatas()
+    {
+        main.DataManager.ResetDatas();
+        main.DataManager.SaveDatas(true);
     }
 
     public void Disconnect()

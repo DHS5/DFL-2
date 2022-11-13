@@ -242,6 +242,17 @@ public class DataManager : MonoBehaviour
             if (cardsContainer.teamCards.GetAttacker(playerPrefs.teamIndex[i]) == null) playerPrefs.teamIndex[i] = 1; // Playerprefs team corresponds to the attacker number
     }
 
+    private void ResetPlayerPrefs()
+    {
+        playerPrefs.infoButtonsOn = true;
+
+        playerPrefs.teamIndex = new int[] { 1,1,1,1,1 };
+        playerPrefs.enemyIndex = new int[5];
+        playerPrefs.playerIndex = 0;
+        playerPrefs.stadiumIndex = 0;
+        playerPrefs.parkourIndex = 0;
+    }
+
     private void InitProgression()
     {
         progressionData.teamMode = true;
@@ -303,6 +314,10 @@ public class DataManager : MonoBehaviour
         audioData.soundVolume = 0.5f;
 
         audioData.loopOn = true;
+
+        audioData.playerVolume = 1;
+        audioData.enemiesVolume = 1;
+        audioData.ambianceVolume = 1;
     }
 
     private void InitGameplay()
@@ -335,6 +350,7 @@ public class DataManager : MonoBehaviour
         InitProgression();
         InitInventory();
         InitStatsDatas();
+        ResetPlayerPrefs();
     }
 
 
@@ -407,14 +423,14 @@ public class DataManager : MonoBehaviour
             {
                 if (response.success)
                 {
-                    Debug.Log("File uploaded successfully");
+                    //Debug.Log("File uploaded successfully");
 
                     LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
                     {
-                        if (response.success)
-                            Debug.Log("Deleted file successfully");
-                        else
-                            Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
+                        //if (response.success)
+                        //    Debug.Log("Deleted file successfully");
+                        //else
+                        //    Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
 
                         done = true;
                     });
@@ -453,6 +469,7 @@ public class DataManager : MonoBehaviour
 
         LoadDataFromDisk();
 
+        //Debug.Log("Load managers");
         StartCoroutine(FirstLoad());
         StartCoroutine(LoadMenuManagers());
 
@@ -565,7 +582,7 @@ public class DataManager : MonoBehaviour
 
     private void LoadDataFromDisk()
     {
-        Debug.Log("Load from disk");
+        //Debug.Log("Load from disk");
         string path = Application.persistentDataPath + "/savefile.json";
 
         if (File.Exists(path))
@@ -575,6 +592,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("doesn't exist");
             ResetDatas();
             SaveOnDisk();
         }
