@@ -24,4 +24,13 @@ public class Leaderboard : MonoBehaviour
         newRow.Item = item;
         newRow.transform.SetSiblingIndex(item.rank - 1);
     }
+
+    public void Clear()
+    {
+        for (int i = 0; i < container.transform.childCount; i++)
+        {
+            Destroy(container.transform.GetChild(i).gameObject);
+        }
+        personnalHigh = new LeaderboardItem { name = "", options = "", rank = 0, score = 0, wave = "0", wheather = "" };
+    }
 }

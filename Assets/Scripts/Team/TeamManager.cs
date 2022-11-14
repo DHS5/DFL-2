@@ -143,7 +143,10 @@ public class TeamManager : MonoBehaviour
     public void ClearAttackers()
     {
         // Attackers
-        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers)) Destroy(a);
+        foreach (Attacker a in frontAttackers.Union(backAttackers).Union(sideLAttackers).Union(sideRAttackers))
+        {
+            Destroy(a.gameObject);
+        }
         frontAttackers.Clear();
         backAttackers.Clear();
         sideRAttackers.Clear();

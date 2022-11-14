@@ -48,7 +48,7 @@ public abstract class AttackerState
     {
 
     }
-    public virtual void Exit() { stage = Event.EXIT; Debug.Log(name + " -> " + nextState.name); }
+    public virtual void Exit() { stage = Event.EXIT; } // Debug.Log(name + " -> " + nextState.name); }
 
 
 

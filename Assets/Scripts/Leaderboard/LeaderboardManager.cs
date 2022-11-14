@@ -69,6 +69,8 @@ public class LeaderboardManager : MonoBehaviour
 
     public int LeaderboardIndex { get { return mode * 5 + difficulty; } }
 
+    public bool Loaded { get; private set; } = false;
+
     // ### Built-in ###
 
     private void Awake()
@@ -109,10 +111,17 @@ public class LeaderboardManager : MonoBehaviour
             ShowLeaderboards(true);
             Wait(true);
 
+            if (Loaded)
+            {
+                ClearLeaderboards();
+            }
+
             for (int i = 0; i < leaderboards.Length; i++)
             {
                 LoadLeaderboard(i);
             }
+
+            Loaded = true;
 
             CurrentLeaderboard = leaderboards[0];
         }
@@ -152,6 +161,13 @@ public class LeaderboardManager : MonoBehaviour
         });
     }
 
+    private void ClearLeaderboards()
+    {
+        foreach (var leaderboard in leaderboards)
+        {
+            leaderboard.Clear();
+        }
+    }
 
     private void ShowLeaderboards(bool state)
     {

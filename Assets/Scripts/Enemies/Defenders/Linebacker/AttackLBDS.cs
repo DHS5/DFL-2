@@ -74,7 +74,7 @@ public class AttackLBDS : LinebackerState
 
         if (A == 0)
         {
-            Debug.Log("A == 0");
+            //Debug.Log("A == 0");
             distP = C / -B;
             if (distP < 0 || B == 0)
                 distP = att.anticipation;
@@ -82,7 +82,7 @@ public class AttackLBDS : LinebackerState
 
         else if (delta > 0)
         {
-            Debug.Log("Delta > 0");
+            //Debug.Log("Delta > 0");
             distP = (-B - Mathf.Sqrt(delta)) / (2 * A);
 
             if (distP < 0)
@@ -93,14 +93,14 @@ public class AttackLBDS : LinebackerState
 
         else if (delta == 0)
         {
-            Debug.Log("delta = 0");
+            //Debug.Log("delta = 0");
 
             distP = -B / (2 * A);
         }
 
         else
         {
-            Debug.Log("delta < 0");
+            //Debug.Log("delta < 0");
 
             distP = att.anticipation;
         }
@@ -110,13 +110,11 @@ public class AttackLBDS : LinebackerState
         if (ToDestinationAngle > att.attackAngle)
         {
             enemy.destination = enemy.playerPosition;
-            Debug.Log("straight to it");
+            //Debug.Log("straight to it");
         }
 
         enemy.destination += DestinationDir * 5;
 
         agent.velocity = DestinationDir * att.attackSpeed;
-
-        //enemy.transform.rotation = Quaternion.LookRotation(DestinationDir);
     }
 }
