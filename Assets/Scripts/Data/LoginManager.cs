@@ -68,8 +68,8 @@ public class LoginManager : MonoBehaviour
             if (ConnectionManager.SessionConnected)
             {
                 main.DataManager.StartCoroutine(main.DataManager.GetOnlineFileID());
-                main.LeaderboardManager.LoadLeaderboards();
             }
+            main.LeaderboardManager.LoadLeaderboards();
 
             Wait(false);
         }

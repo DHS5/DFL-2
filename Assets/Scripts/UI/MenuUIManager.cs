@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuUIManager : MonoBehaviour
@@ -29,6 +30,10 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField] Toggle[] dTOptionToggles;
     [SerializeField] Toggle[] zOptionToggles;
     [SerializeField] Toggle[] drillOptionToggles;
+    [Space, Space]
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] Image loadingImage;
+    [SerializeField] LoadingGauge loadingGauge;
 
 
     // ### Properties ###
@@ -51,7 +56,7 @@ public class MenuUIManager : MonoBehaviour
     }
 
 
-
+    AsyncOperation op;
 
     // ### Functions ###
 
@@ -125,5 +130,15 @@ public class MenuUIManager : MonoBehaviour
                 else drillOptionToggles[i].isOn = false;
             }
         }
+    }
+
+
+    public void LoadGame()
+    {
+        loadingScreen.SetActive(true);
+        loadingImage.sprite = main.cardManager.CurrentStadiumCard.mainSprite;
+
+        op = SceneManager.LoadSceneAsync((int)SceneNumber.GAME, LoadSceneMode.Single);
+        loadingGauge.GetOperation(in op);
     }
 }

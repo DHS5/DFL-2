@@ -28,7 +28,8 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private LeaderboardRow personnalHighRow;
 
 
-    [SerializeField] private GameObject[] leaderboardObjects;
+    [SerializeField] private GameObject leaderboardLoginButton;
+    [SerializeField] private GameObject[] leaderboardObjectsToHide;
     [SerializeField] private RectTransform leaderboardLayout;
 
 
@@ -171,8 +172,9 @@ public class LeaderboardManager : MonoBehaviour
 
     private void ShowLeaderboards(bool state)
     {
-        foreach (GameObject go in leaderboardObjects)
+        foreach (GameObject go in leaderboardObjectsToHide)
             go.SetActive(state);
+        leaderboardLoginButton.SetActive(!state);
     }
 
     // ### Tools ###
