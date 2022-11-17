@@ -72,6 +72,6 @@ public class Stadium : MonoBehaviour
 
     public void ActivateNextWave()
     {
-        nextWaveObject.SetActive(true);
+        if (nextWaveObject != null) nextWaveObject.SetActive(true);
     }
 }

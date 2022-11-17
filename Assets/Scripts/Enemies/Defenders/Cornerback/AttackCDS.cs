@@ -91,14 +91,14 @@ public class AttackCDS : CornerbackState
 
         else if (delta == 0)
         {
-            Debug.Log("delta = 0");
+            //Debug.Log("delta = 0");
 
             distP = -B / (2 * A);
         }
 
         else
         {
-            Debug.Log("delta < 0");
+            //Debug.Log("delta < 0");
 
             distP = att.anticipation;
         }
@@ -108,7 +108,7 @@ public class AttackCDS : CornerbackState
         if (ToDestinationAngle > att.attackAngle)
         {
             enemy.destination = enemy.playerPosition;
-            Debug.Log("straight to it");
+            //Debug.Log("straight to it");
         }
 
         enemy.destination += DestinationDir * 5;

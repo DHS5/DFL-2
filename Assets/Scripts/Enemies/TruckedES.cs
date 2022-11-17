@@ -26,12 +26,12 @@ public class TruckedES : EnemyState
         impactPower = Mathf.Clamp(_collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
         impact = impactPower * new Vector3(impactDir.x, 0, -Mathf.Max(Mathf.Abs(impactDir.z), Mathf.Abs(impactDir.x))).normalized;
 
-        Debug.Log(impact);
+        //Debug.Log(impact);
 
         enemy.transform.rotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
         agent.velocity = -impact;
 
-        Debug.Log(agent.velocity);
+        //Debug.Log(agent.velocity);
 
         animator.SetLayerWeight(animator.GetLayerIndex("Trucked Layer"), 1);
         animator.SetTrigger("Trucked");

@@ -8,8 +8,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private MainManager main;
 
 
-    
-
     [Tooltip("Player prefab")]
     [SerializeField] private GameObject playerBasePrefab;
 
@@ -106,7 +104,7 @@ public class PlayerManager : MonoBehaviour
     {
         playerObject = Instantiate(playerBasePrefab, Vector3.zero, Quaternion.identity);
         player = playerObject.GetComponentInChildren<Player>();
-        player.CreatePlayer(main.GameManager.gameData.player);
+        player.CreatePlayer(main.GameManager.gameData.player, main.GameManager.gameData.gameMode == GameMode.ZOMBIE);
 
         player.gameManager = main.GameManager;
         player.fieldManager = main.FieldManager;

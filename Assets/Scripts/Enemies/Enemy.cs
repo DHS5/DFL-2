@@ -186,7 +186,7 @@ public abstract class Enemy : MonoBehaviour
             trucked = true;
             gameOver = true;
             DestroyColliders();
-            Debug.Log("You've been trucked !");
+            //Debug.Log("You've been trucked !");
             currentState = currentState.Trucked(collision);
         }
     }

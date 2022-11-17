@@ -34,13 +34,16 @@ public class Player : MonoBehaviour
     [Header("Audio Sources")]
     public AudioSource[] crowdAudioSources;
 
+    [Header("Zombie light")]
+    public GameObject zombieLight;
 
-
-    public void CreatePlayer(PlayerInfo player)
+    public void CreatePlayer(PlayerInfo player, bool zombie)
     {
         fPPlayer.CreateFPPlayer(player.avatar, player.mesh, player.materials);
         tPPlayer.CreateTPPlayer(player.avatar, player.mesh, player.materials);
 
         controller.playerAtt = player.attributes;
+
+        zombieLight.SetActive(zombie);
     }
 }
