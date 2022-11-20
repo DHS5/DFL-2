@@ -60,7 +60,7 @@ public class GameAudioManager : MonoBehaviour
 
     public void Pause(bool state)
     {
-        if (state) GetSoundSources();
+        //if (state) GetSoundSources();
 
         PauseSound(state || !SoundOn);
     }

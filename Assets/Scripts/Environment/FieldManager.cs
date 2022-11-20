@@ -58,6 +58,7 @@ public class FieldManager : MonoBehaviour
     public void ActuField()
     {
         field.ActivateFieldLimits();
+        stadium.StartBleachersSound();
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ public class MusicSource : MonoBehaviour
 
     [Header("Music's list")]
     [Tooltip("Music's list")]
-    [SerializeField] private AudioClip[] musics;
+    [SerializeField] private PlaylistSO musics;
 
     [Header("UI elements")]
     [Tooltip("Music's volume slider")]
@@ -136,7 +136,7 @@ public class MusicSource : MonoBehaviour
     /// <param name="clipNumber">Number of the music clip</param>
     protected void PlayFromBeginning(int clipNumber)
     {
-        audioSource.clip = musics[clipNumber];
+        audioSource.clip = musics.musics[clipNumber];
         audioSource.time = 0f;
         audioSource.Play();
     }
@@ -147,7 +147,7 @@ public class MusicSource : MonoBehaviour
     /// <param name="startTime">Start time of the music clip</param>
     protected void PlayFromTime(int clipNumber, float startTime)
     {
-        audioSource.clip = musics[clipNumber];
+        audioSource.clip = musics.musics[clipNumber];
         audioSource.time = startTime;
         audioSource.Play();
     }
@@ -157,7 +157,7 @@ public class MusicSource : MonoBehaviour
     /// </summary>
     public void NextMusic()
     {
-        if (musicNumber == musics.Length - 1) MusicNumber = 0;
+        if (musicNumber == musics.musics.Length - 1) MusicNumber = 0;
         else MusicNumber++;
 
         PlayFromBeginning(musicNumber);
@@ -167,7 +167,7 @@ public class MusicSource : MonoBehaviour
     /// </summary>
     public void PreviousMusic()
     {
-        if (musicNumber == 0) MusicNumber = musics.Length - 1;
+        if (musicNumber == 0) MusicNumber = musics.musics.Length - 1;
         else MusicNumber--;
 
         PlayFromBeginning(musicNumber);
