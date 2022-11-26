@@ -35,6 +35,8 @@ using UnityEngine.Rendering;
 /// </summary>
 [System.Serializable] public enum ViewType { FPS = 0, TPS = 1 }
 
+[System.Serializable] public enum JoystickMode { FIXED = 0, MOVABLE = 1 }
+
 
 /// <summary>
 /// Manages the game

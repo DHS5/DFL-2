@@ -49,6 +49,13 @@ public struct GameplayData
     public int tpCameraPos;
     public bool goalpost;
     public bool backview;
+
+    public JoystickMode joystickMode;
+    public float centerSize;
+    public float boundarySize;
+    public float joystickSize;
+    public float joystickPosX;
+    public float joystickPosY;
 }
 
 [System.Serializable]
@@ -331,8 +338,23 @@ public class DataManager : MonoBehaviour
         gameplayData.headAngle = 10f;
 
         gameplayData.goalpost = true;
+
+        gameplayData.joystickMode = JoystickMode.FIXED;
+        gameplayData.centerSize = 75;
+        gameplayData.boundarySize = 150;
+        gameplayData.joystickSize = 75;
+        gameplayData.joystickPosX = 400;
+        gameplayData.joystickPosY = 300;
     }
 
+    private void FixGameplay()
+    {
+        if (gameplayData.centerSize == 0) gameplayData.centerSize = 75;
+        if (gameplayData.boundarySize == 0) gameplayData.boundarySize = 150;
+        if (gameplayData.joystickSize == 0) gameplayData.joystickSize = 75;
+        if (gameplayData.joystickPosX == 0) gameplayData.joystickPosX = 400;
+        if (gameplayData.joystickPosY == 0) gameplayData.joystickPosY = 300;
+    }
 
     public void ClearGameData()
     {
@@ -612,6 +634,7 @@ public class DataManager : MonoBehaviour
         statsDatas = data.statsDatas;
 
         InitPlayerPrefs();
+        FixGameplay();
     }
 
     private void Load(bool state)
