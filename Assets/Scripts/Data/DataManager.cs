@@ -56,6 +56,7 @@ public struct GameplayData
     public float joystickSize;
     public float joystickPosX;
     public float joystickPosY;
+    public float jumpButtonSize;
 }
 
 [System.Serializable]
@@ -345,6 +346,7 @@ public class DataManager : MonoBehaviour
         gameplayData.joystickSize = 75;
         gameplayData.joystickPosX = 400;
         gameplayData.joystickPosY = 300;
+        gameplayData.jumpButtonSize = 250;
     }
 
     private void FixGameplay()
@@ -354,6 +356,7 @@ public class DataManager : MonoBehaviour
         if (gameplayData.joystickSize == 0) gameplayData.joystickSize = 75;
         if (gameplayData.joystickPosX == 0) gameplayData.joystickPosX = 400;
         if (gameplayData.joystickPosY == 0) gameplayData.joystickPosY = 300;
+        if (gameplayData.jumpButtonSize == 0) gameplayData.jumpButtonSize = 250;
     }
 
     public void ClearGameData()
