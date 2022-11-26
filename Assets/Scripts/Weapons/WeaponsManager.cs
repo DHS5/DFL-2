@@ -17,6 +17,8 @@ public class WeaponsManager : MonoBehaviour
 
     [HideInInspector] public int numberOfKill = 0;
 
+    private WeaponBonus bonus;
+
 
     // ### Properties ###
     public bool GameOn
@@ -50,7 +52,7 @@ public class WeaponsManager : MonoBehaviour
         // Gets a random position in the first part of the field zone
         Vector3 randomPos = new Vector3(Random.Range(-xScale, xScale), 0, Random.Range(-zScale, zScale)) + zonePos;
 
-        WeaponBonus bonus = Instantiate(weaponGetPointPrefab, randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
+        bonus = Instantiate(weaponGetPointPrefab, randomPos, Quaternion.identity).GetComponent<WeaponBonus>();
         bonus.Getter(this);
     }
 
@@ -91,6 +93,12 @@ public class WeaponsManager : MonoBehaviour
     {
         if (currentWeapon != null)
             Destroy(currentWeapon.gameObject);
+    }
+
+    public void DestroyWeaponBonus()
+    {
+        if (bonus != null)
+            Destroy(bonus.gameObject);
     }
 
 

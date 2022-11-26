@@ -113,7 +113,8 @@ public class PlayerManager : MonoBehaviour
 
         ViewType = main.DataManager.gameplayData.viewType;
         FlashlightActive = main.GameManager.gameData.gameMode == GameMode.ZOMBIE;
-        objectifOpt = main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF);
+        objectifOpt = main.GameManager.gameData.gameOptions.Contains(GameOption.OBJECTIF) 
+            || (main.GameManager.gameData.gameMode == GameMode.DRILL && main.GameManager.gameData.gameDrill == GameDrill.OBJECTIF);
         FootballActive = !objectifOpt;
     }
 
@@ -201,7 +202,10 @@ public class PlayerManager : MonoBehaviour
         int total = 0;
         foreach (Enemy e in main.EnemiesManager.enemies)
         {
-            if (e.rawDistance <= radius && e.zDistance > -1) total++;
+            if (e.rawDistance <= radius && e.zDistance > -1)
+            {
+                total++;
+            }
         }
 
         return total;

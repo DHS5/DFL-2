@@ -132,11 +132,12 @@ public abstract class PlayerState
         float min = 0.25f;
         float sample = 100;
         time += 0.5f;
+        WaitForSeconds wait = new(time / sample);
         Time.timeScale = min;
         for (int i = 0; i < sample; i++)
         {
             Time.timeScale += (max - min) / sample;
-            yield return new WaitForSeconds(time / sample);
+            yield return wait;
         }
     }
 

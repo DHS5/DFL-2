@@ -260,6 +260,9 @@ public class SettingsManager : MonoBehaviour
         playerVolumeSlider.value = data.playerVolume;
         ambianceVolumeSlider.value = data.ambianceVolume;
         enemiesVolumeSlider.value = data.enemiesVolume;
+
+        SoundOn = data.soundOn;
+        SoundVolume = data.soundVolume;
     }
 
     private void LoadPlayerPrefs(PlayerPrefs prefs)

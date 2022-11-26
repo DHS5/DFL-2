@@ -65,7 +65,7 @@ public class BonusManager : MonoBehaviour
     /// </summary>
     public void DestroyBonus()
     {
-        Destroy(activeBonus);
+        Destroy(activeBonus.gameObject);
     }
 
 

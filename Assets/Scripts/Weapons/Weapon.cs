@@ -48,6 +48,7 @@ public class Weapon : MonoBehaviour
     [Tooltip("AudioClip of the weapon (played on use)")]
     [SerializeField] private AudioClip audioClip;
 
+    private List<Zombie> killables = new();
 
     private bool canShoot;
     private float reloadEndTime;
@@ -129,30 +130,38 @@ public class Weapon : MonoBehaviour
         player.controller.CurrentState.Shoot(fireArm);
         audioSource.PlayOneShot(shotClip);
 
+        for (int zNum = 0; zNum < zombieList.Count; zNum++)
+        {
+            z = (Zombie)zombieList[zNum];
+
+            if (z != null && !z.dead)
+            {
+                dist = z.rawDistance;
+                toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
+
+                if (dist < range && toZAngle < angle)
+                {
+                    killables.Add(z);
+                }
+            }
+        }
+
         // Enemy kill
         do
         {
-            minScore = range;
+            minScore = Mathf.Infinity;
             target = null;
 
-            for (int zNum = 0; zNum < zombieList.Count; zNum++)
+            foreach (Zombie zomb in killables)
             {
-                z = (Zombie)zombieList[zNum];
+                dist = zomb.rawDistance;
+                toZAngle = Vector3.Angle(zomb.playerLookDirection, -zomb.toPlayerDirection);
 
-                if (z != null && !z.dead)
+                score = dist * dist * ((toZAngle + angle) / angle);
+                if (score < minScore)
                 {
-                    dist = z.rawDistance;
-                    toZAngle = Vector3.Angle(z.playerLookDirection, -z.toPlayerDirection);
-
-                    if (dist < range && toZAngle < angle)
-                    {
-                        score = dist * dist * (toZAngle / angle);
-                        if (score < minScore)
-                        {
-                            target = z;
-                            minScore = score;
-                        }
-                    }
+                    target = zomb;
+                    minScore = score;
                 }
             }
 
@@ -161,6 +170,7 @@ public class Weapon : MonoBehaviour
                 victims++;
                 weaponsManager.numberOfKill++;
                 target.Dead();
+                killables.Remove(target);
             }
         } while (victims < maxVictim && target != null);
 

@@ -236,9 +236,7 @@ public class LoginManager : MonoBehaviour
                     {
                         ConnectionManager.playerInfo.id = response.player_id;
                         ConnectionManager.playerInfo.email = email;
-
-                        if (restore) main.DataManager.RestoreOnlineData();
-
+                        
                         Result("You are now connected !");
                         LootLockerSDKManager.GetPlayerName((response) =>
                         {
@@ -246,7 +244,14 @@ public class LoginManager : MonoBehaviour
                             {
                                 ConnectionManager.playerInfo.pseudo = response.name;
                             }
+                            else
+                            {
+                                ConnectionManager.playerInfo.pseudo = "error";
+                            }
+
                             State = ConnectionState.CONNECTED;
+
+                            if (restore) main.DataManager.RestoreOnlineData();
                         });
                     }
                 });

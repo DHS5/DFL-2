@@ -99,17 +99,6 @@ public class GameAudioManager : MonoBehaviour
             crowdSound = main.FieldManager.stadium.crowd;
             if (crowdSound) PlayerEntry();
         }
-
-        AudioData data = main.DataManager.audioData;
-        if (data.soundOn)
-        {
-            MuteSound(false);
-            ActuSoundVolume();
-        }
-        else
-        {
-            MuteSound(true);
-        }
     }
 
 

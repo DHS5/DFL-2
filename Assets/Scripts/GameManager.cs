@@ -216,6 +216,10 @@ public class GameManager : MonoBehaviour
         {
             main.ObstacleManager.DestroyObstacles(); // Destroys the active obstacles
         }
+        if (gameData.gameOptions.Contains(GameOption.WEAPONS))
+        {
+            main.weaponsManager.DestroyWeaponBonus();
+        }
 
         main.EnemiesManager.SuppEnemies(); // Destroys all the enemies
     }
