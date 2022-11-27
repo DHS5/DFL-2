@@ -552,10 +552,10 @@ public class DataManager : MonoBehaviour
 
         if (ConnectionManager.InternetConnected)
         {
-            Debug.Log("Load online data");
-
             if (ConnectionManager.SessionConnected)
             {
+                yield return GetOnlineFileID();
+
                 Debug.Log("Load from online session");
                 bool success = false;
                 string url = "";

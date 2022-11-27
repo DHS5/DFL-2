@@ -65,10 +65,6 @@ public class LoginManager : MonoBehaviour
             ActuButtons();
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
 
-            if (ConnectionManager.SessionConnected)
-            {
-                main.DataManager.StartCoroutine(main.DataManager.GetOnlineFileID());
-            }
             main.LeaderboardManager.LoadLeaderboards();
 
             Wait(false);
