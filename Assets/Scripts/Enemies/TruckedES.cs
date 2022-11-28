@@ -22,14 +22,15 @@ public class TruckedES : EnemyState
         agent.isStopped = true;
         agent.updateRotation = false;
 
-        impactDir = (_collision.GetContact(0).point - enemy.transform.position).normalized;
+        impactDir = Vector3.Slerp(-enemy.playerVelocity, -agent.velocity, 0.25f).normalized; //(_collision.GetContact(0).point - enemy.transform.position).normalized;
         impactPower = Mathf.Clamp(_collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
-        impact = impactPower * new Vector3(impactDir.x, 0, -Mathf.Max(Mathf.Abs(impactDir.z), Mathf.Abs(impactDir.x))).normalized;
+        //impact = impactPower * new Vector3(impactDir.x, 0, -Mathf.Max(Mathf.Abs(impactDir.z), Mathf.Abs(impactDir.x))).normalized;
+        Vector3 impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;
 
         //Debug.Log(impact);
 
-        enemy.transform.rotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
-        agent.velocity = -impact;
+        enemy.transform.rotation = Quaternion.Euler(0, Quaternion.LookRotation(-impact).eulerAngles.y, 0);
+        agent.velocity = impact;
 
         //Debug.Log(agent.velocity);
 

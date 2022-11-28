@@ -9,6 +9,7 @@ public class ShopButton : MonoBehaviour
     [Header("UI components")]
     [SerializeField] private Image picture;
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private GameObject selector;
 
 
     private ShopCardSO cardSO;
@@ -24,9 +25,11 @@ public class ShopButton : MonoBehaviour
         cardSO = _cardSO;
         shopCard = _shopCard;
         buyable = _buyable;
-        picture.sprite = cardSO.mainSprite;
+        if (picture != null) picture.sprite = cardSO.mainSprite;
         if (nameText != null) nameText.text = cardSO.Title;
         enoughMoney = _enoughMoney;
+
+        DisableSelector();
     }
 
 
@@ -39,6 +42,12 @@ public class ShopButton : MonoBehaviour
         if (shopCard != null)
         {
             shopCard.GenerateCard(cardSO, this, buyable, enoughMoney);
+            selector.SetActive(true);
         }
+    }
+
+    public void DisableSelector()
+    {
+        selector.SetActive(false);
     }
 }

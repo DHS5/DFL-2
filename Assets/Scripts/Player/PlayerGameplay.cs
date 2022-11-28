@@ -118,16 +118,11 @@ public class PlayerGameplay : MonoBehaviour
         if (!player.gameManager.GameOver)
         {
             // When the player collides with an enemy --> game over
-            if (collision.gameObject.CompareTag("Enemy") && Catchable)
+            if (collision.gameObject.CompareTag("Enemy"))
             {
-                //Debug.Log("Hurt by enemy ");
-                Hurt(collision);
-            }
-            if (collision.gameObject.CompareTag("Enemy") && (isTrucking || isHighKneeing))
-            {
-                if (collision.gameObject.transform.position.z > transform.position.z)
+                if ((isTrucking || isHighKneeing) && collision.gameObject.transform.position.z > transform.position.z)
                     collision.gameObject.GetComponentInParent<Enemy>().Trucked(collision);
-                else
+                else if (!isInvincible)
                     Hurt(collision);
             }
 
@@ -183,12 +178,23 @@ public class PlayerGameplay : MonoBehaviour
     {
         // Player animator dead
         player.controller.CurrentState.Dead();
-        Vector3 impactDir = (collision.GetContact(0).point - transform.position).normalized;
+        Vector3 impactDir;
         float impactPower = Mathf.Clamp(collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
+
+        Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
+        if (enemy != null)
+        {
+            impactDir = Vector3.Slerp(player.controller.Velocity, enemy.navMeshAgent.velocity.normalized, 0.75f);
+        }
+        else
+        {
+            impactDir = (collision.GetContact(0).point - transform.position).normalized;
+        }
+
         Vector3 impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;
 
-        player.activeBody.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(impact).eulerAngles.y, 0);
-        player.controller.PlayerRigidbody.AddForce(-impact, ForceMode.Impulse);
+        player.activeBody.transform.localRotation = Quaternion.Euler(0, Quaternion.LookRotation(-impact).eulerAngles.y, 0);
+        player.controller.PlayerRigidbody.AddForce(impact, ForceMode.Impulse);
 
         player.effects.DisableBreathAudio();
         player.playerManager.DeadPlayer();

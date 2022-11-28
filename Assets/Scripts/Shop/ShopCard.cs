@@ -27,6 +27,7 @@ public abstract class ShopCard : MonoBehaviour
 
     public virtual void GenerateCard(ShopCardSO _cardSO, ShopButton _shopButton, bool _buyable, bool enoughMoney)
     {
+        if (shopButton != null) shopButton.DisableSelector();
         cardSO = _cardSO;
         shopButton = _shopButton;
 

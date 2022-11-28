@@ -7,6 +7,8 @@ using TMPro;
 public class Lock : MonoBehaviour
 {
     [Header("Content")]
+    public bool forceLocked;
+    [Space, Space]
     [TextArea] public string content;
     public bool anchorUp;
 
@@ -59,8 +61,8 @@ public class Lock : MonoBehaviour
 
     public void ApplyLockInfos(bool locked, string text)
     {
-        Locked = locked;
-        Content = text;
+        Locked = locked || forceLocked;
+        Content = forceLocked ? "Not available in this version" : text;
         gotInfos = true;
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(layout);

@@ -202,7 +202,7 @@ public class PlayerManager : MonoBehaviour
         int total = 0;
         foreach (Enemy e in main.EnemiesManager.enemies)
         {
-            if (e.rawDistance <= radius && e.zDistance > -1)
+            if (e.rawDistance <= radius && e.zDistance > -1 && !e.DeadTrucked)
             {
                 total++;
             }

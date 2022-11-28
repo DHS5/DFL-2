@@ -11390,7 +11390,7 @@ PrefabInstance:
     - target: {fileID: 1659843429612400019, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: xSize
-      value: 400
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400019, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
@@ -14745,6 +14745,11 @@ PrefabInstance:
         type: 3}
       propertyPath: anchorUp
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -22021,6 +22026,11 @@ PrefabInstance:
       propertyPath: toggle
       value: 
       objectReference: {fileID: 1697627931}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
 --- !u!224 &465421862 stripped
@@ -22616,6 +22626,11 @@ PrefabInstance:
       propertyPath: anchorUp
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
 --- !u!224 &484863510 stripped
@@ -23001,6 +23016,11 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: anchorUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -27230,6 +27250,11 @@ PrefabInstance:
         type: 3}
       propertyPath: content
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -41165,6 +41190,13 @@ MonoBehaviour:
     tpCameraPos: 0
     goalpost: 0
     backview: 0
+    joystickMode: 0
+    centerSize: 0
+    boundarySize: 0
+    joystickSize: 0
+    joystickPosX: 0
+    joystickPosY: 0
+    jumpButtonSize: 0
   playerData:
     id: 0
     name: 
@@ -42329,6 +42361,11 @@ PrefabInstance:
       propertyPath: toggle
       value: 
       objectReference: {fileID: 2409900115237714733}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
 --- !u!224 &873834283 stripped
@@ -76212,12 +76249,10 @@ PrefabInstance:
     - target: {fileID: 1659843429612400019, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
       propertyPath: text
-      value: 'Restore the last online save datas (progression, inventory, settings
-        ...)
+      value: 'Reset the save on this device and online
 
-        ! Be careful ! your current progression on this device will
-        be erased definitely and replaced by the last online save (when connected
-        to a session, everything is saved online after each game)'
+        ! Be careful ! Your
+        progression will be erased definitely'
       objectReference: {fileID: 0}
     - target: {fileID: 1659843429612400019, guid: 818d6183cfcd1b24eb97a0fd77f890d2,
         type: 3}
@@ -80090,6 +80125,11 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: anchorUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -71,6 +71,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool trucked = false;
 
+    public bool DeadTrucked { get { return trucked; } }
+
 
     private Vector3 b4StopVelocity;
 
