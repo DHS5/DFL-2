@@ -15,7 +15,7 @@ public class TutoUIManager : MonoBehaviour
 
 
     [Header("Content")]
-    [SerializeField] private VideoClip[] tutoVideos;
+    [SerializeField] private VideoPlaylistSO tutoVideos;
 
 
     // ### Properties ###
@@ -25,8 +25,8 @@ public class TutoUIManager : MonoBehaviour
         set 
         {
             main.DataManager.gameData.tutoNumber = value;
-            if (tutoVideos != null && value < tutoVideos.Length)
-                videoPlayer.clip = tutoVideos[value];
+            if (tutoVideos != null && value < tutoVideos.videos.Length)
+                videoPlayer.clip = tutoVideos.videos[value];
         }
     }
 

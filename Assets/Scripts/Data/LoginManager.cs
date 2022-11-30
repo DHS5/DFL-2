@@ -157,8 +157,15 @@ public class LoginManager : MonoBehaviour
                 {
                     if (response == false)
                     {
-                        Debug.Log("No white label active session");
-                        State = ConnectionState.NO_SESSION;
+                        if (Application.platform == RuntimePlatform.WebGLPlayer)
+                        {
+                            LoginAsGuest();
+                        }
+                        else
+                        {
+                            Debug.Log("No white label active session");
+                            State = ConnectionState.NO_SESSION;
+                        }
                     }
                     else
                     {

@@ -169,7 +169,7 @@ public class DataManager : MonoBehaviour
 
     private int onlineFileID;
     private bool onlineFileIDLoaded = false;
-
+    private bool quitting = false;
     private bool reloadAll = false;
 
 
@@ -411,6 +411,7 @@ public class DataManager : MonoBehaviour
     {
         SaveOnDisk();
 
+        Debug.Log("saved on disk");
         yield return StartCoroutine(SaveOnlineCR());
 
         if (reload)
@@ -444,23 +445,31 @@ public class DataManager : MonoBehaviour
 
         if (ConnectionManager.SessionConnected)
         {
+            yield return GetOnlineFileID();
+            
             LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
             {
                 if (response.success)
                 {
-                    //Debug.Log("File uploaded successfully");
+                    //Debug.Log("File uploaded successfully : " + response.id);
+                    int formerID = OnlineFileID;
+                    //Debug.Log("deleting file " + formerID);
 
-                    LootLockerSDKManager.DeletePlayerFile(OnlineFileID, (response) =>
+                    LootLockerSDKManager.DeletePlayerFile(formerID, (response) =>
                     {
                         //if (response.success)
                         //    Debug.Log("Deleted file successfully");
                         //else
-                        //    Debug.Log("File not deleted : " + onlineFileID + ";" + response.text);
+                        //    Debug.Log("File not deleted : " + formerID + ";" + response.text);
 
                         done = true;
                     });
 
                     OnlineFileID = response.id;
+                }
+                else
+                {
+                    done = true;
                 }
             });
 
@@ -471,16 +480,21 @@ public class DataManager : MonoBehaviour
 
     public void QuitGame()
     {
-        StartCoroutine(Quit());
+        if (!quitting)
+        {
+            quitting = true;
+            StartCoroutine(Quit());
+        }
     }
 
     private IEnumerator Quit()
     {
         yield return StartCoroutine(SavePlayerData(false));
 
-#if UNITY_EDITOR
+#if (UNITY_EDITOR)
         EditorApplication.ExitPlaymode();
-#elif UNITY_WEBGL
+#elif (UNITY_WEBGL)
+        Application.OpenURL("about:blank");
 #else
         Application.Quit();
 #endif
