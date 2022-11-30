@@ -10,7 +10,7 @@ public class TruckedES : EnemyState
     float impactPower;
 
     readonly float impactMin = 10;
-    readonly float impactMax = 20;
+    readonly float impactMax = 15;
 
     public TruckedES(Enemy _enemy, NavMeshAgent _agent, Animator _animator, Collision _collision) : base(_enemy, _agent, _animator)
     {
@@ -22,10 +22,10 @@ public class TruckedES : EnemyState
         agent.isStopped = true;
         agent.updateRotation = false;
 
-        impactDir = Vector3.Slerp(-enemy.playerVelocity, -agent.velocity, 0.25f).normalized; //(_collision.GetContact(0).point - enemy.transform.position).normalized;
+        impactDir = Vector3.Slerp(enemy.playerVelocity, -agent.velocity, 0.75f).normalized; //(_collision.GetContact(0).point - enemy.transform.position).normalized;
         impactPower = Mathf.Clamp(_collision.impulse.magnitude / Time.fixedDeltaTime, impactMin, impactMax);
         //impact = impactPower * new Vector3(impactDir.x, 0, -Mathf.Max(Mathf.Abs(impactDir.z), Mathf.Abs(impactDir.x))).normalized;
-        Vector3 impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;
+        impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;
 
         //Debug.Log(impact);
 
@@ -45,6 +45,6 @@ public class TruckedES : EnemyState
         agent.ResetPath();
         agent.isStopped = true;
 
-        agent.velocity = -impact;
+        agent.velocity = impact;
     }
 }
