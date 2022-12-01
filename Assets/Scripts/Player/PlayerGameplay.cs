@@ -188,7 +188,7 @@ public class PlayerGameplay : MonoBehaviour
         }
         else
         {
-            impactDir = (collision.GetContact(0).point - transform.position).normalized;
+            impactDir = (transform.position - collision.GetContact(0).point).normalized;
         }
 
         Vector3 impact = impactPower * new Vector3(impactDir.x, 0, impactDir.z).normalized;

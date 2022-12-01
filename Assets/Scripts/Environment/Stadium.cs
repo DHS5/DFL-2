@@ -40,6 +40,11 @@ public class Stadium : MonoBehaviour
     {
         SetBleachersSound(bleachersClip);
         StartBleachersSound();
+
+        if (lights != null && Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            lights.SetActive(false);
+        }
     }
 
 
