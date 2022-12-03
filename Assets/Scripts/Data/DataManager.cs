@@ -411,7 +411,7 @@ public class DataManager : MonoBehaviour
     {
         SaveOnDisk();
 
-        Debug.Log("saved on disk");
+        //Debug.Log("saved on disk");
         yield return StartCoroutine(SaveOnlineCR());
 
         if (reload)
@@ -423,7 +423,7 @@ public class DataManager : MonoBehaviour
         //Debug.Log(Application.persistentDataPath + "/savefile.json");
     }
 
-    private void SaveOnDisk()
+    public void SaveOnDisk()
     {
         SaveData data = new();
 
@@ -540,10 +540,14 @@ public class DataManager : MonoBehaviour
         LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
         {
             if (response.success)
+            {
                 if (response.payload != null)
                     onlineFileID = int.Parse(response.payload.value);
-                else
-                    Debug.Log("Couldn't get online file ID");
+
+                //Debug.Log(onlineFileID);
+            }
+            else
+                Debug.Log("Couldn't get online file ID");
 
             gotResponse = true;
         });

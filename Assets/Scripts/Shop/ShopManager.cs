@@ -43,8 +43,8 @@ public class ShopManager : MonoBehaviour
     [Header("Team Shop")]
     [SerializeField] private TMP_Dropdown attackerPositionDropdown;
 
-    [Header("Stadium Shop")]
-    [Header("Weapon Shop")]
+    [Header("Buy Window")]
+    [SerializeField] private GameObject buyWindow;
 
 
 
@@ -127,11 +127,19 @@ public class ShopManager : MonoBehaviour
             ActuShopButton(card.shopButton, false);
             card.Buyable = false;
             card.RefreshCard();
+            BuyWindow(card.cardSO.Title, card.transform.parent);
         }
         else
         {
             Debug.Log("You don't have enough coins to buy " + card.cardSO.Title);
         }
+    }
+
+    private void BuyWindow(string buy, Transform parent)
+    {
+        TextMeshProUGUI text = Instantiate(buyWindow, parent).GetComponentInChildren<TextMeshProUGUI>();
+
+        text.text = buy;
     }
 
 

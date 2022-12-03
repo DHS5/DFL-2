@@ -207,8 +207,6 @@ public class LoginManager : MonoBehaviour
 
     public void Login(bool restore)
     {
-        DisconnectPreviousSession();
-
         Wait(true);
 
         string email = loginEmailIF.text;
@@ -280,8 +278,6 @@ public class LoginManager : MonoBehaviour
 
     public void NewUser(bool reset)
     {
-        DisconnectPreviousSession();
-
         Wait(true);
 
         string email = newUserEmailIF.text;
@@ -336,6 +332,8 @@ public class LoginManager : MonoBehaviour
                         }
                         ConnectionManager.playerInfo.pseudo = newNickName;
                         ConnectionManager.playerInfo.id = response.player_id;
+                        ActuStateText();
+
                         // Set new nickname for player
                         LootLockerSDKManager.SetPlayerName(newNickName, (response) =>
                         {
@@ -357,8 +355,6 @@ public class LoginManager : MonoBehaviour
 
     public void LoginAsGuest()
     {
-        DisconnectPreviousSession();
-
         Wait(true);
 
         LootLockerSDKManager.StartGuestSession((response) =>
@@ -400,13 +396,6 @@ public class LoginManager : MonoBehaviour
                 State = ConnectionState.NO_SESSION;
             }
         });
-    }
-    private void DisconnectPreviousSession()
-    {
-        if (State == ConnectionState.GUEST || State == ConnectionState.CONNECTED)
-        {
-            Disconnect();
-        }
     }
 
     public void RestoreLastOnlineSave()
