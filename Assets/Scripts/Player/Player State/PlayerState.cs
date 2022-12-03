@@ -264,20 +264,18 @@ public abstract class PlayerState
         SetTrigger("Dead");
 
         stage = Event.GAMEOVER;
-        Process();
     }
     public void Win()
     {
         SetTrigger("Win");
         stage = Event.GAMEOVER;
-        Process();
     }
     public void Lose()
     {
+        DeactivateWeaponLayer();
         SetTrigger("Lose");
 
         stage = Event.GAMEOVER;
-        Process();
     }
 }
 

@@ -62,6 +62,11 @@ public class PlayerController : MonoBehaviour
     private bool isRaining;
 
 
+    readonly float checkboxSize = 1.5f;
+    readonly float checkboxThreshold = 0.25f;
+    private Vector3 checkBox;
+    private int groundLayerMask;
+
 
     // Player state variables
     public bool OnGround { get; private set; }
@@ -149,6 +154,9 @@ public class PlayerController : MonoBehaviour
         AlreadySlide = false;
 
         jumpCharge = playerAtt.JumpStamina;
+
+        checkBox = new Vector3(checkboxSize, checkboxThreshold, checkboxSize);
+        groundLayerMask = LayerMask.GetMask("Ground", "NavMesh");
     }
 
     private void Update()
@@ -258,6 +266,10 @@ public class PlayerController : MonoBehaviour
             OnGround = true;
     }
 
+    public bool TouchGround()
+    {
+        return Physics.CheckBox(player.transform.position, checkBox, Quaternion.identity, groundLayerMask);
+    }
     public bool CanJump(float cost)
     {
         return OnGround && cost <= jumpCharge;
