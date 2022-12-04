@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class JumpPS : PlayerState
 {
+    private bool quittedGround = false;
+
     public JumpPS(Player _player) : base(_player)
     {
         name = PState.JUMP;
@@ -28,7 +30,13 @@ public class JumpPS : PlayerState
 
         PlayerOrientation();
 
-        if (controller.OnGround)
+        if (!quittedGround && !controller.TouchGround())
+        {
+            quittedGround = true;
+            controller.ForceQuitGround();
+        }
+
+        if (quittedGround && controller.OnGround)
         {
             // Slip
             if (IsRaining)

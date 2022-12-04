@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HighKneePS : PlayerState
 {
+    private bool quittedGround = false;
+
     public HighKneePS(Player _player) : base(_player)
     {
         name = PState.HIGHKNEE;
@@ -32,7 +34,13 @@ public class HighKneePS : PlayerState
 
         PlayerOrientation();
 
-        if (controller.OnGround)
+        if (!quittedGround && !controller.TouchGround())
+        {
+            quittedGround = true;
+            controller.ForceQuitGround();
+        }
+
+        if (quittedGround && controller.OnGround)
         {
             // Slip
             if (IsRaining)

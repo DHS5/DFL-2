@@ -66,6 +66,7 @@ public class LoginManager : MonoBehaviour
             homeLoginButton.gameObject.SetActive(value == ConnectionState.NO_SESSION);
 
             main.LeaderboardManager.LoadLeaderboards();
+            main.DataManager.DeleteGarbageFiles();
 
             Wait(false);
         }

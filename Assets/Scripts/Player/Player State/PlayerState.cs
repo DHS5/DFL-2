@@ -188,15 +188,22 @@ public abstract class PlayerState
     {
         SetTrigger("Catch");
         float weight = 0, sample = 50;
+        WaitForSeconds wait1 = new(time / sample);
         for (int i = 0; i < sample; i++)
         {
             weight = Mathf.Lerp(weight, 1, 0.2f);
             SetLayer("Catch", weight);
-            yield return new WaitForSeconds(time / sample);
+            yield return wait1;
         }
         SetLayer("Catch", 1);
         player.playerManager.FootballActive = true;
-        yield return new WaitForSeconds(time * 3/2);
+        yield return new WaitForSeconds(time / 2);
+        for (int i = 0; i < sample; i++)
+        {
+            weight = Mathf.Lerp(weight, 0, 0.2f);
+            SetLayer("Catch", weight);
+            yield return wait1;
+        }
         SetLayer("Catch", 0);
         ResetTrigger("Catch");
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FlipPS : PlayerState
 {
+    private bool quittedGround = false;
+
     public FlipPS(Player _player) : base(_player)
     {
         name = PState.FLIP;
@@ -32,7 +34,13 @@ public class FlipPS : PlayerState
 
         PlayerOrientation();
 
-        if (controller.OnGround)
+        if (!quittedGround && !controller.TouchGround())
+        {
+            quittedGround = true;
+            controller.ForceQuitGround();
+        }
+
+        if (quittedGround && controller.OnGround)
         {
             // Slip
             if (IsRaining)

@@ -265,6 +265,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
             OnGround = true;
     }
+    public void ForceQuitGround()
+    {
+        OnGround = false;
+    }
 
     public bool TouchGround()
     {

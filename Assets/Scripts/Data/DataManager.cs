@@ -604,6 +604,52 @@ public class DataManager : MonoBehaviour
         SceneManager.LoadScene((int)SceneNumber.MENU);
     }
 
+    public void DeleteGarbageFiles()
+    {
+        StartCoroutine(DeleteGarbageFilesCR());
+    }
+
+    private IEnumerator DeleteGarbageFilesCR()
+    {
+        bool gotResponse = false;
+
+        LootLockerSDKManager.GetSingleKeyPersistentStorage("OnlineFileID", (response) =>
+        {
+            if (response.success)
+            {
+                if (response.payload != null)
+                {
+                    onlineFileID = int.Parse(response.payload.value);
+                }
+
+                LootLockerSDKManager.GetAllPlayerFiles((response) =>
+                {
+                    if (response.success)
+                    {
+                        for (int i = 0; i < response.items.Length; i++)
+                        {
+                            if (response.items[i].id != OnlineFileID)
+                            {
+                                LootLockerSDKManager.DeletePlayerFile(response.items[i].id, (onComplete) => { });
+                            }
+                        }
+                        gotResponse = true;
+                    }
+                    else
+                    {
+                        gotResponse = true;
+                    }
+                });
+            }
+            else
+            {
+                gotResponse = true;
+            }
+        });
+
+        yield return new WaitUntil(() => gotResponse);
+    }
+
     private IEnumerator LoadJSONFromURL(string url)
     {
         UnityWebRequest request = UnityWebRequest.Get(url);

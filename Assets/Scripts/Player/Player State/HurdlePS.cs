@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HurdlePS : PlayerState
 {
+    private bool quittedGround = false;
+
     public HurdlePS(Player _player) : base(_player)
     {
         name = PState.HURDLE;
@@ -28,7 +30,13 @@ public class HurdlePS : PlayerState
 
         PlayerOrientation();
 
-        if (controller.OnGround)
+        if (!quittedGround && !controller.TouchGround())
+        {
+            quittedGround = true;
+            controller.ForceQuitGround();
+        }
+
+        if (quittedGround && controller.OnGround)
         {
             // Slip
             if (IsRaining)
