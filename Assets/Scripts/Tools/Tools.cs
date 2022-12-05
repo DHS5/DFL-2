@@ -31,8 +31,6 @@ public class Tools : MonoBehaviour
 
     public static void ReloadScene()
     {
-        SaveData();
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -41,7 +39,7 @@ public class Tools : MonoBehaviour
     /// </summary>
     public static void QuitInstant()
     {
-        SaveData();
+        SaveOnDisk();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #elif UNITY_WEBGL
@@ -55,7 +53,13 @@ public class Tools : MonoBehaviour
     {
         DataManager dataManager = DataManager.InstanceDataManager;
         if (dataManager != null)
-            dataManager.SaveDatas(false);
+            dataManager.SaveAndCleanGarbage();
+    }
+    public static void SaveOnDisk()
+    {
+        DataManager dataManager = DataManager.InstanceDataManager;
+        if (dataManager != null)
+            dataManager.SaveOnDisk();
     }
 
 

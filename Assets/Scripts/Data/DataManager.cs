@@ -402,6 +402,64 @@ public class DataManager : MonoBehaviour
 
     // # SAVE #
 
+    public void SaveAndCleanGarbage()
+    {
+        StartCoroutine(SaveAndCleanCR());
+    }
+    private IEnumerator SaveAndCleanCR()
+    {
+        SaveOnDisk();
+
+        bool done = false;
+
+        if (ConnectionManager.SessionConnected)
+        {
+            LootLockerSDKManager.UploadPlayerFile(Application.persistentDataPath + "/savefile.json", "save", (response) =>
+            {
+                if (response.success)
+                {
+                    int newID = response.id;
+                    OnlineFileID = newID;
+
+                    LootLockerSDKManager.GetAllPlayerFiles((response) =>
+                    {
+                        if (response.success)
+                        {
+                            int cpt = 0;
+                            int length = response.items.Length - 1;
+
+                            for (int i = 0; i < response.items.Length; i++)
+                            {
+                                if (response.items[i].id != newID)
+                                {
+                                    LootLockerSDKManager.DeletePlayerFile(response.items[i].id, (onComplete) => 
+                                    {
+                                        cpt++;
+                                        if (cpt == length)
+                                        {
+                                            done = true;
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            done = true;
+                        }
+                    });
+                }
+                else
+                {
+                    done = true;
+                }
+            });
+
+            yield return new WaitUntil(() => done);
+            yield return new WaitUntil(() => onlineFileIDLoaded);
+        }
+    }
+
     public void SaveDatas(bool reset)
     {
         StartCoroutine(SavePlayerData(reset));

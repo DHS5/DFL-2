@@ -137,6 +137,7 @@ public class MenuUIManager : MonoBehaviour
     {
         loadingScreen.SetActive(true);
         loadingImage.sprite = main.cardManager.CurrentStadiumCard.mainSprite;
+        main.DataManager.SaveAndCleanGarbage();
 
         op = SceneManager.LoadSceneAsync((int)SceneNumber.GAME, LoadSceneMode.Single);
         loadingGauge.GetOperation(in op);

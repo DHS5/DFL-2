@@ -452,7 +452,7 @@ public class GameManager : MonoBehaviour
         main.ParkourManager.Win();
 
         // # Data #
-        main.DataManager.SaveDatas(false);
+        main.DataManager.SaveOnDisk();
 
         // # UI #
         main.GameUIManager.Win();
