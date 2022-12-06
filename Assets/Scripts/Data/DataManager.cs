@@ -547,12 +547,12 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator Quit()
     {
-        yield return StartCoroutine(SavePlayerData(false));
+        yield return StartCoroutine(SaveAndCleanCR());
 
 #if (UNITY_EDITOR)
         EditorApplication.ExitPlaymode();
 #elif (UNITY_WEBGL)
-        Application.OpenURL("about:blank");
+        Application.OpenURL("https://store.steampowered.com/app/2227340/DFL2");
 #else
         Application.Quit();
 #endif

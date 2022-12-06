@@ -184,7 +184,7 @@ public class PlayerGameplay : MonoBehaviour
         Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy != null)
         {
-            if (enemy.navMeshAgent.velocity == Vector3.zero) impactDir = -player.controller.Velocity;
+            if (enemy.navMeshAgent.velocity.magnitude < 2) impactDir = -player.controller.Velocity;
             else impactDir = Vector3.Slerp(player.controller.Velocity, enemy.navMeshAgent.velocity.normalized, 0.75f);
         }
         else

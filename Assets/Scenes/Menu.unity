@@ -14749,7 +14749,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -22029,7 +22029,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -23021,7 +23021,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -27254,7 +27254,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -61716,7 +61716,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -66438,6 +66438,11 @@ PrefabInstance:
       propertyPath: toggle
       value: 
       objectReference: {fileID: 1282552261}
+    - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
+        type: 3}
+      propertyPath: forceLocked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
 --- !u!224 &1386150206 stripped
@@ -75214,7 +75219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutoDropdown: {fileID: 1781068961}
   videoPlayer: {fileID: 522339779}
-  tutoVideos: {fileID: 0}
+  tutoVideos: {fileID: 11400000, guid: ca750bb23c883d7448cf182fb094b241, type: 2}
 --- !u!1001 &1569573574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79228,7 +79233,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -80278,7 +80283,7 @@ PrefabInstance:
     - target: {fileID: 9073093588008024665, guid: 93b09887a9899dd47849a3a95fb27fb6,
         type: 3}
       propertyPath: forceLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b09887a9899dd47849a3a95fb27fb6, type: 3}
@@ -85626,7 +85631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataManager: {fileID: 845207700}
   audioSource: {fileID: 1802871983}
-  musics: {fileID: 11400000, guid: 721a0f78419d3bb4fa61bd528050dd99, type: 2}
+  musics: {fileID: 11400000, guid: cb5f86070d7069e45964ab11ab0a330a, type: 2}
   musicSlider: {fileID: 1418031407}
   musicOnToggle: {fileID: 1130466880}
   loopOnToggle: {fileID: 1621551619}
@@ -102397,7 +102402,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2409900115237714734}
+  m_TargetGraphic: {fileID: 896091536}
   toggleTransition: 1
   graphic: {fileID: 980075406}
   m_Group: {fileID: 0}

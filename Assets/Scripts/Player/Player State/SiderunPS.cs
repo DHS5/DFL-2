@@ -99,6 +99,7 @@ public class SiderunPS : PlayerState
     {
         ResetTrigger("Side");
         ResetTrigger("Run");
+        ResetTrigger("Feint");
 
         base.Exit();
     }
