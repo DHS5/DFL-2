@@ -29,7 +29,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4328240388687322534}
-  - {fileID: 7975277223485829119}
   - {fileID: 2669753571790193769}
   - {fileID: 9164299097812570866}
   - {fileID: 4396626592089711116}
@@ -89,7 +88,7 @@ GameObject:
   - component: {fileID: 3959263724182770836}
   - component: {fileID: 1028466628651403737}
   - component: {fileID: 559182555264552010}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EntryGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1586,9 +1585,9 @@ GameObject:
   - component: {fileID: 557204050682215283}
   - component: {fileID: 5253475291988519930}
   - component: {fileID: 8977340561221193391}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: StadiumGround
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2726,69 +2725,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!1 &5796710497494301902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7975277223485829119}
-  - component: {fileID: 250815139264238887}
-  - component: {fileID: 5876592413048609139}
-  m_Layer: 0
-  m_Name: TunnelPostPro Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7975277223485829119
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5796710497494301902}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 235.1}
-  m_LocalScale: {x: 20, y: 10, z: 5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4982141516519000892}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &250815139264238887
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5796710497494301902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5876592413048609139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5796710497494301902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 0
-  priority: 0
-  blendDistance: 10
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 37a01e03e4a1dcc40a1c90df7f910f56, type: 2}
 --- !u!1 &6179178893449752712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,7 +2789,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4982141516519000892}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4264219482210857736
 BoxCollider:
@@ -3845,7 +3781,7 @@ GameObject:
   - component: {fileID: 3069984521322836308}
   - component: {fileID: 73549584783178063}
   - component: {fileID: 6211542704165138734}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EndGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -4123,7 +4059,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4982141516519000892}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2966182640120562143
 MeshFilter:
@@ -4472,7 +4408,7 @@ PrefabInstance:
     - target: {fileID: 6072080679386267688, guid: 536eb9720ae91144dab1e18eab7db53d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6072080679386267688, guid: 536eb9720ae91144dab1e18eab7db53d,
         type: 3}

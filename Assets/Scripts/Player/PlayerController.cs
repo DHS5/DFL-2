@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
     }
     public bool CanJump(float cost)
     {
-        return OnGround && cost <= jumpCharge;
+        return OnGround && cost <= jumpCharge && TouchGround();
     }
 
     private void RechargeJump()

@@ -136,7 +136,11 @@ public class MusicSource : MonoBehaviour
     /// <param name="clipNumber">Number of the music clip</param>
     protected void PlayFromBeginning(int clipNumber)
     {
-        if (clipNumber >= musics.musics.Length) clipNumber = 0;
+        if (clipNumber >= musics.musics.Length)
+        {
+            MusicNumber = 0;
+            clipNumber = 0;
+        }
         audioSource.clip = musics.musics[clipNumber];
         audioSource.time = 0f;
         audioSource.Play();
