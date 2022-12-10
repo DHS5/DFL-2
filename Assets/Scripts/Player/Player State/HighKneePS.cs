@@ -34,7 +34,7 @@ public class HighKneePS : PlayerState
 
         PlayerOrientation();
 
-        if (!quittedGround && !controller.TouchGround())
+        if (!quittedGround && !controller.TouchGround(0.05f))
         {
             quittedGround = true;
             controller.ForceQuitGround();

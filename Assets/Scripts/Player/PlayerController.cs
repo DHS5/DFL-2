@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
 
     readonly float checkboxSize = 1.5f;
     readonly float checkboxThreshold = 0.25f;
-    private Vector3 checkBox;
     private int groundLayerMask;
 
 
@@ -155,7 +154,6 @@ public class PlayerController : MonoBehaviour
 
         jumpCharge = playerAtt.JumpStamina;
 
-        checkBox = new Vector3(checkboxSize, checkboxThreshold, checkboxSize);
         groundLayerMask = LayerMask.GetMask("Ground", "NavMesh");
     }
 
@@ -263,20 +261,26 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             OnGround = true;
+        }
     }
     public void ForceQuitGround()
     {
         OnGround = false;
     }
 
-    public bool TouchGround()
+    public bool TouchGround(float checkSize)
     {
-        return Physics.CheckBox(player.transform.position, checkBox, Quaternion.identity, groundLayerMask);
+        return Physics.CheckBox(player.transform.position, CheckBox(checkSize), Quaternion.identity, groundLayerMask);
+    }
+    private Vector3 CheckBox(float checkSize)
+    {
+        return new Vector3(checkboxSize, checkSize, checkboxSize);
     }
     public bool CanJump(float cost)
     {
-        return OnGround && cost <= jumpCharge && TouchGround();
+        return OnGround && cost <= jumpCharge && TouchGround(checkboxThreshold);
     }
 
     private void RechargeJump()
