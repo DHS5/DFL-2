@@ -30,7 +30,7 @@ public static class ConnectionManager
 
     public static bool InternetConnected
     {
-        get { return internetConnected || Application.platform == RuntimePlatform.WebGLPlayer; }
+        get { return Application.internetReachability != NetworkReachability.NotReachable && (internetConnected || Application.platform == RuntimePlatform.WebGLPlayer); }
         private set { internetConnected = value; }
     }
     public static bool SessionConnected

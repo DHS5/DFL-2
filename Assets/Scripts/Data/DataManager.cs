@@ -462,13 +462,13 @@ public class DataManager : MonoBehaviour
 
     public void SaveDatas(bool reset)
     {
+        SaveOnDisk();
+
         StartCoroutine(SavePlayerData(reset));
     }
 
     private IEnumerator SavePlayerData(bool reload)
     {
-        SaveOnDisk();
-
         //Debug.Log("saved on disk");
         yield return StartCoroutine(SaveOnlineCR());
 

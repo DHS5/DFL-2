@@ -101,7 +101,7 @@ public class LoginManager : MonoBehaviour
             Debug.Log("webgl");
             ConnectionManager.ForceInternetConnected();
         }
-        else
+        else if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             Debug.Log("no webgl");
             StartCoroutine(CheckInternetConnectionCR());
@@ -145,7 +145,7 @@ public class LoginManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
             ConnectionManager.ForceInternetConnected();
-        else
+        else if (Application.internetReachability != NetworkReachability.NotReachable)
             yield return StartCoroutine(CheckInternetConnectionCR());
 
         Wait(true);

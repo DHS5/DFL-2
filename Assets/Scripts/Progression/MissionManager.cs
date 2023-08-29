@@ -143,6 +143,8 @@ public class MissionManager : MonoBehaviour
                 Unlock("weapon option");
             }
         }
+
+        main.DataManager.SaveOnDisk();
     }
 
 
